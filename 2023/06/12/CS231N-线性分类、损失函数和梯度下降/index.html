@@ -6,19 +6,39 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Archives: 2023/6 | 李宝璐</title>
+  <title>CS231N-损失函数和梯度下降 | 李宝璐</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="里面放着李宝璐的碎碎念">
-<meta property="og:type" content="website">
-<meta property="og:title" content="李宝璐">
-<meta property="og:url" content="http://example.com/archives/2023/06/index.html">
+  <meta name="description" content="损失函数与梯度下降损失函数SVM loss（Hinge loss）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CS231N-损失函数和梯度下降">
+<meta property="og:url" content="http://example.com/2023/06/12/CS231N-%E7%BA%BF%E6%80%A7%E5%88%86%E7%B1%BB%E3%80%81%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/index.html">
 <meta property="og:site_name" content="李宝璐">
-<meta property="og:description" content="里面放着李宝璐的碎碎念">
+<meta property="og:description" content="损失函数与梯度下降损失函数SVM loss（Hinge loss）">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2023/06/12/CS231N-%E7%BA%BF%E6%80%A7%E5%88%86%E7%B1%BB%E3%80%81%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/image-20230612005855485.png">
+<meta property="og:image" content="http://example.com/2023/06/12/CS231N-%E7%BA%BF%E6%80%A7%E5%88%86%E7%B1%BB%E3%80%81%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/image-20230612005446021.png">
+<meta property="og:image" content="http://example.com/2023/06/12/CS231N-%E7%BA%BF%E6%80%A7%E5%88%86%E7%B1%BB%E3%80%81%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/image-20230612010410142.png">
+<meta property="og:image" content="http://example.com/2023/06/12/CS231N-%E7%BA%BF%E6%80%A7%E5%88%86%E7%B1%BB%E3%80%81%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/image-20230612005923200.png">
+<meta property="og:image" content="http://example.com/2023/06/12/CS231N-%E7%BA%BF%E6%80%A7%E5%88%86%E7%B1%BB%E3%80%81%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/image-20230612010011183.png">
+<meta property="og:image" content="http://example.com/2023/06/12/CS231N-%E7%BA%BF%E6%80%A7%E5%88%86%E7%B1%BB%E3%80%81%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/image-20230612010042076.png">
+<meta property="og:image" content="http://example.com/2023/06/12/CS231N-%E7%BA%BF%E6%80%A7%E5%88%86%E7%B1%BB%E3%80%81%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/image-20230612010426059.png">
+<meta property="og:image" content="http://example.com/2023/06/12/CS231N-%E7%BA%BF%E6%80%A7%E5%88%86%E7%B1%BB%E3%80%81%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/image-20230612011149291.png">
+<meta property="og:image" content="http://example.com/2023/06/12/CS231N-%E7%BA%BF%E6%80%A7%E5%88%86%E7%B1%BB%E3%80%81%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/image-20230612012402654.png">
+<meta property="og:image" content="http://example.com/2023/06/12/CS231N-%E7%BA%BF%E6%80%A7%E5%88%86%E7%B1%BB%E3%80%81%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/image-20230612012514936.png">
+<meta property="og:image" content="http://example.com/2023/06/12/CS231N-%E7%BA%BF%E6%80%A7%E5%88%86%E7%B1%BB%E3%80%81%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/image-20230612012735604.png">
+<meta property="og:image" content="http://example.com/2023/06/12/CS231N-%E7%BA%BF%E6%80%A7%E5%88%86%E7%B1%BB%E3%80%81%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/image-20230612013012470.png">
+<meta property="og:image" content="http://example.com/2023/06/12/CS231N-%E7%BA%BF%E6%80%A7%E5%88%86%E7%B1%BB%E3%80%81%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/image-20230612013512838.png">
+<meta property="og:image" content="http://example.com/2023/06/12/CS231N-%E7%BA%BF%E6%80%A7%E5%88%86%E7%B1%BB%E3%80%81%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/image-20230612013644006.png">
+<meta property="og:image" content="http://example.com/2023/06/12/CS231N-%E7%BA%BF%E6%80%A7%E5%88%86%E7%B1%BB%E3%80%81%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/image-20230612013739638.png">
+<meta property="og:image" content="http://example.com/2023/06/12/CS231N-%E7%BA%BF%E6%80%A7%E5%88%86%E7%B1%BB%E3%80%81%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/image-20230612013954641.png">
+<meta property="article:published_time" content="2023-06-11T16:38:36.000Z">
+<meta property="article:modified_time" content="2023-06-11T17:56:08.394Z">
 <meta property="article:author" content="李宝璐">
+<meta property="article:tag" content="技术笔记">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2023/06/12/CS231N-%E7%BA%BF%E6%80%A7%E5%88%86%E7%B1%BB%E3%80%81%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/image-20230612005855485.png">
   
     <link rel="alternative" href="/atom.xml" title="李宝璐" type="application/atom+xml">
   
@@ -225,41 +245,152 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-CS231N-线性分类、损失函数和梯度下降" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2023" class="archive-year">2023</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/06/12/CS231N-%E7%BA%BF%E6%80%A7%E5%88%86%E7%B1%BB%E3%80%81%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/" class="archive-article-date">
-        <time datetime="2023-06-11T16:38:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-06-12</time>
-</a>
-
-        </div>
-    	 
+      <header class="article-header">
   
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/06/12/CS231N-%E7%BA%BF%E6%80%A7%E5%88%86%E7%B1%BB%E3%80%81%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/" target="_blank">CS231N-损失函数和梯度下降</a>
   
+    <h1 class="article-title" itemprop="name">
+      CS231N-损失函数和梯度下降
     </h1>
   
 
 
-        <div class="article-info info-on-right">
+  
+  
+        
+        <span id="busuanzi_container_page_pv" style='display:none' class="archive-article-date">
+              <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+        </span>
+
+<a href="/2023/06/12/CS231N-%E7%BA%BF%E6%80%A7%E5%88%86%E7%B1%BB%E3%80%81%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/" class="archive-article-date">
+        <time datetime="2023-06-11T16:38:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-06-12</time>
+</a>
+
+  
+  
+    
+<div style="margin-top:10px;">
+  <span class="post-time">
+    <span class="post-meta-item-icon">
+      <!-- fonts.scss -->
+      <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
+      <i class="icon-statistics"></i>
+      <span class="post-meta-item-text"> 字数统计:</span>
+      <span class="post-count">1.2k字</span>
+    </span>
+  </span>
+
+  <span class="post-time">
+    &nbsp; | &nbsp;
+    <span class="post-meta-item-icon">
+      <i class="icon-book icon"></i>
+      <span class="post-meta-item-text"> 阅读时长≈</span>
+      <span class="post-count">4分</span>
+    </span>
+  </span>
+</div>
+
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <h1 id="损失函数与梯度下降"><a href="#损失函数与梯度下降" class="headerlink" title="损失函数与梯度下降"></a>损失函数与梯度下降</h1><h2 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数"></a>损失函数</h2><h3 id="SVM-loss（Hinge-loss）"><a href="#SVM-loss（Hinge-loss）" class="headerlink" title="SVM loss（Hinge loss）"></a>SVM loss（Hinge loss）</h3><img src="/2023/06/12/CS231N-%E7%BA%BF%E6%80%A7%E5%88%86%E7%B1%BB%E3%80%81%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/image-20230612005855485.png" alt="image-20230612005855485" style="zoom:67%;">
+
+<span id="more"></span>
+
+<p>​		这是一种常在SVM中用的损失函数，SVM是机器学习的基础知识，后面有时间会更新机器学习相关的知识，SVM用我们国学思想来说就是：“中庸之道”，现在大街上一群人，一坨是老师，一坨是学生，用一个线性模型把他们分开，就要找到这两个类之间中间最大安全距离的点，这个中就是中庸之道的中，SVM就是要找到这个最大安全边距的点，它的损失函数就是这种<strong>铰链损失函数</strong>：</p>
+<p><img src="/2023/06/12/CS231N-%E7%BA%BF%E6%80%A7%E5%88%86%E7%B1%BB%E3%80%81%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/image-20230612005446021.png" alt="image-20230612005446021"></p>
+<p>​		它的数学意义就是对每一个数据把它   <strong>分类错误的分数 - 正确类别的分数 + 1</strong>  求得这个数 和 0 比大小，取最大值，就是这个样本的铰链损失函数。</p>
+<img src="/2023/06/12/CS231N-%E7%BA%BF%E6%80%A7%E5%88%86%E7%B1%BB%E3%80%81%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/image-20230612010410142.png" alt="image-20230612010410142" style="zoom:50%;">
+
+<p>​		比如说这个猫：</p>
+<img src="/2023/06/12/CS231N-%E7%BA%BF%E6%80%A7%E5%88%86%E7%B1%BB%E3%80%81%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/image-20230612005923200.png" alt="image-20230612005923200" style="zoom:50%;">
+
+<p>​		比如说这个汽车：</p>
+<img src="/2023/06/12/CS231N-%E7%BA%BF%E6%80%A7%E5%88%86%E7%B1%BB%E3%80%81%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/image-20230612010011183.png" alt="image-20230612010011183" style="zoom:50%;">
+
+<p>​		比如说这个青蛙：</p>
+<img src="/2023/06/12/CS231N-%E7%BA%BF%E6%80%A7%E5%88%86%E7%B1%BB%E3%80%81%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/image-20230612010042076.png" alt="image-20230612010042076" style="zoom:50%;">
+
+<p>​		那我们进一步思考一下，这个铰链损失函数在干嘛，以汽车为例，汽车的得分是4.9，那么铰链损失函数就会去惩罚得分大于3.9的类别，对于得分小于3.9的类别，铰链函数是不会去惩罚它的。</p>
+<img src="/2023/06/12/CS231N-%E7%BA%BF%E6%80%A7%E5%88%86%E7%B1%BB%E3%80%81%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/image-20230612010426059.png" alt="image-20230612010426059" style="zoom:50%;">
+
+<p>​		最后求一个平均值，就得到了这个数据集的损失值。</p>
+<p>​		铰链损失函数会惩罚哪些和正确类别得分相近的类别，对于相差较远的，就不会去惩罚它，这里的1，可以看做<strong>冗余的安全度</strong>。</p>
+<p><strong>平方铰链损失函数</strong></p>
+<p><img src="/2023/06/12/CS231N-%E7%BA%BF%E6%80%A7%E5%88%86%E7%B1%BB%E3%80%81%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/image-20230612011149291.png" alt="image-20230612011149291"></p>
+<p>​		这个损失函数和普通的损失函数大小是对应的，只不过这个函数会放大损失得分很高的类别，也就是告诉我们要去重点优化差距特别大的那些分类，这两个损失函数是可以相互替换的。</p>
+<p><strong>python实现</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">L_i_vectorized</span>(<span class="params">x,y,W</span>):</span><br><span class="line">    <span class="comment"># scores 是数据集的得分矩阵</span></span><br><span class="line">    <span class="comment"># 假设某一个数据集上有50000张图片，每一个图片都是10分类，那么scores就是50000行 10列</span></span><br><span class="line">    scores = W.dot(x)  <span class="comment"># 每一张图片的分时</span></span><br><span class="line">    margins = np.maximum(<span class="number">0</span>,scores - scores[y] + <span class="number">1</span>) <span class="comment"># 每一行都减去对应正确类别的分数 + 1</span></span><br><span class="line">    margins[y] = <span class="number">0</span> <span class="comment"># 指定正确类别的损失函数为 0</span></span><br><span class="line">    loss_i = np.<span class="built_in">sum</span>(margins) <span class="comment"># 求和</span></span><br><span class="line">    <span class="keyword">return</span> loss_i</span><br></pre></td></tr></table></figure>
+
+<p>这个损失函数是不受权重影响的，同一个损失函数可以对应好多套权重，本着越简单越好的原则，选择数比较小的权重比较好，这里就要引入一个很重要的理论，<strong>正则化</strong>，<strong>regularization</strong>。</p>
+<p><strong>regularization</strong></p>
+<p>​		在损失函数后加了一个正则化项</p>
+<img src="/2023/06/12/CS231N-%E7%BA%BF%E6%80%A7%E5%88%86%E7%B1%BB%E3%80%81%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/image-20230612012402654.png" alt="image-20230612012402654" style="zoom: 50%;">
+
+<p>​		正则化就是让这个<strong>模型更加简单</strong>，让这个<strong>参数和权重更加小</strong>，可以在<strong>测试集上更好的泛化</strong>。</p>
+<img src="/2023/06/12/CS231N-%E7%BA%BF%E6%80%A7%E5%88%86%E7%B1%BB%E3%80%81%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/image-20230612012514936.png" alt="image-20230612012514936" style="zoom:67%;">
+
+<p>​		有L1正则化和L2正则化。</p>
+<p>​		<strong>举个栗子</strong></p>
+<img src="/2023/06/12/CS231N-%E7%BA%BF%E6%80%A7%E5%88%86%E7%B1%BB%E3%80%81%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/image-20230612012735604.png" alt="image-20230612012735604" style="zoom: 33%;">
+
+<p>​		x是输入的四个维度的特征，w1和w2是两个权重，他们的损失分数都是1，但是选哪个好呢？</p>
+<p>​		选第二个好，因为第一个出现了<strong>一家独大</strong>的情况，很容易出现<strong>过拟合</strong>的情况，第二个则是<strong>雨露均沾</strong>。</p>
+<p>​		在多项式回归也会用到正则化，如下图：</p>
+<img src="/2023/06/12/CS231N-%E7%BA%BF%E6%80%A7%E5%88%86%E7%B1%BB%E3%80%81%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/image-20230612013012470.png" alt="image-20230612013012470" style="zoom:33%;">
+
+<p>​		这两个回归拟合模型用那个？  肯定用绿色的，蓝色的模型死记硬背了一些噪声点，把这个模型变得十分复杂，用多项式函数来拟合这个模型的话会发现它的高次项是非常大的，而直线就是kx + b的形式，通过正则化把蓝色的惩罚掉就可以，避免过拟合，寻找<strong>大而化之</strong>的边界线。</p>
+<h3 id="Softmax-Classifier-多分类的逻辑回归"><a href="#Softmax-Classifier-多分类的逻辑回归" class="headerlink" title="Softmax Classifier 多分类的逻辑回归"></a><strong>Softmax Classifier</strong> 多分类的逻辑回归</h3><img src="/2023/06/12/CS231N-%E7%BA%BF%E6%80%A7%E5%88%86%E7%B1%BB%E3%80%81%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/image-20230612013512838.png" alt="image-20230612013512838" style="zoom:50%;">
+
+<p>​		我们得到了每个分类的得分，我们想要吧得分去变成每一个类别的概率，但是这里还有很讨厌的负数，这要怎么搞？</p>
+<p>​		首先我们使用一个指数函数：</p>
+<img src="/2023/06/12/CS231N-%E7%BA%BF%E6%80%A7%E5%88%86%E7%B1%BB%E3%80%81%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/image-20230612013644006.png" alt="image-20230612013644006" style="zoom: 50%;">
+
+<p>​		之后对这些数进行归一化：</p>
+<img src="/2023/06/12/CS231N-%E7%BA%BF%E6%80%A7%E5%88%86%E7%B1%BB%E3%80%81%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/image-20230612013739638.png" alt="image-20230612013739638" style="zoom:50%;">
+
+<p>​		那么经过这样变换的叫做概率，这个变换，就叫做Softmax，它的作用就是把分数变成了概率。</p>
+<p>​		这里我们就要引入一个新的损失函数：</p>
+<h3 id="交叉熵损失函数"><a href="#交叉熵损失函数" class="headerlink" title="交叉熵损失函数"></a><strong>交叉熵损失函数</strong></h3><img src="/2023/06/12/CS231N-%E7%BA%BF%E6%80%A7%E5%88%86%E7%B1%BB%E3%80%81%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/image-20230612013954641.png" alt="image-20230612013954641" style="zoom:33%;">
+
+<p>​		可以想象一个-log的曲线，<strong>如果这个正确的概率越接近1，那么它的损失函数值就越接近0</strong>，这样就很好进行模型的衡量，此时我们只关心分类正确的情况，也叫<strong>最大似然估计</strong>可以去看一下（CS229 机器学习的内容）</p>
+<p>​		选用log这个函数真的十分巧妙，它可以吧乘积变成求和，这样就方便我们统计整个数据集分类正确的得分。</p>
+<h2 id="优化过程-梯度下降"><a href="#优化过程-梯度下降" class="headerlink" title="优化过程 梯度下降"></a>优化过程 梯度下降</h2>
+    
+
+    
+
+    
+    <div class="declare"> 
+      <ul class="post-copyright">
+        <li>
+          <strong>本文作者：</strong>
+          李宝璐
+        </li>
+        <li>
+          <strong>本文链接：</strong>
+          <a href="http://example.com/2023/06/12/CS231N-线性分类、损失函数和梯度下降/" title="CS231N-损失函数和梯度下降" target="_blank">http://example.com/2023/06/12/CS231N-线性分类、损失函数和梯度下降/</a>
+        </li>
+        
+        <li>
+          <strong>版权声明： </strong>
           
+          本博客所有文章除特别声明外，均采用 <a href="https://github.com/JoeyBling/hexo-theme-yilia-plus/blob/master/LICENSE" rel="external nofollow" target="_blank">MIT</a> 许可协议。转载请注明出处！
+        </li>
+        
+      </ul>
+    </div>
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -271,7 +402,7 @@
 		</ul>
 	</div>
 
-          
+    
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -284,287 +415,118 @@
 	</div>
 
 
+    
+
+    
+    
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <!-- <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a> -->
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2023/06/12/CS231N-%E7%BA%BF%E6%80%A7%E5%88%86%E7%B1%BB%E3%80%81%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/" alt="微信分享二维码"> -->
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+
+    
+    <div class="clearfix"></div>
+  </div>
   </div>
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/06/12/%E7%9F%A5%E8%AF%86%E8%92%B8%E9%A6%8F%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86-%E7%BB%BC%E8%BF%B0/" class="archive-article-date">
-        <time datetime="2023-06-11T16:28:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-06-12</time>
-</a>
 
+
+<nav id="article-nav">
+  
+  
+    <a href="/2023/06/12/%E7%9F%A5%E8%AF%86%E8%92%B8%E9%A6%8F%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86-%E7%BB%BC%E8%BF%B0/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">知识蒸馏算法原理+综述</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/06/12/%E7%9F%A5%E8%AF%86%E8%92%B8%E9%A6%8F%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86-%E7%BB%BC%E8%BF%B0/" target="_blank">知识蒸馏算法原理+综述</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/技术笔记//" class="article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E4%B8%8E%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D"><span class="toc-number">1.</span> <span class="toc-text">损失函数与梯度下降</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0"><span class="toc-number">1.1.</span> <span class="toc-text">损失函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SVM-loss%EF%BC%88Hinge-loss%EF%BC%89"><span class="toc-number">1.1.1.</span> <span class="toc-text">SVM loss（Hinge loss）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Softmax-Classifier-%E5%A4%9A%E5%88%86%E7%B1%BB%E7%9A%84%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92"><span class="toc-number">1.1.2.</span> <span class="toc-text">Softmax Classifier 多分类的逻辑回归</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%A4%E5%8F%89%E7%86%B5%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0"><span class="toc-number">1.1.3.</span> <span class="toc-text">交叉熵损失函数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%98%E5%8C%96%E8%BF%87%E7%A8%8B-%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D"><span class="toc-number">1.2.</span> <span class="toc-text">优化过程 梯度下降</span></a></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/06/10/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AF%BE%E8%AE%BE%E4%BB%A3%E7%A0%81%E8%AF%A6%E8%A7%A3/" class="archive-article-date">
-        <time datetime="2023-06-10T12:23:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-06-10</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/06/10/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AF%BE%E8%AE%BE%E4%BB%A3%E7%A0%81%E8%AF%A6%E8%A7%A3/" target="_blank">数据库课设代码详解</a>
-  
-    </h1>
-  
+        
+    </div>
+</aside>
 
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/技术笔记//" class="article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/06/08/%E2%80%9C%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AF%BE%E8%AE%BE-%E9%AB%98%E6%A0%A1%E7%A7%91%E7%A0%94%E7%B3%BB%E7%BB%9F%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%95%E2%80%9D/" class="archive-article-date">
-        <time datetime="2023-06-08T10:48:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-06-08</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/06/08/%E2%80%9C%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AF%BE%E8%AE%BE-%E9%AB%98%E6%A0%A1%E7%A7%91%E7%A0%94%E7%B3%BB%E7%BB%9F%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%95%E2%80%9D/" target="_blank">“数据库课设--高校科研系统开发记录”</a>
-  
-    </h1>
-  
 
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/技术笔记//" class="article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/06/06/%E7%8E%B0%E7%8A%B6%E5%8F%8A%E5%AF%B9%E6%9C%AA%E6%9D%A5%E7%9A%84%E6%80%9D%E8%80%83/" class="archive-article-date">
-        <time datetime="2023-06-06T10:38:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-06-06</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/06/06/%E7%8E%B0%E7%8A%B6%E5%8F%8A%E5%AF%B9%E6%9C%AA%E6%9D%A5%E7%9A%84%E6%80%9D%E8%80%83/" target="_blank">现状及对未来的思考</a>
-  
-    </h1>
-  
 
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">碎碎念</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/碎碎念//" class="article-tag-list-link color4">碎碎念</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/06/04/%E8%BF%90%E5%8A%A8/" class="archive-article-date">
-        <time datetime="2023-06-04T12:55:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-06-04</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/06/04/%E8%BF%90%E5%8A%A8/" target="_blank">运动</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">剪影</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/剪影//" class="article-tag-list-link color3">剪影</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -605,8 +567,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: true,
