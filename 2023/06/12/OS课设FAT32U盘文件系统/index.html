@@ -6,19 +6,72 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Archives | 李宝璐</title>
+  <title>OS课设FAT32U盘文件系统 | 李宝璐</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="里面放着李宝璐的碎碎念">
-<meta property="og:type" content="website">
-<meta property="og:title" content="李宝璐">
-<meta property="og:url" content="http://example.com/archives/index.html">
+  <meta name="description" content="！！！！！ 看再多的博客都不如去读一下原始的手册，这里放一个FAT的手册地址，十分感谢南京大学蒋炎岩老师的分享！ http:&#x2F;&#x2F;jyywiki.cn&#x2F;pages&#x2F;OS&#x2F;manuals&#x2F;MSFAT-spec.pdf">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OS课设FAT32U盘文件系统">
+<meta property="og:url" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/index.html">
 <meta property="og:site_name" content="李宝璐">
-<meta property="og:description" content="里面放着李宝璐的碎碎念">
+<meta property="og:description" content="！！！！！ 看再多的博客都不如去读一下原始的手册，这里放一个FAT的手册地址，十分感谢南京大学蒋炎岩老师的分享！ http:&#x2F;&#x2F;jyywiki.cn&#x2F;pages&#x2F;OS&#x2F;manuals&#x2F;MSFAT-spec.pdf">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230612225258948.png">
+<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230612230201899.png">
+<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230612230259286.png">
+<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230612230548797.png">
+<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230612231456257.png">
+<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230612231517938.png">
+<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230612231641589.png">
+<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230612231725701.png">
+<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230612232612658.png">
+<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230612232732461.png">
+<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230612233707009.png">
+<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230612234907049.png">
+<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230612235555918.png">
+<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230612235825684.png">
+<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230613002849175.png">
+<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230613005544270.png">
+<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230613005558953.png">
+<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230613214641298.png">
+<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230613220745624.png">
+<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230613004417775.png">
+<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230612224534717.png">
+<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230612224843458.png">
+<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614012931989.png">
+<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614013142399.png">
+<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614013610634.png">
+<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614013742747.png">
+<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614014944452.png">
+<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614015044089.png">
+<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614015244867.png">
+<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614015431932.png">
+<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614015809231.png">
+<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230613233408681.png">
+<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614020345080.png">
+<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230613233657185.png">
+<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230613233826134.png">
+<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230613233903037.png">
+<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614000658429.png">
+<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614000729046.png">
+<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614000747824.png">
+<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614002128010.png">
+<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614002353593.png">
+<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614002447619.png">
+<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614002731997.png">
+<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614002739575.png">
+<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614002939035.png">
+<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614003009137.png">
+<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614003437396.png">
+<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614003447201.png">
+<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614003512805.png">
+<meta property="article:published_time" content="2023-06-12T14:05:48.000Z">
+<meta property="article:modified_time" content="2023-06-13T18:06:00.374Z">
 <meta property="article:author" content="李宝璐">
+<meta property="article:tag" content="技术笔记">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230612225258948.png">
   
     <link rel="alternative" href="/atom.xml" title="李宝璐" type="application/atom+xml">
   
@@ -225,41 +278,345 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-OS课设FAT32U盘文件系统" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2023" class="archive-year">2023</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" class="archive-article-date">
-        <time datetime="2023-06-12T14:05:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-06-12</time>
-</a>
-
-        </div>
-    	 
+      <header class="article-header">
   
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" target="_blank">OS课设FAT32U盘文件系统</a>
   
+    <h1 class="article-title" itemprop="name">
+      OS课设FAT32U盘文件系统
     </h1>
   
 
 
-        <div class="article-info info-on-right">
+  
+  
+        
+        <span id="busuanzi_container_page_pv" style='display:none' class="archive-article-date">
+              <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+        </span>
+
+<a href="/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" class="archive-article-date">
+        <time datetime="2023-06-12T14:05:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-06-12</time>
+</a>
+
+  
+  
+    
+<div style="margin-top:10px;">
+  <span class="post-time">
+    <span class="post-meta-item-icon">
+      <!-- fonts.scss -->
+      <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
+      <i class="icon-statistics"></i>
+      <span class="post-meta-item-text"> 字数统计:</span>
+      <span class="post-count">8.6k字</span>
+    </span>
+  </span>
+
+  <span class="post-time">
+    &nbsp; | &nbsp;
+    <span class="post-meta-item-icon">
+      <i class="icon-book icon"></i>
+      <span class="post-meta-item-text"> 阅读时长≈</span>
+      <span class="post-count">33分</span>
+    </span>
+  </span>
+</div>
+
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <p>！！！！！</p>
+<p>看再多的博客都不如去读一下原始的手册，这里放一个FAT的手册地址，十分感谢南京大学蒋炎岩老师的分享！</p>
+<p><a target="_blank" rel="noopener" href="http://jyywiki.cn/pages/OS/manuals/MSFAT-spec.pdf">http://jyywiki.cn/pages/OS/manuals/MSFAT-spec.pdf</a></p>
+<span id="more"></span>
+
+<p>首先我们来看不同的操作系统有哪些文件系统：</p>
+<p><strong>Windows阵营：</strong></p>
+<ul>
+<li>FAT12&#x2F;FAT16&#x2F;FAT32</li>
+<li>exFAT</li>
+<li>NTFS</li>
+</ul>
+<p><strong>Linux阵营：</strong></p>
+<ul>
+<li>ext2&#x2F;ext3</li>
+<li>NFS</li>
+<li>jffs2</li>
+<li>yaffs</li>
+</ul>
+<p>​		本次，我们重点关注，FAT32，它的代码量比较少，而且十分经典，它一般可以支持到8G的存储空间（甚至可以到64G），很适合现在的小型嵌入式系统，可以说，经典！好用！</p>
+<h1 id="簇——文件存储的最小单元"><a href="#簇——文件存储的最小单元" class="headerlink" title="簇——文件存储的最小单元"></a>簇——文件存储的最小单元</h1><p><img src="/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230612225258948.png" alt="image-20230612225258948"></p>
+<p>​		磁盘中最小的扇区大小是512B，我们可以想到，不同大小的磁盘，它的管理办法应该是不一样的，这时引入一个簇的概念，它就是<strong>文件系统管理的最小单元</strong>，显而易见，簇应该是<strong>扇区大小的倍数</strong>。</p>
+<p>​		ps：哪怕文件里只有一个字节，那它也会占用最少一个簇的单元</p>
+<h2 id="100KB空间如何管理文件"><a href="#100KB空间如何管理文件" class="headerlink" title="100KB空间如何管理文件"></a>100KB空间如何管理文件</h2><p><strong>分配方案</strong></p>
+<p><img src="/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230612230201899.png" alt="image-20230612230201899"></p>
+<p><strong>目录分配方案</strong></p>
+<p><img src="/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230612230259286.png" alt="image-20230612230259286"></p>
+<p><strong>当文件需要删除&#x2F;增加</strong></p>
+<p><img src="/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230612230548797.png" alt="image-20230612230548797"></p>
+<h2 id="FAT32-FAT表"><a href="#FAT32-FAT表" class="headerlink" title="FAT32 FAT表"></a>FAT32 FAT表</h2><h3 id="添加FAT表"><a href="#添加FAT表" class="headerlink" title="添加FAT表"></a>添加FAT表</h3><p><img src="/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230612231456257.png" alt="image-20230612231456257"></p>
+<p>​		重点就是这个文件分配表</p>
+<h3 id="FAT表格式"><a href="#FAT表格式" class="headerlink" title="FAT表格式"></a>FAT表格式</h3><p><img src="/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230612231517938.png" alt="image-20230612231517938"></p>
+<p>​		FF就是文件的结束簇</p>
+<h3 id="FAT表解决增删改问题"><a href="#FAT表解决增删改问题" class="headerlink" title="FAT表解决增删改问题"></a>FAT表解决增删改问题</h3><p><img src="/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230612231641589.png" alt="image-20230612231641589"></p>
+<p>​		重点看这里：</p>
+<p><img src="/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230612231725701.png" alt="image-20230612231725701"></p>
+<p>​		通过文件分配表，可以实现文件的一个链式结构，很方便实现增删改查！合理的利用碎片化的空间。</p>
+<p>如何实现一个FAT系统呢，请看下文。</p>
+<h1 id="文件系统的实现"><a href="#文件系统的实现" class="headerlink" title="文件系统的实现"></a>文件系统的实现</h1><p>​		其实实现一个文件系统的核心就是：使用bread（）和bwrite（）来实现文件系统的API （block read and write）</p>
+<img src="/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230612232612658.png" alt="image-20230612232612658" style="zoom:67%;">
+
+<p>​		说到底，这就是一个<strong>数据结构</strong>！！！！</p>
+<img src="/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230612232732461.png" alt="image-20230612232732461" style="zoom:67%;">
+
+<img src="/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230612233707009.png" alt="image-20230612233707009" style="zoom: 67%;">
+
+<img src="/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230612234907049.png" alt="image-20230612234907049" style="zoom:67%;">
+
+<p>​		OK，原理差不多了，进入正题！</p>
+<h3 id="File-Alloct-Table"><a href="#File-Alloct-Table" class="headerlink" title="File Alloct Table"></a><strong>File Alloct Table</strong></h3><img src="/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230612235555918.png" alt="image-20230612235555918" style="zoom:67%;">
+
+<img src="/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230612235825684.png" alt="image-20230612235825684" style="zoom:67%;">
+
+<p>​				最终采取<strong>第二种方案</strong>。</p>
+<img src="/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230613002849175.png" alt="image-20230613002849175" style="zoom:67%;">
+
+<p>​				为了防止关键数据发生损坏，怎么办？ <strong>备份</strong></p>
+<p>​			<strong>备份的是 FAT表  容易损坏的也是 FAT表   FAT表里存放的就是next指针</strong>，<strong>一个FAT就是一个next的数组</strong></p>
+<img src="/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230613005544270.png" alt="image-20230613005544270" style="zoom:67%;">
+
+<img src="/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230613005558953.png" alt="image-20230613005558953" style="zoom:67%;">
+
+<img src="/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230613214641298.png" alt="image-20230613214641298" style="zoom:67%;">
+
+<img src="/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230613220745624.png" alt="image-20230613220745624" style="zoom:67%;">
+
+<h3 id="coding过程"><a href="#coding过程" class="headerlink" title="coding过程"></a>coding过程</h3><p>​		我的建议是照抄手册，手册的内容就不放了，直接上代码：</p>
+<p><strong>Fat32.h</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdint.h&gt;</span></span></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">uint8_t</span> u8;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">uint16_t</span> u16;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">uint32_t</span> u32;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Copied from the manual</span></span><br><span class="line"><span class="comment">// Should be placed in a header file</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">fat32hdr</span> &#123;</span><br><span class="line">  u8  BS_jmpBoot[<span class="number">3</span>];</span><br><span class="line">  u8  BS_OEMName[<span class="number">8</span>];</span><br><span class="line">  u16 BPB_BytsPerSec;</span><br><span class="line">  u8  BPB_SecPerClus;</span><br><span class="line">  u16 BPB_RsvdSecCnt;</span><br><span class="line">  u8  BPB_NumFATs;</span><br><span class="line">  u16 BPB_RootEntCnt;</span><br><span class="line">  u16 BPB_TotSec16;</span><br><span class="line">  u8  BPB_Media;</span><br><span class="line">  u16 BPB_FATSz16;</span><br><span class="line">  u16 BPB_SecPerTrk;</span><br><span class="line">  u16 BPB_NumHeads;</span><br><span class="line">  u32 BPB_HiddSec;</span><br><span class="line">  u32 BPB_TotSec32;</span><br><span class="line">  u32 BPB_FATSz32;</span><br><span class="line">  u16 BPB_ExtFlags;</span><br><span class="line">  u16 BPB_FSVer;</span><br><span class="line">  u32 BPB_RootClus;</span><br><span class="line">  u16 BPB_FSInfo;</span><br><span class="line">  u16 BPB_BkBootSec;</span><br><span class="line">  u8  BPB_Reserved[<span class="number">12</span>];</span><br><span class="line">  u8  BS_DrvNum;</span><br><span class="line">  u8  BS_Reserved1;</span><br><span class="line">  u8  BS_BootSig;</span><br><span class="line">  u32 BS_VolID;</span><br><span class="line">  u8  BS_VolLab[<span class="number">11</span>];</span><br><span class="line">  u8  BS_FilSysType[<span class="number">8</span>];</span><br><span class="line">  u8  __padding_1[<span class="number">420</span>];</span><br><span class="line">  u16 Signature_word;</span><br><span class="line">&#125; __attribute__((packed));</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">fat32dent</span> &#123;</span><br><span class="line">  u8  DIR_Name[<span class="number">11</span>];</span><br><span class="line">  u8  DIR_Attr;</span><br><span class="line">  u8  DIR_NTRes;</span><br><span class="line">  u8  DIR_CrtTimeTenth;</span><br><span class="line">  u16 DIR_CrtTime;</span><br><span class="line">  u16 DIR_CrtDate;</span><br><span class="line">  u16 DIR_LastAccDate;</span><br><span class="line">  u16 DIR_FstClusHI;</span><br><span class="line">  u16 DIR_WrtTime;</span><br><span class="line">  u16 DIR_WrtDate;</span><br><span class="line">  u16 DIR_FstClusLO;</span><br><span class="line">  u32 DIR_FileSize;</span><br><span class="line">&#125; __attribute__((packed));</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> CLUS_INVALID   0xffffff7</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ATTR_READ_ONLY 0x01</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ATTR_HIDDEN    0x02</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ATTR_SYSTEM    0x04</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ATTR_VOLUME_ID 0x08</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ATTR_DIRECTORY 0x10</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ATTR_ARCHIVE   0x20</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>Fat32tree.cpp</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;assert.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/mman.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;fat32.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">fat32hdr</span> *hdr;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> *<span class="title">map_disk</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *fname)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">dfs</span><span class="params">(u32 clusId, <span class="type">int</span> depth, <span class="type">int</span> is_dir)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> *argv[])</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (argc &lt; <span class="number">2</span>) &#123;</span><br><span class="line">    <span class="built_in">fprintf</span>(stderr, <span class="string">&quot;Usage: %s fs-image\n&quot;</span>, argv[<span class="number">0</span>]);</span><br><span class="line">    <span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">setbuf</span>(stdout, <span class="literal">NULL</span>);</span><br><span class="line"></span><br><span class="line">  <span class="built_in">assert</span>(<span class="built_in">sizeof</span>(<span class="keyword">struct</span> fat32hdr) == <span class="number">512</span>); <span class="comment">// defensive</span></span><br><span class="line">  <span class="built_in">assert</span>(<span class="built_in">sizeof</span>(<span class="keyword">struct</span> fat32dent) == <span class="number">32</span>); <span class="comment">// defensive</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// map disk image to memory</span></span><br><span class="line">  hdr = <span class="built_in">map_disk</span>(argv[<span class="number">1</span>]);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// file system traversal</span></span><br><span class="line">  <span class="built_in">dfs</span>(hdr-&gt;BPB_RootClus, <span class="number">0</span>, <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">  <span class="built_in">munmap</span>(hdr, hdr-&gt;BPB_TotSec32 * hdr-&gt;BPB_BytsPerSec);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> *<span class="title">map_disk</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *fname)</span> </span>&#123;</span><br><span class="line">  <span class="type">int</span> fd = <span class="built_in">open</span>(fname, O_RDWR);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (fd &lt; <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="keyword">goto</span> release;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="type">off_t</span> size = <span class="built_in">lseek</span>(fd, <span class="number">0</span>, SEEK_END);</span><br><span class="line">  <span class="keyword">if</span> (size == <span class="number">-1</span>) &#123;</span><br><span class="line">    <span class="keyword">goto</span> release;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">struct</span> <span class="title class_">fat32hdr</span> *hdr = <span class="built_in">mmap</span>(<span class="literal">NULL</span>, size, PROT_READ | PROT_WRITE, MAP_PRIVATE, fd, <span class="number">0</span>);</span><br><span class="line">  <span class="keyword">if</span> (hdr == (<span class="type">void</span> *)<span class="number">-1</span>) &#123;</span><br><span class="line">    <span class="keyword">goto</span> release;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">close</span>(fd);</span><br><span class="line"></span><br><span class="line">  <span class="built_in">assert</span>(hdr-&gt;Signature_word == <span class="number">0xaa55</span>); <span class="comment">// this is an MBR</span></span><br><span class="line">  <span class="built_in">assert</span>(hdr-&gt;BPB_TotSec32 * hdr-&gt;BPB_BytsPerSec == size);</span><br><span class="line"></span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%s: DOS/MBR boot sector, &quot;</span>, fname);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;OEM-ID \&quot;%s\&quot;, &quot;</span>, hdr-&gt;BS_OEMName);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;sectors/cluster %d, &quot;</span>, hdr-&gt;BPB_SecPerClus);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;sectors %d, &quot;</span>, hdr-&gt;BPB_TotSec32);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;sectors %d, &quot;</span>, hdr-&gt;BPB_TotSec32);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;sectors/FAT %d, &quot;</span>, hdr-&gt;BPB_FATSz32);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;serial number 0x%x\n&quot;</span>, hdr-&gt;BS_VolID);</span><br><span class="line">  <span class="keyword">return</span> hdr;</span><br><span class="line"></span><br><span class="line">release:</span><br><span class="line">  <span class="built_in">perror</span>(<span class="string">&quot;map disk&quot;</span>);</span><br><span class="line">  <span class="keyword">if</span> (fd &gt; <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="built_in">close</span>(fd);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">u32 <span class="title">next_cluster</span><span class="params">(<span class="type">int</span> n)</span> </span>&#123;</span><br><span class="line">  <span class="comment">// RTFM: Sec 4.1</span></span><br><span class="line">  u32 *fat = (u32 *)((u8 *)hdr + hdr-&gt;BPB_RsvdSecCnt * hdr-&gt;BPB_BytsPerSec);</span><br><span class="line">  <span class="keyword">return</span> fat[n];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> *<span class="title">cluster_to_sec</span><span class="params">(<span class="type">int</span> n)</span> </span>&#123;</span><br><span class="line">  <span class="comment">// RTFM: Sec 3.5 and 4 (TRICKY)</span></span><br><span class="line">  <span class="comment">// Don&#x27;t copy code. Write your own.</span></span><br><span class="line">  u32 DataSec = hdr-&gt;BPB_RsvdSecCnt + hdr-&gt;BPB_NumFATs * hdr-&gt;BPB_FATSz32;</span><br><span class="line">  DataSec += (n - <span class="number">2</span>) * hdr-&gt;BPB_SecPerClus;</span><br><span class="line">  <span class="keyword">return</span> ((<span class="type">char</span> *)hdr) + DataSec * hdr-&gt;BPB_BytsPerSec;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">get_filename</span><span class="params">(<span class="keyword">struct</span> fat32dent *dent, <span class="type">char</span> *buf)</span> </span>&#123;</span><br><span class="line">  <span class="comment">// RTFM: Sec 6.1</span></span><br><span class="line">  <span class="type">int</span> len = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="built_in">sizeof</span>(dent-&gt;DIR_Name); i++) &#123;</span><br><span class="line">    <span class="keyword">if</span> (dent-&gt;DIR_Name[i] != <span class="string">&#x27; &#x27;</span>) &#123;</span><br><span class="line">      <span class="keyword">if</span> (i == <span class="number">8</span>) buf[len++] = <span class="string">&#x27;.&#x27;</span>;</span><br><span class="line">      buf[len++] = dent-&gt;DIR_Name[i];</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  buf[len] = <span class="string">&#x27;\0&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">dfs</span><span class="params">(u32 clusId, <span class="type">int</span> depth, <span class="type">int</span> is_dir)</span> </span>&#123;</span><br><span class="line">  <span class="comment">// RTFM: Sec 6</span></span><br><span class="line">  <span class="keyword">for</span> (; clusId &lt; CLUS_INVALID; clusId = <span class="built_in">next_cluster</span>(clusId)) &#123;</span><br><span class="line">    <span class="keyword">if</span> (is_dir) &#123;</span><br><span class="line">      <span class="type">int</span> ndents = hdr-&gt;BPB_BytsPerSec * hdr-&gt;BPB_SecPerClus / <span class="built_in">sizeof</span>(<span class="keyword">struct</span> fat32dent);</span><br><span class="line"></span><br><span class="line">      <span class="keyword">for</span> (<span class="type">int</span> d = <span class="number">0</span>; d &lt; ndents; d++) &#123;</span><br><span class="line">        <span class="keyword">struct</span> <span class="title class_">fat32dent</span> *dent = (<span class="keyword">struct</span> fat32dent *)<span class="built_in">cluster_to_sec</span>(clusId) + d;</span><br><span class="line">        <span class="keyword">if</span> (dent-&gt;DIR_Name[<span class="number">0</span>] == <span class="number">0x00</span> ||</span><br><span class="line">            dent-&gt;DIR_Name[<span class="number">0</span>] == <span class="number">0xe5</span> ||</span><br><span class="line">            dent-&gt;DIR_Attr &amp; ATTR_HIDDEN) <span class="keyword">continue</span>;</span><br><span class="line"></span><br><span class="line">        <span class="type">char</span> fname[<span class="number">32</span>];</span><br><span class="line">        <span class="built_in">get_filename</span>(dent, fname);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">4</span> * depth; i++) <span class="built_in">putchar</span>(<span class="string">&#x27; &#x27;</span>);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;[%-12s] %6.1lf KiB    &quot;</span>, fname, dent-&gt;DIR_FileSize / <span class="number">1024.0</span>);</span><br><span class="line"></span><br><span class="line">        u32 dataClus = dent-&gt;DIR_FstClusLO | (dent-&gt;DIR_FstClusHI &lt;&lt; <span class="number">16</span>);</span><br><span class="line">        <span class="keyword">if</span> (dent-&gt;DIR_Attr &amp; ATTR_DIRECTORY) &#123;</span><br><span class="line">          <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">          <span class="keyword">if</span> (dent-&gt;DIR_Name[<span class="number">0</span>] != <span class="string">&#x27;.&#x27;</span>) &#123;</span><br><span class="line">            <span class="built_in">dfs</span>(dataClus, depth + <span class="number">1</span>, <span class="number">1</span>);</span><br><span class="line">          &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          <span class="built_in">dfs</span>(dataClus, depth + <span class="number">1</span>, <span class="number">0</span>);</span><br><span class="line">          <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="built_in">printf</span>(<span class="string">&quot;#%d &quot;</span>, clusId);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h1 id="FAT32文件存储原理"><a href="#FAT32文件存储原理" class="headerlink" title="FAT32文件存储原理"></a>FAT32文件存储原理</h1><p>FAT是什么？  <strong>File Alloct Table</strong></p>
+<p>​		FAT32 是 Windwos 系统硬盘格式分区的一种。这种格式采用 32 位的文件分配表，使其对磁盘的管理能力大大增强，突破了 FAT16 对配一个分区的容量只有2GB 的限制。虽然目前已被更优异的 NTFS 分区格式所取代。其实说白了就是 FAT表的每一项长度都是 32 位，所以叫做 FAT32。</p>
+<p>FAT32文件系统布局（保留扇区常为31）</p>
+<p>​		FAT32 文件系统将逻辑盘的空间划分为三部分，依次是<strong>引导区 （BOOT 区）</strong>、<strong>文件分配表区（FAT 区）</strong>、<strong>数据区（DATA 区）</strong>。引导区和文件分配表区又合称为系统区。</p>
+<p><img src="/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230613004417775.png" alt="image-20230613004417775"></p>
+<p><img src="/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230612224534717.png" alt="image-20230612224534717"></p>
+<p>​		首先是引导扇区，及操作系统DBR，其实就是启动DOS操作系统的地方，这部分其实是微软在开发FAT文件系统的时放在这里的，我们只研究文件系统的话，不需要了解这部分的内容，重点是后面的部分。</p>
+<p>​		<strong>DBR 及保留扇区</strong>：DBR 的含义是 DOS 引导记录，也称为操作系统引导记录，在DBR 之后往往会有一些保留扇区。<br>DBR 分为两个部分：</p>
+<ul>
+<li>DOS 引导程:DOS 引导程序的主要任务是当 MBR 将系统控制权交给它时，判断本分区根目录前两个文件是不是操作系统的引导文件（即IO.SYS 和 MSDOS.SYS），如果确定存在，就把它读入内存，并把控制权交给它。</li>
+<li>BPB（BIOS Parameter Block ，BIOS 参数块 BPB 用来描述本 DOS 分区的磁盘信息，它位于 DBR 偏移 0BH 处，共 13 字节。它的记录包括本分区的起始扇区、结束扇区、文件存储格式、硬盘介质描述符、根目录大小、FAT 个数，分配单元的大小等重要参数。</li>
+</ul>
+<p>​		<strong>FAT1</strong>：FAT 的含义是文件分配表，FAT32 一般有两份 FAT，FAT1 是第一份，也是主 FAT。<br>​		<strong>FAT2</strong>：FAT2 是 FAT32 的第二份文件分配表，也是 FAT1 的备份。<br>​		<strong>DATA</strong>：DATA 也就是数据区，是 FAT32 文件系统的主要区域，其中包含目录区域。</p>
+<p>​		实际文件其实是放在数据区的，数据区中有根目录，可以进行索引。</p>
+<img src="/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230612224843458.png" alt="image-20230612224843458" style="zoom:50%;">
+
+<p>​		索引之后，这个文件就放在数据区，那我们怎么知道它具体放在磁盘的哪个位置呢？其实整个数据区的大小，实际物理地址，FAT1|FAT2的物理地址和大小，都是在操作系统DBR中进行读取的，读取整个文件系统的分配表，来交给软件，由此可以定位到根目录的起始地址（注意，此时定位不到具体一个文件在哪里）。</p>
+<h2 id="MBR分区策略"><a href="#MBR分区策略" class="headerlink" title="MBR分区策略"></a>MBR分区策略</h2><p>​		MBR：<strong>主引导记录</strong>。之所以叫“主引导记录” ，是因为它是<strong>存在于驱动器开始部分的一个特殊的启动扇区</strong>。这个扇区包含了驱动器的分区信息(64 个字节，大小固定，一个分区用 16 个字节记录)和已安装的操作系统的启动加载器(446 字节)和 2 个字节的结束标志，所以这个扇区的大小是 512 个字节。所谓<strong>启动加载器</strong>，是一小段代码，用于加载驱动器上其他分区上更大的加载器。如果你安装了 Windows，Windows 启动加载器的初始信息就放在这个区域里——如果 MBR 的信息被覆盖导致 Windows 不能启动，你就需要使用 Windows 的 MBR 修复功能来使其恢复正常。如果你安装了 Linux，则位于 MBR 里的通常会是 GRUB 加载器。<br>​		MBR 支持最大 2TB 磁盘，它无法处理大于 2TB 容量的磁盘。 MBR 还只支持最多 4 个主分区——如果你想要更多分区，你需要创建所谓“扩展分区” ，并在其中创建逻辑分区。</p>
+<p><img src="/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614012931989.png" alt="image-20230614012931989"></p>
+<p>​		MBR 下的硬盘分区有三种，<strong>主磁盘分区</strong>、<strong>扩展磁盘分区</strong>、<strong>逻辑分区</strong>。</p>
+<p>​		<strong>主分区</strong>：也叫引导分区，最多可能创建 4 个，当创建四个主分区时候，就无法再创建扩展分区了，当然也就没有逻辑分区了。主分区是独立的，对应磁盘上的第一个分区，“一般”就是 C 盘。在 Windows 系统把所有的主分区和逻辑分区都叫做“盘”或者“驱动器”，并且把所有的可存储介质都显示为操作系统的“盘”。因此，从“盘”的概念上无法区分主分区和逻辑分区。并且盘符可以在操作系统中修改，这就是要加上“一般”二字的原因。</p>
+<p>​		<strong>扩展分区</strong>：除了主分区外，剩余的磁盘空间就是扩展分区了，扩展分区可以没有，最多 1 个。严格地讲它不是一个实际意义的分区，它仅仅是一个指向下一个分区的指针，这种指针结构将形成一个单向链表。这样在主引导扇区中除了主分区外，仅需要存储一个被称为扩展分区的分区数据，通过这个扩展分区的数据可以找到下一个分区(实际上也就是下一个逻辑磁盘)的起始位置，以此起始位置类推可以找到所有的分区。无论系统中建立多少个逻辑磁盘，在主引导扇区中通过一个扩展分区的参数就可以逐个找到每一个逻辑磁盘。</p>
+<p>​		<strong>逻辑分区</strong>：在扩展分区上面，可以创建多个逻辑分区。逻辑分区相当于一块存储截止，和操作系统还有别的逻辑分区、主分区没有什么关系，是“独立的”。</p>
+<p><img src="/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614013142399.png" alt="image-20230614013142399"></p>
+<h2 id="BPB-及保留扇区"><a href="#BPB-及保留扇区" class="headerlink" title="BPB 及保留扇区"></a>BPB 及保留扇区</h2><p>​		BPB(BIOS Parameter Block)是 FAT 文件系统中第一个重要的数据结构，它位于该 FAT 分区的第一个扇区，同时也属于 FAT 文件系统基本区域的保留区。这个扇区又叫做“启动扇区” 、 “保留扇区”、“0 扇区”，众多的叫法都说明一个相同的问题：该扇区是 FAT 分区的第一个扇区。</p>
+<h2 id="FAT-数据结构"><a href="#FAT-数据结构" class="headerlink" title="FAT 数据结构"></a>FAT 数据结构</h2><p>​		文件系统分配磁盘空间按<strong>簇</strong>来分配的。因此，文件占用磁盘空间时，基本单位不是字节而是簇，即使某个文件只有一个字节，操作系统也会给他分配一个最小单元——即一个簇。</p>
+<p>​		为了可以将磁盘空间有序地分配给相应的文件，而读取文件的时候又可以从相应的地址读出文件，我们把数据区空间分成 <strong>BPB_BytsPerSec  * BPB_SecPerClus</strong> 字节长的簇来管理， FAT 表项的大小与 FAT 类型有关，FAT12的 表项为 12-bit，FAT16 为 16-bit，而 FAT32 则为 32-bit。对于大文件，需要分配多个簇。同一个文件的数据并不一定完整地存放在磁盘中一个连续的区域内，而往往会分成若干段，像链子一样存放。这种存储方式称为文件的链式存储。为了实现文件的链式存储，文件系统必须准确地记录哪些簇已经被文件占用，还必须为每个已经占用的簇指明存储后继内容的下一个簇的簇号，对文件的最后一簇，则要指明本簇无后继簇。这些都是由 FAT 表来保存的，FAT 表的对应表项中记录着它所代表的簇的有关信息：诸如是否空，是否是坏簇，是否已经是某个文件的尾簇等。</p>
+<p>​		FAT32 文件表是由一个个表项组成的一张表，其中每一个表项由一个 32 位的二进制组成，其值对应了相应簇的使用情况，如 2 号表项对应了 2 号簇的使用情况，3 号表项对应了 3 号簇的使用情况，依此类推。(但是第 0 和第 1 项例外，下面会有说明)。每个表项对应数值的含义如表下图 所示：</p>
+<p><img src="/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614013610634.png" alt="image-20230614013610634"></p>
+<p>​		首先 FAT 表一般来说有两张，另一张用于备份。两张表是前后紧挨在一起的，只要计算出了 FAT1 表的偏移之后加上 FAT 表的大小就可以得到 FAT2 表的偏移。FAT1 表的偏移地址计算公式如下 :</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">FAT1 表偏移 = 保留扇区数 * 每扇区字节数</span><br></pre></td></tr></table></figure>
+
+<p>​		同理:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">FAT2 表的偏移 = FAT1+FAT 表的大小 = (保留扇区数 + FAT 表扇区数) * 每扇区字节数</span><br></pre></td></tr></table></figure>
+
+<p>​		若读取了第一张 FAT 表起始部分的内容，如图所示：</p>
+<p><img src="/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614013742747.png" alt="image-20230614013742747"></p>
+<p>​		FAT 目录和普通的文件并没有什么不一样的地方，<strong>只是多了一个表示它是目录的属性</strong>，另外就是目录所链接的内容是一个 32 字节的目录项。除此之外，目录和文件没什么区别。 FAT 表是根据簇数和文件对应的。第一个存放数据的簇是簇 2。簇 2 的第一个扇区（磁盘的数据区）根据 BPB 来计算，首先<strong>计算根目录所占的扇区数</strong>：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RootDirSectors = ((BPBRootEntCnt ∗<span class="number">32</span>) + (BPBBytsPerSec–<span class="number">1</span>))/BPBBytsPerSec</span><br></pre></td></tr></table></figure>
+
+<p>​		因为 FAT32 的 BPB_RootEntCnt 为 0， 所以对于 FAT32 卷RootDirSectors 的值也一定是 0。上式中的 32 是每个目录项所占的字节数。计算结果四舍五入。<strong>如何计算总的数据区簇数呢</strong>？</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DataSec = BPB_TotSec32 – (BPB_RsvdSecCnt + (BPB_NumFATs * BPB_FATSz) + RootDirSectors)</span><br><span class="line">CountofClusters = DataSec / BPB_SecPerClus</span><br></pre></td></tr></table></figure>
+
+<p>​		包含 <strong>EOC 标记</strong>的簇属于当前文件并且是当前文件的<strong>最后一个簇</strong>。Microsoft的操作系统设置 EOC 标记时，FAT32 使用 <strong>0x0FFFFFFF</strong>，但有一些运行于Microsoft 系统的工具并不使用这个值。还有一个特殊的标记就是“<strong>坏簇（BATCLUSTER）</strong>”标记，<strong>任何包含“坏簇”标记的簇都不应该被列到剩余簇的范畴内</strong>，这个“坏簇”标记对 FAT12 是 0x0FF7, FAT16 是 0xFFF7, <strong>FAT32 是 0x0FFFFFF7</strong>。另外，这些坏簇看起来也像是丢失的簇——们似乎已经分配出去，因为它们的值不为 0，但同时它们又不属于任何文件。磁盘修复程序一定要认出这些被标记坏簇标记的“丢失簇”，并且不去修改它们的内容。</p>
+<p>​		 FAT 表中<strong>剩余簇</strong>的列表就是<strong>卷中所有内容为 0 的簇的列表</strong>。这些数据必须尽早取得并记录下来以表示剩余的簇是已经被使用的。这个列表并没有存储在卷中的任何一个地方，他<strong>必须在系统挂上（mount）该卷时由 FAT 扫描程序获得内容为 0 的簇的列表</strong>。在 FAT 卷起始部分的<strong>两个保留扇区到底是做什么用的呢</strong>？</p>
+<p>​		第一个保留簇 FAT[0]，它的低位 8-bit 为 BPB_Media，剩余的位用 1 填充，比如：BPB_Media 的内容为 0xF8，那么 FAT32 的内容为 0x0FFFFFF8。</p>
+<p>​		第二个保留簇 FAT[1]，在格式化的时候被填充 EOC 标记。FAT16 和 FAT32 此域的高 2-bit 可以被用于标记磁盘是否为“脏”，剩余的位均用 1 填充。</p>
+<p>​		FAT 表的结束扇区不一定就是 FAT 表的最后一个扇区，FAT 表的结尾扇区位于簇号为 CountofClusters + 1 的簇中。这个扇区未必在 FAT 表的最后面。 FAT 程序不应该尝试着去访问 CountofClusters +1 以后的簇. FAT 格式化程序应该把这个簇号后面的所有簇用 0 填充。BPB_FATSz32 的值会比它实际需要的大，也就是说，在 FAT 表 中可能有部分扇区没有被使用。因此，<strong>FAT 表的结束扇区都是由CountofClusters + 1 来 计算得到</strong>，而不是使用 BPB_FATSz16&#x2F;32 来计算。FAT 程序不因该尝试去访问这些“额外”的扇区。<strong>FAT 格式化程序因该把这些扇区用 0 来填充</strong>。</p>
+<h2 id="FAT-目录结构"><a href="#FAT-目录结构" class="headerlink" title="FAT 目录结构"></a>FAT 目录结构</h2><p>​		FAT 目录其实就是一个<strong>由 32-bytes 的线性表构成的“文件”</strong>。</p>
+<p>​		<strong>根目录</strong>（rootdirectory）是一个特殊的目录,它<strong>存在于每一个 FAT 分区中</strong>。对于 FAT12&#x2F;16,根目录存储在磁盘中固定的地方，它紧跟在最后一个 FAT 表后。根目录的扇区数也是固定的，可以根据 BPB_RootEntCnt 计算得出对于 FAT12&#x2F;16,根目录的扇区号是相对该 FAT 卷第一个扇区（0 扇区）的偏移量。 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">FirstRootDirSecNum =BPB_RsvdSecCnt + (BPB_NumFATs * BPB_FATSz16)</span><br></pre></td></tr></table></figure>
+
+<p>​		FAT32 的<strong>根目录</strong>由<strong>簇链组成</strong>，其扇区数不确定，这点和普通的文件相同，根目录的第一个扇区号存储在 BPB_RootClus 中，<strong>根目录不同于其他的目录，没有日期和时间戳</strong>，<strong>也没有目录名</strong>,同时根目录里<strong>没有 “.” 和 “..”这两个目录项</strong>,根目录另一个特殊的地方在于，<strong>根目录中有一个设置了 ATTR_VOLUME_ID 位的文件,这个文件在整个 FAT 卷中是唯一的</strong>。</p>
+<p>​		当磁盘分区被格式化为 FAT32 文件系统后，FAT 表<strong>仅前三项被初始赋值</strong>，剩余表项全部为 0。</p>
+<p>​		在文件创建期间，FAT32 文件系统会<strong>首先为文件创建目录项结构</strong>，并<strong>将其保存在目录的数据区内</strong>。只有向文件写入数据时，文件系统才为其分配可用簇号；而在创建子目录时，由于子目录始终不空（含有代表当前目录和父目录的两个目录项），所以会<strong>为子目录分配簇号</strong>。 </p>
+<p>​		对于文件和目录的创建方式，Windows 和 linux 略有不同。Linux文件系统再创建目录项时，除非文件名全部为大写字母，否则一律用<strong>段目录项加长目录项的方式为文件创建目录项</strong>。而 windows 除了具备 Linux 的功能外，还会<strong>考虑文件名的长度与大小写</strong>，当文件名满足短目录项格式时，如果基础名或拓展名名中含有的字母同为大写或者小写，则可以使用目录项结构中 DIR_NTRes成员变量加以标识，从而省去长目录项。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">00</span>h:扩展名大写，基础名大写</span><br><span class="line"><span class="number">10</span>h:扩展名小写，基础名大写</span><br><span class="line"><span class="number">08</span>h:扩展名大写，基础名小写</span><br><span class="line"><span class="number">18</span>h:扩展名小写，基础名小写</span><br></pre></td></tr></table></figure>
+
+<h3 id="短目录项"><a href="#短目录项" class="headerlink" title="短目录项"></a>短目录项</h3><p>​			目录区是由一个个目录项构成，类似于 FAT 表。其中每一个目录项占用 32个字节，可以是代表长文件名目录项、文件目录项、子目录项等。对于短文件名格式的目录项，其参数的含义如下表所示。</p>
+<p><img src="/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614014944452.png" alt="image-20230614014944452"></p>
+<h3 id="长目录项"><a href="#长目录项" class="headerlink" title="长目录项"></a>长目录项</h3><p>​			当创建一个长文件名文件时，系统会自动加上对应的短文件名，其原则如下：</p>
+<ul>
+<li>1、取长文件名的前 6 个字符加上”~1”形成短文件名，扩展名不变。</li>
+<li>2、如果已存在这个文件名，则符号”~”后的数字递增，直到 5。</li>
+</ul>
+<p>​		那么系统是如何判断当前目录项是短文件名目录项呢还是长文件名目录项，这里关键是看目录项的<strong>第 12 个字节的值</strong>，如果为 0x0F 时则系统认为长文件名目录项的参数，如表所示：	</p>
+<p><img src="/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614015044089.png" alt="image-20230614015044089"></p>
+<h1 id="Linux-的虚拟文件系统-VFS"><a href="#Linux-的虚拟文件系统-VFS" class="headerlink" title="Linux 的虚拟文件系统-VFS"></a>Linux 的虚拟文件系统-VFS</h1><p>​		Linux 中<strong>允许众多不同的文件系统共存</strong>，如 ext2, ext3, vfat 等。通过使用同一套文件 I&#x2F;O 系统 调用即可对 Linux 中的任意文件进行操作而无需考虑其所在的具体文件系统格式；更进一步，对文件的 操作可以跨文件系统而执行。</p>
+<p>​		“<strong>一切皆是文件</strong>”是 Unix&#x2F;Linux 的基本哲学之一。不仅普通的文件，目录、字符设备、块设备、 套接字等在 Unix&#x2F;Linux 中都是以文件被对待；它们虽然类型不同，但是对其提供的却是同一套操作界面。</p>
+<p>​		而虚拟文件系统正是实现上述两点 Linux 特性的关键所在。</p>
+<p>​		虚拟文件系统（Virtual File System, 简称 VFS）， 是 Linux 内核中的一个<strong>软件层</strong>，用于给用户空间的程序<strong>提供文件系统接口</strong>；同时，它也提供了内核中的一个 <strong>抽象功能</strong>，<strong>允许不同的文件系统共存</strong>。系统中所有的文件系统不但依赖 VFS 共存，而且也依靠 VFS 协同工作。</p>
+<p>​		Linux 内核要求文件系统必须是实体，它还必须在持久对象上实现 open()、read() 和 write() 方法，并且这些实体需要有与之关联的名字。从面向对象编程的角度来看，内核将通用文件系统视为一个抽象接口，这三大函数是“虚拟”的，没有默认定义。因此，<strong>内核的默认文件系统实现被称为虚拟文件系统</strong>。</p>
+<p>​		VFS 内核中与其他的内核模块的协同关系如下：</p>
+<p><img src="/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614015244867.png" alt="image-20230614015244867"></p>
+<p>​		为了能够支持各种实际文件系统，VFS 定义了所有文件系统都支持的基本的、概念上的接口和数据结构；同时实际文件系统也提供 VFS 所期望的抽象接口和数据结构，将自身的诸如文件、目录等概念在形式上与 VFS 的定义保持一致。</p>
+<p>​		换句话说，一个实际的文件系统想要被 Linux 支持，就必须提供一个符合 VFS 标准的接口，才能与 VFS 协同工作。实际文件系统在统一的接口和数据结构下隐藏了具体的实现细节，所以在 VFS 层和内核的其他部分看来，所有文件系统都是相同的。</p>
+<h2 id="VFS-的数据结构"><a href="#VFS-的数据结构" class="headerlink" title="VFS 的数据结构"></a>VFS 的数据结构</h2><p>​		VFS 本身只存在内存中，他需要将硬盘上的文件系统抽象到内存中，这个工作是通过几个重要的设局结构实现的，通过这些数据结构将一个真实的磁盘（或其它设备）文件系统抽象到了内存，通过管理几个对象就可以完成对文件系统的操作。</p>
+<h3 id="超级块"><a href="#超级块" class="headerlink" title="超级块"></a>超级块</h3><p>​			超级块对象，挂载点对象及文件系统类型对象间的联系如下：</p>
+<p><img src="/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614015431932.png" alt="image-20230614015431932"></p>
+<p>​			<strong>超级块对象代表已挂载的文件系统本身</strong>，存储一个已挂载的文件系统的控制信息，代表一个已安装的文件系统；每次一个实际的文件系统被安装时，内核会从磁盘的特定位置读取一些控制信息来填充内存中的超级块对象。<strong>一个挂载实例和一个超级块对象一一对应</strong>。 超级块通过其结构中的一个域 s_type 记录它所属的文件系统类型。</p>
+<h3 id="dentry"><a href="#dentry" class="headerlink" title="dentry"></a>dentry</h3><p>​			VFS 实现 open、stat、chmod 等类似的文件系统调用，他们传递一个pathname 参数给 VFS。VFS 根据文件路径 pathname 搜索 directory entry cache（dentry cache 或者 dcache）获取对应的 dentry。所以 dcache 是一个高速目录项缓存，用于映射文件路径和 dentry。</p>
+<p>​			dentry 结构用于<strong>优化查询性能</strong>，<strong>只存在于内存中，不实际存储到磁盘</strong>。由于内存限制，并不是所有 dentry 都能在缓存命中，当根据 pathname 找不到对应 dentry 时，VFS 调用 lookup 接口向底层文件系统查找获取 inode 信息，以此建立 dentry 和其对应的 inode 结构。</p>
+<h3 id="Inode"><a href="#Inode" class="headerlink" title="Inode"></a>Inode</h3><p>​			<strong>每个 dentry 通常对应一个 inode 结构用于描述文件、目录等的基本元数据信息</strong>。如果底层是磁盘存储，Inode 结构会保存到磁盘。当需要时从磁盘读取到内存中进行缓存。一个 inode 结构可以被多个 dentry 指向，如硬链接。对于网络文件系统（分布式文件系统）Inode 结构需要通过网络协议获取到缓存中。</p>
+<p>​			<strong>VFS 通过父目录的 lookup 方法来获取某个文件的 inode 信息</strong>，该方法由底层文件系统实现。一旦获取了 inode 信息，open、stat 等无聊的操作直接从缓存里进行，变得很快。</p>
+<p>​			索引节点代表一个文件，保存着文件的参数、信息，一个真实的文件只能由一个索引节点，且目录项和索引节点分别代表了文件的两个部分。</p>
+<p>​			进程与超级块、目录项、索引节点、文件对象间的联系如下：</p>
+<p><img src="/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614015809231.png" alt="image-20230614015809231"></p>
+<h3 id="File"><a href="#File" class="headerlink" title="File"></a>File</h3><p>​			<strong>Open 一个文件还需要另外一个数据结构：File</strong>。</p>
+<p>​			File 用于表示一个处于Open 状态的文件，同一个文件被 Open 多次对应不同的 File 结构。应用程序打开文件后对应一个句柄，每个 FD 都对应到内核的一个 File 结构，因此 File结构直接存放在进程的 FD 表里，通过 FD 可以快速获取到 File 数据结构。VFS实现用户态文件读写关闭操作时，通过用户态的 FD 来获取对应的 File 结构，然后调用对应的底层文件系统方法。只要有 File 结构正在使用，就增加 dentry的引用计数，保证 dentry 和 inode 结构没有从缓存里删除。</p>
+<h1 id="课设的实现步骤（代码详解）"><a href="#课设的实现步骤（代码详解）" class="headerlink" title="课设的实现步骤（代码详解）"></a>课设的实现步骤（代码详解）</h1><p>​		OK，现在我们的先验知识已经足够了，开始我们的课设实现部分，首先先看一下我们要做什么：</p>
+<p><img src="/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230613233408681.png" alt="image-20230613233408681"></p>
+<p>​		同时，老师要求我们要区分内核文件和演示界面，那么我们就先写内核文件的部分。</p>
+<p>​		我这里给出一个整体的对象图：</p>
+<p><img src="/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614020345080.png" alt="image-20230614020345080"></p>
+<p>​			系统仿造 VFS 构建文件系统的基本结构，并在适当的地方做了简化。该系统底层完全实现了对 FAT32 文件系统的读写等基本操作，并与 Windows 兼容，即可以读写 Windows 系统格式化的 FAT32 文件系统卷，并且读写结果能被Windows 系统所识别。</p>
+<h2 id="内核文件的实现-FAT32"><a href="#内核文件的实现-FAT32" class="headerlink" title="内核文件的实现 FAT32"></a>内核文件的实现 FAT32</h2><p>​		内核文件就是一个完整的FAT32系统，同时我们要留出可以调用的接口，以供给界面使用。</p>
+<p>​		还是和前面一样，先照抄文档，把基本的FAT文件系统搭建起来。</p>
+<img src="/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230613233657185.png" alt="image-20230613233657185" style="zoom: 80%;">
+
+<p>​		根据文档中的内容，我们可以得出要定义哪些东西。</p>
+<img src="/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230613233826134.png" alt="image-20230613233826134" style="zoom: 80%;">
+
+<p>​		这里我们可以看到整个FAT文件系统，翻译一下就是下面这个样子：</p>
+<img src="/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230613233903037.png" alt="image-20230613233903037" style="zoom:80%;">
+
+<h3 id="引导扇区与BPB"><a href="#引导扇区与BPB" class="headerlink" title="引导扇区与BPB"></a>引导扇区与BPB</h3><p>​		还是先看文档：</p>
+<img src="/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614000658429.png" alt="image-20230614000658429" style="zoom: 100%;">
+
+<img src="/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614000729046.png" alt="image-20230614000729046" style="zoom: 100%;">
+
+<img src="/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614000747824.png" alt="image-20230614000747824" style="zoom: 100%;">
+
+<p>​		照抄文档，代码如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">FAT32_BootSector</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">char</span> BS_jmpBoot[<span class="number">3</span>];<span class="comment">//跳转指令 0&gt;3</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">char</span> BS_OEMName[<span class="number">8</span>];<span class="comment">//生产厂商名 3&gt;8</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">short</span> BPB_BytesPerSec;<span class="comment">//每扇区字节数 11&gt;2</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">char</span> BPB_SecPerClus;<span class="comment">//每簇扇区数 13&gt;1</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">short</span> BPB_RsvdSecCnt;<span class="comment">//保留扇区数 14&gt;2</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">char</span> BPB_NumFATs;<span class="comment">//Fat表的份数</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">short</span> BPB_RootEntCnt;<span class="comment">//根目录可容纳的目录项数</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">short</span> BPB_TotSec16;<span class="comment">//总扇区数</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">char</span> BPB_Media;<span class="comment">//介质描述符</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">short</span> BPB_FATSz16;<span class="comment">//每Fat扇区数</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">short</span> BPB_SecPerTrk;<span class="comment">//每磁道扇区数</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">short</span> BPB_NumHeads;<span class="comment">//磁头数</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">int</span> BPB_HiddSec;<span class="comment">//隐藏扇区数</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">int</span> BPB_TotSec32;<span class="comment">//如果BPB_TotSec16为0 则此值记录扇区数</span></span><br><span class="line"></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">int</span> BPB_FATSz32;<span class="comment">//如果BPB_FATSz16为0 每Fat扇区数</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">short</span> BPB_ExtFlags;<span class="comment">/*扩展标识</span></span><br><span class="line"><span class="comment">								*bit 0-3 :活动Fat表</span></span><br><span class="line"><span class="comment">								*bit 4-6 :保留</span></span><br><span class="line"><span class="comment">								*bit 7 :更新Fat表 0:实时更新所有fat表 1：仅更新活动Fat表</span></span><br><span class="line"><span class="comment">								*bit 8-15:保留</span></span><br><span class="line"><span class="comment">								*/</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">short</span> BPB_FSVer;<span class="comment">//FAT32文件系统版本号，高字节代表主版本号，低字节代表次版本号</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">int</span> BPB_RootClus;<span class="comment">//根目录起始簇号</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">short</span> BPB_FSInfo;<span class="comment">//FSInfo 的扇区号</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">short</span> BPB_BkBootSec;<span class="comment">//引导扇区备份扇区号</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">char</span> BPB_Reserved[<span class="number">12</span>];<span class="comment">//保留</span></span><br><span class="line"></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">char</span> BS_DrvNum;<span class="comment">/*</span></span><br><span class="line"><span class="comment">							*物理驱动器号( Physical Drive Number) 与BIOS物理驱动器号有关。</span></span><br><span class="line"><span class="comment">							*软盘驱动器被标识为0x00，物理硬盘被标识为0x80，</span></span><br><span class="line"><span class="comment">							*而与物理磁盘驱动器无关。</span></span><br><span class="line"><span class="comment">							*一般地，在发出一个INT13h</span></span><br><span class="line"><span class="comment">							*BIOS调用之前设置该值，具体指定所访问的设备。</span></span><br><span class="line"><span class="comment">							*只有当该设备是一个引导设备时，这个值才有意义</span></span><br><span class="line"><span class="comment">							*/</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">char</span> BS_Reserved1;<span class="comment">//未使用</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">char</span> BS_BootSig;<span class="comment">//扩展引导标签(Extended Boot Signature) 本字段必须要有能被Windows 2000所识别的值0x28或0x29</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">int</span> BS_VolID;<span class="comment">//卷序列号</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">char</span> BS_VolLab[<span class="number">11</span>];<span class="comment">//卷标</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">char</span> BS_FilSysType[<span class="number">8</span>];<span class="comment">//文件系统类型</span></span><br><span class="line"></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">char</span> BootCode[<span class="number">420</span>];<span class="comment">//引导代码、数据及其他信息</span></span><br><span class="line"></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">short</span> BS_TrailSig;<span class="comment">//结束标识</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>​		<strong>FAT类型(FAT12、FAT16或FAT32)的确定取决于扇区的数量</strong>，<strong>对于 FAT32卷，每个 FAT表项的长度为32位</strong></p>
+<p>​		这里扩展一些知识，<strong>如何确定FAT的类型</strong>：</p>
+<h3 id="如何确定FAT的类型"><a href="#如何确定FAT的类型" class="headerlink" title="如何确定FAT的类型"></a>如何确定FAT的类型</h3><p>​		首先，<strong>确定根目录多占用的扇区数</strong>：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RootDirSectors = ((BPB_RootEntCnt * <span class="number">32</span>) + (BPB_BytsPerSec – <span class="number">1</span>)) / BPB_BytsPerSec</span><br></pre></td></tr></table></figure>
+
+<p>​		注意在FAT32卷上，BPB_RootEntCnt的值总是0。因此，在FAT32卷上，RootDirSectors总是0。</p>
+<p>​		接下来，<strong>确定卷的数据区域的扇区数</strong>：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">If</span>(BPB_FATSz16 != <span class="number">0</span>)</span><br><span class="line">	FATSz = BPB_FATSz16;</span><br><span class="line">Else</span><br><span class="line">	FATSz = BPB_FATSz32;</span><br><span class="line"><span class="built_in">If</span>(BPB_TotSec16 != <span class="number">0</span>)</span><br><span class="line">	TotSec = BPB_TotSec16;</span><br><span class="line">Else</span><br><span class="line">	TotSec = BPB_TotSec32;</span><br><span class="line">DataSec = TotSec – (BPB_ResvdSecCnt + (BPB_NumFATs * FATSz) + RootDirSectors);</span><br></pre></td></tr></table></figure>
+
+<p>​		最后，确定扇区的数量为： 计算结构四舍五入</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CountofClusters = DataSec / BPB_SecPerClus;</span><br></pre></td></tr></table></figure>
+
+<p>​		为了确定FAT类型，使用以下<strong>算法</strong>：		</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">If</span>(CountofClusters &lt; <span class="number">4085</span>)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">/* Volume is FAT12 */</span></span><br><span class="line">&#125; </span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(CountofClusters &lt; <span class="number">65525</span>) </span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">/* Volume is FAT16 */</span></span><br><span class="line">&#125; </span><br><span class="line"><span class="keyword">else</span> </span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">/* Volume is FAT32 */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​		上述算法确定FAT类型，请注意以下内容：</p>
+<ul>
+<li>FAT12卷不能包含超过4084个簇。</li>
+<li>FAT16卷不能包含少于4085个簇或多于65524个簇。</li>
+</ul>
+<h3 id="FAT"><a href="#FAT" class="headerlink" title="FAT"></a>FAT</h3><p>​		文件分配表（FAT）中的每个有效条目表示来自包括根目录区域（当适用时）以及文件和目录数据区域的集群集合的集群的状态。FAT中每个（压缩）条目的大小如下：</p>
+<ul>
+<li>对于FAT12卷，每个FAT条目长度为12位</li>
+<li>对于FAT16卷，每个FAT条目长度为16位</li>
+<li>对于FAT32卷，每个FAT条目长度为32位</li>
+</ul>
+<p>​		如前所述，FAT可以大于描述包括根&#x2F;数据区域的所有可分配扇区所需的FAT。FAT中的额外条目（位于FAT的尾部&#x2F;末尾）必须设置为0值。</p>
+<p>​		FAT条目值必须按下表所述写入：</p>
+<p><img src="/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614002128010.png" alt="image-20230614002128010"></p>
+<h3 id="文件系统信息（FSInfo）结构"><a href="#文件系统信息（FSInfo）结构" class="headerlink" title="文件系统信息（FSInfo）结构"></a>文件系统信息（FSInfo）结构</h3><p><img src="/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614002353593.png" alt="image-20230614002353593"></p>
+<p><img src="/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614002447619.png" alt="image-20230614002447619"></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">pragma</span> pack(1)</span></span><br><span class="line"><span class="comment">//2、FAT32文件系统信息扇区</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">FAT32_FSInfo</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">int</span> FSI_LeadSig;<span class="comment">//FSInfo 扇区标识符，数值固定0x41615252</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">char</span> FSI_Reserved1[<span class="number">480</span>];<span class="comment">//置0保留</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">int</span> FSI_StrucSig;<span class="comment">//标识符 数值固定 0x61417272</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">int</span> FSI_Free_Count;<span class="comment">//上一次记录的空闲簇数量，参考值，如果</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">int</span> FSI_Nxt_Free;<span class="comment">//空闲簇的起始位置</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">char</span> FSI_Reserved2[<span class="number">12</span>];<span class="comment">//保留</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">int</span> FSI_TrailSig;<span class="comment">//结束标识</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h3><p>​		<strong>FAT目录是一种特殊的文件类型</strong>。该目录充当其他文件和子目录的容器。目录内容（数据）是一系列32字节的目录条目。每个目录条目又通常表示所包含的文件或子目录目录。</p>
+<p>​		下表描述了包括每个目录条目的字段：</p>
+<p><img src="/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614002731997.png" alt="image-20230614002731997"></p>
+<p><img src="/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614002739575.png" alt="image-20230614002739575"></p>
+<p>Legal文件属性类型定义如下：</p>
+<p>​		文件&#x2F;目录属性</p>
+<p><img src="/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614002939035.png" alt="image-20230614002939035"></p>
+<p><img src="/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614003009137.png" alt="image-20230614003009137"></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span>	ATTR_READ_ONLY	(1 &lt;&lt; 0)<span class="comment">//1</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ATTR_HIDDEN	(1 &lt;&lt; 1)<span class="comment">//2</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ATTR_SYSTEM	(1 &lt;&lt; 2)<span class="comment">//3</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ATTR_VOLUME_ID	(1 &lt;&lt; 3)<span class="comment">//4</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ATTR_DIRECTORY	(1 &lt;&lt; 4)<span class="comment">//5</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ATTR_ARCHIVE	(1 &lt;&lt; 5)<span class="comment">//6</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ATTR_LONG_NAME	(ATTR_READ_ONLY | ATTR_HIDDEN | ATTR_SYSTEM | ATTR_VOLUME_ID)</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">pragma</span> pack(1)</span></span><br><span class="line"><span class="comment">//3、FAT32目录项</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">FAT32_Directory</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">char</span> DIR_Name[<span class="number">11</span>];<span class="comment">//基础名 8B 扩展名 3B</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">char</span> DIR_Attr; <span class="comment">/*文件属性</span></span><br><span class="line"><span class="comment">							 *0x01=ATTR_READ_ONLY(只读)</span></span><br><span class="line"><span class="comment">							 *0x02=ATTR_HIDDEN(隐藏)</span></span><br><span class="line"><span class="comment">							 *0x04=ATTR_SYSTEM(系统)</span></span><br><span class="line"><span class="comment">							 *0x08=ATTR_VOLUME_ID(卷标)</span></span><br><span class="line"><span class="comment">							 *0x10=ATTR_DIRECTORY(目录)</span></span><br><span class="line"><span class="comment">							 *0x20=ATTR_ARCHIVE(存档)</span></span><br><span class="line"><span class="comment">							 *0x0F=ATTR_LONG_NAME(长文件名)</span></span><br><span class="line"><span class="comment">							 */</span></span><br><span class="line"></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">char</span> DIR_NTRes;	<span class="comment">//EXT|BASE =&gt; 8(BASE).3(EXT)</span></span><br><span class="line">					<span class="comment">//BASE:LowerCase(8),UpperCase(0)</span></span><br><span class="line">					<span class="comment">//EXT:LowerCase(16),UpperCase(0)</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">char</span> DIR_CrtTimeTenth;<span class="comment">//时间戳 单位ms</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">short</span> DIR_CrtTime;<span class="comment">//文件创建时间</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">short</span> DIR_CrtDate;<span class="comment">//日期</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">short</span> DIR_LastAccDate;<span class="comment">//最后访问日期</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">short</span> DIR_FstClusHI;<span class="comment">//起始簇号（高字）</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">short</span> DIR_WrtTime;<span class="comment">//最后写入时间</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">short</span> DIR_WrtDate;<span class="comment">//日期</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">short</span> DIR_FstClusLO;<span class="comment">//起始簇号（低字）</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">int</span> DIR_FileSize;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>​		<strong>文件&#x2F;目录大小</strong></p>
+<p>​		最大文件大小为0xFFFFFFFF字节。分配给文件的任何簇链必须&lt;&#x3D; 0x 100000000字节。这样的簇链中的最后一个字节不能是文件的一部分。最大有效目录大小为221字节。</p>
+<h3 id="长文件名实现"><a href="#长文件名实现" class="headerlink" title="长文件名实现"></a>长文件名实现</h3><p>​		目录条目中的DIR_Name字段仅允许11个字符的文件&#x2F;子目录名，由主要部分（最大长度为8个字符）和扩展名（最大长度为3个字符）组成。此字段的内容也称为“短名称”，相应的目录条目也称为短名称目录条目。应用程序和用户通常喜欢为文件&#x2F;子目录创建更长（更具描述性）的名称。本节介绍如何将此类长文件名存储在介质上。</p>
+<p>​		目标文件或子目录的长文件名被存储在与描述目标文件或子目录的短名称目录条目相关联的一组（一个或多个）<strong>附加目录条目</strong>中。这组附加目录条目（也称为长名称目录条目）必须紧接在对应的短名称目录条目之前，并且因此在物理上与短名称目录条目连续。</p>
+<p>​		下表描述了长名称目录条目结构：</p>
+<p><img src="/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614003437396.png" alt="image-20230614003437396"></p>
+<p><img src="/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614003447201.png" alt="image-20230614003447201"></p>
+<p>​		下表描述了长名称目录条目结构：下面说明了名称目录条目的存储长度：</p>
+<p><img src="/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614003512805.png" alt="image-20230614003512805"></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> LOWERCASE_BASE (8)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> LOWERCASE_EXT (16)</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">pragma</span> pack(1)</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">FAT32_LongDirectory</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">char</span> LDIR_Ord;<span class="comment">//长目录项序号</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">short</span> LDIR_Name1[<span class="number">5</span>];<span class="comment">//长文件名 ，宽字符1-5</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">char</span> LDIR_Attr;<span class="comment">//属性 必须为ATTR_LONG_NAME</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">char</span> LDIR_Type;<span class="comment">//如果为0，则为子项</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">char</span> LDIR_Chksum;<span class="comment">//短文件名 校验和</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">short</span> LDIR_Name2[<span class="number">6</span>];<span class="comment">//长文件名 ，宽字符6-11</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">short</span> LDIR_FstClusLO;<span class="comment">//值为0</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">short</span> LDIR_Name3[<span class="number">2</span>];<span class="comment">//长文件名 ，宽字符12-13</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="超级块中-FAT32-特有数据（私有信息）"><a href="#超级块中-FAT32-特有数据（私有信息）" class="headerlink" title="超级块中 FAT32 特有数据（私有信息）"></a>超级块中 FAT32 特有数据（私有信息）</h3><p>​		</p>
+
+    
+
+    
+
+    
+    <div class="declare"> 
+      <ul class="post-copyright">
+        <li>
+          <strong>本文作者：</strong>
+          李宝璐
+        </li>
+        <li>
+          <strong>本文链接：</strong>
+          <a href="http://example.com/2023/06/12/OS课设FAT32U盘文件系统/" title="OS课设FAT32U盘文件系统" target="_blank">http://example.com/2023/06/12/OS课设FAT32U盘文件系统/</a>
+        </li>
+        
+        <li>
+          <strong>版权声明： </strong>
           
+          本博客所有文章除特别声明外，均采用 <a href="https://github.com/JoeyBling/hexo-theme-yilia-plus/blob/master/LICENSE" rel="external nofollow" target="_blank">MIT</a> 许可协议。转载请注明出处！
+        </li>
+        
+      </ul>
+    </div>
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -271,7 +628,7 @@
 		</ul>
 	</div>
 
-          
+    
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -284,395 +641,118 @@
 	</div>
 
 
+    
+
+    
+    
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <!-- <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a> -->
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" alt="微信分享二维码"> -->
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+
+    
+    <div class="clearfix"></div>
+  </div>
   </div>
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/06/12/CS231N-%E7%BA%BF%E6%80%A7%E5%88%86%E7%B1%BB%E3%80%81%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/" class="archive-article-date">
-        <time datetime="2023-06-11T16:38:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-06-12</time>
-</a>
 
+
+<nav id="article-nav">
+  
+  
+    <a href="/2023/06/12/CS231N-%E7%BA%BF%E6%80%A7%E5%88%86%E7%B1%BB%E3%80%81%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">CS231N-损失函数和梯度下降</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/06/12/CS231N-%E7%BA%BF%E6%80%A7%E5%88%86%E7%B1%BB%E3%80%81%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/" target="_blank">CS231N-损失函数和梯度下降</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/CS231N//" class="article-tag-list-link color2">CS231N</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%B0%87%E2%80%94%E2%80%94%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8%E7%9A%84%E6%9C%80%E5%B0%8F%E5%8D%95%E5%85%83"><span class="toc-number">1.</span> <span class="toc-text">簇——文件存储的最小单元</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#100KB%E7%A9%BA%E9%97%B4%E5%A6%82%E4%BD%95%E7%AE%A1%E7%90%86%E6%96%87%E4%BB%B6"><span class="toc-number">1.1.</span> <span class="toc-text">100KB空间如何管理文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FAT32-FAT%E8%A1%A8"><span class="toc-number">1.2.</span> <span class="toc-text">FAT32 FAT表</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0FAT%E8%A1%A8"><span class="toc-number">1.2.1.</span> <span class="toc-text">添加FAT表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#FAT%E8%A1%A8%E6%A0%BC%E5%BC%8F"><span class="toc-number">1.2.2.</span> <span class="toc-text">FAT表格式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#FAT%E8%A1%A8%E8%A7%A3%E5%86%B3%E5%A2%9E%E5%88%A0%E6%94%B9%E9%97%AE%E9%A2%98"><span class="toc-number">1.2.3.</span> <span class="toc-text">FAT表解决增删改问题</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-number">2.</span> <span class="toc-text">文件系统的实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#File-Alloct-Table"><span class="toc-number">2.0.1.</span> <span class="toc-text">File Alloct Table</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#coding%E8%BF%87%E7%A8%8B"><span class="toc-number">2.0.2.</span> <span class="toc-text">coding过程</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#FAT32%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8%E5%8E%9F%E7%90%86"><span class="toc-number">3.</span> <span class="toc-text">FAT32文件存储原理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#MBR%E5%88%86%E5%8C%BA%E7%AD%96%E7%95%A5"><span class="toc-number">3.1.</span> <span class="toc-text">MBR分区策略</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#BPB-%E5%8F%8A%E4%BF%9D%E7%95%99%E6%89%87%E5%8C%BA"><span class="toc-number">3.2.</span> <span class="toc-text">BPB 及保留扇区</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FAT-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="toc-number">3.3.</span> <span class="toc-text">FAT 数据结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FAT-%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="toc-number">3.4.</span> <span class="toc-text">FAT 目录结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9F%AD%E7%9B%AE%E5%BD%95%E9%A1%B9"><span class="toc-number">3.4.1.</span> <span class="toc-text">短目录项</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%95%BF%E7%9B%AE%E5%BD%95%E9%A1%B9"><span class="toc-number">3.4.2.</span> <span class="toc-text">长目录项</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Linux-%E7%9A%84%E8%99%9A%E6%8B%9F%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F-VFS"><span class="toc-number">4.</span> <span class="toc-text">Linux 的虚拟文件系统-VFS</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#VFS-%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="toc-number">4.1.</span> <span class="toc-text">VFS 的数据结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B6%85%E7%BA%A7%E5%9D%97"><span class="toc-number">4.1.1.</span> <span class="toc-text">超级块</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#dentry"><span class="toc-number">4.1.2.</span> <span class="toc-text">dentry</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Inode"><span class="toc-number">4.1.3.</span> <span class="toc-text">Inode</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#File"><span class="toc-number">4.1.4.</span> <span class="toc-text">File</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AF%BE%E8%AE%BE%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%AD%A5%E9%AA%A4%EF%BC%88%E4%BB%A3%E7%A0%81%E8%AF%A6%E8%A7%A3%EF%BC%89"><span class="toc-number">5.</span> <span class="toc-text">课设的实现步骤（代码详解）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%85%E6%A0%B8%E6%96%87%E4%BB%B6%E7%9A%84%E5%AE%9E%E7%8E%B0-FAT32"><span class="toc-number">5.1.</span> <span class="toc-text">内核文件的实现 FAT32</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%95%E5%AF%BC%E6%89%87%E5%8C%BA%E4%B8%8EBPB"><span class="toc-number">5.1.1.</span> <span class="toc-text">引导扇区与BPB</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E7%A1%AE%E5%AE%9AFAT%E7%9A%84%E7%B1%BB%E5%9E%8B"><span class="toc-number">5.1.2.</span> <span class="toc-text">如何确定FAT的类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#FAT"><span class="toc-number">5.1.3.</span> <span class="toc-text">FAT</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E4%BF%A1%E6%81%AF%EF%BC%88FSInfo%EF%BC%89%E7%BB%93%E6%9E%84"><span class="toc-number">5.1.4.</span> <span class="toc-text">文件系统信息（FSInfo）结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="toc-number">5.1.5.</span> <span class="toc-text">目录结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%95%BF%E6%96%87%E4%BB%B6%E5%90%8D%E5%AE%9E%E7%8E%B0"><span class="toc-number">5.1.6.</span> <span class="toc-text">长文件名实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B6%85%E7%BA%A7%E5%9D%97%E4%B8%AD-FAT32-%E7%89%B9%E6%9C%89%E6%95%B0%E6%8D%AE%EF%BC%88%E7%A7%81%E6%9C%89%E4%BF%A1%E6%81%AF%EF%BC%89"><span class="toc-number">5.1.7.</span> <span class="toc-text">超级块中 FAT32 特有数据（私有信息）</span></a></li></ol></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/06/12/%E7%9F%A5%E8%AF%86%E8%92%B8%E9%A6%8F%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86-%E7%BB%BC%E8%BF%B0/" class="archive-article-date">
-        <time datetime="2023-06-11T16:28:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-06-12</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/06/12/%E7%9F%A5%E8%AF%86%E8%92%B8%E9%A6%8F%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86-%E7%BB%BC%E8%BF%B0/" target="_blank">知识蒸馏算法原理+综述</a>
-  
-    </h1>
-  
+        
+    </div>
+</aside>
 
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/技术笔记//" class="article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/06/10/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AF%BE%E8%AE%BE%E4%BB%A3%E7%A0%81%E8%AF%A6%E8%A7%A3/" class="archive-article-date">
-        <time datetime="2023-06-10T12:23:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-06-10</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/06/10/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AF%BE%E8%AE%BE%E4%BB%A3%E7%A0%81%E8%AF%A6%E8%A7%A3/" target="_blank">数据库课设代码详解</a>
-  
-    </h1>
-  
 
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/技术笔记//" class="article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/06/08/%E2%80%9C%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AF%BE%E8%AE%BE-%E9%AB%98%E6%A0%A1%E7%A7%91%E7%A0%94%E7%B3%BB%E7%BB%9F%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%95%E2%80%9D/" class="archive-article-date">
-        <time datetime="2023-06-08T10:48:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-06-08</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/06/08/%E2%80%9C%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AF%BE%E8%AE%BE-%E9%AB%98%E6%A0%A1%E7%A7%91%E7%A0%94%E7%B3%BB%E7%BB%9F%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%95%E2%80%9D/" target="_blank">“数据库课设--高校科研系统开发记录”</a>
-  
-    </h1>
-  
 
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/技术笔记//" class="article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/06/06/%E7%8E%B0%E7%8A%B6%E5%8F%8A%E5%AF%B9%E6%9C%AA%E6%9D%A5%E7%9A%84%E6%80%9D%E8%80%83/" class="archive-article-date">
-        <time datetime="2023-06-06T10:38:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-06-06</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/06/06/%E7%8E%B0%E7%8A%B6%E5%8F%8A%E5%AF%B9%E6%9C%AA%E6%9D%A5%E7%9A%84%E6%80%9D%E8%80%83/" target="_blank">现状及对未来的思考</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">碎碎念</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/碎碎念//" class="article-tag-list-link color4">碎碎念</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/06/04/%E8%BF%90%E5%8A%A8/" class="archive-article-date">
-        <time datetime="2023-06-04T12:55:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-06-04</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/06/04/%E8%BF%90%E5%8A%A8/" target="_blank">运动</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">剪影</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/剪影//" class="article-tag-list-link color3">剪影</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/05/06/%E4%B8%AA%E4%BA%BA%E8%87%AA%E8%BF%B0/" class="archive-article-date">
-        <time datetime="2023-05-06T13:05:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-05-06</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/05/06/%E4%B8%AA%E4%BA%BA%E8%87%AA%E8%BF%B0/" target="_blank">个人自述</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">个人自述</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/个人自述//" class="article-tag-list-link color5">个人自述</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -713,8 +793,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: true,
