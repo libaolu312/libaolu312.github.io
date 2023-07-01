@@ -672,11 +672,9 @@
   <div class="article-entry" itemprop="articleBody">
     
     <h1 id="Image-Super-Resolution-Using-Very-Deep-Residual-Channel-Attention-Networks"><a href="#Image-Super-Resolution-Using-Very-Deep-Residual-Channel-Attention-Networks" class="headerlink" title="Image Super-Resolution Using Very Deep Residual Channel Attention Networks"></a>Image Super-Resolution Using Very Deep Residual Channel Attention Networks</h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>​		在图像超分辨领域，卷积神经网络的深度非常重要，但<strong>过深的网络却难以训练</strong>。低分辨率的输入以及特征包含丰富的低频信息，但却在通道间被平等对待，因此阻碍了网络的表示能力。<br>​		为了解决上述问题，作者提出了一个深度残差通道注意力网络（RCAN）。其中比较重要的是，作者设计了一个残差中的残差（RIR）结构来构造深层网络，<strong>每个 RIR 结构由数个残差组（RG）以及长跳跃连接（LSC）组成</strong>，<strong>每个 RG 则包含一些残差块和短跳跃连接</strong>（SSC）。<br>​		RIR 结构<strong>允许丰富的低频信息通过多个跳跃连接直接进行传播</strong>，使主网络<strong>专注于学习高频信息</strong>。此外，我们还提出了一种通道注意力机制（CA），通过考虑通道之间的相互依赖性来自适应地重新调整特征。</p>
-<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>​		网络的深度在许多视觉识别任务中展示了非常重要的作用，特别是在 <strong>ResNet 引入残差块</strong>之后，最近许多图像超分辨效果的重大提升都是基于网络表示的深度来改进的。</p>
-<p>​		但是，另一方面，现在的大多数 CNN 都平等对待特征的每一个通道，这无疑缺少处理不同类型信息的灵活度。图像超分辨是为了尽可能多地恢复高频信息，而低分辨率的图片却包含着许多可以直接被传播到输出的低频信息，因此，特征的所有通道如果被平等对待则会使网络缺乏辨别学习能力。</p>
-<p>​		基于上面的分析，作者提出了一个 RIR（Residual In Residual）架构，其中 RG（Residual Group）作为基本模块，LSC（Long Skip Connection）则用来进行粗略的残差学习，在每个 RG 内部则叠加数个简单的残差块和 SSC（Short Skip Connection）。LSC、SSC 和残差块内部的短连接可以允许丰富的低频信息直接通过恒等映射向后传播，这可以保证信息的流动，加速网络的训练。</p>
-<p>​		进一步，作者提出了通道注意力（Channel Attention）机制，通过对特征通道之间的相互依赖性建模来自适应地重新缩放每个通道的特征。实验证明，这种机制允许网络专注于更有用的信道并增强辨别学习能力。</p>
-
+    
+    <a class="article-more-a" href="/2023/06/23/RCAN-Image-Super-Resolution-Using-Very-Deep-Residual-Channel-Attention-Networks/#more">more >></a>
+    
     
 
     
