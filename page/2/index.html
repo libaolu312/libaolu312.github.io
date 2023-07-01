@@ -443,6 +443,320 @@
 
 
   
+    <article id="post-LSTM" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2022/07/01/LSTM/" target="_blank">LSTM</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2022/07/01/LSTM/" class="archive-article-date">
+        <time datetime="2022-07-01T08:44:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-07-01</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <h2 id="LSTM"><a href="#LSTM" class="headerlink" title="LSTM"></a>LSTM</h2><p><a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=LSTM&spm=1001.2101.3001.7020">LSTM</a>(Long Short-Term Memory)是长短期记忆网络，是一种时间递归神经网络，适合于处理和预测<a target="_blank" rel="noopener" href="https://baike.so.com/doc/6192108-6405360.html">时间序列</a>中间隔和延迟相对较长的重要事件。</p>
+<p>LSTM是<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=RNN&spm=1001.2101.3001.7020">RNN</a>的一种，可以解决RNN短时记忆的不足，当一条序列足够长，那RNN将很难将信息从较早的时间步传送到后面的时间步，而LSTM能学习长期依赖的信息，记住较早时间步的信息，因此可以做到联系上下文。</p>
+<p>STM区别于<a target="_blank" rel="noopener" href="https://baike.so.com/doc/913822-965967.html">RNN</a>的地方，主要就在于它在算法中加入了一个判断信息有用与否的”处理器”，这个处理器作用的结构被称为cell。</p>
+<p>一个cell当中被放置了三扇门，分别叫做输入门、遗忘门和输出门。一个信息进入LSTM的网络当中，可以根据规则来判断是否有用。只有符合算法认证的信息才会留下，不符的信息则通过遗忘门被遗忘。</p>
+<p><img src="/2022/07/01/LSTM/image-20230701164558176.png" alt="image-20230701164558176"></p>
+<p>符号说明：</p>
+<p><img src="/2022/07/01/LSTM/eq-1688201206825-19.png" alt="x_{t}">:当前时刻输入信息 </p>
+<p><img src="/2022/07/01/LSTM/eq-1688201206825-20.png" alt="h_{t-1}">:上一时刻的隐藏状态</p>
+<p><img src="/2022/07/01/LSTM/eq-1688201206825-21.png" alt="h_{t}">:传递到下一时刻的隐藏状态</p>
+<p> <img src="/2022/07/01/LSTM/sigma.png" alt="\sigma">:<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=sigmoid%E5%87%BD%E6%95%B0&spm=1001.2101.3001.7020">sigmoid函数</a>，通过这个函数可以将数据变为0-1范围的数值。</p>
+<p><a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=tanh&spm=1001.2101.3001.7020">tanh</a>: tanh函数，通过这个函数可以将数据变为[-1,1]范围的数值</p>
+<p><strong>LSTM的特点：</strong></p>
+<p>lstm比rnn多一个细胞状态（cell state），也有人叫记忆细胞。</p>
+<p>下图中的水平黑线表示上一时刻的细胞状态通过三个门的控制及线性运算来决定哪些信息该遗忘丢弃，哪些信息该保留，或者不变，从而生成当前时刻的细胞状态，然后输出到下一时刻，以此来进行记忆的更新。</p>
+<p>这只是某个时刻的细胞状态的更新过程，在整个长序列中，每个时刻的细胞状态都对上一时刻的信息选择性的进行遗忘丢弃，或者保留，或者不变，对记忆进行更新，从传送到，因此可以做到长期记忆。</p>
+<img src="/2022/07/01/LSTM/image-20230701164704116.png" alt="image-20230701164704116" style="zoom:50%;">
+
+<h3 id="0-什么是门？"><a href="#0-什么是门？" class="headerlink" title="0.什么是门？"></a>0.什么是门？</h3><p>LSTM通过门（gate）来控制细胞状态遗忘或添加记忆，门的结构就是一个sigmoid层再点乘上一时刻的细胞状态，下图就是一个门。</p>
+<p><img src="/2022/07/01/LSTM/image-20230701164715603.png" alt="image-20230701164715603"></p>
+<p>sigmoid层输出的值范围在[0, 1]，可以作为门控信号，0点乘任何值还是0，表示过不去，这些记忆就遗忘了，1表示可以通过，记忆就保留下来了。</p>
+<h3 id="1-遗忘门"><a href="#1-遗忘门" class="headerlink" title="1. 遗忘门"></a><strong>1. 遗忘门</strong></h3><p>遗忘门的作用对象是细胞状态<img src="/2022/07/01/LSTM/eq-1688201261756-30.png" alt="C_{t-1}">，作用是控制细胞状态中的信息进行选择性的遗忘，决定哪部分需要丢弃，哪些需要保留。那么是如何控制细胞状态选择性遗忘记忆的呢，我们结合公式来看:</p>
+<img src="/2022/07/01/LSTM/image-20230701164758904.png" alt="image-20230701164758904" style="zoom:50%;">
+
+
+
+<p>遗忘门的公式： </p>
+<img src="/2022/07/01/LSTM/image-20230701164809546.png" alt="image-20230701164809546" style="zoom:80%;">
+
+<p> 权重矩阵<img src="/2022/07/01/LSTM/eq-1688201315267-33.png" alt="W_{f}">对<img src="/2022/07/01/LSTM/eq-1688201315267-34.png" alt="h_{t-1}">和<img src="/2022/07/01/LSTM/eq-1688201315267-35.png" alt="x_{t}">拼接而成的矩阵进行矩阵相乘，再加上偏置<img src="/2022/07/01/LSTM/eq-1688201315267-36.png" alt="b_{f}">，投入到sigmoid函数中，得到一个与<img src="/2022/07/01/LSTM/eq-1688201315267-37.png" alt="C_{t-1}">相同维度的矩阵<img src="/2022/07/01/LSTM/eq.png" alt="f_{t}">， 比如，得到<img src="https://latex.csdn.net/eq?f_%7Bt%7D" alt="f_{t}">为[ 0,0,1,0]，矩阵中每一个值都决定<img src="https://latex.csdn.net/eq?C_%7Bt-1%7D" alt="C_{t-1}">中对应信息的遗忘或保留，0代表彻底丢弃，1代表完全保留。</p>
+<p>比如一个语言模型，根据之前的所有词预测下一个词。细胞状态可能已经记住了当前人物的性别，以便下次预测人称代词（他还是她），但当出现一个新人物时，需要将上一个人物的性别忘掉。</p>
+<p>举例：</p>
+<p>小明是一个帅气的男生，小美喜欢…，当处理到‘’小美‘’的时候，需要选择性的忘记前面的’小明’，或者说减小这个词对后面词的作用。</p>
+<h3 id="2-输入门"><a href="#2-输入门" class="headerlink" title="2.输入门"></a><strong>2.输入门</strong></h3><p>输入门的作用对象也是细胞状态，作用是决定要往细胞状态中存储哪些新的信息，也就是细胞状态选择性的添加哪些新的记忆。那么如何决定添加哪些新的信息呢，输入门分两个部分进行。</p>
+<img src="/2022/07/01/LSTM/a475e0b4e86f4e6397e042a84529a275-1688201337803-50.png" alt="img" style="zoom:50%;">
+
+<p>第一部分：</p>
+<p> 构建一个输入门，决定哪些信息被添加到细胞状态中，作为新的记忆。</p>
+<p><img src="/2022/07/01/LSTM/fcc4be2c3d154327aedab20173287355-1688201348531-53.png" alt="img"></p>
+<p>输入门公式： </p>
+<img src="/2022/07/01/LSTM/c727c036ebab4168aca769c8dc3abc95-1688201357162-56.png" alt="img" style="zoom:80%;">
+
+<p>与遗忘门公式差不多，输入门通过线性运算得到一个与<img src="/2022/07/01/LSTM/tilde%7BC%7D_%7Bt%7D.png" alt="\tilde{C}_{t}">相同维度的矩阵<img src="/2022/07/01/LSTM/eq-1688201363733-59.png" alt="i_{t}">， 比如，得到<img src="https://latex.csdn.net/eq?i_%7Bt%7D" alt="i_{t}">为    [ 0,0,1,0]，矩阵中每一个值都决定<img src="https://latex.csdn.net/eq?%5Ctilde%7BC%7D_%7Bt%7D" alt="\tilde{C}_{t}">中对应信息的丢弃或保留，0代表彻底丢弃，1代表完全保留。</p>
+<p>第二部分：</p>
+<p>构建出一个候选细胞状态<img src="/2022/07/01/LSTM/tilde%7BC%7D_%7Bt%7D.png" alt="\tilde{C}_{t}">，它保存了 <img src="/2022/07/01/LSTM/eq-1688201369914-64.png" alt="x_{t}">和<img src="/2022/07/01/LSTM/eq-1688201369914-65.png" alt="h_{t-1}">中的信息，然后与<img src="/2022/07/01/LSTM/eq-1688201369914-66.png" alt="i_{t}">的值点乘，来决定哪些记忆是有用的，依然<img src="https://latex.csdn.net/eq?i_%7Bt%7D" alt="i_{t}">中0代表彻底丢弃，1代表完全保留，这样保留下来的信息作为新的记忆添加给新的细胞状态，所以这里<img src="https://latex.csdn.net/eq?%5Ctilde%7BC%7D_%7Bt%7D" alt="\tilde{C}_{t}">叫<strong>候选</strong>细胞状态，它只是一个等候选择的，有用的才会被作为新记忆添加。</p>
+<img src="/2022/07/01/LSTM/c7526a36567e425d921733392381ae02-1688201375489-75.png" alt="img" style="zoom:50%;">
+
+<p>候选细胞状态 <img src="/2022/07/01/LSTM/tilde%7BC%7D_%7Bt%7D.png" alt="\tilde{C}_{t}">的公式：</p>
+<img src="/2022/07/01/LSTM/0de501b68fa24bf6bf640c40eb1fe826-1688201385594-80.png" alt="img" style="zoom:80%;">
+
+<p>接着上一个例子：</p>
+<p>这一步传入了一些信息，比如小美喜欢穿裙子，输入门就是要在这些信息中筛选出来有用的，用来记住新人物的性别，记住小美的性别为女，作为新的记忆添加。</p>
+<h3 id="3-更新记忆"><a href="#3-更新记忆" class="headerlink" title="3.更新记忆"></a><strong>3.更新记忆</strong></h3><p>新的细胞状态中的记忆由两部分构成。</p>
+<p>一部分是，上一时刻的记忆细胞遗忘掉没用的记忆后剩下的旧记忆</p>
+<p>另一部分是，输入门中把有用的信息筛选出来当作新的记忆</p>
+<img src="/2022/07/01/LSTM/image-20230701165046394.png" alt="image-20230701165046394" style="zoom:50%;">
+
+<p>新的细胞状态的公式：</p>
+<img src="/2022/07/01/LSTM/1d16ad38ae8e46508ccf0843ab881066-1688201460307-85.png" alt="img" style="zoom:80%;">
+
+<p><img src="/2022/07/01/LSTM/eq.png" alt="f_{t}">点乘<img src="/2022/07/01/LSTM/eq-1688201474260-88.png" alt="C_{t-1}">表示处理后的旧记忆，<img src="/2022/07/01/LSTM/eq-1688201474260-89.png" alt="i_{t}">点乘<img src="/2022/07/01/LSTM/tilde%7BC%7D_%7Bt%7D.png" alt="\tilde{C}_{t}">表示需要添加的新记忆，加起来就是新的细胞状态。</p>
+<p>继续举例：</p>
+<p>小明是一个帅气的男生，小美喜欢穿裙子，这一步是要忘记小明性别为男，记住小美性别为女。</p>
+<h3 id="4-输出门"><a href="#4-输出门" class="headerlink" title="4.输出门"></a><strong>4.输出门</strong></h3><p>输出门的作用是决定最终输出什么，也就是<img src="/2022/07/01/LSTM/eq-1688201488305-98.png" alt="h_{t}">，这个输出是以新的细胞状态<img src="/2022/07/01/LSTM/eq-1688201488305-99.png" alt="C_{t}">为基础的，分两部分进行。</p>
+<img src="/2022/07/01/LSTM/1fcd66721fdd41e78b82e8572cc698f9-1688201494789-104.png" alt="img" style="zoom:50%;">
+
+<p>第一部分：</p>
+<p>依然使用sigmoid层来得到<img src="/2022/07/01/LSTM/eq-1688201508624-107.png" alt="o_{t}">，比如<img src="https://latex.csdn.net/eq?o_%7Bt%7D" alt="o_{t}">&#x3D;[0,0,0,1]，来决定哪部分细胞状态需要被输出，需要的记忆才输出，并不是所有的都输出。</p>
+<img src="/2022/07/01/LSTM/8f9c4bcd907b4c5baa61f4c5806c19d7-1688201523760-110.png" alt="img" style="zoom:50%;">
+
+<p> <img src="/2022/07/01/LSTM/eq-1688201532367-113.png" alt="o_{t}">的公式：</p>
+<img src="/2022/07/01/LSTM/387f25960f424f90a1f2b142bcaed8d6-1688201536599-116.png" alt="img" style="zoom:80%;">
+
+<p> 第二部分：</p>
+<p>把新的细胞状态通过tanh函数处理，将输出值变为[-1. 1]，再点乘<img src="/2022/07/01/LSTM/eq-1688201544643-119.png" alt="o_{t}">，来控制哪部分需要输出。</p>
+<img src="/2022/07/01/LSTM/75f7c35e083f4ee0b01f885c31b2ff52-1688201550202-122.png" alt="img" style="zoom:50%;">
+
+<p> <img src="/2022/07/01/LSTM/eq-1688201556477-125.png" alt="h_{t}">的公式：</p>
+<img src="/2022/07/01/LSTM/2341e83b595548d4b28e08f43da8990f-1688201562302-128.png" alt="img" style="zoom:80%;">
+
+
+
+
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2022/07/01/LSTM/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-ResNet" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2022/05/07/ResNet/" target="_blank">ResNet</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2022/05/07/ResNet/" class="archive-article-date">
+        <time datetime="2022-05-07T06:59:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-05-07</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <h1 id="一、提出原因"><a href="#一、提出原因" class="headerlink" title="一、提出原因"></a>一、提出原因</h1><h2 id="1、堆叠网络造成的问题"><a href="#1、堆叠网络造成的问题" class="headerlink" title="1、堆叠网络造成的问题"></a>1、堆叠网络造成的问题</h2><p>传统的想法是如果我们堆叠很多很多层，或许能让网络变得更好。</p>
+<p>然而现实却是：堆叠网络后网络难以收敛，而且梯度爆炸（梯度消失）在一开始就阻碍网络的收敛，让网络难以训练，得到适当的参数。</p>
+<h2 id="2、解决深度网络的退化问题"><a href="#2、解决深度网络的退化问题" class="headerlink" title="2、解决深度网络的退化问题"></a>2、解决深度网络的退化问题</h2><p>理论上来讲，增加网络的层数，网络可以进行更加复杂的特征提取，可以取得更好的结果。但是实验发现深度网络出现了退化问题，如下图所示（图片来源：Resnet的论文）。网络深度增加时，网络准确度出现饱和，之后甚至还快速下降。而且这种下降不是因为过拟合引起的，而是因为在适当的深度模型上添加更多的层会导致了更高的训练误差，从而使其下降。</p>
+<p><img src="/2022/05/07/ResNet/image-20230701150248134.png" alt="image-20230701150248134"></p>
+<h1 id="二、残差结构"><a href="#二、残差结构" class="headerlink" title="二、残差结构"></a>二、残差结构</h1><p>为了解决以上两个问题，残差结构应运而生。</p>
+<p>原理图如图所示（图片来源：Resnet的论文）：它的结构很像电路中的短路，因此被称为短路连接（shortcut）。</p>
+<p>它使用了一种连接方式叫做“shortcut connection”，顾名思义，shortcut就是“抄近道”的意思，下面是这个resnet的网络结构：</p>
+<p><img src="/2022/05/07/ResNet/image-20230701150344727.png" alt="image-20230701150344727"></p>
+<p>​		对于这整个堆叠结构，当输入x时：</p>
+<ul>
+<li>​		<strong>它学习到的特征记为H（x）</strong></li>
+<li>​		<strong>因此我们希望他学习到的残差为F（x）&#x3D; H（x）- x；</strong></li>
+<li>​		<strong>那么我们最初学习到的特征就是H（x）&#x3D; F（x）+ x。</strong></li>
+</ul>
+<p>它对每层的输入做一个reference（X）, 学习形成残差函数， 而不是学习一些没有reference（X）的函数。这种残差函数更容易优化，能使网络层数大大加深。在上图的残差块中它有二层，如下表达式，<br>其中σ代表非线性函数ReLU。</p>
+<p><img src="/2022/05/07/ResNet/20190731144237339.png" alt="在这里插入图片描述"></p>
+<p>然后通过一个shortcut，和第2个ReLU，获得输出y。</p>
+<p><img src="/2022/05/07/ResNet/20190731144304151.png" alt="在这里插入图片描述"></p>
+<p>当需要对输入和输出维数进行变化时（如改变通道数目），可以在shortcut时对x做一个线性变换Ws，如下式。</p>
+<p><img src="/2022/05/07/ResNet/20190731144342584.png" alt="在这里插入图片描述"></p>
+<p>​		这样做的目的是：让经过堆积结构学到的（F（x））和最原始的x<strong>进行联合获取特征</strong>。</p>
+<p>​		残差学习相比原始特征直接学习更容易。取一个最极端的结果来看，就是F（x）&#x3D; 0（堆积结构啥也没学到），这里堆积层仅仅做了恒等映射，至少网络性能不会下降，实际上残差不会为0，这也会使得堆积层在输入特征基础上学习到新的特征，从而拥有更好的性能。并且将残差置为零比通过一堆非线性层来拟合恒等映射更容易。</p>
+<p>​		然而实验证明x已经足够了，不需要再搞个维度变换，除非需求是某个特定维度的输出，如是将通道数翻倍，如下图所示：</p>
+<img src="/2022/05/07/ResNet/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxNzYwNzY3,size_16,color_FFFFFF,t_70.png" alt="在这里插入图片描述" style="zoom: 50%;">
+
+<p>​		由上图，我们可以清楚的看到“实线”和“虚线”两种连接方式， 实线的Connection部分 (第一个粉色矩形和第三个粉色矩形) 都是执行3x3x64的卷积，他们的channel个数一致，所以采用计算方式：<br>​		Y &#x3D; F(x) + x，虚线的Connection部分 (第一个绿色矩形和第三个绿色矩形) 分别是3x3x64和3x3x128的卷积操作，他们的channel个数不同(64和128)，所以采用计算方式： y&#x3D;F(x)+Wx 。其中W是卷积操作，用来调整x的channel维度。</p>
+<h2 id="残差块的两种结构"><a href="#残差块的两种结构" class="headerlink" title="残差块的两种结构"></a>残差块的两种结构</h2><p>​		这是文章里面的图，我们可以看到一个“弯弯的弧线“这个就是所谓的”shortcut connection“，也是文中提到identity mapping，这张图也诠释了ResNet的真谛，当然大家可以放心，真正在使用的ResNet模块并不是这么单一，文章中就提出了两种方式：</p>
+<p><img src="/2022/05/07/ResNet/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxNzYwNzY3,size_16,color_FFFFFF,t_70-1688197294440-15.png" alt="img"></p>
+<p>​		这两种结构分别针对ResNet34（左图）和ResNet50&#x2F;101&#x2F;152（右图），一般称整个结构为一个“building block” 。其中右图又称为“bottleneck design”，目的就是为了降低参数的数目，实际中，考虑计算的成本，对残差块做了计算优化，即将两个3x3的卷积层替换为1x1 + 3x3 + 1x1，如右图所示。新结构中的中间3x3的卷积层首先在一个降维1x1卷积层下减少了计算，然后在另一个1x1的卷积层下做了还原，既保持了精度又减少了计算量。第一个1x1的卷积把256维channel降到64维，然后在最后通过1x1卷积恢复，整体上用的参数数目：1x1x256x64 + 3x3x64x64 + 1x1x64x256 &#x3D; 69632，而不使用bottleneck的话就是两个3x3x256的卷积，参数数目: 3x3x256x256x2 &#x3D; 1179648，差了16.94倍。</p>
+<h1 id="三、Resnet网络结构"><a href="#三、Resnet网络结构" class="headerlink" title="三、Resnet网络结构"></a>三、Resnet网络结构</h1><h2 id="1-原理分析"><a href="#1-原理分析" class="headerlink" title="1.原理分析"></a>1.原理分析</h2><p> ResNet网络是在VGG19网络的基础上进行修改的，并且通过短路机制加入了残差单元。</p>
+<p>设计规则：</p>
+<p>（1）<strong>对于相同的输出特征图尺寸，层具有相同数量的滤波器</strong></p>
+<p>（2）<strong>当feature map大小降低一半时，feature map的数量增加一倍【过滤器（可以看作是卷积核的集合）的数量增加一倍】，这保持了网络层的复杂度。然后通过步长为2的卷积层直接执行下采样。</strong></p>
+<p>网络结构具体如下图所示（左为VGG-19，中为34个参数层的简单网络，右为34个参数层的残差网络）：<br><img src="/2022/05/07/ResNet/8b612e130e2ad5ac04f7bc4f8e1ed7dd.png" alt="8b612e130e2ad5ac04f7bc4f8e1ed7dd.png"></p>
+<p>ResNet相比普通网络每两层间增加了短路机制，这就形成了残差学习，其中实线表示快捷连接，虚线表示feature map数量发生了改变。</p>
+<p>有两种情况需要考虑：</p>
+<p>（1）输入和输出具有相同的维度时（对应实线部分）：</p>
+<p>直接使用恒等快捷连接</p>
+<p><img src="/2022/05/07/ResNet/12534cd86e604f1782361149f07c5eda.png" alt="12534cd86e604f1782361149f07c5eda.png"></p>
+<p>（2）维度增加（当快捷连接跨越两种尺寸的特征图时，它们执行时步长为2）：</p>
+<p>①快捷连接仍然执行恒等映射，额外填充零输入以增加维度。这样就不会引入额外的参数。</p>
+<p>②用下面公式的投影快捷连接用于匹配维度（由1×1卷积完成）</p>
+<p><img src="/2022/05/07/ResNet/c44e781d717d4b2b8686c2bf4129d23e.png" alt="c44e781d717d4b2b8686c2bf4129d23e.png"></p>
+<p> Resnet网络结构的更多细节如下图所示：</p>
+<p><img src="/2022/05/07/ResNet/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM4ODA3Njg4,size_16,color_FFFFFF,t_70.png" alt="watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM4ODA3Njg4,size_16,color_FFFFFF,t_70"></p>
+<h2 id="2、结构分析"><a href="#2、结构分析" class="headerlink" title="2、结构分析"></a>2、结构分析</h2><p>Resnet结构分层为：Layer–Block–Stage–Network</p>
+<p>（1）Layer是最小的结构，ResNet-18就代表网络有18层。</p>
+<p>（2）Block是由两层或者三层conv层堆叠形成的。一般来说，50层以下用下图左侧的双层block，50层以上用下图右侧的三层block，其中右侧的这个block叫做BottleNeck（瓶颈结构）。</p>
+<img src="/2022/05/07/ResNet/image-20230701163734595.png" alt="image-20230701163734595" style="zoom:67%;">
+
+<p>（3）stage 是由数个Block堆叠形成的。如下图黄圈圈（3个Block组成）所示：</p>
+<p><img src="/2022/05/07/ResNet/image-20230701163847017.png" alt="image-20230701163847017"></p>
+<p>（4）以Resnet-50为例，如上图，该网络是由stage之前的两层（conv7x7, maxpooling）和4个stage（共48层）组成的。</p>
+<h2 id="3、代码分析（内含分析和注释）"><a href="#3、代码分析（内含分析和注释）" class="headerlink" title="3、代码分析（内含分析和注释）"></a>3、代码分析（内含分析和注释）</h2><p>（1）网络总括</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">ResNet</span>(nn.Module):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self,block, layers, num_class=<span class="number">1000</span>, norm_layer=<span class="literal">None</span></span>):</span><br><span class="line">        <span class="built_in">super</span>(ResNet, self).__init__()</span><br><span class="line">        <span class="keyword">if</span> norm_layer <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            norm_layer = nn.BatchNorm2d</span><br><span class="line">        self._norm_layer = norm_layer</span><br><span class="line"> </span><br><span class="line">        self.inplanes = <span class="number">64</span></span><br><span class="line"> </span><br><span class="line">        <span class="comment">#对应第一层conv1</span></span><br><span class="line">        self.conv1 = nn.Conv2d(<span class="number">3</span>, self.inplanes, kernel_size=<span class="number">7</span>, stride = <span class="number">2</span>, padding = <span class="number">3</span>, bias=<span class="literal">False</span>)<span class="comment">#7*7卷积</span></span><br><span class="line">        self.bn1 = norm_layer(self.inplanes)<span class="comment">#正态分布（归一化操作）</span></span><br><span class="line"> </span><br><span class="line">        self.relu = nn.ReLU(inplace=<span class="literal">True</span>)<span class="comment">#激活</span></span><br><span class="line"> </span><br><span class="line">        <span class="comment">#对应第二层</span></span><br><span class="line">        self.maxpool = nn.MaxPool2d(kernel_size=<span class="number">3</span>, stride=<span class="number">2</span>)<span class="comment">#3*3最大池化池化</span></span><br><span class="line"> </span><br><span class="line">        <span class="comment"># stages部分，分别第1，2，3，4个stage</span></span><br><span class="line">        self.layer1 = self._make_layer(block, <span class="number">64</span>, layers[<span class="number">0</span>])</span><br><span class="line">        self.layer2 = self._make_layer(block, <span class="number">128</span>, layers[<span class="number">1</span>], stride=<span class="number">2</span>)</span><br><span class="line">        self.layer3 = self._make_layer(block, <span class="number">256</span>, layers[<span class="number">2</span>], stride=<span class="number">2</span>)</span><br><span class="line">        self.layer4 = self._make_layer(block, <span class="number">512</span>, layers[<span class="number">3</span>], stride=<span class="number">2</span>)</span><br><span class="line"> </span><br><span class="line">        <span class="comment">#对应最后一层</span></span><br><span class="line">        self.gap = nn.AdaptiveAvgPool2d((<span class="number">1</span>,<span class="number">1</span>))<span class="comment">#平均池化</span></span><br><span class="line"> </span><br><span class="line">        self.linear = nn.Linear(<span class="number">512</span>*block.expansion, num_class)<span class="comment">#线性</span></span><br><span class="line"> </span><br><span class="line">        <span class="keyword">for</span> m <span class="keyword">in</span> self.modules():</span><br><span class="line">        	<span class="comment">#isinstance()函数来判断一个对象是否是一个已知的类型，类似 type()，其实就是没有正态分布的话咱就kaiming均匀分布。</span></span><br><span class="line">            <span class="keyword">if</span> <span class="built_in">isinstance</span>(m, nn.Conv2d): </span><br><span class="line">                nn.init.kaiming_normal_(m.weight, mode=<span class="string">&#x27;fan_out&#x27;</span>, nonlinearity=<span class="string">&#x27;relu&#x27;</span>)</span><br><span class="line">				<span class="comment">#kaiming均匀分布</span></span><br><span class="line">            <span class="keyword">elif</span> <span class="built_in">isinstance</span>(m, nn.BatchNorm2d):<span class="comment">#是正态分布</span></span><br><span class="line">                nn.init.constant_(m.weight, <span class="number">1</span>)</span><br><span class="line">			<span class="comment">#torch.nn.init.constant(tensor, val)，用val的值填充输入的张量或变量，即变成全1分布</span></span><br><span class="line">                nn.init.constant_(m.bias, <span class="number">0</span>)<span class="comment">#偏置变为0</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self,x</span>):</span><br><span class="line"> </span><br><span class="line">        out = self.conv1(x)</span><br><span class="line">        out = self.bn1(out)</span><br><span class="line">        out = self.maxpool(out)</span><br><span class="line">        out = self.layer1(out)</span><br><span class="line">        out = self.layer2(out)</span><br><span class="line">        out = self.layer3(out)</span><br><span class="line">        out = self.layer4(out)</span><br><span class="line">        out = self.gap(out)</span><br><span class="line">        out = nn.Flatten(out)<span class="comment">#推平</span></span><br><span class="line">        out = self.linear(out)</span><br><span class="line"> </span><br><span class="line">        <span class="keyword">return</span> out</span><br></pre></td></tr></table></figure>
+
+<p>（2）内含函数（将多个block拼接成一个stage）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">_make_layer</span>(<span class="params">self, block, planes, blocks, stride = <span class="number">1</span></span>):</span><br><span class="line"> </span><br><span class="line">    <span class="comment">#将多个block拼接成一个stage，实现block之间的衔接；block指前面定义的BottleNeck或BasicBlock;planes指进行变换的通道数;blocks指这个stage中block的数目;stride：filter在原图上扫描时，需要跳跃的格数</span></span><br><span class="line"> </span><br><span class="line">        norm_layer = self._norm_layer</span><br><span class="line">        downsample = <span class="literal">None</span></span><br><span class="line">        <span class="keyword">if</span> stride !=<span class="number">1</span> <span class="keyword">or</span> self.inplanes != block.expansion *planes:</span><br><span class="line">        <span class="comment">#形状不匹配的两种情况:(1)通道数目不匹配，（2）stride导致的feature map的尺寸不匹配</span></span><br><span class="line">        </span><br><span class="line">            downsample= nn.Sequential(</span><br><span class="line">            conv1x1(self.inplanes, block.expansion *planes, stride = stride),</span><br><span class="line">            norm_layer(block.expansion *planes)</span><br><span class="line">                                )</span><br><span class="line"><span class="comment"># self.inplanes是block的输入通道数，planes是做3x3卷积的空间的通道数，expansion是残差结构中输出维度是输入维度的多少倍，同一个stage内，第一个block，inplanes=planes， 输出为planes*block.expansion</span></span><br><span class="line">        <span class="comment"># 第二个block开始，该block的inplanes等于上一层的输出的通道数planes*block.expansion（类似于卷积后的结果进入下一个卷积时，前一个卷积得到的output的输出为下一个卷积的input）</span></span><br><span class="line"> </span><br><span class="line">        layers = []</span><br><span class="line">        layers.append(block(self.inplanes, blocks[<span class="number">0</span>], stride=stride, downsample=downsample, norm_layer=norm_layer))</span><br><span class="line">        <span class="comment">#在一个stage中，只对stage中的第一个block中使用下采样(stride!=1)，其他的block都不影响feature map的维度的</span></span><br><span class="line">        self.inplanes = planes * self.expansion</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, blocks):</span><br><span class="line">            layers.append(block(self.inplanes, blocks[<span class="number">0</span>], stride=stride, norm_layer=norm_layer))<span class="comment">#这里就没有downsample了</span></span><br><span class="line"> </span><br><span class="line">        <span class="keyword">return</span> nn.Sequential(*layers)<span class="comment"># 变量名前加星号表示Unpack解包</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/CNN//" class="article-tag-list-link color4">CNN</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2022/05/07/ResNet/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
