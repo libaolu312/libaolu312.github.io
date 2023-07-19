@@ -6,19 +6,24 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Tag: 技术笔记 | 李宝璐</title>
+  <title>Python numpy中切片 [:, : -1] [:, [-1] ] 分别表示什么 | 李宝璐</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="里面放着李宝璐的碎碎念">
-<meta property="og:type" content="website">
-<meta property="og:title" content="李宝璐">
-<meta property="og:url" content="http://example.com/tags/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/index.html">
+  <meta name="description" content="Python numpy中切片 [:, : -1] [:, [-1] ] 分别表示什么最近在做数据集处理的时候，发现一个很有意思的东西，其实很早的发现了，只是现在才想起来总结。 我们在做数据切片的时候，都知道[  起点   :  终点  :  步长  ] 包括一些常规的正负的操作，在这里我就不多说了，想要了解可以看一下这篇博客：彻底搞懂切片 本次我就简单分享几个有意思的特殊切片： [ : , :">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python numpy中切片 [:, : -1] [:, [-1] ] 分别表示什么">
+<meta property="og:url" content="http://example.com/2023/07/19/Python-numpy%E4%B8%AD%E5%88%87%E7%89%87-1-1-%E5%88%86%E5%88%AB%E8%A1%A8%E7%A4%BA%E4%BB%80%E4%B9%88/index.html">
 <meta property="og:site_name" content="李宝璐">
-<meta property="og:description" content="里面放着李宝璐的碎碎念">
+<meta property="og:description" content="Python numpy中切片 [:, : -1] [:, [-1] ] 分别表示什么最近在做数据集处理的时候，发现一个很有意思的东西，其实很早的发现了，只是现在才想起来总结。 我们在做数据切片的时候，都知道[  起点   :  终点  :  步长  ] 包括一些常规的正负的操作，在这里我就不多说了，想要了解可以看一下这篇博客：彻底搞懂切片 本次我就简单分享几个有意思的特殊切片： [ : , :">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2023/07/19/Python-numpy%E4%B8%AD%E5%88%87%E7%89%87-1-1-%E5%88%86%E5%88%AB%E8%A1%A8%E7%A4%BA%E4%BB%80%E4%B9%88/image-20230719172220356.png">
+<meta property="article:published_time" content="2023-07-19T09:09:40.000Z">
+<meta property="article:modified_time" content="2023-07-19T09:24:17.880Z">
 <meta property="article:author" content="李宝璐">
+<meta property="article:tag" content="技术笔记">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2023/07/19/Python-numpy%E4%B8%AD%E5%88%87%E7%89%87-1-1-%E5%88%86%E5%88%AB%E8%A1%A8%E7%A4%BA%E4%BB%80%E4%B9%88/image-20230719172220356.png">
   
     <link rel="alternative" href="/atom.xml" title="李宝璐" type="application/atom+xml">
   
@@ -225,41 +230,131 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-Python-numpy中切片-1-1-分别表示什么" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2023" class="archive-year">2023</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/07/19/Python-numpy%E4%B8%AD%E5%88%87%E7%89%87-1-1-%E5%88%86%E5%88%AB%E8%A1%A8%E7%A4%BA%E4%BB%80%E4%B9%88/" class="archive-article-date">
-        <time datetime="2023-07-19T09:09:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-07-19</time>
-</a>
-
-        </div>
-    	 
+      <header class="article-header">
   
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/07/19/Python-numpy%E4%B8%AD%E5%88%87%E7%89%87-1-1-%E5%88%86%E5%88%AB%E8%A1%A8%E7%A4%BA%E4%BB%80%E4%B9%88/" target="_blank">Python numpy中切片 [:, : -1] [:, [-1] ] 分别表示什么</a>
   
+    <h1 class="article-title" itemprop="name">
+      Python numpy中切片 [:, : -1] [:, [-1] ] 分别表示什么
     </h1>
   
 
 
-        <div class="article-info info-on-right">
+  
+  
+        
+        <span id="busuanzi_container_page_pv" style='display:none' class="archive-article-date">
+              <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+        </span>
+
+<a href="/2023/07/19/Python-numpy%E4%B8%AD%E5%88%87%E7%89%87-1-1-%E5%88%86%E5%88%AB%E8%A1%A8%E7%A4%BA%E4%BB%80%E4%B9%88/" class="archive-article-date">
+        <time datetime="2023-07-19T09:09:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-07-19</time>
+</a>
+
+  
+  
+    
+<div style="margin-top:10px;">
+  <span class="post-time">
+    <span class="post-meta-item-icon">
+      <!-- fonts.scss -->
+      <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
+      <i class="icon-statistics"></i>
+      <span class="post-meta-item-text"> 字数统计:</span>
+      <span class="post-count">856字</span>
+    </span>
+  </span>
+
+  <span class="post-time">
+    &nbsp; | &nbsp;
+    <span class="post-meta-item-icon">
+      <i class="icon-book icon"></i>
+      <span class="post-meta-item-text"> 阅读时长≈</span>
+      <span class="post-count">3分</span>
+    </span>
+  </span>
+</div>
+
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <h1 id="Python-numpy中切片-1-1-分别表示什么"><a href="#Python-numpy中切片-1-1-分别表示什么" class="headerlink" title="Python numpy中切片 [:, : -1] [:, [-1] ] 分别表示什么"></a>Python numpy中切片 [:, : -1] [:, [-1] ] 分别表示什么</h1><p>最近在做数据集处理的时候，发现一个很有意思的东西，其实很早的发现了，只是现在才想起来总结。</p>
+<p>我们在做数据切片的时候，都知道[  起点   :  终点  :  步长  ]</p>
+<p>包括一些常规的正负的操作，在这里我就不多说了，想要了解可以看一下这篇博客：<a target="_blank" rel="noopener" href="https://blog.csdn.net/liuluTL/article/details/104951788?ops_request_misc=&request_id=&biz_id=102&utm_term=%5B:,%20:-1%5D%E5%88%87%E7%89%87&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduweb~default-0-104951788.142%5Ev89%5Econtrol_2,239%5Ev2%5Einsert_chatgpt&spm=1018.2226.3001.4187">彻底搞懂切片</a></p>
+<p>本次我就简单分享几个有意思的特殊切片：</p>
+<p><strong>[ : , : -1]</strong></p>
+<p><strong>[ : , [-1]]</strong></p>
+<p><strong>[ : , -1]</strong></p>
+<span id="more"></span>
+
+<p>如果一个一个详细的讲的话很难讲清楚，如果大家想要理解的话，可以画一个图去尝试理解一下。</p>
+<p>下面直接效果展示：</p>
+<h2 id="一、-1"><a href="#一、-1" class="headerlink" title="一、**[ : , : -1]**"></a>一、**[ : , : -1]**</h2><p>举例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">xy = [</span><br><span class="line">    [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>],</span><br><span class="line">    [<span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>],</span><br><span class="line">    [<span class="number">11</span>, <span class="number">12</span>, <span class="number">13</span>, <span class="number">14</span>, <span class="number">15</span>],</span><br><span class="line">    [<span class="number">16</span>, <span class="number">17</span>, <span class="number">18</span>, <span class="number">19</span>, <span class="number">20</span>],</span><br><span class="line">    [<span class="number">21</span>, <span class="number">22</span>, <span class="number">23</span>, <span class="number">24</span>, <span class="number">25</span>],</span><br><span class="line">]</span><br><span class="line">xy = np.array(xy)</span><br><span class="line">x_data = xy[:,:-<span class="number">1</span>]</span><br><span class="line"><span class="built_in">print</span>(x_data)</span><br></pre></td></tr></table></figure>
+
+<p>效果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[[ <span class="number">1</span>  <span class="number">2</span>  <span class="number">3</span>  <span class="number">4</span>]</span><br><span class="line"> [ <span class="number">6</span>  <span class="number">7</span>  <span class="number">8</span>  <span class="number">9</span>]</span><br><span class="line"> [<span class="number">11</span> <span class="number">12</span> <span class="number">13</span> <span class="number">14</span>]</span><br><span class="line"> [<span class="number">16</span> <span class="number">17</span> <span class="number">18</span> <span class="number">19</span>]</span><br><span class="line"> [<span class="number">21</span> <span class="number">22</span> <span class="number">23</span> <span class="number">24</span>]]</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="二、-1"><a href="#二、-1" class="headerlink" title="二、**[ : , [-1]]**"></a>二、**[ : , [-1]]**</h2><p>举例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">xy = [</span><br><span class="line">    [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>],</span><br><span class="line">    [<span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>],</span><br><span class="line">    [<span class="number">11</span>, <span class="number">12</span>, <span class="number">13</span>, <span class="number">14</span>, <span class="number">15</span>],</span><br><span class="line">    [<span class="number">16</span>, <span class="number">17</span>, <span class="number">18</span>, <span class="number">19</span>, <span class="number">20</span>],</span><br><span class="line">    [<span class="number">21</span>, <span class="number">22</span>, <span class="number">23</span>, <span class="number">24</span>, <span class="number">25</span>],</span><br><span class="line">]</span><br><span class="line">xy = np.array(xy)</span><br><span class="line">x_data = xy[:,[-<span class="number">1</span>]]</span><br><span class="line"><span class="built_in">print</span>(x_data)</span><br></pre></td></tr></table></figure>
+
+<p>效果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[[ <span class="number">5</span>]</span><br><span class="line"> [<span class="number">10</span>]</span><br><span class="line"> [<span class="number">15</span>]</span><br><span class="line"> [<span class="number">20</span>]</span><br><span class="line"> [<span class="number">25</span>]]</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="三、-1"><a href="#三、-1" class="headerlink" title="三、**[ : , -1]**"></a>三、**[ : , -1]**</h2><p>举例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">xy = [</span><br><span class="line">    [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>],</span><br><span class="line">    [<span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>],</span><br><span class="line">    [<span class="number">11</span>, <span class="number">12</span>, <span class="number">13</span>, <span class="number">14</span>, <span class="number">15</span>],</span><br><span class="line">    [<span class="number">16</span>, <span class="number">17</span>, <span class="number">18</span>, <span class="number">19</span>, <span class="number">20</span>],</span><br><span class="line">    [<span class="number">21</span>, <span class="number">22</span>, <span class="number">23</span>, <span class="number">24</span>, <span class="number">25</span>],</span><br><span class="line">]</span><br><span class="line">xy = np.array(xy)</span><br><span class="line">x_data = xy[:,-<span class="number">1</span>]</span><br><span class="line"><span class="built_in">print</span>(x_data)</span><br></pre></td></tr></table></figure>
+
+<p>效果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[ <span class="number">5</span> <span class="number">10</span> <span class="number">15</span> <span class="number">20</span> <span class="number">25</span>]</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="四、总结"><a href="#四、总结" class="headerlink" title="四、总结"></a>四、总结</h2><p>效果明显，那么这种切片怎么用呢，下面我附上一小段代码，感兴趣的朋友可以理解一下，并且在这个基础上优化，这个只是半成品。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch.nn</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="comment"># delimiter 分隔符  dtype 数据类型</span></span><br><span class="line">xy = np.loadtxt(<span class="string">&#x27;dataset/diabetes.csv.gz&#x27;</span>, delimiter=<span class="string">&quot;,&quot;</span>, dtype=np.float32)</span><br><span class="line"><span class="comment"># 数据类型如下</span></span><br><span class="line"><span class="comment"># -0.294118,0.487437,0.180328,-0.292929,0,0.00149028,-0.53117,-0.0333333,0</span></span><br><span class="line"><span class="comment"># -0.882353,-0.145729,0.0819672,-0.414141,0,-0.207153,-0.766866,-0.666667,1</span></span><br><span class="line"><span class="comment"># -0.0588235,0.839196,0.0491803,0,0,-0.305514,-0.492741,-0.633333,0</span></span><br><span class="line"><span class="comment"># -0.882353,-0.105528,0.0819672,-0.535354,-0.777778,-0.162444,-0.923997,0,1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 最后一列是分类的tag  我们不要 所以切片时不读最后一个</span></span><br><span class="line">x_data = torch.from_numpy(xy[:, :-<span class="number">1</span>])  <span class="comment"># 创建好的就是一个tensor</span></span><br><span class="line"><span class="comment"># [-1] 意思是要最后这一列</span></span><br><span class="line">y_data = torch.from_numpy(xy[:, [-<span class="number">1</span>]])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Model</span>(torch.nn.Module):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">super</span>(Model, self).__init__()</span><br><span class="line">        <span class="comment"># 这里用三个层吧</span></span><br><span class="line">        self.linear1 = torch.nn.Linear(<span class="number">8</span>, <span class="number">6</span>)  <span class="comment"># 输入 8 维 输出 6 维</span></span><br><span class="line">        self.linear2 = torch.nn.Linear(<span class="number">6</span>, <span class="number">4</span>)  <span class="comment"># 输入 6 维 输出 4 维</span></span><br><span class="line">        self.linear3 = torch.nn.Linear(<span class="number">4</span>, <span class="number">1</span>)  <span class="comment"># 输入 4 维 输出 1 维</span></span><br><span class="line">        <span class="comment"># 之前用的是nn.Function.sigmoid 现在用的是nn下的sigmoid 它是一个模块 在这里当作一个运算的层</span></span><br><span class="line">        <span class="comment"># 激活函数 给模型添加一个非线性的变换  可以尝试不同的激活函数</span></span><br><span class="line">        self.sigmoid = torch.nn.Sigmoid()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, x</span>):</span><br><span class="line">        <span class="comment"># 注意 以下一个传递的过程  就用一个变量 从头用到尾</span></span><br><span class="line">        x = self.sigmoid(self.linear1(x))  <span class="comment"># O1</span></span><br><span class="line">        x = self.sigmoid(self.linear2(x))  <span class="comment"># O2</span></span><br><span class="line">        x = self.sigmoid(self.linear3(x))  <span class="comment"># y_hat   有些激活函数的取值范围是[0,1] 这个还是有一定的风险的  建议最后一次激活函数用 sigmoid</span></span><br><span class="line">        <span class="keyword">return</span> x</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">model = Model()</span><br><span class="line"></span><br><span class="line">criterion = torch.nn.BCELoss()</span><br><span class="line"></span><br><span class="line">optimizer = torch.optim.SGD(model.parameters(), lr=<span class="number">0.01</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10000</span>):</span><br><span class="line">    <span class="comment"># Forward</span></span><br><span class="line">    y_pred = model(x_data)  <span class="comment"># 实际开发过程中 使用的是mini batch 这里数据量比较小  所以直接全部扔进来了</span></span><br><span class="line">    loss = criterion(y_pred, y_data)</span><br><span class="line">    <span class="built_in">print</span>(epoch, loss.item())</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Backward</span></span><br><span class="line">    optimizer.zero_grad()</span><br><span class="line">    loss.backward()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Update</span></span><br><span class="line">    optimizer.step()</span><br></pre></td></tr></table></figure>
+
+<p>注释写的很详细啦~</p>
+<p><img src="/2023/07/19/Python-numpy%E4%B8%AD%E5%88%87%E7%89%87-1-1-%E5%88%86%E5%88%AB%E8%A1%A8%E7%A4%BA%E4%BB%80%E4%B9%88/image-20230719172220356.png" alt="image-20230719172220356"></p>
+<p>半成品，待优化…….</p>
+
+    
+
+    
+
+    
+    <div class="declare"> 
+      <ul class="post-copyright">
+        <li>
+          <strong>本文作者：</strong>
+          李宝璐
+        </li>
+        <li>
+          <strong>本文链接：</strong>
+          <a href="http://example.com/2023/07/19/Python-numpy中切片-1-1-分别表示什么/" title="Python numpy中切片 [:, : -1] [:, [-1] ] 分别表示什么" target="_blank">http://example.com/2023/07/19/Python-numpy中切片-1-1-分别表示什么/</a>
+        </li>
+        
+        <li>
+          <strong>版权声明： </strong>
           
+          本博客所有文章除特别声明外，均采用 <a href="https://github.com/JoeyBling/hexo-theme-yilia-plus/blob/master/LICENSE" rel="external nofollow" target="_blank">MIT</a> 许可协议。转载请注明出处！
+        </li>
+        
+      </ul>
+    </div>
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -271,7 +366,7 @@
 		</ul>
 	</div>
 
-          
+    
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -284,517 +379,118 @@
 	</div>
 
 
+    
+
+    
+    
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <!-- <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a> -->
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2023/07/19/Python-numpy%E4%B8%AD%E5%88%87%E7%89%87-1-1-%E5%88%86%E5%88%AB%E8%A1%A8%E7%A4%BA%E4%BB%80%E4%B9%88/" alt="微信分享二维码"> -->
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+
+    
+    <div class="clearfix"></div>
+  </div>
   </div>
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/07/01/%E5%85%B3%E4%BA%8Erequirements-txt%E7%9A%84%E9%82%A3%E7%82%B9%E4%BA%8B/" class="archive-article-date">
-        <time datetime="2023-07-01T06:21:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-07-01</time>
-</a>
 
+
+<nav id="article-nav">
+  
+  
+    <a href="/2023/07/01/%E5%85%B3%E4%BA%8Erequirements-txt%E7%9A%84%E9%82%A3%E7%82%B9%E4%BA%8B/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">关于requirements.txt的那点事</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/07/01/%E5%85%B3%E4%BA%8Erequirements-txt%E7%9A%84%E9%82%A3%E7%82%B9%E4%BA%8B/" target="_blank">关于requirements.txt的那点事</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/requirements-txt//" class="article-tag-list-link color2">requirements.txt</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Python-numpy%E4%B8%AD%E5%88%87%E7%89%87-1-1-%E5%88%86%E5%88%AB%E8%A1%A8%E7%A4%BA%E4%BB%80%E4%B9%88"><span class="toc-number">1.</span> <span class="toc-text">Python numpy中切片 [:, : -1] [:, [-1] ] 分别表示什么</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81-1"><span class="toc-number">1.1.</span> <span class="toc-text">一、**[ : , : -1]**</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81-1"><span class="toc-number">1.2.</span> <span class="toc-text">二、**[ : , [-1]]**</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81-1"><span class="toc-number">1.3.</span> <span class="toc-text">三、**[ : , -1]**</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E6%80%BB%E7%BB%93"><span class="toc-number">1.4.</span> <span class="toc-text">四、总结</span></a></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/06/26/%E9%87%8D%E7%94%9F%E4%B9%8B%E6%88%91%E6%98%AF%E6%9C%BA%E8%AF%95coding%E6%80%AA/" class="archive-article-date">
-        <time datetime="2023-06-26T05:03:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-06-26</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/06/26/%E9%87%8D%E7%94%9F%E4%B9%8B%E6%88%91%E6%98%AF%E6%9C%BA%E8%AF%95coding%E6%80%AA/" target="_blank">重生之我是机试coding怪</a>
-  
-    </h1>
-  
+        
+    </div>
+</aside>
 
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/机试指南//" class="article-tag-list-link color5">机试指南</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/06/23/RCAN-Image-Super-Resolution-Using-Very-Deep-Residual-Channel-Attention-Networks/" class="archive-article-date">
-        <time datetime="2023-06-23T13:52:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-06-23</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/06/23/RCAN-Image-Super-Resolution-Using-Very-Deep-Residual-Channel-Attention-Networks/" target="_blank">RCAN Image Super-Resolution Using Very Deep Residual Channel Attention Networks</a>
-  
-    </h1>
-  
 
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/图像超分辨率//" class="article-tag-list-link color2">图像超分辨率</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" class="archive-article-date">
-        <time datetime="2023-06-12T14:05:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-06-12</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" target="_blank">OS课设FAT32U盘文件系统</a>
-  
-    </h1>
-  
 
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/操作系统//" class="article-tag-list-link color5">操作系统</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/06/12/CS231N-%E7%BA%BF%E6%80%A7%E5%88%86%E7%B1%BB%E3%80%81%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/" class="archive-article-date">
-        <time datetime="2023-06-11T16:38:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-06-12</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/06/12/CS231N-%E7%BA%BF%E6%80%A7%E5%88%86%E7%B1%BB%E3%80%81%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/" target="_blank">CS231N-损失函数和梯度下降</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/CS231N//" class="article-tag-list-link color2">CS231N</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/06/12/%E7%9F%A5%E8%AF%86%E8%92%B8%E9%A6%8F%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86-%E7%BB%BC%E8%BF%B0/" class="archive-article-date">
-        <time datetime="2023-06-11T16:28:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-06-12</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/06/12/%E7%9F%A5%E8%AF%86%E8%92%B8%E9%A6%8F%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86-%E7%BB%BC%E8%BF%B0/" target="_blank">知识蒸馏算法原理+综述</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/技术笔记//" class="article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/06/10/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AF%BE%E8%AE%BE%E4%BB%A3%E7%A0%81%E8%AF%A6%E8%A7%A3/" class="archive-article-date">
-        <time datetime="2023-06-10T12:23:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-06-10</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/06/10/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AF%BE%E8%AE%BE%E4%BB%A3%E7%A0%81%E8%AF%A6%E8%A7%A3/" target="_blank">数据库课设代码详解</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/技术笔记//" class="article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/06/08/%E2%80%9C%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AF%BE%E8%AE%BE-%E9%AB%98%E6%A0%A1%E7%A7%91%E7%A0%94%E7%B3%BB%E7%BB%9F%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%95%E2%80%9D/" class="archive-article-date">
-        <time datetime="2023-06-08T10:48:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-06-08</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/06/08/%E2%80%9C%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AF%BE%E8%AE%BE-%E9%AB%98%E6%A0%A1%E7%A7%91%E7%A0%94%E7%B3%BB%E7%BB%9F%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%95%E2%80%9D/" target="_blank">“数据库课设--高校科研系统开发记录”</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/技术笔记//" class="article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-      
-        </div></section>
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2022" class="archive-year">2022</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2022/07/01/YOLOv5/" class="archive-article-date">
-        <time datetime="2022-07-01T12:33:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-07-01</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2022/07/01/YOLOv5/" target="_blank">YOLOv5</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/CNN//" class="article-tag-list-link color4">CNN</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/tags/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/page/2/">2</a><a class="extend next" rel="next" href="/tags/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/page/2/">Next &amp;raquo;</a>
-    </nav>
-  
 
 
           </div>
@@ -835,9 +531,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: true,
 		toc_hide_index: true,
