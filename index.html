@@ -462,6 +462,207 @@
 
 
   
+    <article id="post-Any-to-Any-Generation-via-Composable-Diffusion" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2023/10/20/Any-to-Any-Generation-via-Composable-Diffusion/" target="_blank">Any-to-Any Generation via Composable Diffusion</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2023/10/20/Any-to-Any-Generation-via-Composable-Diffusion/" class="archive-article-date">
+        <time datetime="2023-10-20T11:33:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-10-20</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <p><img src="/2023/10/20/Any-to-Any-Generation-via-Composable-Diffusion/image-20231020193618805.png" alt="image-20231020193618805"></p>
+<p>​		这篇论文主要介绍了一种名为<strong>Composable Diffusion</strong>的算法，用于生成任意样式的图像。该算法使用一组可组合的扩散操作，从共享的潜在空间中生成图像。这些操作允许使用多个扩散过程来生成图像，以便在不同的分辨率和模式下对潜在空间进行采样。</p>
+<p>​		该算法的关键提出是可组合性，它允许用户在不同的操作序列之间切换，以探索不同的样式和图像。该算法还提供了一种新的形式化分析技术，可以计算操作序列之间的互信息。这种技术提供了一种量化方法，以测量不同操作序列之间的相似性和差异性，并帮助用户理解操作的效果。在实验中，Composable Diffusion比其他流行的生成模型更灵活和可定制，可以生成高质量、多样性和艺术性的图像。</p>
+
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/论文精读//" class="article-tag-list-link color5">论文精读</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2023/10/20/Any-to-Any-Generation-via-Composable-Diffusion/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-视觉扩散模型综述" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2023/10/17/%E8%A7%86%E8%A7%89%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E7%BB%BC%E8%BF%B0/" target="_blank">视觉扩散模型综述</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2023/10/17/%E8%A7%86%E8%A7%89%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E7%BB%BC%E8%BF%B0/" class="archive-article-date">
+        <time datetime="2023-10-17T13:59:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-10-17</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <p><a target="_blank" rel="noopener" href="https://github.com/ChenHsing/Awesome-Video-Diffusion-Models">https://github.com/ChenHsing/Awesome-Video-Diffusion-Models</a></p>
+<p>​		最近一波人工智能生成内容(AIGC)在计算机视觉领域取得了巨大的成功，而扩散模型在其中发挥了关键作用。由于其令人印象深刻的生成能力，扩散模型正逐渐取代基于GANs和自回归transformer的方法，不仅在图像生成和编辑方面，而且在视频相关研究领域都表现出了卓越的性能。</p>
+<h4 id="当前不足"><a href="#当前不足" class="headerlink" title="当前不足"></a>当前不足</h4><p>现有的研究主要集中在图像生成环境中的扩散模型（主要做image generation）</p>
+<p>provide only a coarse coverage of the video diffusion model or place greater emphasis on image model</p>
+    
+    <a class="article-more-a" href="/2023/10/17/%E8%A7%86%E8%A7%89%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E7%BB%BC%E8%BF%B0/#more">more >></a>
+    
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/论文精读//" class="article-tag-list-link color5">论文精读</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2023/10/17/%E8%A7%86%E8%A7%89%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E7%BB%BC%E8%BF%B0/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-关键路径及相关知识" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1010,206 +1211,6 @@
     
     <p class="article-more-link">
       <a class="article-more-a" href="/2023/06/22/Deep-Spectral-Representation-Learning-From-Multi-View-Data/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-OS课设FAT32U盘文件系统" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" target="_blank">OS课设FAT32U盘文件系统</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" class="archive-article-date">
-        <time datetime="2023-06-12T14:05:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-06-12</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p>！！！！！</p>
-<p>看再多的博客都不如去读一下原始的手册，这里放一个FAT的手册地址，十分感谢南京大学蒋炎岩老师的分享！</p>
-<p><a target="_blank" rel="noopener" href="http://jyywiki.cn/pages/OS/manuals/MSFAT-spec.pdf">http://jyywiki.cn/pages/OS/manuals/MSFAT-spec.pdf</a></p>
-    
-    <a class="article-more-a" href="/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/操作系统//" class="article-tag-list-link color5">操作系统</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-CS231N-线性分类、损失函数和梯度下降" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2023/06/12/CS231N-%E7%BA%BF%E6%80%A7%E5%88%86%E7%B1%BB%E3%80%81%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/" target="_blank">CS231N-损失函数和梯度下降</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2023/06/12/CS231N-%E7%BA%BF%E6%80%A7%E5%88%86%E7%B1%BB%E3%80%81%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/" class="archive-article-date">
-        <time datetime="2023-06-11T16:38:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-06-12</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <h1 id="损失函数与梯度下降"><a href="#损失函数与梯度下降" class="headerlink" title="损失函数与梯度下降"></a>损失函数与梯度下降</h1><h2 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数"></a>损失函数</h2><h3 id="SVM-loss（Hinge-loss）"><a href="#SVM-loss（Hinge-loss）" class="headerlink" title="SVM loss（Hinge loss）"></a>SVM loss（Hinge loss）</h3><img src="/2023/06/12/CS231N-%E7%BA%BF%E6%80%A7%E5%88%86%E7%B1%BB%E3%80%81%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/image-20230612005855485.png" alt="image-20230612005855485" style="zoom:67%;">
-    
-    <a class="article-more-a" href="/2023/06/12/CS231N-%E7%BA%BF%E6%80%A7%E5%88%86%E7%B1%BB%E3%80%81%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/CS231N//" class="article-tag-list-link color2">CS231N</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2023/06/12/CS231N-%E7%BA%BF%E6%80%A7%E5%88%86%E7%B1%BB%E3%80%81%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/">展开全文 >></a>
     </p>
     
 

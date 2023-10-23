@@ -6,19 +6,30 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Tag: 技术笔记 | 李宝璐</title>
+  <title>视觉扩散模型综述 | 李宝璐</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="里面放着李宝璐的碎碎念">
-<meta property="og:type" content="website">
-<meta property="og:title" content="李宝璐">
-<meta property="og:url" content="http://example.com/tags/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/index.html">
+  <meta name="description" content="https:&#x2F;&#x2F;github.com&#x2F;ChenHsing&#x2F;Awesome-Video-Diffusion-Models ​		最近一波人工智能生成内容(AIGC)在计算机视觉领域取得了巨大的成功，而扩散模型在其中发挥了关键作用。由于其令人印象深刻的生成能力，扩散模型正逐渐取代基于GANs和自回归transformer的方法，不仅在图像生成和编辑方面，而且在视频相关研究领域都表现出了卓越的性能。 当">
+<meta property="og:type" content="article">
+<meta property="og:title" content="视觉扩散模型综述">
+<meta property="og:url" content="http://example.com/2023/10/17/%E8%A7%86%E8%A7%89%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E7%BB%BC%E8%BF%B0/index.html">
 <meta property="og:site_name" content="李宝璐">
-<meta property="og:description" content="里面放着李宝璐的碎碎念">
+<meta property="og:description" content="https:&#x2F;&#x2F;github.com&#x2F;ChenHsing&#x2F;Awesome-Video-Diffusion-Models ​		最近一波人工智能生成内容(AIGC)在计算机视觉领域取得了巨大的成功，而扩散模型在其中发挥了关键作用。由于其令人印象深刻的生成能力，扩散模型正逐渐取代基于GANs和自回归transformer的方法，不仅在图像生成和编辑方面，而且在视频相关研究领域都表现出了卓越的性能。 当">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2023/10/17/%E8%A7%86%E8%A7%89%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E7%BB%BC%E8%BF%B0/image-20231017220030877.png">
+<meta property="og:image" content="http://example.com/2023/10/17/%E8%A7%86%E8%A7%89%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E7%BB%BC%E8%BF%B0/image-20231017220331268.png">
+<meta property="og:image" content="http://example.com/2023/10/17/%E8%A7%86%E8%A7%89%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E7%BB%BC%E8%BF%B0/image-20231017220623961.png">
+<meta property="og:image" content="http://example.com/2023/10/17/%E8%A7%86%E8%A7%89%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E7%BB%BC%E8%BF%B0/image-20231018231441678.png">
+<meta property="og:image" content="http://example.com/2023/10/17/%E8%A7%86%E8%A7%89%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E7%BB%BC%E8%BF%B0/image-20231018231639391.png">
+<meta property="og:image" content="http://example.com/2023/10/17/%E8%A7%86%E8%A7%89%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E7%BB%BC%E8%BF%B0/image-20231019141418466.png">
+<meta property="og:image" content="http://example.com/2023/10/17/%E8%A7%86%E8%A7%89%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E7%BB%BC%E8%BF%B0/image-20231019141814057.png">
+<meta property="article:published_time" content="2023-10-17T13:59:00.000Z">
+<meta property="article:modified_time" content="2023-10-23T06:14:26.069Z">
 <meta property="article:author" content="李宝璐">
+<meta property="article:tag" content="技术笔记">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2023/10/17/%E8%A7%86%E8%A7%89%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E7%BB%BC%E8%BF%B0/image-20231017220030877.png">
   
     <link rel="alternative" href="/atom.xml" title="李宝璐" type="application/atom+xml">
   
@@ -225,95 +236,213 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-视觉扩散模型综述" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2023" class="archive-year">2023</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/10/20/Any-to-Any-Generation-via-Composable-Diffusion/" class="archive-article-date">
-        <time datetime="2023-10-20T11:33:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-10-20</time>
-</a>
-
-        </div>
-    	 
+      <header class="article-header">
   
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/10/20/Any-to-Any-Generation-via-Composable-Diffusion/" target="_blank">Any-to-Any Generation via Composable Diffusion</a>
   
+    <h1 class="article-title" itemprop="name">
+      视觉扩散模型综述
     </h1>
   
 
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/论文精读//" class="article-tag-list-link color5">论文精读</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
+  
+        
+        <span id="busuanzi_container_page_pv" style='display:none' class="archive-article-date">
+              <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+        </span>
+
 <a href="/2023/10/17/%E8%A7%86%E8%A7%89%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E7%BB%BC%E8%BF%B0/" class="archive-article-date">
         <time datetime="2023-10-17T13:59:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-10-17</time>
 </a>
 
-        </div>
-    	 
   
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/10/17/%E8%A7%86%E8%A7%89%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E7%BB%BC%E8%BF%B0/" target="_blank">视觉扩散模型综述</a>
   
-    </h1>
-  
+    
+<div style="margin-top:10px;">
+  <span class="post-time">
+    <span class="post-meta-item-icon">
+      <!-- fonts.scss -->
+      <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
+      <i class="icon-statistics"></i>
+      <span class="post-meta-item-text"> 字数统计:</span>
+      <span class="post-count">10.1k字</span>
+    </span>
+  </span>
+
+  <span class="post-time">
+    &nbsp; | &nbsp;
+    <span class="post-meta-item-icon">
+      <i class="icon-book icon"></i>
+      <span class="post-meta-item-text"> 阅读时长≈</span>
+      <span class="post-count">35分</span>
+    </span>
+  </span>
+</div>
 
 
-        <div class="article-info info-on-right">
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <p><a target="_blank" rel="noopener" href="https://github.com/ChenHsing/Awesome-Video-Diffusion-Models">https://github.com/ChenHsing/Awesome-Video-Diffusion-Models</a></p>
+<p>​		最近一波人工智能生成内容(AIGC)在计算机视觉领域取得了巨大的成功，而扩散模型在其中发挥了关键作用。由于其令人印象深刻的生成能力，扩散模型正逐渐取代基于GANs和自回归transformer的方法，不仅在图像生成和编辑方面，而且在视频相关研究领域都表现出了卓越的性能。</p>
+<h4 id="当前不足"><a href="#当前不足" class="headerlink" title="当前不足"></a>当前不足</h4><p>现有的研究主要集中在图像生成环境中的扩散模型（主要做image generation）</p>
+<p>provide only a coarse coverage of the video diffusion model or place greater emphasis on image model</p>
+<span id="more"></span>
+
+
+
+<h2 id="扩散模型的基本原理和发展"><a href="#扩散模型的基本原理和发展" class="headerlink" title="扩散模型的基本原理和发展"></a>扩散模型的基本原理和发展</h2><h3 id="扩散模型"><a href="#扩散模型" class="headerlink" title="扩散模型"></a>扩散模型</h3><p>​		扩散模型是一类概率生成模型，它们学习逆转一个逐渐降低训练数据结构的过程。</p>
+<p>​		目前对扩散模型的研究主要基于三种主要的公式：去噪扩散概率模型（DDPMs），基于分数的生成模型（SGMs）和随机微分方程（Score SDEs）。</p>
+<h4 id="噪扩散概率模型-DDPMs"><a href="#噪扩散概率模型-DDPMs" class="headerlink" title="噪扩散概率模型 DDPMs"></a>噪扩散概率模型 DDPMs</h4><p>​		去噪扩散概率模型(DDPM)包含<strong>两个马尔可夫链</strong>:</p>
+<ul>
+<li>一个是<strong>将数据扰动为噪声</strong>的正向链，将任何数据转换成一个简单的先验分布</li>
+<li>一个是<strong>将噪声转换为数据</strong>的反向链，学习转换核来逆转前者的过程</li>
+</ul>
+<p>​		通过先从先验分布中抽样一个随机向量，然后通过反向马尔可夫链进行祖先抽样，可以生成新的数据点。</p>
+<p>​		这个采样过程的核心是<strong>训练反向马尔可夫链来匹配正向马尔可夫链的实际时间反转</strong>。</p>
+<p>​		考虑一个数据分布 x0 ∽ q(x0)，</p>
+<p>​		正向马尔可夫过程生成一系列随机变量 x1, x2, …, xT，其中过渡核为 q(xt|xt−1)。在给定 x0 的条件下，记作 q(x1, …, xT|x0) 的 x1, x2, …, xT 的联合分布可以分解为：</p>
+<img src="/2023/10/17/%E8%A7%86%E8%A7%89%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E7%BB%BC%E8%BF%B0/image-20231017220030877.png" alt="image-20231017220030877" style="zoom: 50%;">
+
+<p>​		通常情况下，过渡核被设计为：</p>
+<img src="/2023/10/17/%E8%A7%86%E8%A7%89%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E7%BB%BC%E8%BF%B0/image-20231017220331268.png" alt="image-20231017220331268" style="zoom:50%;">
+
+<p>其中 βt ∈ (0, 1) 是在模型训练之前选择的超参数。</p>
+<p>​		</p>
+<p>​		反向马尔可夫链由一个先验分布 p(xT) &#x3D; N(xT; 0, I) 和一个可学习的过渡核 pθ(xt−1|xt) 参数化，其形式如下：</p>
+<img src="/2023/10/17/%E8%A7%86%E8%A7%89%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E7%BB%BC%E8%BF%B0/image-20231017220623961.png" alt="image-20231017220623961" style="zoom:50%;">
+
+<p>​		其中，θ 表示模型参数，均值 µθ(xt, t) 和方差 Σθ(xt, t) 由深度神经网络参数化。借助反向马尔可夫链，我们可以通过首先从噪声向量 xT ∽ p(xT) 中进行采样，然后迭代地从可学习的过渡核 xt−1 ∽ pθ(xt−1|xt) 中进行采样，直到 t &#x3D; 1，生成新的数据 x0。</p>
+<h4 id="评分生成模型-SGMs"><a href="#评分生成模型-SGMs" class="headerlink" title="评分生成模型 SGMs"></a>评分生成模型 SGMs</h4><p>​		评分生成模型（Score-Based Generative Models，SGMs）的关键思想是通过<strong>使用不同水平的噪声扰动数据</strong>，并同时通过<strong>训练单个条件评分网络</strong>估计与所有噪声水平对应的评分。样本是通过<strong>在递减的噪声水平上使用评分函数链式生成</strong>，并结合基于评分的采样方法。在SGMs的制定中，训练和采样完全解耦。</p>
+<p>​		设q(x0)为数据分布，0 &lt; σ1 &lt; σ2 &lt; … &lt; σT为一系列噪声水平。SGMs的典型示例涉及通过高斯噪声分布将数据点x0扰动为xt，其中q(xt|x0) &#x3D; N(xt; x0, σ2 t I)，从而得到一系列含噪数据密度q(x1)，q(x2)，…，q(xT)，其中q(xt) :&#x3D; R q(xt)q(x0)dx0。噪声条件分数网络（NCSN）是一个深度神经网络sθ(x, t)，用于训练估计得分函数∇xt log q(xt)。我们可以直接使用得分匹配（score matching）、去噪得分匹配（denoising score matching）和切片得分匹配（sliced score matching）等技术来训练我们的NCSN，使用扰动数据点进行训练。</p>
+<p>​		对于样本生成，SGMs利用迭代方法按顺序从sθ(x,T)，sθ(x,T − 1)，…，sθ(x, 0)中产生样本，使用诸如annealed Langevin dynamics（ALD）等技术。</p>
+<h4 id="随机微分方程-Score-SDEs"><a href="#随机微分方程-Score-SDEs" class="headerlink" title="随机微分方程  Score SDEs"></a>随机微分方程  Score SDEs</h4><p>​		使用多个噪声尺度扰动数据是上面两个模型方法成功的关键。得分随机微分方程（Score SDEs）将这一思想进一步推广到<strong>无穷多个噪声尺度</strong>。扩散过程可以被建模为以下随机微分方程（SDE）的解：</p>
+<img src="/2023/10/17/%E8%A7%86%E8%A7%89%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E7%BB%BC%E8%BF%B0/image-20231018231441678.png" alt="image-20231018231441678" style="zoom:50%;">
+
+<p>其中，f(x, t)是SDE的扩散，g(t)是漂移函数，w是标准维纳过程(standard Wiener process)。</p>
+<p>​		从x(T) ∽ pT的样本开始，并反向进行过程，我们可以通过这个逆时间SDE获得样本x(0) ∽ p0：</p>
+<img src="/2023/10/17/%E8%A7%86%E8%A7%89%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E7%BB%BC%E8%BF%B0/image-20231018231639391.png" alt="image-20231018231639391" style="zoom:50%;">
+
+<p>​		其中，当时间倒流时，¯w是一个标准维纳过程。一旦对于所有t知道了每个边际分布的得分，即∇x log pt(x)，我们可以从方程（5）中推导出逆扩散过程，并模拟它以从p0中进行采样。</p>
+<h3 id="相关任务"><a href="#相关任务" class="headerlink" title="相关任务"></a>相关任务</h3><h4 id="Text-to-Video-Generation"><a href="#Text-to-Video-Generation" class="headerlink" title="Text-to-Video Generation"></a>Text-to-Video Generation</h4><p>​		文本到视频生成旨在根据文本描述自动生成相应的视频。这通常涉及理解文本描述中的场景、对象和动作，并将其转化为一系列连贯的视觉帧，从而生成具有逻辑和视觉一致性的视频。文本到视频生成具有广泛的应用，包括自动生成电影、动画、虚拟现实内容、教育演示视频等。</p>
+<h4 id="Unconditional-Video-Generation"><a href="#Unconditional-Video-Generation" class="headerlink" title="Unconditional Video Generation"></a>Unconditional Video Generation</h4><p>​		无条件视频生成是一项生成建模任务，其目标是从随机噪声或固定的初始状态开始生成连续且视觉上连贯的视频序列，而无需依赖特定的输入条件。与有条件视频生成不同，无条件视频生成不需要任何外部指导或先验信息。生成模型需要在没有明确输入的情况下自主学习如何捕捉时间动态、动作和视觉连贯性，以生成既真实又多样的视频内容。这对于探索生成模型从无监督数据中学习视频内容的能力和展示多样性至关重要。</p>
+<h4 id="Text-guided-Video-Editing"><a href="#Text-guided-Video-Editing" class="headerlink" title="Text-guided Video Editing"></a>Text-guided Video Editing</h4><p>​		文本引导的视频编辑是一种利用文本描述来指导视频内容编辑过程的技术。在这个任务中，输入是自然语言描述，描述了对视频应用的期望改变或修改。系统会分析文本输入，提取相关信息，如对象、动作或场景，并利用这些信息来指导编辑过程。文本引导的视频编辑提供了一种通过使用自然语言来传达编辑意图的方式，从而促进高效且直观的编辑[29, 38, 80]，潜在地减少了逐帧手动耗时编辑的需求。</p>
+<h3 id="数据集"><a href="#数据集" class="headerlink" title="数据集"></a>数据集</h3><p>​		在视频生成的早期阶段，任务仅限于在低分辨率、小规模数据集上进行训练，针对特定领域，从而导致生成的视频相对单调。随着大规模视频文本配对数据集的出现，像通用文本到视频生成这样的任务开始受到关注。</p>
+<p>​		视频生成的数据集主要可以分为<strong>字幕级别</strong>和<strong>分类级别</strong>。</p>
+<h4 id="字幕级别的数据集"><a href="#字幕级别的数据集" class="headerlink" title="字幕级别的数据集"></a>字幕级别的数据集</h4><p>​		字幕级别的数据集由<strong>视频和描述性文本字幕配对组成</strong>，为训练模型基于文本描述生成视频提供了必要的数据。</p>
+<img src="/2023/10/17/%E8%A7%86%E8%A7%89%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E7%BB%BC%E8%BF%B0/image-20231019141418466.png" alt="image-20231019141418466" style="zoom:50%;">
+
+<p>​		早期的字幕级别视频数据集主要用于<strong>视频文本检索任务</strong>[84–86]，<strong>规模较小</strong>（不超过120K），并且对特定领域（如电影[86]、动作[87, 92]、烹饪[88]）的关注有限。随着开放领域数据集WebVid-10M [94]的引入，文本到视频（T2V）生成的新任务开始受到关注，研究人员开始专注于开放领域的T2V生成任务。尽管WebVid-10M是T2V任务的主流基准数据集，但仍存在<strong>分辨率低</strong>（360P）和<strong>带有水印内容</strong>等问题。随后，为了提高通用文本到视频（T2V）任务中视频的分辨率和覆盖范围，<strong>VideoFactory</strong> [30]和<strong>InternVid</strong> [99]引入了更大规模（130M和234M）和高清（720P）的开放领域数据集。</p>
+<h4 id="分类级别的数据集"><a href="#分类级别的数据集" class="headerlink" title="分类级别的数据集"></a>分类级别的数据集</h4><p>​		分类级别的数据集由被分组为特定类别的视频组成，<strong>每个视频都带有其类别标签</strong>。这些数据集通常<strong>用于无条件视频生成或类别条件视频生成任务</strong>。</p>
+<img src="/2023/10/17/%E8%A7%86%E8%A7%89%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E7%BB%BC%E8%BF%B0/image-20231019141814057.png" alt="image-20231019141814057" style="zoom:50%;">
+
+<p>​		其中几个数据集也被应用于其他任务。例如，UCF101 [101]、Kinetics [103, 107]和Something-Something [106]是动作识别的典型基准数据集。DAVIS [105]最初是为视频对象分割任务提出的，后来成为视频编辑的常用基准数据集。在这些数据集中，UCF-101 [101]是最广泛用于视频生成的数据集，它被用作无条件视频生成、基于类别的条件生成和视频预测应用的基准数据集。它包含来自YouTube [110]的样本，涵盖了101个动作类别，包括人类运动、乐器演奏和互动动作。与UCF类似，Kinetics-400 [103]和Kinetics-600 [107]是两个涵盖更复杂动作类别和更大数据规模的数据集，但与UCF-101 [101]具有相同的应用范围。另一方面，Something-Something [106]数据集具有类别级别和字幕级别的标签，特别适用于文本条件视频预测任务 [111]。值得注意的是，这些原本在动作识别领域起关键作用的大规模数据集具有较小的规模（不超过50K）和单一类别[82, 83]、单一领域属性（数字 [81]、驾驶风景 [35, 102, 109]、机器人 [108]），因此不足以生成高质量的视频。因此，近年来，专门为视频生成任务设计的数据集被提出，通常具有独特的属性，例如高分辨率（1080P）[35]或延长的持续时间 [109, 112]。例如，Long Video GAN [109]提出了包含66个视频的马术数据集，每个视频平均持续时间为6504帧，帧率为30fps。Video LDM [35]收集了RDS数据集，其中包含683,060个持续时间为8秒的真实驾驶视频，分辨率为1080P。</p>
+<h3 id="评价指标"><a href="#评价指标" class="headerlink" title="评价指标"></a>评价指标</h3><p>​		视频生成的评估指标通常可以分为<strong>定量</strong>和<strong>定性</strong>度量。</p>
+<p>​		对于定性度量，一些研究中使用了人类主观评估的方法，评估者通常被呈现出两个或多个生成的视频，以与其他竞争模型合成的视频进行比较。观察者通常通过<strong>投票</strong>的方式对视频（T2V任务）的<strong>逼真度</strong>、<strong>自然连贯性</strong>和<strong>文本对齐</strong>等方面进行评估。然而，人工评估既<strong>昂贵</strong>，也存在<strong>无法完全反映模型全部能力的风险</strong>。</p>
+<h4 id="定性度量"><a href="#定性度量" class="headerlink" title="定性度量"></a>定性度量</h4><h5 id="图像级别评估指标"><a href="#图像级别评估指标" class="headerlink" title="图像级别评估指标"></a><strong>图像级别评估指标</strong></h5><p>​		Fréchet Inception Distance（FID）[114]、峰值信噪比（PSNR）[115]、结构相似性指数（SSIM）[116]和CLIPSIM [117]。FID通过将合成的视频帧与真实的视频帧进行比较来评估生成的视频的质量。它涉及对图像进行预处理，将其归一化到一致的尺度，利用InceptionV3 [118]从真实和合成的视频中提取特征，并计算均值和协方差矩阵。然后将这些统计数据组合起来计算FID分数。</p>
+<p>​		SSIM [116]和PSNR [115]都是像素级别的评估指标。<strong>SSIM 评估原始图像和生成图像的亮度、对比度和结构特征</strong>，而<strong>PSNR 是代表峰值信号与均方误差（MSE）之间比率的系数</strong>。这两个指标常用于<strong>评估重建图像帧的质量</strong>，并在超分辨率和修复等任务中应用。<strong>CLIPSIM</strong> [117]是一种用于衡量图像-文本相关性的方法。基于CLIP模型，它提取图像和文本特征，然后计算它们之间的相似性。该指标经常在文本条件的视频生成或编辑任务中使用。</p>
+<p><strong>缺点</strong>：图像级别的评估指标表示生成的视频帧的质量，但它们<strong>主要集中在单个帧上，忽略了视频的时间连贯性。</strong></p>
+<h5 id="视频级别评估指标"><a href="#视频级别评估指标" class="headerlink" title="视频级别评估指标"></a><strong>视频级别评估指标</strong></h5><p>​		Fréchet Video Distance（FVD）[121]是一种基于FID的视频质量评估指标。FVD使用在Kinetics上预训练的Inflated-3D Convnets (I3D)从视频片段中提取特征。随后，<strong>通过均值和协方差矩阵的组合计算FVD分数</strong>。</p>
+<p>​		Kernel Video Distance（KVD）[123]也基于I3D特征，但它通过<strong>利用基于核的方法Maximum Mean Discrepancy（MMD）来评估生成视频的质量</strong>。</p>
+<p>​		Video IS（Inception Score）[125]<strong>使用3D-Convnets（C3D）提取的特征计算生成视频的Inception得分</strong>，通常在UCF-101 上进行评估。高质量的视频具有低熵概率P(y|x)，而多样性通过检查所有视频的边际分布来评估，这应该呈现出高水平的熵。</p>
+<p>​		Frame Consistency CLIP Score [117]通常用于视频编辑任务中，用于<strong>衡量编辑视频的连贯性</strong>。它的计算涉及对编辑视频的所有帧计算CLIP图像嵌入，并报告所有视频帧对之间的平均余弦相似度。</p>
+<h2 id="VIDEO-GENERATION"><a href="#VIDEO-GENERATION" class="headerlink" title="VIDEO GENERATION"></a>VIDEO GENERATION</h2><h3 id="一般文本视频生成"><a href="#一般文本视频生成" class="headerlink" title="一般文本视频生成"></a>一般文本视频生成</h3><h4 id="基于训练的t2v扩散方法"><a href="#基于训练的t2v扩散方法" class="headerlink" title="基于训练的t2v扩散方法"></a>基于训练的t2v扩散方法</h4><h5 id="像素级扩散"><a href="#像素级扩散" class="headerlink" title="像素级扩散"></a>像素级扩散</h5><p>​		<strong>VDM</strong> (First One)<strong>将传统的图像扩散U-Net 架构扩展为3D U-Net结构</strong>，并同时<strong>使用图像和视频进行联合训练(需要成对的视频-文本数据集)<strong>。它采用的</strong>条件采样技术</strong>使得生成的视频具有更好的质量和更长的时长。它还适用于无条件生成和视频预测等任务。</p>
+<p>​		<strong>Make-A-Video</strong> 引入了一种新的范式。在这种方法中，<strong>网络从成对的图像-文本数据中学习视觉-文本相关性</strong>，并<strong>从无监督的视频数据中捕捉视频动态</strong>。这种创新的方法减少了对数据收集的依赖，从而生成多样且逼真的视频。此外，通过使用多个超分辨率模型和插值网络，它实现了更高清晰度和帧率的生成视频。</p>
+<h5 id="Latent-Diffusion-Model"><a href="#Latent-Diffusion-Model" class="headerlink" title="Latent Diffusion Model"></a>Latent Diffusion Model</h5><p>​		依赖于一维卷积或时间注意力来建立时间关系</p>
+<p>​		<strong>MagicVideo</strong> 是最早使用Latent Diffusion Model (LDM，潜扩散模型)在潜空间中进行T2V生成的工作之一。通过<strong>在较低维度的潜空间中利用扩散模型</strong>，它显著降低了计算复杂度，从而加快了处理速度。引入的逐帧轻量级适配器使图像和视频的分布对齐，从而使得提出的有向注意力能够更好地建模时间关系，确保视频的一致性。</p>
+<p>​		<strong>LVDM</strong>也采用了LDM 作为其骨干网络，并利用<strong>分层框架</strong>对潜空间进行建模。通过采用<strong>掩码采样</strong>技术，该模型能够生成更长的视频。它结合了条件潜空间扰动 和 无条件引导 等技术，以减轻自回归生成任务后期性能下降的问题。通过这种训练方法，它可以应用于视频预测任务，甚至生成由数千帧组成的长视频。</p>
+<p>​		<strong>ModelScope</strong> 将<strong>空间-时间卷积和注意力机制</strong>融入LDM中，用于T2V任务。它采用了<strong>混合训练</strong>方法，使用了LAION 和WebVid 数据集，并作为一个开源基准方法。</p>
+<p>​		<strong>Latent-Shift</strong> 专注于轻量级的时间建模。它借鉴了TSM的思想，在卷积块中将通道在相邻帧之间进行位移，以实现时间建模。此外，在生成视频的同时，这个模型还保持了原有的T2I能力。</p>
+<h5 id="Multi-stage-T2V方法"><a href="#Multi-stage-T2V方法" class="headerlink" title="Multi-stage T2V方法"></a>Multi-stage T2V方法</h5><p>​		<strong>Imagin Video</strong> 将成熟的T2I模型Imagen扩展到视频生成任务上。级联视频扩散模型由<strong>七个子模型</strong>组成，其中一个用于基础视频生成，三个用于空间超分辨率，三个用于时间超分辨率。这些子模型共同构成了一个全面的三阶段训练流程。它验证了T2I训练中采用的许多训练技术的有效性，如无分类器引导、条件增强和v-参数化 。此外，作者利用渐进蒸馏技术加速了视频扩散模型的采样时间。其中引入的多阶段训练技术已成为主流高清视频生成的有效策略。</p>
+<p>​		<strong>Video LDM</strong> 训练了一个由三个训练阶段组成的 T2V 网络，包括关键帧 T2V 生成、视频帧插值和空间超分辨率模块。它在空间层次上增加了时间注意力层和三维卷积层，从而能够在第一阶段生成关键帧。随后，通过实施掩码采样方法，训练了一个帧插值模型，将短视频的关键帧扩展到更高的帧率。最后，采用视频超分辨率模型来提高分辨率。</p>
+<p>​		<strong>LAVIE</strong>使用了一个由三个阶段组成的级联视频扩散模型：基础 T2V 阶段、时间插值阶段和视频超分辨率阶段。此外，它验证了联合图像-视频微调的过程可以产生高质量和创造性的结果。</p>
+<p>​		<strong>Show-1</strong> 首次引入了基于像素和基于潜空间的扩散模型融合用于 T2V 生成。它的框架包括四个独立的阶段，前三个阶段在低分辨率像素级别上运行：关键帧生成、帧插值和超分辨率。值得注意的是，像素级别的阶段可以生成具有精确文本对齐的视频。第四个阶段由一个潜空间超分辨率模块组成，提供了一种经济高效的方法来增强视频的分辨率。</p>
+<h5 id="Noise-Prior-Exploration"><a href="#Noise-Prior-Exploration" class="headerlink" title="Noise Prior Exploration"></a>Noise Prior Exploration</h5><p>​		上面的方法通过扩散模型独立地对每个帧进行去噪。</p>
+<p>​		<strong>VideoFusion</strong> 通过考虑不同帧之间的内容冗余和时间相关性而脱颖而出。具体而言，它使用共享的基础噪声和沿时间轴的残差噪声对扩散过程进行分解。这种噪声分解是通过两个共同训练的网络实现的。这种方法的引入旨在确保生成帧运动的一致性，尽管可能导致多样性有限。此外，该论文还表明，使用像DALLE-2这样的T2I骨干网络来训练T2V模型可以加快收敛速度，但其文本嵌入可能面临理解长时序文本的挑战。</p>
+<p>​		<strong>PYoCo</strong>承认，在视频之前直接扩展图像噪声可能在T2V任务中产生次优结果。作为一种解决方案，它复杂地预先设计一个视频噪声，并微调用于视频生成的eDiff-I模型。提出的噪声先验包括对视频中不同帧的相关噪声进行采样。作者验证了提出的<strong>混合和递进噪声模型更适合T2V任务</strong>。</p>
+<h5 id="数据集贡献"><a href="#数据集贡献" class="headerlink" title="数据集贡献"></a>数据集贡献</h5><p>​		<strong>VideoFactory</strong> 注意到先前广泛使用的WebVid 数据集中存在低分辨率和水印的问题。作为回应，它构建了一个大规模的视频数据集HD-VG-130M，由来自开放领域的1.3亿个视频文本对组成。该数据集是通过HD-VILA 使用BLIP-2 字幕收集的，这些字幕声称具有高分辨率且无水印。此外，VideoFactory引入了<strong>交换交叉注意机制</strong>，以促进时间和空间模块之间的交互，从而改进了时间关系建模。在这个高清晰度数据集上训练，论文中提出的方法能够生成(1376 × 768)分辨率的高分辨率视频。</p>
+<p>​		<strong>VidRD</strong> 引入了“重用和扩散”框架，通过重用原始潜空间表示并遵循之前的扩散过程，迭代地生成额外的帧。此外，在构建视频文本数据集时，它利用了静态图像、长视频和短视频。对于静态图像，通过随机缩放或平移操作引入动态方面。Short videos 使用BLIP-2标注进行分类，而长视频首先进行分割，然后基于MiniGPT-4 进行标注以保留所需的视频片段。在视频文本数据集中构建多样的类别和分布被证明对提高视频生成的质量是有效的。</p>
+<h5 id="高效训练"><a href="#高效训练" class="headerlink" title="高效训练"></a>高效训练</h5><p>​		<strong>ED-T2V</strong> 采用LDM 作为其骨干网络，并冻结了大部分参数以降低训练成本。它引入了身份注意力和时间交叉注意力，以确保时间的连贯性。本文提出的方法在降低训练成本的同时，保持了可比的T2V生成性能。</p>
+<p>​		<strong>SimDA</strong> 提出了一种参数高效的T2V任务训练方法，通过保持T2I模型的参数固定。它引入了一个轻量级的空间适配器，用于将视觉信息转移用于T2V学习。此外，它还引入了一个时间适配器，用于在较低的特征维度上建模时间关系。所提出的潜移注意力有助于保持视频的一致性。此外，轻量级的架构使得推断速度更快，并且适用于视频编辑任务。</p>
+<h5 id="个性化视频生成"><a href="#个性化视频生成" class="headerlink" title="个性化视频生成"></a>个性化视频生成</h5><p>​		个性化视频生成通常指根据特定主角或风格创建定制视频，以满足个人偏好或特征的视频生成需求。</p>
+<p>​		<strong>AnimateDiff</strong> 注意到LoRA 和Dreambooth 在个性化T2I模型方面的成功，并希望将它们的有效性扩展到视频动画领域。此外，作者旨在训练一个可以适应生成多样化个性化视频的模型，而无需反复在视频数据集上重新训练。这涉及使用T2I模型作为基本生成器，并添加一个运动模块来学习运动动态。在推断过程中，个性化T2I模型可以替换基本T2I模型的权重，从而实现个性化视频生成。</p>
+<h5 id="去除伪影"><a href="#去除伪影" class="headerlink" title="去除伪影"></a>去除伪影</h5><p>​		“去除伪影”是指在媒体中消除或减少不希望的失真、故障或瑕疵的过程，例如图像、视频或音频。伪影可能出现为视觉异常、噪声或错误，这些都会降低媒体的质量或破坏其原本的内容。去除伪影涉及使用各种技术和算法将媒体恢复到其原始或期望的状态，提高内容的整体质量和清晰度。(T2V生成的视频中的闪烁和伪影问题)</p>
+<p>​		<strong>DSDN</strong> 引入了双流扩散模型，一个用于视频内容，另一个用于动作。通过这种方式，它可以保持内容和动作之间的强对齐。通过将视频生成过程分解为内容和动作组件，可以生成具有较少闪烁的连续视频。</p>
+<p>​		<strong>VideoGen</strong> 首先使用T2I模型根据文本提示生成图像，这些图像作为引导视频生成的参考图像。随后，引入了高效的级联潜空间扩散模块，采用基于流的时间上采样步骤来提高时间分辨率。与先前的方法相比，引入参考图像可以提高视觉保真度并减少伪影，使模型能够更多地专注于学习视频动态。</p>
+<h5 id="复杂动态建模"><a href="#复杂动态建模" class="headerlink" title="复杂动态建模"></a>复杂动态建模</h5><p>​		Text-to-Video (T2V)的生成在建模复杂动态方面面临挑战，特别是在行为连贯性方面的干扰。</p>
+<p>​		<strong>Dysen-VDM</strong> 引入了一种将文本信息转化为动态场景图的方法。借助大型语言模型 (LLM) ，Dysen-VDM 从输入文本中识别关键动作，并按时间顺序进行排列，丰富场景的描述细节。此外，该模型从LLM的上下文学习中受益，赋予它具有强大的时空建模能力。这种方法在合成复杂动作方面展现出显著的优势。</p>
+<p>​		<strong>VideoDirGPT</strong> 同样利用 LLM 来规划视频内容的生成。对于给定的文本输入，它通过 GPT-4 将其扩展为一个视频计划，其中包括场景描述、实体及其布局，以及实体在背景中的分布。随后，模型通过对布局进行明确控制来生成相应的视频。这种方法在复杂动态视频生成中展现出在布局和运动控制方面的显著优势。</p>
+<h5 id="特定领域的文本到视频生成"><a href="#特定领域的文本到视频生成" class="headerlink" title="特定领域的文本到视频生成"></a>特定领域的文本到视频生成</h5><p>​		<strong>Video-Adapter</strong> 通过将预训练的通用T2V模型转移到特定领域的T2V任务中，引入了一种新颖的设置。通过将特定领域的视频分布分解为预训练噪声和一个较小的训练组件，它大大降低了迁移训练的成本。该方法在Ego4D 和Bridge Data 场景的T2V生成中的有效性得到了验证。</p>
+<p>​		<strong>NUWA-XL</strong> 采用了粗到精的生成范式，实现了并行视频生成。它首先使用全局扩散生成关键帧，然后利用局部扩散模型在两个帧之间进行插值。这种方法使得可以生成长达3376帧的视频，从而为动画生成建立了一个基准。这项工作专注于卡通视频生成领域，利用其技术生成持续几分钟的卡通视频。</p>
+<p>​		<strong>Text2Performer</strong> 将以人为中心的视频分解为外貌和动作表示。它首先利用VQVAE 潜空间对自然人类视频进行无监督训练，以解耦外貌和姿势表示。随后，它利用连续VQ扩散器对连续的姿势嵌入进行采样。最后，作者在姿势嵌入的时空域中采用了一种动作感知的遮罩策略，以增强时序相关性。</p>
+<h4 id="无需训练的T2VDiffusion方法"><a href="#无需训练的T2VDiffusion方法" class="headerlink" title="无需训练的T2VDiffusion方法"></a>无需训练的T2VDiffusion方法</h4><p>​		前面的方法都是基于训练的T2V方法，通常依赖于大规模数据集，如WebVid 或其他视频数据集 。而一些最近的研究 则旨在通过开发无需训练的T2V方法来减少繁重的训练成本，下面将介绍这些方法。</p>
+<p>​		<strong>Text2Video-Zero</strong> 利用预训练的T2I模型Stable Diffusion进行视频合成。为了保持不同帧之间的一致性，它在每个帧和第一帧之间使用了<strong>交叉注意力机制</strong>。此外，通过修改潜空间编码的采样方法，它丰富了运动动力学。此外，该方法可以与条件生成和编辑技术（如ControlNet 和InstructPix2Pix）结合使用，实现对视频的可控生成。</p>
+<p>​		<strong>DirecT2V 和Free-Bloom</strong> 则引入了大型语言模型 (LLM) ，基于单个抽象用户提示生成逐帧描述。LLM导演被用来将用户输入分解为逐帧描述。此外，为了保持帧间的连续性，DirecT2V 采用了一种新颖的值映射和双softmax过滤方法。Free-Bloom 提出了一系列的反向过程增强，包括联合噪声采样、步骤感知的注意力转移和双路径插值。实验结果表明这些修改增强了零样本视频生成的能力。</p>
+<p>​		为了处理复杂的时空提示，<strong>LVD</strong> 首先利用LLM 生成动态场景布局，然后利用这些布局指导视频生成。该方法无需训练，并通过调整基于布局的注意力图来引导视频扩散模型，实现复杂动态视频的生成。</p>
+<p>​		<strong>DiffSynth</strong> 提出了一种迭代中的潜空间去闪烁框架和视频去闪烁算法，以减轻闪烁并生成连贯的视频。此外，它可以应用于各种领域，包括视频风格化和3D渲染。</p>
+<h3 id="具有其他条件的视频生成"><a href="#具有其他条件的视频生成" class="headerlink" title="具有其他条件的视频生成"></a>具有其他条件的视频生成</h3><h4 id="姿势引导的视频生成"><a href="#姿势引导的视频生成" class="headerlink" title="姿势引导的视频生成"></a>姿势引导的视频生成</h4><p>​		<strong>Follow Your Pose</strong> 提出了一种由姿势和文本控制驱动的视频生成模型。它采用了两阶段的训练过程，利用图像-姿势对和无姿势视频。在第一阶段，通过使用（图像，姿势）对对T2I（文本到图像）模型进行微调，实现了姿势控制的生成。在第二阶段，模型利用未标记的视频进行学习，通过引入时间注意力和跨帧注意力机制来进行时间建模。这种两阶段的训练赋予了模型姿势控制和时间建模的能力。</p>
+<p>​		<strong>Dreampose</strong> 构建了一个双路径CLIP-VAE 图像编码器和适配器模块，用以替代LDM 中原有的CLIP文本编码器作为条件组件。给定一张人类图像和一个姿势序列，这项研究可以基于提供的姿势信息生成相应的人类姿势视频。</p>
+<p>​		<strong>Dancing Avatar</strong> 专注于合成人类舞蹈视频。它利用T2I模型 以自回归的方式生成视频的每一帧。为了确保整个视频的一致性，使用了一个帧对齐模块，并结合了ChatGPT 的见解，增强了相邻帧之间的连贯性。此外，它利用OpenPose ControlNet 来利用基于姿势生成高质量人体视频的能力。</p>
+<p>​		<strong>Disco</strong> 涉及一种称为参考人类舞蹈生成的新颖问题设置。它利用ControlNet 、Grounded-SAM 和OpenPose 分别进行背景控制、前景提取和姿势骨架提取。此外，还利用大规模图像数据集 对人类属性进行预训练。通过结合这些训练步骤，Disco为人类特定的视频生成任务奠定了坚实的基础。</p>
+<h4 id="运动引导的视频生成"><a href="#运动引导的视频生成" class="headerlink" title="运动引导的视频生成"></a>运动引导的视频生成</h4><p>​		<strong>MCDiff</strong> 是将运动作为控制视频合成的先驱。该方法涉及提供视频的第一帧以及一系列的笔触动作。最初，利用流量完井模型根据稀疏的笔触运动控制预测密集的视频运动。随后，该模型使用稠密运动图的自回归方法来预测后续帧数，最终合成出完整的视频。</p>
+<p>​		<strong>DragNUWA</strong> 同时引入文本、图像和轨迹信息，从语义、空间和时间的角度提供对视频内容的细粒度控制。为了进一步解决之前工作中对开放域轨迹控制的不足，作者提出了轨迹采样器 (Trajectory Sampler, TS)，以实现任意轨迹的开放域控制，同时还提出了多尺度融合 (Multiscale Fusion, MF) 来控制不同粒度的轨迹，并采用自适应训练 (Adaptive Training, AT) 策略来生成符合轨迹的一致视频。</p>
+<h4 id="声音引导的视频生成"><a href="#声音引导的视频生成" class="headerlink" title="声音引导的视频生成"></a>声音引导的视频生成</h4><p>​		<strong>AADiff</strong> 引入了同时使用音频和文本作为视频合成条件的概念。该方法首先使用专用编码器分别对文本和音频进行编码。然后，计算文本和音频嵌入之间的相似性，并选择具有最高相似度的文本标记。选择的文本标记以prompt2prompt 的方式用于编辑帧。这种方法可以生成与音频同步的视频，而无需进行任何额外的训练。</p>
+<p>​		<strong>Generative Disco</strong> 是一个旨在进行音乐可视化的文本到视频生成的人工智能系统。该系统采用了一个流水线，首先使用一个大型语言模型 ，然后使用一个文本到图像模型来实现其目标。</p>
+<p>​		<strong>TPoS</strong> 将具有可变时间语义和幅度的音频输入与LDM 的基础相结合，扩展了在生成模型中利用音频模态的应用。通过客观评估和用户研究，这种方法在广泛使用的音频到视频基准测试中表现出色，凸显了其卓越的性能。</p>
+<h4 id="图像引导的视频生成"><a href="#图像引导的视频生成" class="headerlink" title="图像引导的视频生成"></a>图像引导的视频生成</h4><p>​		<strong>LaMD</strong> 首先训练一个自编码器，将视频中的运动信息进行分离。接着，训练一个基于扩散的运动生成器，用于生成视频的运动。通过这种方法，模型在运动的指导下，能够生成具有高质量感知的视频，只需提供第一帧作为输入。</p>
+<p>​		<strong>LFDM</strong> 利用条件图像和文本进行以人为中心的视频生成。在初始阶段，训练了一个潜在流自编码器来重建视频。此外，在中间阶段可以使用流动预测器来预测流动运动。随后，在第二阶段，使用图像、流动和文本提示作为条件训练扩散模型，以生成连贯的视频。</p>
+<p>​		<strong>Generative Dynamics</strong> 提出了一种在图像空间建模场景动态的方法。它从展现自然运动的真实视频序列中提取运动轨迹。对于单个图像，扩散模型通过一个频率协调的扩散采样过程，在傅里叶域中为每个像素预测长期的运动表示。这个表示可以转换为跨越整个视频的密集运动轨迹。当与图像渲染模块结合时，它可以将静态图像转化为无缝循环的动态视频，促进用户与所描绘对象的真实互动。</p>
+<h4 id="脑引导的视频生成"><a href="#脑引导的视频生成" class="headerlink" title="脑引导的视频生成"></a>脑引导的视频生成</h4><p>​		<strong>MinD-Video</strong> 是通过连续的功能性磁共振成像（fMRI）数据探索视频生成的开创性工作。该方法首先使用对比学习将MRI数据与图像和文本进行对齐。接下来，通过训练的MRI编码器取代CLIP文本编码器作为条件输入。通过设计一个时间注意力模块来建模序列动态，进一步增强了该方法。得到的模型能够重建具有精确语义、动作和场景动态的视频，超越了真实数据的性能，为这一领域设定了新的基准。</p>
+<h4 id="深度引导的视频生成"><a href="#深度引导的视频生成" class="headerlink" title="深度引导的视频生成"></a>深度引导的视频生成</h4><p>​		<strong>Make-Your-Video</strong> 采用了一种新颖的方法进行文本深度条件视频生成。它在训练过程中使用MiDas 提取深度信息，并将其作为条件因素进行集成。此外，该方法引入了因果性注意掩码，以便合成更长的视频。与最先进的技术进行比较表明，该方法在可控的文本到视频生成方面具有优势，展示了更好的定量和定性性能。</p>
+<p>​		<strong>Animate-A-Story</strong> 中，引入了一种创新的方法，将视频生成分为两个步骤。第一步是动作结构检索，根据给定的文本提示从大型视频数据库中检索出最相关的视频。使用离线深度估计方法获取这些检索到的视频的深度图，然后用作运动引导。第二步是结构引导的文本到视频合成，通过从深度图中获取的结构运动来训练视频生成模型。这种两步法可以根据定制的文本描述创建个性化的视频。</p>
+<h4 id="多模态引导的视频生成"><a href="#多模态引导的视频生成" class="headerlink" title="多模态引导的视频生成"></a>多模态引导的视频生成</h4><p>​		<strong>VideoComposer</strong> 专注于基于多模态条件生成视频，包括文本、空间和时间条件。具体而言，它引入了一个时空条件编码器，允许对各种条件进行灵活组合。这最终实现了多种模态的结合，例如草图、掩码、深度和运动向量。通过利用多种模态的控制，VideoComposer 实现了生成内容中更高的视频质量和改进的细节。</p>
+<p>​		<strong>MM-Diffusion</strong> 是联合音频-视频生成的首次尝试。为了实现多模态内容的生成，它引入了一个分支结构的架构，其中包括两个子网络，分别负责视频和音频的生成。为了确保这两个子网络的输出之间的连贯性，设计了一个基于随机偏移的注意力模块来建立相互连接。除了在无条件音频-视频生成方面的能力之外，MM-Diffusion 在实现视频到音频的转换方面也表现出明显的适应能力。</p>
+<p>​		<strong>MovieFactory</strong> 致力于将扩散模型应用于电影风格视频的生成。它利用ChatGPT 对用户提供的文本进行详细阐述，以生成用于电影生成的全面顺序脚本。此外，还设计了一个音频检索系统，为视频提供配音。通过上述技术，实现了生成多模态音视频内容的目标。</p>
+<p>​		<strong>CoDi</strong> 提出了一种新颖的生成模型，具有从不同的输入模态组合中创建多样化的输出模态的能力，包括语言、图像、视频或音频。这是通过构建一个共享的多模态空间实现的，通过对不同模态之间的输入和输出空间进行对齐，促进了任意模态组合的生成。</p>
+<p>​		<strong>NExT-GPT</strong> 提出了一个端到端的任意多模态LLM系统，可以实现任意多模态的输入和输出。它将LLM 与多模态适配器和多样化的扩散解码器集成在一起，使系统能够感知文本、图像、视频和音频的任意组合，并生成相应的输出。在训练过程中，它只微调了一小部分参数。此外，它引入了一种模态切换指令调整（MosIT）机制，并手动策划了一个高质量的MosIT数据集。这个数据集有助于获取复杂的跨模态语义理解和内容生成能力。</p>
+<h3 id="无条件视频生成"><a href="#无条件视频生成" class="headerlink" title="无条件视频生成"></a>无条件视频生成</h3><p>​		在没有额外条件的情况下生成属于特定领域的视频。这些研究的重点主要集中在视频表征的设计和扩散模型网络的架构上。</p>
+<h5 id="基于U-Net的生成模型"><a href="#基于U-Net的生成模型" class="headerlink" title="基于U-Net的生成模型"></a>基于U-Net的生成模型</h5><p>​		<strong>VIDM</strong> 利用了两个流：内容生成流用于生成视频帧内容，动作流定义了视频的运动。通过合并这两个流，生成了一致的视频。此外，作者采用了位置群归一化（PosGN）来增强视频连续性，并探索了隐式运动条件（IMC）和PosGN的组合，以解决长视频的生成一致性问题。</p>
+<p>​		<strong>PVDM</strong> 首先训练一个自编码器将像素映射到低维潜在空间，然后在潜在空间中应用扩散去噪生成模型来合成视频。这种方法既降低了训练和推断的成本，同时又能保持令人满意的生成质量。(与LDM类似)</p>
+<p>​		<strong>GDVDM</strong> 首先生成深度图视频，其中场景和布局的生成被优先考虑，而细节和纹理被抽象化。然后，生成的深度图作为条件信号用于进一步生成视频的其余细节。这种方法保留了出色的细节生成能力，特别适用于复杂的驾驶场景视频生成任务。(主要关注合成驾驶场景视频)</p>
+<p>​		<strong>LEO</strong> 通过一系列流场图在生成过程中表示运动，从而在本质上将运动与外观分离开来。它通过流场图像动画器和潜在运动扩散模型的组合实现人类视频的生成。前者学习从流场图到运动编码的重构，而后者捕捉运动先验以获取运动编码。这两种方法的协同作用能够有效地学习人类视频之间的相关性。此外，这种方法可以扩展到无限长度的人类视频合成和保留内容的视频编辑等任务。</p>
+<h5 id="基于Transformer的生成模型"><a href="#基于Transformer的生成模型" class="headerlink" title="基于Transformer的生成模型"></a>基于Transformer的生成模型</h5><p>​		VDT 在Transformer 架构中开创性地探索了基于视频扩散模型的方法。利用Transformer的灵活可扩展性，作者研究了各种时间建模方法。此外，他们还将VDT应用于多个任务，如无条件生成和视频预测。</p>
+<h3 id="视频补全"><a href="#视频补全" class="headerlink" title="视频补全"></a>视频补全</h3><h2 id="VIDEO-EDITING"><a href="#VIDEO-EDITING" class="headerlink" title="VIDEO EDITING"></a>VIDEO EDITING</h2><h2 id="VIDEO-UNDERSTANDING"><a href="#VIDEO-UNDERSTANDING" class="headerlink" title="VIDEO UNDERSTANDING"></a>VIDEO UNDERSTANDING</h2><h2 id="面临的挑战"><a href="#面临的挑战" class="headerlink" title="面临的挑战"></a>面临的挑战</h2><h2 id="未来发展趋势"><a href="#未来发展趋势" class="headerlink" title="未来发展趋势"></a>未来发展趋势</h2>
+    
+
+    
+
+    
+    <div class="declare"> 
+      <ul class="post-copyright">
+        <li>
+          <strong>本文作者：</strong>
+          李宝璐
+        </li>
+        <li>
+          <strong>本文链接：</strong>
+          <a href="http://example.com/2023/10/17/视觉扩散模型综述/" title="视觉扩散模型综述" target="_blank">http://example.com/2023/10/17/视觉扩散模型综述/</a>
+        </li>
+        
+        <li>
+          <strong>版权声明： </strong>
           
+          本博客所有文章除特别声明外，均采用 <a href="https://github.com/JoeyBling/hexo-theme-yilia-plus/blob/master/LICENSE" rel="external nofollow" target="_blank">MIT</a> 许可协议。转载请注明出处！
+        </li>
+        
+      </ul>
+    </div>
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -325,7 +454,7 @@
 		</ul>
 	</div>
 
-          
+    
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -338,453 +467,127 @@
 	</div>
 
 
+    
+
+    
+    
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <!-- <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a> -->
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2023/10/17/%E8%A7%86%E8%A7%89%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E7%BB%BC%E8%BF%B0/" alt="微信分享二维码"> -->
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+
+    
+    <div class="clearfix"></div>
+  </div>
   </div>
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/09/26/%E5%85%B3%E9%94%AE%E8%B7%AF%E5%BE%84%E5%8F%8A%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/" class="archive-article-date">
-        <time datetime="2023-09-26T11:30:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-09-26</time>
-</a>
 
+
+<nav id="article-nav">
+  
+    <a href="/2023/10/20/Any-to-Any-Generation-via-Composable-Diffusion/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Any-to-Any Generation via Composable Diffusion
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2023/09/26/%E5%85%B3%E9%94%AE%E8%B7%AF%E5%BE%84%E5%8F%8A%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">关键路径及相关知识</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/09/26/%E5%85%B3%E9%94%AE%E8%B7%AF%E5%BE%84%E5%8F%8A%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/" target="_blank">关键路径及相关知识</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/技术笔记//" class="article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BD%93%E5%89%8D%E4%B8%8D%E8%B6%B3"><span class="toc-number">1.</span> <span class="toc-text">当前不足</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86%E5%92%8C%E5%8F%91%E5%B1%95"><span class="toc-number"></span> <span class="toc-text">扩散模型的基本原理和发展</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B"><span class="toc-number"></span> <span class="toc-text">扩散模型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%99%AA%E6%89%A9%E6%95%A3%E6%A6%82%E7%8E%87%E6%A8%A1%E5%9E%8B-DDPMs"><span class="toc-number">1.</span> <span class="toc-text">噪扩散概率模型 DDPMs</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AF%84%E5%88%86%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B-SGMs"><span class="toc-number">2.</span> <span class="toc-text">评分生成模型 SGMs</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9A%8F%E6%9C%BA%E5%BE%AE%E5%88%86%E6%96%B9%E7%A8%8B-Score-SDEs"><span class="toc-number">3.</span> <span class="toc-text">随机微分方程  Score SDEs</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%B8%E5%85%B3%E4%BB%BB%E5%8A%A1"><span class="toc-number"></span> <span class="toc-text">相关任务</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Text-to-Video-Generation"><span class="toc-number">1.</span> <span class="toc-text">Text-to-Video Generation</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Unconditional-Video-Generation"><span class="toc-number">2.</span> <span class="toc-text">Unconditional Video Generation</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Text-guided-Video-Editing"><span class="toc-number">3.</span> <span class="toc-text">Text-guided Video Editing</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E9%9B%86"><span class="toc-number"></span> <span class="toc-text">数据集</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%97%E5%B9%95%E7%BA%A7%E5%88%AB%E7%9A%84%E6%95%B0%E6%8D%AE%E9%9B%86"><span class="toc-number">1.</span> <span class="toc-text">字幕级别的数据集</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%86%E7%B1%BB%E7%BA%A7%E5%88%AB%E7%9A%84%E6%95%B0%E6%8D%AE%E9%9B%86"><span class="toc-number">2.</span> <span class="toc-text">分类级别的数据集</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87"><span class="toc-number"></span> <span class="toc-text">评价指标</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9A%E6%80%A7%E5%BA%A6%E9%87%8F"><span class="toc-number">1.</span> <span class="toc-text">定性度量</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%9B%BE%E5%83%8F%E7%BA%A7%E5%88%AB%E8%AF%84%E4%BC%B0%E6%8C%87%E6%A0%87"><span class="toc-number">1.1.</span> <span class="toc-text">图像级别评估指标</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%A7%86%E9%A2%91%E7%BA%A7%E5%88%AB%E8%AF%84%E4%BC%B0%E6%8C%87%E6%A0%87"><span class="toc-number">1.2.</span> <span class="toc-text">视频级别评估指标</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#VIDEO-GENERATION"><span class="toc-number"></span> <span class="toc-text">VIDEO GENERATION</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E8%88%AC%E6%96%87%E6%9C%AC%E8%A7%86%E9%A2%91%E7%94%9F%E6%88%90"><span class="toc-number"></span> <span class="toc-text">一般文本视频生成</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E8%AE%AD%E7%BB%83%E7%9A%84t2v%E6%89%A9%E6%95%A3%E6%96%B9%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">基于训练的t2v扩散方法</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%83%8F%E7%B4%A0%E7%BA%A7%E6%89%A9%E6%95%A3"><span class="toc-number">1.1.</span> <span class="toc-text">像素级扩散</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Latent-Diffusion-Model"><span class="toc-number">1.2.</span> <span class="toc-text">Latent Diffusion Model</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Multi-stage-T2V%E6%96%B9%E6%B3%95"><span class="toc-number">1.3.</span> <span class="toc-text">Multi-stage T2V方法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Noise-Prior-Exploration"><span class="toc-number">1.4.</span> <span class="toc-text">Noise Prior Exploration</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E9%9B%86%E8%B4%A1%E7%8C%AE"><span class="toc-number">1.5.</span> <span class="toc-text">数据集贡献</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%AB%98%E6%95%88%E8%AE%AD%E7%BB%83"><span class="toc-number">1.6.</span> <span class="toc-text">高效训练</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%AA%E6%80%A7%E5%8C%96%E8%A7%86%E9%A2%91%E7%94%9F%E6%88%90"><span class="toc-number">1.7.</span> <span class="toc-text">个性化视频生成</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8E%BB%E9%99%A4%E4%BC%AA%E5%BD%B1"><span class="toc-number">1.8.</span> <span class="toc-text">去除伪影</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%A4%8D%E6%9D%82%E5%8A%A8%E6%80%81%E5%BB%BA%E6%A8%A1"><span class="toc-number">1.9.</span> <span class="toc-text">复杂动态建模</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%89%B9%E5%AE%9A%E9%A2%86%E5%9F%9F%E7%9A%84%E6%96%87%E6%9C%AC%E5%88%B0%E8%A7%86%E9%A2%91%E7%94%9F%E6%88%90"><span class="toc-number">1.10.</span> <span class="toc-text">特定领域的文本到视频生成</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%97%A0%E9%9C%80%E8%AE%AD%E7%BB%83%E7%9A%84T2VDiffusion%E6%96%B9%E6%B3%95"><span class="toc-number">2.</span> <span class="toc-text">无需训练的T2VDiffusion方法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B7%E6%9C%89%E5%85%B6%E4%BB%96%E6%9D%A1%E4%BB%B6%E7%9A%84%E8%A7%86%E9%A2%91%E7%94%9F%E6%88%90"><span class="toc-number"></span> <span class="toc-text">具有其他条件的视频生成</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A7%BF%E5%8A%BF%E5%BC%95%E5%AF%BC%E7%9A%84%E8%A7%86%E9%A2%91%E7%94%9F%E6%88%90"><span class="toc-number">1.</span> <span class="toc-text">姿势引导的视频生成</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%90%E5%8A%A8%E5%BC%95%E5%AF%BC%E7%9A%84%E8%A7%86%E9%A2%91%E7%94%9F%E6%88%90"><span class="toc-number">2.</span> <span class="toc-text">运动引导的视频生成</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A3%B0%E9%9F%B3%E5%BC%95%E5%AF%BC%E7%9A%84%E8%A7%86%E9%A2%91%E7%94%9F%E6%88%90"><span class="toc-number">3.</span> <span class="toc-text">声音引导的视频生成</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9B%BE%E5%83%8F%E5%BC%95%E5%AF%BC%E7%9A%84%E8%A7%86%E9%A2%91%E7%94%9F%E6%88%90"><span class="toc-number">4.</span> <span class="toc-text">图像引导的视频生成</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%84%91%E5%BC%95%E5%AF%BC%E7%9A%84%E8%A7%86%E9%A2%91%E7%94%9F%E6%88%90"><span class="toc-number">5.</span> <span class="toc-text">脑引导的视频生成</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B7%B1%E5%BA%A6%E5%BC%95%E5%AF%BC%E7%9A%84%E8%A7%86%E9%A2%91%E7%94%9F%E6%88%90"><span class="toc-number">6.</span> <span class="toc-text">深度引导的视频生成</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%9A%E6%A8%A1%E6%80%81%E5%BC%95%E5%AF%BC%E7%9A%84%E8%A7%86%E9%A2%91%E7%94%9F%E6%88%90"><span class="toc-number">7.</span> <span class="toc-text">多模态引导的视频生成</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%A0%E6%9D%A1%E4%BB%B6%E8%A7%86%E9%A2%91%E7%94%9F%E6%88%90"><span class="toc-number"></span> <span class="toc-text">无条件视频生成</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8EU-Net%E7%9A%84%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B"><span class="toc-number">0.1.</span> <span class="toc-text">基于U-Net的生成模型</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8ETransformer%E7%9A%84%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B"><span class="toc-number">0.2.</span> <span class="toc-text">基于Transformer的生成模型</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%86%E9%A2%91%E8%A1%A5%E5%85%A8"><span class="toc-number"></span> <span class="toc-text">视频补全</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#VIDEO-EDITING"><span class="toc-number"></span> <span class="toc-text">VIDEO EDITING</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#VIDEO-UNDERSTANDING"><span class="toc-number"></span> <span class="toc-text">VIDEO UNDERSTANDING</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%A2%E4%B8%B4%E7%9A%84%E6%8C%91%E6%88%98"><span class="toc-number"></span> <span class="toc-text">面临的挑战</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%AA%E6%9D%A5%E5%8F%91%E5%B1%95%E8%B6%8B%E5%8A%BF"><span class="toc-number"></span> <span class="toc-text">未来发展趋势</span></a>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/07/19/Python-numpy%E4%B8%AD%E5%88%87%E7%89%87-1-1-%E5%88%86%E5%88%AB%E8%A1%A8%E7%A4%BA%E4%BB%80%E4%B9%88/" class="archive-article-date">
-        <time datetime="2023-07-19T09:09:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-07-19</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/07/19/Python-numpy%E4%B8%AD%E5%88%87%E7%89%87-1-1-%E5%88%86%E5%88%AB%E8%A1%A8%E7%A4%BA%E4%BB%80%E4%B9%88/" target="_blank">Python numpy中切片 [:, : -1] [:, [-1] ] 分别表示什么</a>
-  
-    </h1>
-  
+        
+    </div>
+</aside>
 
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/numpy//" class="article-tag-list-link color1">numpy</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/07/01/%E5%85%B3%E4%BA%8Erequirements-txt%E7%9A%84%E9%82%A3%E7%82%B9%E4%BA%8B/" class="archive-article-date">
-        <time datetime="2023-07-01T06:21:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-07-01</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/07/01/%E5%85%B3%E4%BA%8Erequirements-txt%E7%9A%84%E9%82%A3%E7%82%B9%E4%BA%8B/" target="_blank">关于requirements.txt的那点事</a>
-  
-    </h1>
-  
 
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/requirements-txt//" class="article-tag-list-link color2">requirements.txt</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/06/26/%E9%87%8D%E7%94%9F%E4%B9%8B%E6%88%91%E6%98%AF%E6%9C%BA%E8%AF%95coding%E6%80%AA/" class="archive-article-date">
-        <time datetime="2023-06-26T05:03:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-06-26</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/06/26/%E9%87%8D%E7%94%9F%E4%B9%8B%E6%88%91%E6%98%AF%E6%9C%BA%E8%AF%95coding%E6%80%AA/" target="_blank">重生之我是机试coding怪</a>
-  
-    </h1>
-  
 
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/机试指南//" class="article-tag-list-link color5">机试指南</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/06/23/RCAN-Image-Super-Resolution-Using-Very-Deep-Residual-Channel-Attention-Networks/" class="archive-article-date">
-        <time datetime="2023-06-23T13:52:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-06-23</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/06/23/RCAN-Image-Super-Resolution-Using-Very-Deep-Residual-Channel-Attention-Networks/" target="_blank">RCAN Image Super-Resolution Using Very Deep Residual Channel Attention Networks</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/图像超分辨率//" class="article-tag-list-link color2">图像超分辨率</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" class="archive-article-date">
-        <time datetime="2023-06-12T14:05:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-06-12</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" target="_blank">OS课设FAT32U盘文件系统</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/操作系统//" class="article-tag-list-link color5">操作系统</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/06/12/CS231N-%E7%BA%BF%E6%80%A7%E5%88%86%E7%B1%BB%E3%80%81%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/" class="archive-article-date">
-        <time datetime="2023-06-11T16:38:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-06-12</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/06/12/CS231N-%E7%BA%BF%E6%80%A7%E5%88%86%E7%B1%BB%E3%80%81%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/" target="_blank">CS231N-损失函数和梯度下降</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/CS231N//" class="article-tag-list-link color2">CS231N</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/06/12/%E7%9F%A5%E8%AF%86%E8%92%B8%E9%A6%8F%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86-%E7%BB%BC%E8%BF%B0/" class="archive-article-date">
-        <time datetime="2023-06-11T16:28:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-06-12</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/06/12/%E7%9F%A5%E8%AF%86%E8%92%B8%E9%A6%8F%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86-%E7%BB%BC%E8%BF%B0/" target="_blank">知识蒸馏算法原理+综述</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/技术笔记//" class="article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/tags/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/page/2/">2</a><a class="extend next" rel="next" href="/tags/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/page/2/">Next &amp;raquo;</a>
-    </nav>
-  
 
 
           </div>
@@ -825,9 +628,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: true,
 		toc_hide_index: true,
