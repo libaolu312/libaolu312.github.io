@@ -6,19 +6,25 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Tag: 环境配置 | 李宝璐</title>
+  <title>Diffusion Models/Score-based Generative Models背后的深度学习原理（1）:配分函数 | 李宝璐</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="里面放着李宝璐的碎碎念">
-<meta property="og:type" content="website">
-<meta property="og:title" content="李宝璐">
-<meta property="og:url" content="http://example.com/tags/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/index.html">
+  <meta name="description" content="Diffusion Models&#x2F;Score-based Generative Models背后的深度学习原理（1）:配分函数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Diffusion Models&#x2F;Score-based Generative Models背后的深度学习原理（1）:配分函数">
+<meta property="og:url" content="http://example.com/2023/11/06/Diffusion-Models-Score-based-Generative-Models%E8%83%8C%E5%90%8E%E7%9A%84%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%8E%9F%E7%90%86%EF%BC%881%EF%BC%89-%E9%85%8D%E5%88%86%E5%87%BD%E6%95%B0/index.html">
 <meta property="og:site_name" content="李宝璐">
-<meta property="og:description" content="里面放着李宝璐的碎碎念">
+<meta property="og:description" content="Diffusion Models&#x2F;Score-based Generative Models背后的深度学习原理（1）:配分函数">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2023/11/06/Diffusion-Models-Score-based-Generative-Models%E8%83%8C%E5%90%8E%E7%9A%84%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%8E%9F%E7%90%86%EF%BC%881%EF%BC%89-%E9%85%8D%E5%88%86%E5%87%BD%E6%95%B0/4f290e62ad14420faed9f5e6c43859c7.png">
+<meta property="og:image" content="http://example.com/2023/11/06/Diffusion-Models-Score-based-Generative-Models%E8%83%8C%E5%90%8E%E7%9A%84%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%8E%9F%E7%90%86%EF%BC%881%EF%BC%89-%E9%85%8D%E5%88%86%E5%87%BD%E6%95%B0/9ea5bc08c8084744bfd2d275951d4685.png">
+<meta property="article:published_time" content="2023-11-06T07:40:16.000Z">
+<meta property="article:modified_time" content="2023-11-06T10:01:15.779Z">
 <meta property="article:author" content="李宝璐">
+<meta property="article:tag" content="技术笔记">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2023/11/06/Diffusion-Models-Score-based-Generative-Models%E8%83%8C%E5%90%8E%E7%9A%84%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%8E%9F%E7%90%86%EF%BC%881%EF%BC%89-%E9%85%8D%E5%88%86%E5%87%BD%E6%95%B0/4f290e62ad14420faed9f5e6c43859c7.png">
   
     <link rel="alternative" href="/atom.xml" title="李宝璐" type="application/atom+xml">
   
@@ -225,76 +231,258 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-Diffusion-Models-Score-based-Generative-Models背后的深度学习原理（1）-配分函数" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2023" class="archive-year">2023</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/10/25/%E5%9C%A8windows11%E4%B8%8B%E5%AE%89%E8%A3%85ubuntu%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%B9%B6%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/" class="archive-article-date">
-        <time datetime="2023-10-25T04:21:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-10-25</time>
-</a>
-
-        </div>
-    	 
+      <header class="article-header">
   
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/10/25/%E5%9C%A8windows11%E4%B8%8B%E5%AE%89%E8%A3%85ubuntu%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%B9%B6%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/" target="_blank">在windows11下安装ubuntu子系统并配置深度学习环境</a>
   
+    <h1 class="article-title" itemprop="name">
+      Diffusion Models/Score-based Generative Models背后的深度学习原理（1）:配分函数
     </h1>
   
 
 
-        <div class="article-info info-on-right">
+  
+  
+        
+        <span id="busuanzi_container_page_pv" style='display:none' class="archive-article-date">
+              <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+        </span>
+
+<a href="/2023/11/06/Diffusion-Models-Score-based-Generative-Models%E8%83%8C%E5%90%8E%E7%9A%84%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%8E%9F%E7%90%86%EF%BC%881%EF%BC%89-%E9%85%8D%E5%88%86%E5%87%BD%E6%95%B0/" class="archive-article-date">
+        <time datetime="2023-11-06T07:40:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-11-06</time>
+</a>
+
+  
+  
+    
+<div style="margin-top:10px;">
+  <span class="post-time">
+    <span class="post-meta-item-icon">
+      <!-- fonts.scss -->
+      <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
+      <i class="icon-statistics"></i>
+      <span class="post-meta-item-text"> 字数统计:</span>
+      <span class="post-count">2.2k字</span>
+    </span>
+  </span>
+
+  <span class="post-time">
+    &nbsp; | &nbsp;
+    <span class="post-meta-item-icon">
+      <i class="icon-book icon"></i>
+      <span class="post-meta-item-text"> 阅读时长≈</span>
+      <span class="post-count">7分</span>
+    </span>
+  </span>
+</div>
+
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <h1 id="Diffusion-Models-x2F-Score-based-Generative-Models背后的深度学习原理（1）-配分函数"><a href="#Diffusion-Models-x2F-Score-based-Generative-Models背后的深度学习原理（1）-配分函数" class="headerlink" title="Diffusion Models&#x2F;Score-based Generative Models背后的深度学习原理（1）:配分函数"></a>Diffusion Models&#x2F;Score-based Generative Models背后的深度学习原理（1）:配分函数</h1><span id="more"></span>
+
+<h2 id="无向模型"><a href="#无向模型" class="headerlink" title="无向模型"></a>无向模型</h2><p>有向图模型为我们提供了一种描述结构化概率模型的语言。而另一种常见的语 言则是 **无向模型(undirected Model),**也被称为 **马尔可夫随机场(Markov random field, MRF)**或者是 **马尔可夫网络(Markov network)(Kindermann, 1980)**。就像它 们的名字所说的那样,无向模型中所有的边都是没有方向的。</p>
+<ul>
+<li>当存在很明显的理由画出每一个指向特定方向的箭头时，有向模型显然最适用。 有向模型中，经常存在我们理解的具有因果关系以及因果关系有明确方向的情况。 接力赛的例子就是一个这样的情况。 之前运动员的表现会影响后面运动员的完成时间，而后面运动员却不会影响前面运动员的完成时间。</li>
+<li>然而并不是所有情况的相互作用都有一个明确的方向关系。 当相互的作用并没有本质性的指向，或者是明确的双向相互作用时，使用无向模型更加合适。</li>
+</ul>
+<p>作为一个这种情况的例子，假设我们希望对三个二值随机变量建模：你是否生病，你的同事是否生病以及你的室友是否生病。 就像在接力赛的例子中所作的简化假设一样，我们可以在这里做一些关于相互作用的简化假设。 假设你的室友和同事并不认识，所以他们不太可能直接相互传染一些疾病，比如说感冒。 这个事件太过罕见，所以我们不对此事件建模。 然而，很有可能其中之一将感冒传染给你，然后通过你再传染给了另一个人。 我们通过对你的同事传染给你以及你传染给你的室友建模来对这种间接的从你的同事到你的室友的感冒传染建模。</p>
+<p>在这种情况下，你传染给你的室友和你的室友传染给你都是非常容易的，所以模型不存在一个明确的单向箭头。 这启发我们使用无向模型。 其中<strong>随机变量对应着图中的相互作用的结点</strong>。 与有向模型相同的是，如果在无向模型中的两个结点通过一条边相连接，那么对应这些结点的随机变量相互之间是直接作用的。 不同于有向模型，在无向模型中的边是没有方向的，并不与一个条件分布相关联。</p>
+<p>我们把对应你健康状况的随机变量记作$h_y$，对应你的室友健康状况的随机变量记作$h_x$ ，你的同事健康的变量记作$h_c$ 。下图表示这种关系。</p>
+<p><img src="/2023/11/06/Diffusion-Models-Score-based-Generative-Models%E8%83%8C%E5%90%8E%E7%9A%84%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%8E%9F%E7%90%86%EF%BC%881%EF%BC%89-%E9%85%8D%E5%88%86%E5%87%BD%E6%95%B0/4f290e62ad14420faed9f5e6c43859c7.png" alt="img"></p>
+<p>正式地说，一个无向模型是一个定义在无向模型 G上的结构化概率模型。 对于图中的每一个团， 一个因子（factor）$\Phi $ (也称为团势能（clique potential）)，衡量了团中变量每一种可能的联合状态所对应的密切程度。 这些因子都被限制为是非负的。 它们一起定义了未归一化概率函数：<br>$$<br>\tilde{p}\left( x \right) &#x3D;\prod_{c&#x3D;\varrho}{\phi \left( C \right)}<br>$$<br>只要所有团中的结点数都不大，那么我们就能够高效地处理这些未归一化概率函数。 它包含了这样的思想，密切度越高的状态有越大的概率。 然而，不像贝叶斯网络，几乎不存在团定义的结构，所以不能保证把它们乘在一起能够得到一个有效的概率分布。下面展示了一个从无向模型中读取分解信息的例子。</p>
+<p><img src="/2023/11/06/Diffusion-Models-Score-based-Generative-Models%E8%83%8C%E5%90%8E%E7%9A%84%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%8E%9F%E7%90%86%EF%BC%881%EF%BC%89-%E9%85%8D%E5%88%86%E5%87%BD%E6%95%B0/9ea5bc08c8084744bfd2d275951d4685.png" alt="img"></p>
+<p>这 个 图 说 明 通 过 选 择 适 当 的 φ, 函 数 p(a; b; c; d; e; f) 可 以 写 作 1 Z φa,b(a; b)φb,c(b; c)φa,d(a; d)φb,e(b; e)φe,f(e; f)。</p>
+<p>在你、你的室友和同事之间感冒传染的例子中包含了两个团。 一个团包含了$h_y$ 和$h_c$ 。 这个团的因子可以通过一个表来定义，可能取到下面的值：状态为1代表了健康的状态，相对的状态为0则表示不好的健康状态（即感染了感冒）。 你们两个通常都是健康的，所以对应的状态拥有最高的密切程度。 两个人中只有一个人是生病的密切程度是最低的，因为这是一个很罕见的状态。 两个人都生病的状态（通过一个人来传染给了另一个人）有一个稍高的密切程度，尽管仍然不及两个人都健康的密切程度。</p>
+<p>为了完整地定义这个模型，我们需要对包含$h_y$ 和$h_r$的团定义类似的因子。</p>
+<h2 id="配分函数"><a href="#配分函数" class="headerlink" title="配分函数"></a>配分函数</h2><p>尽管这个未归一化概率函数处处不为零，我们仍然无法保证它的概率之和或者积分为1。 为了得到一个有效的概率分布，我们需要使用对应的归一化的概率分布，一个通过归一化团势能乘积定义的分布也被称作是吉布斯分布：<br>$$<br>p\left( x \right) &#x3D;\frac{1}{Z}\tilde{p}\left( x \right)<br>$$<br>其中，Z是使得所有的概率之和或者积分为1的常数，并且满足：<br>$$<br>Z&#x3D;\int{\tilde{p}\left( x \right) dx}<br>$$<br>当函数p(x)固定时，我们可以把Z当成是一个常数。 值得注意的是如果函数p(x)带有参数时，那么Z是这些参数的一个函数。 在相关文献中为了节省空间忽略控制Z的变量而直接写Z是一个常用的方式。 归一化常数Z被称作是配分函数，这是一个从统计物理学中借鉴的术语。</p>
+<p>由于Z通常是由对所有可能的x状态的联合分布空间求和或者求积分得到的，它通常是很难计算的。 为了获得一个无向模型的归一化概率分布，模型的结构和函数$\Phi $ 的定义通常需要设计为有助于高效地计算Z。 在深度学习中，Z通常是难以处理的。 由于Z难以精确地计算出，我们只能使用一些近似的方法。</p>
+<p>在设计无向模型时，我们必须牢记在心的一个要点是设定一些使得Z不存在的因子也是有可能的。 当模型中的一些变量是连续的，且在其定义域上的积分发散时这种情况就会发生。 例如， 当我们需要对一个单独的标量变量建模，并且单个团势能在这种情况下：<br>$$<br>Z&#x3D;\int{x^2dx}<br>$$<br>由于这个积分是发散的，所以不存在一个对应着这个势能函数的概率分布。 有时候$\Phi $函数某些参数的选择可以决定相应的概率分布是否能够被定义。参数$\beta $决定了归一化常数Z是否存在。 正的$\beta $使得$\Phi $函数是一个关于x的高斯分布，但是非正的参数 $\beta $则使得$\Phi $不可能被归一化。</p>
+<p>有向建模和无向建模之间一个重要的区别就是有向模型是通过从起始点的概率分布直接定义的， 反之无向模型的定义显得更加宽松，通过$\Phi $函数转化为概率分布而定义。 这改变了我们处理这些建模问题的直觉。 当我们处理无向模型时需要牢记一点，每一个变量的定义域对于一系列给定的$\Phi $函数所对应的概率分布有着重要的影响。 举个例子，我们考虑一个n维向量的随机变量x以及一个由偏置向量b参数化的无向模型。 假设x的每一个元素对应着一个团，并且满足$\phi ^{\left( i \right)}\left( x_i \right) &#x3D;\exp \left( b_ix_i \right) $。 在这种情况下概率分布是怎样的呢？ 答案是我们无法确定，因为我们并没有指定x的定义域。</p>
+<p>相关参考：</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/exacity/deeplearningbook-chinese/tree/master/Chapter16">https://github.com/exacity/deeplearningbook-chinese/tree/master/Chapter16</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_41895747/article/details/122951702?spm=1001.2014.3001.5501">https://blog.csdn.net/qq_41895747/article/details/122951702?spm=1001.2014.3001.5501</a></p>
+
+    
+
+    
+
+    
+    <div class="declare"> 
+      <ul class="post-copyright">
+        <li>
+          <strong>本文作者：</strong>
+          李宝璐
+        </li>
+        <li>
+          <strong>本文链接：</strong>
+          <a href="http://example.com/2023/11/06/Diffusion-Models-Score-based-Generative-Models背后的深度学习原理（1）-配分函数/" title="Diffusion Models/Score-based Generative Models背后的深度学习原理（1）:配分函数" target="_blank">http://example.com/2023/11/06/Diffusion-Models-Score-based-Generative-Models背后的深度学习原理（1）-配分函数/</a>
+        </li>
+        
+        <li>
+          <strong>版权声明： </strong>
           
+          本博客所有文章除特别声明外，均采用 <a href="https://github.com/JoeyBling/hexo-theme-yilia-plus/blob/master/LICENSE" rel="external nofollow" target="_blank">MIT</a> 许可协议。转载请注明出处！
+        </li>
+        
+      </ul>
+    </div>
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">环境配置</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+    
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/技术文档//" class="article-tag-list-link color5">技术文档</a>
+        			<a href="/categories/深扒论文//" class="article-tag-list-link color5">深扒论文</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
+    
 
     
+    
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <!-- <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a> -->
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2023/11/06/Diffusion-Models-Score-based-Generative-Models%E8%83%8C%E5%90%8E%E7%9A%84%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%8E%9F%E7%90%86%EF%BC%881%EF%BC%89-%E9%85%8D%E5%88%86%E5%87%BD%E6%95%B0/" alt="微信分享二维码"> -->
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+
+<nav id="article-nav">
+  
+    <a href="/2023/11/06/Diffusion-Models-Score-based-Generative-Models%E8%83%8C%E5%90%8E%E7%9A%84%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%8E%9F%E7%90%86%EF%BC%882%EF%BC%89-%E5%9F%BA%E4%BA%8E%E8%83%BD%E9%87%8F%E6%A8%A1%E5%9E%8B%E5%92%8C%E5%8F%97%E9%99%90%E7%8E%BB%E5%B0%94%E5%85%B9%E6%9B%BC%E6%9C%BA/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Diffusion Models/Score-based Generative Models背后的深度学习原理（2）:基于能量模型和受限玻尔兹曼机
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2023/10/25/%E5%9C%A8windows11%E4%B8%8B%E5%AE%89%E8%A3%85ubuntu%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%B9%B6%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">在windows11下安装ubuntu子系统并配置深度学习环境</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Diffusion-Models-x2F-Score-based-Generative-Models%E8%83%8C%E5%90%8E%E7%9A%84%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%8E%9F%E7%90%86%EF%BC%881%EF%BC%89-%E9%85%8D%E5%88%86%E5%87%BD%E6%95%B0"><span class="toc-number">1.</span> <span class="toc-text">Diffusion Models&#x2F;Score-based Generative Models背后的深度学习原理（1）:配分函数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%A0%E5%90%91%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.1.</span> <span class="toc-text">无向模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E5%88%86%E5%87%BD%E6%95%B0"><span class="toc-number">1.2.</span> <span class="toc-text">配分函数</span></a></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
+        
+    </div>
+</aside>
+
+
+
+
+
+
+
+
+
+
+
+
 
 
           </div>
@@ -335,9 +523,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: true,
 		toc_hide_index: true,
@@ -419,10 +607,6 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Personal homepage</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">环境配置</a>
               </li>
             
             <div class="clearfix"></div>

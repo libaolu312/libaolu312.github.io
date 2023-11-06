@@ -232,6 +232,420 @@
             
 
   
+    <article id="post-YOLOv5" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2022/07/01/YOLOv5/" target="_blank">YOLOv5</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2022/07/01/YOLOv5/" class="archive-article-date">
+        <time datetime="2022-07-01T12:33:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-07-01</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <h1 id="YOLOv5"><a href="#YOLOv5" class="headerlink" title="YOLOv5"></a>YOLOv5</h1><h1 id="一、输入端分析"><a href="#一、输入端分析" class="headerlink" title="一、输入端分析"></a>一、输入端分析</h1><h2 id="Mosaic数据增强"><a href="#Mosaic数据增强" class="headerlink" title="Mosaic数据增强"></a>Mosaic数据增强</h2><h3 id="原理分析"><a href="#原理分析" class="headerlink" title="原理分析"></a>原理分析</h3><p>YOLOv5采用和YOLOv4一样的Mosaic数据增强。</p>
+<p>主要原理：<strong>它将一张选定的图片和随机的3张图片进行随机裁剪，再拼接到一张图上作为训练数据。</strong></p>
+<p>这样可以丰富图片的背景，而且四张图片拼接在一起变相提高了batch_size，在进行batch normalization（归一化）的时候也会计算四张图片。</p>
+<p>这样让YOLOv5对本身batch_size不是很依赖。</p>
+<p><img src="/2022/07/01/YOLOv5/344d1c81ddaf46e78150296e955441eb.png" alt="img"></p>
+    
+    <a class="article-more-a" href="/2022/07/01/YOLOv5/#more">more >></a>
+    
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/论文精读//" class="article-tag-list-link color5">论文精读</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2022/07/01/YOLOv5/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-VGG" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2022/07/01/VGG/" target="_blank">VGG</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2022/07/01/VGG/" class="archive-article-date">
+        <time datetime="2022-07-01T09:13:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-07-01</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <h1 id="一、VGG网络的背景"><a href="#一、VGG网络的背景" class="headerlink" title="一、VGG网络的背景"></a>一、VGG网络的背景</h1><p>AlexNet问世之后，很多学者通过改进AlexNet的网络结构来提高自己的准确率，主要有两个方向：<strong>小卷积核</strong>和<strong>多尺度</strong>。</p>
+<p>而VGG的作者们则选择了另外一个方向，即<strong>加深网络深度</strong>。</p>
+<p>VGGNet的网络结构简单、规整且高效。VGGNet较为典型的网络结构主要有VGG16和VGG19（两者并没有本质上的区别，只是网络深度不一样）。</p>
+<h1 id="二、VGG网络结构"><a href="#二、VGG网络结构" class="headerlink" title="二、VGG网络结构"></a>二、VGG网络结构</h1><h2 id="1、各网络结构参数图示"><a href="#1、各网络结构参数图示" class="headerlink" title="1、各网络结构参数图示"></a>1、各网络结构参数图示</h2><p><img src="/2022/07/01/VGG/image-20230701192613915.png" alt="image-20230701192613915"></p>
+<p> 接下来以VGG16为例子来进行讲解</p>
+<h2 id="2、输入"><a href="#2、输入" class="headerlink" title="2、输入"></a>2、输入</h2><p>（224，224，3）的RGB图像作为输入</p>
+<h2 id="3、双层-——-一层卷积-（一层卷积-最大池化）"><a href="#3、双层-——-一层卷积-（一层卷积-最大池化）" class="headerlink" title="3、双层 —— 一层卷积+（一层卷积+最大池化）"></a>3、双层 —— 一层卷积+（一层卷积+最大池化）</h2><p><img src="/2022/07/01/VGG/7335d7d0c2a14959917754acd313a425.png" alt="img"></p>
+<p>这里总共4层。</p>
+<p>都是使用卷积核为（3，3）的卷积层，每过一层（不含池化）尺寸不变，每过一层池化尺寸减半。</p>
+<p>因此（224，224，3）-&gt;（224，224，64）-&gt;（112，112，64）-&gt;（112，112，128）-&gt;（56，56，128）</p>
+<h2 id="4、三层-——-两层卷积-（一层卷积-最大池化）"><a href="#4、三层-——-两层卷积-（一层卷积-最大池化）" class="headerlink" title="4、三层 —— 两层卷积+（一层卷积+最大池化）"></a>4、三层 —— 两层卷积+（一层卷积+最大池化）</h2><p><img src="/2022/07/01/VGG/30208d82be3e4ae6b9e7b396d0f21215.png" alt="img"></p>
+<p>这里总共9层。</p>
+<p>因此（56，56，128）-&gt; （56，56，256）-&gt; （28，28，256）-&gt; （28，28，512）-&gt; （14，14，512）-&gt; （7，7，512）</p>
+<h2 id="5、全连接层——分类判决"><a href="#5、全连接层——分类判决" class="headerlink" title="5、全连接层——分类判决"></a>5、全连接层——分类判决</h2><p><img src="/2022/07/01/VGG/7b5968f971554dc58f4587ba6a76d92f.png" alt="img"></p>
+<h2 id="6、拓展：VGG16-bn-——-Batch-Normalization"><a href="#6、拓展：VGG16-bn-——-Batch-Normalization" class="headerlink" title="6、拓展：VGG16_bn —— Batch Normalization"></a>6、拓展：VGG16_bn —— Batch Normalization</h2><p>就是在提取特征的每一层多加了BatchNorm2d层。</p>
+<p>通常来说，数据标准化预处理对于浅层模型来说就够了（使得输入数据在各个特征的分布相近，往往更容易训练出有效的模型），但对于深层模型来说，训练中模型参数的更新依然很容易造成靠近输出层输出的剧烈变化，这种不稳定性难以让我们训练出有效的深度模型。</p>
+<p>因此，批量归一化应运而生。</p>
+<p>BatchNorm2d层的作用是：进行批量标准化处理（对于所有的batch中样本的同一个channel的数据元素进行标准化处理，即如果有C个通道，无论batch中有多少个样本，都会在通道维度上进行标准化处理，一共进行C次。），这样能把输入的数限制在一个范围内，把数据重新变为正态分布。<br>公式：</p>
+<img src="/2022/07/01/VGG/beta.png" alt="\hat{x}=\frac{x-\operatorname{mean}[x]}{\sqrt{\operatorname{Var}[x]+e p s}} * \gamma+\beta" style="zoom:100%;">
+
+<p>而上面的可训练参数（拉伸<img src="/2022/07/01/VGG/gamma.png" alt="\gamma">和偏移<img src="/2022/07/01/VGG/beta-1688212456336-9.png" alt="\beta">)也可以根据学习得到不一样的结果，甚至可以不使用批量归一化（ </p>
+<p><img src="/2022/07/01/VGG/beta%20%253D%20mean(x).png" alt="\gamma =\sqrt{var(x)+eps}, \beta = mean(x)"></p>
+<p>上面所说的是训练时的批量归一化，而在预测时的批量归一化则通常使用移动平均估算整个训练数据集的样本均值和方差，并使用它们得到确定的输出。</p>
+<p>（Note：使用批量归一化训练时可以把批量大小设得大一些，从而使批量内样本的均值和方差的计算都较为准确。）</p>
+<p>具体结构如下：</p>
+<p><img src="/2022/07/01/VGG/d489cd43b3cb4e78869d3ea3ab2da1bf.png" alt="img"></p>
+<p><img src="/2022/07/01/VGG/24da5ccd275f4235bd3e30e3491da6fd.png" alt="img"></p>
+<h1 id="三、VGG网络的亮点——连续小卷积核代替大卷积核"><a href="#三、VGG网络的亮点——连续小卷积核代替大卷积核" class="headerlink" title="三、VGG网络的亮点——连续小卷积核代替大卷积核"></a>三、VGG网络的亮点——连续小卷积核代替大卷积核</h1><p>采用连续的几个3x3的卷积核代替AlexNet中的较大卷积核（11x11，7x7，5x5）</p>
+<p>对于给定的感受野，采用堆积的小卷积核是优于采用大的卷积核，因为多层非线性层（3个3<em>3卷积附带3个ReLU，而一个7</em>7卷积只附带一个ReLU）可以增加网络深度来保证学习更复杂的模式，而且代价还比较小（参数更少）。</p>
+<p>在VGG中，使用了3个3x3卷积核来代替7x7卷积核，使用了2个3x3卷积核来代替5*5卷积核，这样可以在保证具有相同感知野的条件下，提升了网络的深度，在一定程度上提升了神经网络的效果。</p>
+<p>替代原因：</p>
+<p><img src="/2022/07/01/VGG/image-20230701203110298.png" alt="image-20230701203110298"></p>
+<p>如图所示，最上面的那个特征最终是由下面5<em>5的特征得到的，这样的效果跟一层5</em>5卷积的效果一样。</p>
+<p>参数：3<em>3</em>2&lt;5*5</p>
+<h1 id="四、VGG网络的不足"><a href="#四、VGG网络的不足" class="headerlink" title="四、VGG网络的不足"></a>四、VGG网络的不足</h1><p>耗费更多计算资源，并且使用了更多的参数（这里不是因为多层3x3卷积），导致更多的内存占用。其中绝大多数的参数都是来自于第一个全连接层。</p>
+<h1 id="五、VGG代码实现"><a href="#五、VGG代码实现" class="headerlink" title="五、VGG代码实现"></a>五、VGG代码实现</h1><p>这里只展示模型架构。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn</span><br><span class="line"> </span><br><span class="line"><span class="keyword">class</span> <span class="title class_">VGG</span>(nn.Module):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">          <span class="built_in">super</span>().__init__()</span><br><span class="line"> </span><br><span class="line">          self.features = nn.Sequential(</span><br><span class="line">            nn.Conv2d(<span class="number">3</span>,<span class="number">64</span>,(<span class="number">3</span>,<span class="number">3</span>),padding=<span class="number">1</span>),</span><br><span class="line">            nn.ReLU(),</span><br><span class="line">            nn.Conv2d(<span class="number">64</span>,<span class="number">64</span>,(<span class="number">3</span>,<span class="number">3</span>),padding=<span class="number">1</span>),</span><br><span class="line">            nn.ReLU(),</span><br><span class="line">            nn.MaxPool2d(<span class="number">2</span>,<span class="number">2</span>),</span><br><span class="line">            nn.Conv2d(<span class="number">64</span>,<span class="number">128</span>,(<span class="number">3</span>,<span class="number">3</span>),padding=<span class="number">1</span>),</span><br><span class="line">            nn.ReLU(),</span><br><span class="line">            nn.Conv2d(<span class="number">128</span>,<span class="number">128</span>,(<span class="number">3</span>,<span class="number">3</span>),padding=<span class="number">1</span>),</span><br><span class="line">            nn.ReLU(),</span><br><span class="line">            nn.MaxPool2d(<span class="number">2</span>,<span class="number">2</span>),</span><br><span class="line">            nn.Conv2d(<span class="number">128</span>,<span class="number">256</span>,(<span class="number">3</span>,<span class="number">3</span>),padding=<span class="number">1</span>),</span><br><span class="line">            nn.ReLU(),</span><br><span class="line">            nn.Conv2d(<span class="number">256</span>,<span class="number">256</span>,(<span class="number">3</span>,<span class="number">3</span>),padding=<span class="number">1</span>),</span><br><span class="line">            nn.ReLU(),</span><br><span class="line">            nn.Conv2d(<span class="number">256</span>,<span class="number">256</span>,(<span class="number">3</span>,<span class="number">3</span>),padding=<span class="number">1</span>),</span><br><span class="line">            nn.ReLU(),</span><br><span class="line">            nn.MaxPool2d(<span class="number">2</span>,<span class="number">2</span>),</span><br><span class="line">            nn.Conv2d(<span class="number">256</span>,<span class="number">512</span>,(<span class="number">3</span>,<span class="number">3</span>),padding=<span class="number">1</span>),</span><br><span class="line">            nn.ReLU(),</span><br><span class="line">            nn.Conv2d(<span class="number">512</span>,<span class="number">512</span>,(<span class="number">3</span>,<span class="number">3</span>),padding=<span class="number">1</span>),</span><br><span class="line">            nn.ReLU(),</span><br><span class="line">            nn.Conv2d(<span class="number">512</span>,<span class="number">512</span>,(<span class="number">3</span>,<span class="number">3</span>),padding=<span class="number">1</span>),</span><br><span class="line">            nn.ReLU(),</span><br><span class="line">            nn.MaxPool2d(<span class="number">2</span>,<span class="number">2</span>),</span><br><span class="line">            nn.Conv2d(<span class="number">512</span>,<span class="number">512</span>,(<span class="number">3</span>,<span class="number">3</span>),padding=<span class="number">1</span>),</span><br><span class="line">            nn.ReLU(),</span><br><span class="line">            nn.Conv2d(<span class="number">512</span>,<span class="number">512</span>,(<span class="number">3</span>,<span class="number">3</span>),padding=<span class="number">1</span>),</span><br><span class="line">            nn.ReLU(),</span><br><span class="line">            nn.Conv2d(<span class="number">512</span>,<span class="number">512</span>,(<span class="number">3</span>,<span class="number">3</span>),padding=<span class="number">1</span>),</span><br><span class="line">            nn.ReLU(),</span><br><span class="line">            nn.MaxPool2d(<span class="number">2</span>,<span class="number">2</span>)</span><br><span class="line">          )</span><br><span class="line">          self.classifier = nn.Sequential(</span><br><span class="line">            nn.Linear(<span class="number">25088</span>,<span class="number">4096</span>),</span><br><span class="line">            nn.ReLU(),</span><br><span class="line">            nn.Dropout(p=<span class="number">0.5</span>),</span><br><span class="line">            nn.Linear(<span class="number">4096</span>,<span class="number">4096</span>),</span><br><span class="line">            nn.ReLU(),</span><br><span class="line">            nn.Dropout(p=<span class="number">0.5</span>),</span><br><span class="line">            nn.Linear(<span class="number">4096</span>,<span class="number">1000</span>)</span><br><span class="line">          )</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, x</span>):</span><br><span class="line">        x = self.features(x)</span><br><span class="line">        x = torch.flatten(x, start_dim=<span class="number">1</span>)</span><br><span class="line">        x = self.classifier(x)</span><br><span class="line">        <span class="keyword">return</span> x</span><br></pre></td></tr></table></figure>
+
+
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/论文精读//" class="article-tag-list-link color5">论文精读</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2022/07/01/VGG/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-LSTM" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2022/07/01/LSTM/" target="_blank">LSTM</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2022/07/01/LSTM/" class="archive-article-date">
+        <time datetime="2022-07-01T08:44:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-07-01</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <h2 id="LSTM"><a href="#LSTM" class="headerlink" title="LSTM"></a>LSTM</h2><p><a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=LSTM&spm=1001.2101.3001.7020">LSTM</a>(Long Short-Term Memory)是长短期记忆网络，是一种时间递归神经网络，适合于处理和预测<a target="_blank" rel="noopener" href="https://baike.so.com/doc/6192108-6405360.html">时间序列</a>中间隔和延迟相对较长的重要事件。</p>
+<p>LSTM是<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=RNN&spm=1001.2101.3001.7020">RNN</a>的一种，可以解决RNN短时记忆的不足，当一条序列足够长，那RNN将很难将信息从较早的时间步传送到后面的时间步，而LSTM能学习长期依赖的信息，记住较早时间步的信息，因此可以做到联系上下文。</p>
+<p>STM区别于<a target="_blank" rel="noopener" href="https://baike.so.com/doc/913822-965967.html">RNN</a>的地方，主要就在于它在算法中加入了一个判断信息有用与否的”处理器”，这个处理器作用的结构被称为cell。</p>
+<p>一个cell当中被放置了三扇门，分别叫做输入门、遗忘门和输出门。一个信息进入LSTM的网络当中，可以根据规则来判断是否有用。只有符合算法认证的信息才会留下，不符的信息则通过遗忘门被遗忘。</p>
+<p><img src="/2022/07/01/LSTM/image-20230701164558176.png" alt="image-20230701164558176"></p>
+<p>符号说明：</p>
+<p><img src="/2022/07/01/LSTM/eq-1688201206825-19.png" alt="x_{t}">:当前时刻输入信息 </p>
+<p><img src="/2022/07/01/LSTM/eq-1688201206825-20.png" alt="h_{t-1}">:上一时刻的隐藏状态</p>
+<p><img src="/2022/07/01/LSTM/eq-1688201206825-21.png" alt="h_{t}">:传递到下一时刻的隐藏状态</p>
+<p> <img src="/2022/07/01/LSTM/sigma.png" alt="\sigma">:<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=sigmoid%E5%87%BD%E6%95%B0&spm=1001.2101.3001.7020">sigmoid函数</a>，通过这个函数可以将数据变为0-1范围的数值。</p>
+<p><a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=tanh&spm=1001.2101.3001.7020">tanh</a>: tanh函数，通过这个函数可以将数据变为[-1,1]范围的数值</p>
+<p><strong>LSTM的特点：</strong></p>
+<p>lstm比rnn多一个细胞状态（cell state），也有人叫记忆细胞。</p>
+<p>下图中的水平黑线表示上一时刻的细胞状态通过三个门的控制及线性运算来决定哪些信息该遗忘丢弃，哪些信息该保留，或者不变，从而生成当前时刻的细胞状态，然后输出到下一时刻，以此来进行记忆的更新。</p>
+<p>这只是某个时刻的细胞状态的更新过程，在整个长序列中，每个时刻的细胞状态都对上一时刻的信息选择性的进行遗忘丢弃，或者保留，或者不变，对记忆进行更新，从传送到，因此可以做到长期记忆。</p>
+<img src="/2022/07/01/LSTM/image-20230701164704116.png" alt="image-20230701164704116" style="zoom:50%;">
+
+<h3 id="0-什么是门？"><a href="#0-什么是门？" class="headerlink" title="0.什么是门？"></a>0.什么是门？</h3><p>LSTM通过门（gate）来控制细胞状态遗忘或添加记忆，门的结构就是一个sigmoid层再点乘上一时刻的细胞状态，下图就是一个门。</p>
+<p><img src="/2022/07/01/LSTM/image-20230701164715603.png" alt="image-20230701164715603"></p>
+<p>sigmoid层输出的值范围在[0, 1]，可以作为门控信号，0点乘任何值还是0，表示过不去，这些记忆就遗忘了，1表示可以通过，记忆就保留下来了。</p>
+<h3 id="1-遗忘门"><a href="#1-遗忘门" class="headerlink" title="1. 遗忘门"></a><strong>1. 遗忘门</strong></h3><p>遗忘门的作用对象是细胞状态<img src="/2022/07/01/LSTM/eq-1688201261756-30.png" alt="C_{t-1}">，作用是控制细胞状态中的信息进行选择性的遗忘，决定哪部分需要丢弃，哪些需要保留。那么是如何控制细胞状态选择性遗忘记忆的呢，我们结合公式来看:</p>
+<img src="/2022/07/01/LSTM/image-20230701164758904.png" alt="image-20230701164758904" style="zoom:50%;">
+
+
+
+<p>遗忘门的公式： </p>
+<img src="/2022/07/01/LSTM/image-20230701164809546.png" alt="image-20230701164809546" style="zoom:80%;">
+
+<p> 权重矩阵<img src="/2022/07/01/LSTM/eq-1688201315267-33.png" alt="W_{f}">对<img src="/2022/07/01/LSTM/eq-1688201315267-34.png" alt="h_{t-1}">和<img src="/2022/07/01/LSTM/eq-1688201315267-35.png" alt="x_{t}">拼接而成的矩阵进行矩阵相乘，再加上偏置<img src="/2022/07/01/LSTM/eq-1688201315267-36.png" alt="b_{f}">，投入到sigmoid函数中，得到一个与<img src="/2022/07/01/LSTM/eq-1688201315267-37.png" alt="C_{t-1}">相同维度的矩阵<img src="/2022/07/01/LSTM/eq.png" alt="f_{t}">， 比如，得到<img src="https://latex.csdn.net/eq?f_%7Bt%7D" alt="f_{t}">为[ 0,0,1,0]，矩阵中每一个值都决定<img src="https://latex.csdn.net/eq?C_%7Bt-1%7D" alt="C_{t-1}">中对应信息的遗忘或保留，0代表彻底丢弃，1代表完全保留。</p>
+<p>比如一个语言模型，根据之前的所有词预测下一个词。细胞状态可能已经记住了当前人物的性别，以便下次预测人称代词（他还是她），但当出现一个新人物时，需要将上一个人物的性别忘掉。</p>
+<p>举例：</p>
+<p>小明是一个帅气的男生，小美喜欢…，当处理到‘’小美‘’的时候，需要选择性的忘记前面的’小明’，或者说减小这个词对后面词的作用。</p>
+<h3 id="2-输入门"><a href="#2-输入门" class="headerlink" title="2.输入门"></a><strong>2.输入门</strong></h3><p>输入门的作用对象也是细胞状态，作用是决定要往细胞状态中存储哪些新的信息，也就是细胞状态选择性的添加哪些新的记忆。那么如何决定添加哪些新的信息呢，输入门分两个部分进行。</p>
+<img src="/2022/07/01/LSTM/a475e0b4e86f4e6397e042a84529a275-1688201337803-50.png" alt="img" style="zoom:50%;">
+
+<p>第一部分：</p>
+<p> 构建一个输入门，决定哪些信息被添加到细胞状态中，作为新的记忆。</p>
+<p><img src="/2022/07/01/LSTM/fcc4be2c3d154327aedab20173287355-1688201348531-53.png" alt="img"></p>
+<p>输入门公式： </p>
+<img src="/2022/07/01/LSTM/c727c036ebab4168aca769c8dc3abc95-1688201357162-56.png" alt="img" style="zoom:80%;">
+
+<p>与遗忘门公式差不多，输入门通过线性运算得到一个与<img src="/2022/07/01/LSTM/tilde%7BC%7D_%7Bt%7D.png" alt="\tilde{C}_{t}">相同维度的矩阵<img src="/2022/07/01/LSTM/eq-1688201363733-59.png" alt="i_{t}">， 比如，得到<img src="https://latex.csdn.net/eq?i_%7Bt%7D" alt="i_{t}">为    [ 0,0,1,0]，矩阵中每一个值都决定<img src="https://latex.csdn.net/eq?%5Ctilde%7BC%7D_%7Bt%7D" alt="\tilde{C}_{t}">中对应信息的丢弃或保留，0代表彻底丢弃，1代表完全保留。</p>
+<p>第二部分：</p>
+<p>构建出一个候选细胞状态<img src="/2022/07/01/LSTM/tilde%7BC%7D_%7Bt%7D.png" alt="\tilde{C}_{t}">，它保存了 <img src="/2022/07/01/LSTM/eq-1688201369914-64.png" alt="x_{t}">和<img src="/2022/07/01/LSTM/eq-1688201369914-65.png" alt="h_{t-1}">中的信息，然后与<img src="/2022/07/01/LSTM/eq-1688201369914-66.png" alt="i_{t}">的值点乘，来决定哪些记忆是有用的，依然<img src="https://latex.csdn.net/eq?i_%7Bt%7D" alt="i_{t}">中0代表彻底丢弃，1代表完全保留，这样保留下来的信息作为新的记忆添加给新的细胞状态，所以这里<img src="https://latex.csdn.net/eq?%5Ctilde%7BC%7D_%7Bt%7D" alt="\tilde{C}_{t}">叫<strong>候选</strong>细胞状态，它只是一个等候选择的，有用的才会被作为新记忆添加。</p>
+<img src="/2022/07/01/LSTM/c7526a36567e425d921733392381ae02-1688201375489-75.png" alt="img" style="zoom:50%;">
+
+<p>候选细胞状态 <img src="/2022/07/01/LSTM/tilde%7BC%7D_%7Bt%7D.png" alt="\tilde{C}_{t}">的公式：</p>
+<img src="/2022/07/01/LSTM/0de501b68fa24bf6bf640c40eb1fe826-1688201385594-80.png" alt="img" style="zoom:80%;">
+
+<p>接着上一个例子：</p>
+<p>这一步传入了一些信息，比如小美喜欢穿裙子，输入门就是要在这些信息中筛选出来有用的，用来记住新人物的性别，记住小美的性别为女，作为新的记忆添加。</p>
+<h3 id="3-更新记忆"><a href="#3-更新记忆" class="headerlink" title="3.更新记忆"></a><strong>3.更新记忆</strong></h3><p>新的细胞状态中的记忆由两部分构成。</p>
+<p>一部分是，上一时刻的记忆细胞遗忘掉没用的记忆后剩下的旧记忆</p>
+<p>另一部分是，输入门中把有用的信息筛选出来当作新的记忆</p>
+<img src="/2022/07/01/LSTM/image-20230701165046394.png" alt="image-20230701165046394" style="zoom:50%;">
+
+<p>新的细胞状态的公式：</p>
+<img src="/2022/07/01/LSTM/1d16ad38ae8e46508ccf0843ab881066-1688201460307-85.png" alt="img" style="zoom:80%;">
+
+<p><img src="/2022/07/01/LSTM/eq.png" alt="f_{t}">点乘<img src="/2022/07/01/LSTM/eq-1688201474260-88.png" alt="C_{t-1}">表示处理后的旧记忆，<img src="/2022/07/01/LSTM/eq-1688201474260-89.png" alt="i_{t}">点乘<img src="/2022/07/01/LSTM/tilde%7BC%7D_%7Bt%7D.png" alt="\tilde{C}_{t}">表示需要添加的新记忆，加起来就是新的细胞状态。</p>
+<p>继续举例：</p>
+<p>小明是一个帅气的男生，小美喜欢穿裙子，这一步是要忘记小明性别为男，记住小美性别为女。</p>
+<h3 id="4-输出门"><a href="#4-输出门" class="headerlink" title="4.输出门"></a><strong>4.输出门</strong></h3><p>输出门的作用是决定最终输出什么，也就是<img src="/2022/07/01/LSTM/eq-1688201488305-98.png" alt="h_{t}">，这个输出是以新的细胞状态<img src="/2022/07/01/LSTM/eq-1688201488305-99.png" alt="C_{t}">为基础的，分两部分进行。</p>
+<img src="/2022/07/01/LSTM/1fcd66721fdd41e78b82e8572cc698f9-1688201494789-104.png" alt="img" style="zoom:50%;">
+
+<p>第一部分：</p>
+<p>依然使用sigmoid层来得到<img src="/2022/07/01/LSTM/eq-1688201508624-107.png" alt="o_{t}">，比如<img src="https://latex.csdn.net/eq?o_%7Bt%7D" alt="o_{t}">&#x3D;[0,0,0,1]，来决定哪部分细胞状态需要被输出，需要的记忆才输出，并不是所有的都输出。</p>
+<img src="/2022/07/01/LSTM/8f9c4bcd907b4c5baa61f4c5806c19d7-1688201523760-110.png" alt="img" style="zoom:50%;">
+
+<p> <img src="/2022/07/01/LSTM/eq-1688201532367-113.png" alt="o_{t}">的公式：</p>
+<img src="/2022/07/01/LSTM/387f25960f424f90a1f2b142bcaed8d6-1688201536599-116.png" alt="img" style="zoom:80%;">
+
+<p> 第二部分：</p>
+<p>把新的细胞状态通过tanh函数处理，将输出值变为[-1. 1]，再点乘<img src="/2022/07/01/LSTM/eq-1688201544643-119.png" alt="o_{t}">，来控制哪部分需要输出。</p>
+<img src="/2022/07/01/LSTM/75f7c35e083f4ee0b01f885c31b2ff52-1688201550202-122.png" alt="img" style="zoom:50%;">
+
+<p> <img src="/2022/07/01/LSTM/eq-1688201556477-125.png" alt="h_{t}">的公式：</p>
+<img src="/2022/07/01/LSTM/2341e83b595548d4b28e08f43da8990f-1688201562302-128.png" alt="img" style="zoom:80%;">
+
+
+
+
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/论文精读//" class="article-tag-list-link color5">论文精读</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2022/07/01/LSTM/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-ResNet" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -352,7 +766,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/CNN//" class="article-tag-list-link color4">CNN</a>
+        			<a href="/categories/论文精读//" class="article-tag-list-link color5">论文精读</a>
         		</li>
       		
 		</ul>
@@ -520,10 +934,6 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Personal homepage</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">环境配置</a>
               </li>
             
             <div class="clearfix"></div>
