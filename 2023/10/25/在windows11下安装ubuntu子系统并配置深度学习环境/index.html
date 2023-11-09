@@ -5,7 +5,7 @@
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <link rel="dns-prefetch" href="http://example.com">
+  <link rel="dns-prefetch" href="https://libaolu312.github.io">
   <title>在windows11下安装ubuntu子系统并配置深度学习环境 | 李宝璐</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -13,41 +13,41 @@
   <meta name="description" content="事件起因之前我在跑深度学习的实验时要么用windows环境跑，要么用租的服务器的ubuntu环境跑，windows由于先天条件，运行时总是报一些稀奇古怪的错误，而且现在大多数的开源代码也都是在linux下跑的，代码调来调去的很麻烦，租的服务器每次配置环境也有些不便，而且现在服务器一天比一天贵，我本机是一张4070的卡，寻思着不用也是浪费，索性就研究一下如何在windows的大环境下配一个linux">
 <meta property="og:type" content="article">
 <meta property="og:title" content="在windows11下安装ubuntu子系统并配置深度学习环境">
-<meta property="og:url" content="http://example.com/2023/10/25/%E5%9C%A8windows11%E4%B8%8B%E5%AE%89%E8%A3%85ubuntu%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%B9%B6%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/index.html">
+<meta property="og:url" content="https://libaolu312.github.io/2023/10/25/%E5%9C%A8windows11%E4%B8%8B%E5%AE%89%E8%A3%85ubuntu%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%B9%B6%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/index.html">
 <meta property="og:site_name" content="李宝璐">
 <meta property="og:description" content="事件起因之前我在跑深度学习的实验时要么用windows环境跑，要么用租的服务器的ubuntu环境跑，windows由于先天条件，运行时总是报一些稀奇古怪的错误，而且现在大多数的开源代码也都是在linux下跑的，代码调来调去的很麻烦，租的服务器每次配置环境也有些不便，而且现在服务器一天比一天贵，我本机是一张4070的卡，寻思着不用也是浪费，索性就研究一下如何在windows的大环境下配一个linux">
-<meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/2023/10/25/%E5%9C%A8windows11%E4%B8%8B%E5%AE%89%E8%A3%85ubuntu%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%B9%B6%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/image-20231025122903644.png">
-<meta property="og:image" content="http://example.com/2023/10/25/%E5%9C%A8windows11%E4%B8%8B%E5%AE%89%E8%A3%85ubuntu%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%B9%B6%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/image-20231025123036578.png">
-<meta property="og:image" content="http://example.com/2023/10/25/%E5%9C%A8windows11%E4%B8%8B%E5%AE%89%E8%A3%85ubuntu%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%B9%B6%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/image-20231025125757717.png">
-<meta property="og:image" content="http://example.com/2023/10/25/%E5%9C%A8windows11%E4%B8%8B%E5%AE%89%E8%A3%85ubuntu%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%B9%B6%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/store.png">
-<meta property="og:image" content="http://example.com/2023/10/25/%E5%9C%A8windows11%E4%B8%8B%E5%AE%89%E8%A3%85ubuntu%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%B9%B6%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/ubuntustore.png">
-<meta property="og:image" content="http://example.com/2023/10/25/%E5%9C%A8windows11%E4%B8%8B%E5%AE%89%E8%A3%85ubuntu%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%B9%B6%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/ubuntuinstall.png">
-<meta property="og:image" content="http://example.com/2023/10/25/%E5%9C%A8windows11%E4%B8%8B%E5%AE%89%E8%A3%85ubuntu%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%B9%B6%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/image-20231025142508454.png">
-<meta property="og:image" content="http://example.com/2023/10/25/%E5%9C%A8windows11%E4%B8%8B%E5%AE%89%E8%A3%85ubuntu%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%B9%B6%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/terminal.png">
-<meta property="og:image" content="http://example.com/2023/10/25/%E5%9C%A8windows11%E4%B8%8B%E5%AE%89%E8%A3%85ubuntu%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%B9%B6%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/image-20231025145157444.png">
-<meta property="og:image" content="http://example.com/2023/10/25/%E5%9C%A8windows11%E4%B8%8B%E5%AE%89%E8%A3%85ubuntu%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%B9%B6%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/image-20231025145428951.png">
-<meta property="og:image" content="http://example.com/2023/10/25/%E5%9C%A8windows11%E4%B8%8B%E5%AE%89%E8%A3%85ubuntu%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%B9%B6%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/image-20231025145445385.png">
-<meta property="og:image" content="http://example.com/2023/10/25/%E5%9C%A8windows11%E4%B8%8B%E5%AE%89%E8%A3%85ubuntu%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%B9%B6%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/image-20231025152107831.png">
-<meta property="og:image" content="http://example.com/2023/10/25/%E5%9C%A8windows11%E4%B8%8B%E5%AE%89%E8%A3%85ubuntu%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%B9%B6%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/image-20231025152124314.png">
-<meta property="og:image" content="http://example.com/2023/10/25/%E5%9C%A8windows11%E4%B8%8B%E5%AE%89%E8%A3%85ubuntu%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%B9%B6%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/kMSPFbJ2yG3a9TX.png">
-<meta property="og:image" content="http://example.com/2023/10/25/%E5%9C%A8windows11%E4%B8%8B%E5%AE%89%E8%A3%85ubuntu%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%B9%B6%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/oe8AZIixlOPXpUc.png">
-<meta property="og:image" content="http://example.com/2023/10/25/%E5%9C%A8windows11%E4%B8%8B%E5%AE%89%E8%A3%85ubuntu%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%B9%B6%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/image-20231025164534135.png">
-<meta property="og:image" content="http://example.com/2023/10/25/%E5%9C%A8windows11%E4%B8%8B%E5%AE%89%E8%A3%85ubuntu%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%B9%B6%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/9PVLksuX6BCxaU8.png">
-<meta property="og:image" content="http://example.com/2023/10/25/%E5%9C%A8windows11%E4%B8%8B%E5%AE%89%E8%A3%85ubuntu%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%B9%B6%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/yemLhduQx1rHBGP.png">
-<meta property="og:image" content="http://example.com/2023/10/25/%E5%9C%A8windows11%E4%B8%8B%E5%AE%89%E8%A3%85ubuntu%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%B9%B6%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/imlkrNDYjoqIObA.png">
-<meta property="og:image" content="http://example.com/2023/10/25/%E5%9C%A8windows11%E4%B8%8B%E5%AE%89%E8%A3%85ubuntu%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%B9%B6%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/3ZOdr5pcqtUivIB.png">
-<meta property="og:image" content="http://example.com/2023/10/25/%E5%9C%A8windows11%E4%B8%8B%E5%AE%89%E8%A3%85ubuntu%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%B9%B6%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/VWK7jPvda2rwYsg.png">
-<meta property="og:image" content="http://example.com/2023/10/25/%E5%9C%A8windows11%E4%B8%8B%E5%AE%89%E8%A3%85ubuntu%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%B9%B6%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/DSwiAanLlV98M3j.png">
-<meta property="og:image" content="http://example.com/2023/10/25/%E5%9C%A8windows11%E4%B8%8B%E5%AE%89%E8%A3%85ubuntu%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%B9%B6%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/217LZ495MFT6GCu.png">
-<meta property="og:image" content="http://example.com/2023/10/25/%E5%9C%A8windows11%E4%B8%8B%E5%AE%89%E8%A3%85ubuntu%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%B9%B6%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/VvnQa8Zr6qYkSPD.png">
-<meta property="og:image" content="http://example.com/2023/10/25/%E5%9C%A8windows11%E4%B8%8B%E5%AE%89%E8%A3%85ubuntu%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%B9%B6%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/3r8Fdsbcv7elPZ2.png">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://libaolu312.github.io/2023/10/25/%E5%9C%A8windows11%E4%B8%8B%E5%AE%89%E8%A3%85ubuntu%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%B9%B6%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/image-20231025122903644.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/10/25/%E5%9C%A8windows11%E4%B8%8B%E5%AE%89%E8%A3%85ubuntu%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%B9%B6%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/image-20231025123036578.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/10/25/%E5%9C%A8windows11%E4%B8%8B%E5%AE%89%E8%A3%85ubuntu%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%B9%B6%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/image-20231025125757717.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/10/25/%E5%9C%A8windows11%E4%B8%8B%E5%AE%89%E8%A3%85ubuntu%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%B9%B6%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/store.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/10/25/%E5%9C%A8windows11%E4%B8%8B%E5%AE%89%E8%A3%85ubuntu%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%B9%B6%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/ubuntustore.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/10/25/%E5%9C%A8windows11%E4%B8%8B%E5%AE%89%E8%A3%85ubuntu%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%B9%B6%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/ubuntuinstall.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/10/25/%E5%9C%A8windows11%E4%B8%8B%E5%AE%89%E8%A3%85ubuntu%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%B9%B6%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/image-20231025142508454.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/10/25/%E5%9C%A8windows11%E4%B8%8B%E5%AE%89%E8%A3%85ubuntu%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%B9%B6%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/terminal.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/10/25/%E5%9C%A8windows11%E4%B8%8B%E5%AE%89%E8%A3%85ubuntu%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%B9%B6%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/image-20231025145157444.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/10/25/%E5%9C%A8windows11%E4%B8%8B%E5%AE%89%E8%A3%85ubuntu%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%B9%B6%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/image-20231025145428951.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/10/25/%E5%9C%A8windows11%E4%B8%8B%E5%AE%89%E8%A3%85ubuntu%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%B9%B6%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/image-20231025145445385.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/10/25/%E5%9C%A8windows11%E4%B8%8B%E5%AE%89%E8%A3%85ubuntu%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%B9%B6%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/image-20231025152107831.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/10/25/%E5%9C%A8windows11%E4%B8%8B%E5%AE%89%E8%A3%85ubuntu%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%B9%B6%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/image-20231025152124314.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/10/25/%E5%9C%A8windows11%E4%B8%8B%E5%AE%89%E8%A3%85ubuntu%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%B9%B6%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/kMSPFbJ2yG3a9TX.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/10/25/%E5%9C%A8windows11%E4%B8%8B%E5%AE%89%E8%A3%85ubuntu%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%B9%B6%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/oe8AZIixlOPXpUc.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/10/25/%E5%9C%A8windows11%E4%B8%8B%E5%AE%89%E8%A3%85ubuntu%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%B9%B6%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/image-20231025164534135.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/10/25/%E5%9C%A8windows11%E4%B8%8B%E5%AE%89%E8%A3%85ubuntu%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%B9%B6%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/9PVLksuX6BCxaU8.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/10/25/%E5%9C%A8windows11%E4%B8%8B%E5%AE%89%E8%A3%85ubuntu%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%B9%B6%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/yemLhduQx1rHBGP.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/10/25/%E5%9C%A8windows11%E4%B8%8B%E5%AE%89%E8%A3%85ubuntu%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%B9%B6%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/imlkrNDYjoqIObA.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/10/25/%E5%9C%A8windows11%E4%B8%8B%E5%AE%89%E8%A3%85ubuntu%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%B9%B6%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/3ZOdr5pcqtUivIB.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/10/25/%E5%9C%A8windows11%E4%B8%8B%E5%AE%89%E8%A3%85ubuntu%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%B9%B6%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/VWK7jPvda2rwYsg.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/10/25/%E5%9C%A8windows11%E4%B8%8B%E5%AE%89%E8%A3%85ubuntu%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%B9%B6%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/DSwiAanLlV98M3j.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/10/25/%E5%9C%A8windows11%E4%B8%8B%E5%AE%89%E8%A3%85ubuntu%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%B9%B6%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/217LZ495MFT6GCu.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/10/25/%E5%9C%A8windows11%E4%B8%8B%E5%AE%89%E8%A3%85ubuntu%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%B9%B6%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/VvnQa8Zr6qYkSPD.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/10/25/%E5%9C%A8windows11%E4%B8%8B%E5%AE%89%E8%A3%85ubuntu%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%B9%B6%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/3r8Fdsbcv7elPZ2.png">
 <meta property="article:published_time" content="2023-10-25T04:21:32.000Z">
 <meta property="article:modified_time" content="2023-11-06T09:23:31.006Z">
 <meta property="article:author" content="李宝璐">
 <meta property="article:tag" content="技术笔记">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2023/10/25/%E5%9C%A8windows11%E4%B8%8B%E5%AE%89%E8%A3%85ubuntu%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%B9%B6%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/image-20231025122903644.png">
+<meta name="twitter:image" content="https://libaolu312.github.io/2023/10/25/%E5%9C%A8windows11%E4%B8%8B%E5%AE%89%E8%A3%85ubuntu%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%B9%B6%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/image-20231025122903644.png">
   
     <link rel="alternative" href="/atom.xml" title="李宝璐" type="application/atom+xml">
   
@@ -73,6 +73,22 @@
  	  <script src="/lib/clickLove.js"></script>
   
   
+
+<script>
+  (function () {
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    } else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+
+</script>
+
 
 
   
@@ -138,18 +154,18 @@
 					
 				
 					
-						<a class="github" href="#" 
+						<a class="github" href="https://github.com/libaolu312" 
 												title="GitHub" target="_blank"><i class="icon-github"></i></a>
 					
 				
 					
-						<a class="gitee" href="#" 
-												title="gitee" target="_blank"><i class="icon-gitee"></i></a>
+						<a class="gitee" href="https://gitee.com/calmli" 
+												title="码云" target="_blank"><i class="icon-gitee"></i></a>
 					
 				
 					
-						<a class="jianshu" href="#" 
-												title="jianshu" target="_blank"><i class="icon-jianshu"></i></a>
+						<a class="qq" href="/2981808882" 
+												title="QQ" target="_blank"><i class="icon-qq"></i></a>
 					
 				
 			</div>
@@ -210,17 +226,17 @@
 					
 						
 						<a class="github" target="_blank" 
-							href="#" title="GitHub"><i class="icon-github"></i></a>
+							href="https://github.com/libaolu312" title="GitHub"><i class="icon-github"></i></a>
 						
 					
 						
 						<a class="gitee" target="_blank" 
-							href="#" title="gitee"><i class="icon-gitee"></i></a>
+							href="https://gitee.com/calmli" title="码云"><i class="icon-gitee"></i></a>
 						
 					
 						
-						<a class="jianshu" target="_blank" 
-							href="#" title="jianshu"><i class="icon-jianshu"></i></a>
+						<a class="qq" target="_blank" 
+							href="/2981808882" title="QQ"><i class="icon-qq"></i></a>
 						
 					
 				</div>
@@ -539,7 +555,7 @@
         </li>
         <li>
           <strong>本文链接：</strong>
-          <a href="http://example.com/2023/10/25/在windows11下安装ubuntu子系统并配置深度学习环境/" title="在windows11下安装ubuntu子系统并配置深度学习环境" target="_blank">http://example.com/2023/10/25/在windows11下安装ubuntu子系统并配置深度学习环境/</a>
+          <a href="https://libaolu312.github.io/2023/10/25/在windows11下安装ubuntu子系统并配置深度学习环境/" title="在windows11下安装ubuntu子系统并配置深度学习环境" target="_blank">https://libaolu312.github.io/2023/10/25/在windows11下安装ubuntu子系统并配置深度学习环境/</a>
         </li>
         
         <li>
@@ -628,7 +644,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-     <!-- <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2023/10/25/%E5%9C%A8windows11%E4%B8%8B%E5%AE%89%E8%A3%85ubuntu%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%B9%B6%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/" alt="微信分享二维码"> -->
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://libaolu312.github.io/2023/10/25/%E5%9C%A8windows11%E4%B8%8B%E5%AE%89%E8%A3%85ubuntu%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%B9%B6%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/" alt="微信分享二维码"> -->
     </div>
 </div>
 
@@ -700,6 +716,29 @@
 
 
 
+  
+  <div id="gitment-ctn"></div>
+  
+    <!-- 中文 -->
+    <link rel="stylesheet" href="/lib/gitment.css">
+    <script src="/lib/gitment.js"></script>
+  
+  <script>
+    <!-- id: "在windows11下安装ubuntu子系统并配置深度学习环境" -->
+    var gitment = new Gitment({
+      id: "20231025122132",
+      owner: 'libaolu312',
+      repo: 'myblog-demo',
+      oauth: {
+        client_id: '7310ea694471182fe2b5',
+        client_secret: 'f721a78a52a0b5c7b4ee99d903f1eeff84a15d93',
+      },
+    })
+    gitment.render('gitment-ctn')
+  </script>
+
+
+  
 
 
 
@@ -710,7 +749,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2023 <a href="http://example.com/" target="_blank">李宝璐</a>
+    		&copy; 2022-2023 <a href="https://libaolu312.github.io/" target="_blank">李宝璐</a>
     	</div>
       	<div class="footer-right">
 			

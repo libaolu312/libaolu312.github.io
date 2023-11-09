@@ -5,7 +5,7 @@
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <link rel="dns-prefetch" href="http://example.com">
+  <link rel="dns-prefetch" href="https://libaolu312.github.io">
   <title>YOLOv5 | 李宝璐</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -13,39 +13,39 @@
   <meta name="description" content="YOLOv5一、输入端分析Mosaic数据增强原理分析YOLOv5采用和YOLOv4一样的Mosaic数据增强。 主要原理：它将一张选定的图片和随机的3张图片进行随机裁剪，再拼接到一张图上作为训练数据。 这样可以丰富图片的背景，而且四张图片拼接在一起变相提高了batch_size，在进行batch normalization（归一化）的时候也会计算四张图片。 这样让YOLOv5对本身batch_s">
 <meta property="og:type" content="article">
 <meta property="og:title" content="YOLOv5">
-<meta property="og:url" content="http://example.com/2022/07/01/YOLOv5/index.html">
+<meta property="og:url" content="https://libaolu312.github.io/2022/07/01/YOLOv5/index.html">
 <meta property="og:site_name" content="李宝璐">
 <meta property="og:description" content="YOLOv5一、输入端分析Mosaic数据增强原理分析YOLOv5采用和YOLOv4一样的Mosaic数据增强。 主要原理：它将一张选定的图片和随机的3张图片进行随机裁剪，再拼接到一张图上作为训练数据。 这样可以丰富图片的背景，而且四张图片拼接在一起变相提高了batch_size，在进行batch normalization（归一化）的时候也会计算四张图片。 这样让YOLOv5对本身batch_s">
-<meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/2022/07/01/YOLOv5/344d1c81ddaf46e78150296e955441eb.png">
-<meta property="og:image" content="http://example.com/2022/07/01/YOLOv5/ef646a69d29c4c5085914d1e7bba0fb1.png">
-<meta property="og:image" content="http://example.com/2022/07/01/YOLOv5/adbb26a2365b401c92857d0d35986af2.png">
-<meta property="og:image" content="http://example.com/2022/07/01/YOLOv5/fa0e872312be407ba00e76e0627c3280.png">
-<meta property="og:image" content="http://example.com/2022/07/01/YOLOv5/c1c9abc695a048b9b35ab2ed597a5366.png">
-<meta property="og:image" content="http://example.com/2022/07/01/YOLOv5/73c5dd64cd514e50ae9646eaabff5bb6.png">
-<meta property="og:image" content="http://example.com/2022/07/01/YOLOv5/f5b6faeb640e47d49335c39bfc162df8.png">
-<meta property="og:image" content="http://example.com/2022/07/01/YOLOv5/d7286997d6554decba9fe024925d8c66.png">
-<meta property="og:image" content="http://example.com/2022/07/01/YOLOv5/7ba8b7726b084f0aba10e0229ad22b30.png">
-<meta property="og:image" content="http://example.com/2022/07/01/YOLOv5/82a1d69d75134b04b8408e9a4a9658c6.png">
-<meta property="og:image" content="http://example.com/2022/07/01/YOLOv5/49a405a404a1440b99dd17a5ccd253c8.png">
-<meta property="og:image" content="http://example.com/2022/07/01/YOLOv5/66568f12b714470395028dbc2302a10b.png">
-<meta property="og:image" content="http://example.com/2022/07/01/YOLOv5/164558cd4d6c4624ac736e6dc4534392.png">
-<meta property="og:image" content="http://example.com/2022/07/01/YOLOv5/880d9c06a11d46f58afee027248cd6b0.png">
-<meta property="og:image" content="http://example.com/2022/07/01/YOLOv5/84fb67450d014a0ab1428f54f69d6524.png">
-<meta property="og:image" content="http://example.com/2022/07/01/YOLOv5/1d802ef287134e689bad30e2055750d9.png">
-<meta property="og:image" content="http://example.com/2022/07/01/YOLOv5/014c8e0f5a9a413e9a8df617ccd12c1b.png">
-<meta property="og:image" content="http://example.com/2022/07/01/YOLOv5/39625b987099458d93c0cd540171784c.png">
-<meta property="og:image" content="http://example.com/2022/07/01/YOLOv5/577439bfde034ef59ee14964eea62fa5.png">
-<meta property="og:image" content="http://example.com/2022/07/01/YOLOv5/3efb7866eb1948d68f18519e4d0e71cc.png">
-<meta property="og:image" content="http://example.com/2022/07/01/YOLOv5/c47c872c7a514c96a59cb2bfbce3be60.png">
-<meta property="og:image" content="http://example.com/2022/07/01/YOLOv5/b1a9b287558249248d7ff93223ca4dcc.png">
-<meta property="og:image" content="http://example.com/2022/07/01/YOLOv5/c01e7ddf926f47dabbdd0a0323378dd2.png">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://libaolu312.github.io/2022/07/01/YOLOv5/344d1c81ddaf46e78150296e955441eb.png">
+<meta property="og:image" content="https://libaolu312.github.io/2022/07/01/YOLOv5/ef646a69d29c4c5085914d1e7bba0fb1.png">
+<meta property="og:image" content="https://libaolu312.github.io/2022/07/01/YOLOv5/adbb26a2365b401c92857d0d35986af2.png">
+<meta property="og:image" content="https://libaolu312.github.io/2022/07/01/YOLOv5/fa0e872312be407ba00e76e0627c3280.png">
+<meta property="og:image" content="https://libaolu312.github.io/2022/07/01/YOLOv5/c1c9abc695a048b9b35ab2ed597a5366.png">
+<meta property="og:image" content="https://libaolu312.github.io/2022/07/01/YOLOv5/73c5dd64cd514e50ae9646eaabff5bb6.png">
+<meta property="og:image" content="https://libaolu312.github.io/2022/07/01/YOLOv5/f5b6faeb640e47d49335c39bfc162df8.png">
+<meta property="og:image" content="https://libaolu312.github.io/2022/07/01/YOLOv5/d7286997d6554decba9fe024925d8c66.png">
+<meta property="og:image" content="https://libaolu312.github.io/2022/07/01/YOLOv5/7ba8b7726b084f0aba10e0229ad22b30.png">
+<meta property="og:image" content="https://libaolu312.github.io/2022/07/01/YOLOv5/82a1d69d75134b04b8408e9a4a9658c6.png">
+<meta property="og:image" content="https://libaolu312.github.io/2022/07/01/YOLOv5/49a405a404a1440b99dd17a5ccd253c8.png">
+<meta property="og:image" content="https://libaolu312.github.io/2022/07/01/YOLOv5/66568f12b714470395028dbc2302a10b.png">
+<meta property="og:image" content="https://libaolu312.github.io/2022/07/01/YOLOv5/164558cd4d6c4624ac736e6dc4534392.png">
+<meta property="og:image" content="https://libaolu312.github.io/2022/07/01/YOLOv5/880d9c06a11d46f58afee027248cd6b0.png">
+<meta property="og:image" content="https://libaolu312.github.io/2022/07/01/YOLOv5/84fb67450d014a0ab1428f54f69d6524.png">
+<meta property="og:image" content="https://libaolu312.github.io/2022/07/01/YOLOv5/1d802ef287134e689bad30e2055750d9.png">
+<meta property="og:image" content="https://libaolu312.github.io/2022/07/01/YOLOv5/014c8e0f5a9a413e9a8df617ccd12c1b.png">
+<meta property="og:image" content="https://libaolu312.github.io/2022/07/01/YOLOv5/39625b987099458d93c0cd540171784c.png">
+<meta property="og:image" content="https://libaolu312.github.io/2022/07/01/YOLOv5/577439bfde034ef59ee14964eea62fa5.png">
+<meta property="og:image" content="https://libaolu312.github.io/2022/07/01/YOLOv5/3efb7866eb1948d68f18519e4d0e71cc.png">
+<meta property="og:image" content="https://libaolu312.github.io/2022/07/01/YOLOv5/c47c872c7a514c96a59cb2bfbce3be60.png">
+<meta property="og:image" content="https://libaolu312.github.io/2022/07/01/YOLOv5/b1a9b287558249248d7ff93223ca4dcc.png">
+<meta property="og:image" content="https://libaolu312.github.io/2022/07/01/YOLOv5/c01e7ddf926f47dabbdd0a0323378dd2.png">
 <meta property="article:published_time" content="2022-07-01T12:33:55.000Z">
 <meta property="article:modified_time" content="2023-11-06T09:24:16.511Z">
 <meta property="article:author" content="李宝璐">
 <meta property="article:tag" content="技术笔记">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2022/07/01/YOLOv5/344d1c81ddaf46e78150296e955441eb.png">
+<meta name="twitter:image" content="https://libaolu312.github.io/2022/07/01/YOLOv5/344d1c81ddaf46e78150296e955441eb.png">
   
     <link rel="alternative" href="/atom.xml" title="李宝璐" type="application/atom+xml">
   
@@ -71,6 +71,22 @@
  	  <script src="/lib/clickLove.js"></script>
   
   
+
+<script>
+  (function () {
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    } else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+
+</script>
+
 
 
   
@@ -136,18 +152,18 @@
 					
 				
 					
-						<a class="github" href="#" 
+						<a class="github" href="https://github.com/libaolu312" 
 												title="GitHub" target="_blank"><i class="icon-github"></i></a>
 					
 				
 					
-						<a class="gitee" href="#" 
-												title="gitee" target="_blank"><i class="icon-gitee"></i></a>
+						<a class="gitee" href="https://gitee.com/calmli" 
+												title="码云" target="_blank"><i class="icon-gitee"></i></a>
 					
 				
 					
-						<a class="jianshu" href="#" 
-												title="jianshu" target="_blank"><i class="icon-jianshu"></i></a>
+						<a class="qq" href="/2981808882" 
+												title="QQ" target="_blank"><i class="icon-qq"></i></a>
 					
 				
 			</div>
@@ -208,17 +224,17 @@
 					
 						
 						<a class="github" target="_blank" 
-							href="#" title="GitHub"><i class="icon-github"></i></a>
+							href="https://github.com/libaolu312" title="GitHub"><i class="icon-github"></i></a>
 						
 					
 						
 						<a class="gitee" target="_blank" 
-							href="#" title="gitee"><i class="icon-gitee"></i></a>
+							href="https://gitee.com/calmli" title="码云"><i class="icon-gitee"></i></a>
 						
 					
 						
-						<a class="jianshu" target="_blank" 
-							href="#" title="jianshu"><i class="icon-jianshu"></i></a>
+						<a class="qq" target="_blank" 
+							href="/2981808882" title="QQ"><i class="icon-qq"></i></a>
 						
 					
 				</div>
@@ -540,7 +556,7 @@
         </li>
         <li>
           <strong>本文链接：</strong>
-          <a href="http://example.com/2022/07/01/YOLOv5/" title="YOLOv5" target="_blank">http://example.com/2022/07/01/YOLOv5/</a>
+          <a href="https://libaolu312.github.io/2022/07/01/YOLOv5/" title="YOLOv5" target="_blank">https://libaolu312.github.io/2022/07/01/YOLOv5/</a>
         </li>
         
         <li>
@@ -629,7 +645,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-     <!-- <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2022/07/01/YOLOv5/" alt="微信分享二维码"> -->
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://libaolu312.github.io/2022/07/01/YOLOv5/" alt="微信分享二维码"> -->
     </div>
 </div>
 
@@ -701,6 +717,29 @@
 
 
 
+  
+  <div id="gitment-ctn"></div>
+  
+    <!-- 中文 -->
+    <link rel="stylesheet" href="/lib/gitment.css">
+    <script src="/lib/gitment.js"></script>
+  
+  <script>
+    <!-- id: "YOLOv5" -->
+    var gitment = new Gitment({
+      id: "20220701203355",
+      owner: 'libaolu312',
+      repo: 'myblog-demo',
+      oauth: {
+        client_id: '7310ea694471182fe2b5',
+        client_secret: 'f721a78a52a0b5c7b4ee99d903f1eeff84a15d93',
+      },
+    })
+    gitment.render('gitment-ctn')
+  </script>
+
+
+  
 
 
 
@@ -711,7 +750,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2023 <a href="http://example.com/" target="_blank">李宝璐</a>
+    		&copy; 2022-2023 <a href="https://libaolu312.github.io/" target="_blank">李宝璐</a>
     	</div>
       	<div class="footer-right">
 			

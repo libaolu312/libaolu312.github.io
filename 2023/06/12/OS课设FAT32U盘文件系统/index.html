@@ -5,7 +5,7 @@
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <link rel="dns-prefetch" href="http://example.com">
+  <link rel="dns-prefetch" href="https://libaolu312.github.io">
   <title>OS课设FAT32U盘文件系统 | 李宝璐</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -13,86 +13,86 @@
   <meta name="description" content="！！！！！ 看再多的博客都不如去读一下原始的手册，这里放一个FAT的手册地址，十分感谢南京大学蒋炎岩老师的分享！ http:&#x2F;&#x2F;jyywiki.cn&#x2F;pages&#x2F;OS&#x2F;manuals&#x2F;MSFAT-spec.pdf">
 <meta property="og:type" content="article">
 <meta property="og:title" content="OS课设FAT32U盘文件系统">
-<meta property="og:url" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/index.html">
+<meta property="og:url" content="https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/index.html">
 <meta property="og:site_name" content="李宝璐">
 <meta property="og:description" content="！！！！！ 看再多的博客都不如去读一下原始的手册，这里放一个FAT的手册地址，十分感谢南京大学蒋炎岩老师的分享！ http:&#x2F;&#x2F;jyywiki.cn&#x2F;pages&#x2F;OS&#x2F;manuals&#x2F;MSFAT-spec.pdf">
-<meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230612225258948.png">
-<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230612230201899.png">
-<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230612230259286.png">
-<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230612230548797.png">
-<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230612231456257.png">
-<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230612231517938.png">
-<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230612231641589.png">
-<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230612231725701.png">
-<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230612232612658.png">
-<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230612232732461.png">
-<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230612233707009.png">
-<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230612234907049.png">
-<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230612235555918.png">
-<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230612235825684.png">
-<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230613002849175.png">
-<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230613005544270.png">
-<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230613005558953.png">
-<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230613214641298.png">
-<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230613220745624.png">
-<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230613004417775.png">
-<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230612224534717.png">
-<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230612224843458.png">
-<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614012931989.png">
-<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614013142399.png">
-<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614013610634.png">
-<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614013742747.png">
-<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614014944452.png">
-<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614015044089.png">
-<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614015244867.png">
-<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614015431932.png">
-<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614015809231.png">
-<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230613233408681.png">
-<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614020345080.png">
-<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230613233657185.png">
-<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230613233826134.png">
-<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230613233903037.png">
-<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614000658429.png">
-<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614000729046.png">
-<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614000747824.png">
-<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614002128010.png">
-<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614002353593.png">
-<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614002447619.png">
-<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614002731997.png">
-<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614002739575.png">
-<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614002939035.png">
-<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614003009137.png">
-<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614003437396.png">
-<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614003447201.png">
-<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614003512805.png">
-<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230615014019201.png">
-<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230615014141717.png">
-<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230615014351527.png">
-<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230615014216694.png">
-<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230615014318582.png">
-<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230615014729180.png">
-<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230615003925412.png">
-<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230615021824507.png">
-<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230615021901580.png">
-<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230615022018895.png">
-<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230615022253070.png">
-<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230615022358227.png">
-<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230615095524040.png">
-<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230615095554768.png">
-<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230615095744859.png">
-<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230615095821916.png">
-<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230615095846452.png">
-<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230615101751380.png">
-<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230615101808558.png">
-<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230615100221146.png">
-<meta property="og:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230615100048354.png">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230612225258948.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230612230201899.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230612230259286.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230612230548797.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230612231456257.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230612231517938.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230612231641589.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230612231725701.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230612232612658.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230612232732461.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230612233707009.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230612234907049.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230612235555918.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230612235825684.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230613002849175.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230613005544270.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230613005558953.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230613214641298.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230613220745624.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230613004417775.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230612224534717.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230612224843458.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614012931989.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614013142399.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614013610634.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614013742747.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614014944452.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614015044089.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614015244867.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614015431932.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614015809231.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230613233408681.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614020345080.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230613233657185.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230613233826134.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230613233903037.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614000658429.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614000729046.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614000747824.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614002128010.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614002353593.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614002447619.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614002731997.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614002739575.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614002939035.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614003009137.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614003437396.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614003447201.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230614003512805.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230615014019201.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230615014141717.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230615014351527.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230615014216694.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230615014318582.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230615014729180.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230615003925412.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230615021824507.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230615021901580.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230615022018895.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230615022253070.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230615022358227.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230615095524040.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230615095554768.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230615095744859.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230615095821916.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230615095846452.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230615101751380.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230615101808558.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230615100221146.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230615100048354.png">
 <meta property="article:published_time" content="2023-06-12T14:05:48.000Z">
 <meta property="article:modified_time" content="2023-06-15T02:31:14.139Z">
 <meta property="article:author" content="李宝璐">
 <meta property="article:tag" content="技术笔记">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230612225258948.png">
+<meta name="twitter:image" content="https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/image-20230612225258948.png">
   
     <link rel="alternative" href="/atom.xml" title="李宝璐" type="application/atom+xml">
   
@@ -118,6 +118,22 @@
  	  <script src="/lib/clickLove.js"></script>
   
   
+
+<script>
+  (function () {
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    } else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+
+</script>
+
 
 
   
@@ -183,18 +199,18 @@
 					
 				
 					
-						<a class="github" href="#" 
+						<a class="github" href="https://github.com/libaolu312" 
 												title="GitHub" target="_blank"><i class="icon-github"></i></a>
 					
 				
 					
-						<a class="gitee" href="#" 
-												title="gitee" target="_blank"><i class="icon-gitee"></i></a>
+						<a class="gitee" href="https://gitee.com/calmli" 
+												title="码云" target="_blank"><i class="icon-gitee"></i></a>
 					
 				
 					
-						<a class="jianshu" href="#" 
-												title="jianshu" target="_blank"><i class="icon-jianshu"></i></a>
+						<a class="qq" href="/2981808882" 
+												title="QQ" target="_blank"><i class="icon-qq"></i></a>
 					
 				
 			</div>
@@ -255,17 +271,17 @@
 					
 						
 						<a class="github" target="_blank" 
-							href="#" title="GitHub"><i class="icon-github"></i></a>
+							href="https://github.com/libaolu312" title="GitHub"><i class="icon-github"></i></a>
 						
 					
 						
 						<a class="gitee" target="_blank" 
-							href="#" title="gitee"><i class="icon-gitee"></i></a>
+							href="https://gitee.com/calmli" title="码云"><i class="icon-gitee"></i></a>
 						
 					
 						
-						<a class="jianshu" target="_blank" 
-							href="#" title="jianshu"><i class="icon-jianshu"></i></a>
+						<a class="qq" target="_blank" 
+							href="/2981808882" title="QQ"><i class="icon-qq"></i></a>
 						
 					
 				</div>
@@ -802,7 +818,7 @@
         </li>
         <li>
           <strong>本文链接：</strong>
-          <a href="http://example.com/2023/06/12/OS课设FAT32U盘文件系统/" title="OS课设FAT32U盘文件系统" target="_blank">http://example.com/2023/06/12/OS课设FAT32U盘文件系统/</a>
+          <a href="https://libaolu312.github.io/2023/06/12/OS课设FAT32U盘文件系统/" title="OS课设FAT32U盘文件系统" target="_blank">https://libaolu312.github.io/2023/06/12/OS课设FAT32U盘文件系统/</a>
         </li>
         
         <li>
@@ -891,7 +907,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-     <!-- <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" alt="微信分享二维码"> -->
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://libaolu312.github.io/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" alt="微信分享二维码"> -->
     </div>
 </div>
 
@@ -963,6 +979,29 @@
 
 
 
+  
+  <div id="gitment-ctn"></div>
+  
+    <!-- 中文 -->
+    <link rel="stylesheet" href="/lib/gitment.css">
+    <script src="/lib/gitment.js"></script>
+  
+  <script>
+    <!-- id: "OS课设FAT32U盘文件系统" -->
+    var gitment = new Gitment({
+      id: "20230612220548",
+      owner: 'libaolu312',
+      repo: 'myblog-demo',
+      oauth: {
+        client_id: '7310ea694471182fe2b5',
+        client_secret: 'f721a78a52a0b5c7b4ee99d903f1eeff84a15d93',
+      },
+    })
+    gitment.render('gitment-ctn')
+  </script>
+
+
+  
 
 
 
@@ -973,7 +1012,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2023 <a href="http://example.com/" target="_blank">李宝璐</a>
+    		&copy; 2022-2023 <a href="https://libaolu312.github.io/" target="_blank">李宝璐</a>
     	</div>
       	<div class="footer-right">
 			
