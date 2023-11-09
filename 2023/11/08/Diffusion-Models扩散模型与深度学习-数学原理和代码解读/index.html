@@ -6,22 +6,35 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Diffusion Models扩散模型与深度学习(数学原理和代码解读) | 李宝璐</title>
+  <title>Diffusion Models扩散模型与深度学习(数学原理深解) | 李宝璐</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="Diffusion Models扩散模型与深度学习(数学原理和代码解读) 前面的三次博客已经深入的说明了配分函数、基于能量模型、受限玻尔兹曼机、蒙特卡洛采样法和重要采样法等数学原理，这些都是扩散模型所蕴含的底层数学原理，那么现在就开始真正理解一下扩散模型。">
+  <meta name="description" content="Diffusion Models扩散模型与深度学习(数学原理深解) 前面的三次博客已经深入的说明了配分函数、基于能量模型、受限玻尔兹曼机、蒙特卡洛采样法和重要采样法等数学原理，这些都是扩散模型所蕴含的底层数学原理，那么现在就开始真正理解一下扩散模型。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Diffusion Models扩散模型与深度学习(数学原理和代码解读)">
+<meta property="og:title" content="Diffusion Models扩散模型与深度学习(数学原理深解)">
 <meta property="og:url" content="http://example.com/2023/11/08/Diffusion-Models%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E4%B8%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86%E5%92%8C%E4%BB%A3%E7%A0%81%E8%A7%A3%E8%AF%BB/index.html">
 <meta property="og:site_name" content="李宝璐">
-<meta property="og:description" content="Diffusion Models扩散模型与深度学习(数学原理和代码解读) 前面的三次博客已经深入的说明了配分函数、基于能量模型、受限玻尔兹曼机、蒙特卡洛采样法和重要采样法等数学原理，这些都是扩散模型所蕴含的底层数学原理，那么现在就开始真正理解一下扩散模型。">
+<meta property="og:description" content="Diffusion Models扩散模型与深度学习(数学原理深解) 前面的三次博客已经深入的说明了配分函数、基于能量模型、受限玻尔兹曼机、蒙特卡洛采样法和重要采样法等数学原理，这些都是扩散模型所蕴含的底层数学原理，那么现在就开始真正理解一下扩散模型。">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2023/11/08/Diffusion-Models%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E4%B8%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86%E5%92%8C%E4%BB%A3%E7%A0%81%E8%A7%A3%E8%AF%BB/20210714130306607.png">
+<meta property="og:image" content="http://example.com/2023/11/08/Diffusion-Models%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E4%B8%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86%E5%92%8C%E4%BB%A3%E7%A0%81%E8%A7%A3%E8%AF%BB/959594dd68e5d0cba808a8535469747.jpg">
+<meta property="og:image" content="http://example.com/2023/11/08/Diffusion-Models%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E4%B8%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86%E5%92%8C%E4%BB%A3%E7%A0%81%E8%A7%A3%E8%AF%BB/image-20231108170040093.png">
+<meta property="og:image" content="http://example.com/2023/11/08/Diffusion-Models%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E4%B8%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86%E5%92%8C%E4%BB%A3%E7%A0%81%E8%A7%A3%E8%AF%BB/image-20231108170611149.png">
+<meta property="og:image" content="http://example.com/2023/11/08/Diffusion-Models%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E4%B8%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86%E5%92%8C%E4%BB%A3%E7%A0%81%E8%A7%A3%E8%AF%BB/image-20231108170633337.png">
+<meta property="og:image" content="http://example.com/2023/11/08/Diffusion-Models%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E4%B8%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86%E5%92%8C%E4%BB%A3%E7%A0%81%E8%A7%A3%E8%AF%BB/f4850f1bc21f4c8eafd2b6e4207b4b2.png">
+<meta property="og:image" content="http://example.com/2023/11/08/Diffusion-Models%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E4%B8%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86%E5%92%8C%E4%BB%A3%E7%A0%81%E8%A7%A3%E8%AF%BB/a48b5b2d560d3d6e1de5a57e9d12e25.jpg">
+<meta property="og:image" content="http://example.com/2023/11/08/Diffusion-Models%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E4%B8%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86%E5%92%8C%E4%BB%A3%E7%A0%81%E8%A7%A3%E8%AF%BB/5ea701d0552f5670fa4a5b5e286ab28.png">
+<meta property="og:image" content="http://example.com/2023/11/08/Diffusion-Models%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E4%B8%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86%E5%92%8C%E4%BB%A3%E7%A0%81%E8%A7%A3%E8%AF%BB/image-20231109173906987.png">
+<meta property="og:image" content="http://example.com/2023/11/08/Diffusion-Models%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E4%B8%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86%E5%92%8C%E4%BB%A3%E7%A0%81%E8%A7%A3%E8%AF%BB/image-20231109174029275.png">
+<meta property="og:image" content="http://example.com/2023/11/08/Diffusion-Models%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E4%B8%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86%E5%92%8C%E4%BB%A3%E7%A0%81%E8%A7%A3%E8%AF%BB/image-20231109174144956.png">
+<meta property="og:image" content="http://example.com/2023/11/08/Diffusion-Models%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E4%B8%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86%E5%92%8C%E4%BB%A3%E7%A0%81%E8%A7%A3%E8%AF%BB/a99e5679d8cdc001e6ee6fe577214a3.jpg">
 <meta property="article:published_time" content="2023-11-08T07:12:43.000Z">
-<meta property="article:modified_time" content="2023-11-08T07:17:59.791Z">
+<meta property="article:modified_time" content="2023-11-09T12:03:30.118Z">
 <meta property="article:author" content="李宝璐">
 <meta property="article:tag" content="技术笔记">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2023/11/08/Diffusion-Models%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E4%B8%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86%E5%92%8C%E4%BB%A3%E7%A0%81%E8%A7%A3%E8%AF%BB/20210714130306607.png">
   
     <link rel="alternative" href="/atom.xml" title="李宝璐" type="application/atom+xml">
   
@@ -235,7 +248,7 @@
   
   
     <h1 class="article-title" itemprop="name">
-      Diffusion Models扩散模型与深度学习(数学原理和代码解读)
+      Diffusion Models扩散模型与深度学习(数学原理深解)
     </h1>
   
 
@@ -261,7 +274,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">105字</span>
+      <span class="post-count">3.3k字</span>
     </span>
   </span>
 
@@ -270,7 +283,7 @@
     <span class="post-meta-item-icon">
       <i class="icon-book icon"></i>
       <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">1分</span>
+      <span class="post-count">14分</span>
     </span>
   </span>
 </div>
@@ -281,9 +294,266 @@
   
   <div class="article-entry" itemprop="articleBody">
     
-    <h1 id="diffusion-models扩散模型与深度学习数学原理和代码解读">Diffusion
-Models扩散模型与深度学习(数学原理和代码解读)</h1>
+    <h1 id="diffusion-models扩散模型与深度学习数学原理深解">Diffusion
+Models扩散模型与深度学习(数学原理深解)</h1>
 <p>前面的三次博客已经深入的说明了配分函数、基于能量模型、受限玻尔兹曼机、蒙特卡洛采样法和重要采样法等数学原理，这些都是扩散模型所蕴含的底层数学原理，那么现在就开始真正理解一下扩散模型。</p>
+<span id="more"></span>
+<h3 id="核心问题">核心问题</h3>
+<p>机器学习的一个核心问题是，<strong>使用高度灵活的概率分布族对复杂数据集进行建模</strong>，在这些概率分布族中，学习、抽样、推理和评估仍然可以通过分析或计算进行处理。</p>
+<p>扩散模型的基本思想受到非平衡统计物理的启发，<strong>通过迭代正向扩散过程系统地、缓慢地破坏数据分布中的结构，然后学习一个反向扩散过程，恢复数据中的结构，产生了一个高度灵活和易于处理的数据生成模型</strong>。</p>
+<p>这种方法允许我们快速学习、采样和评估数千层或时间步长的深度生成模型中的概率，以及计算学习模型下的条件概率和后验概率。</p>
+<p><strong>说明</strong>：扩散模型是一种很古老的模型，2020年提出的Denoising
+Diffusion Probabilistic
+Models（DDPM）去噪扩散概率取得了更好的效果，与此类似，或者在DDPM上改进的模型如：Score-Based
+Models、DDIM、SMLD等，原理相似。这里就以DDPM为例讲述其数学原理。</p>
+<h3 id="总体过程">总体过程</h3>
+<p>总体过程分为<strong>正向过程</strong>和<strong>逆向过程</strong>。</p>
+<p>扩散概率模型DDPM是一个<strong>参数化的马尔科夫链</strong>，<strong>使用变分推理来来生成有限时间
+T
+后与数据分配的样本</strong>。<strong>神经网络学习这条链的跃迁来逆转扩散过程</strong>，这是一条马尔科夫链，它<strong>在采样的相反方向逐渐向数据添加噪声</strong>，<strong>直到信号被破坏</strong>。</p>
+<p>正向过程称为 <strong>q采样过程</strong>，用<span class="math inline">\(q\left( x_t|x_{t-1}
+\right)\)</span>表示，这一过程可以理解为<strong>添加噪声的过程</strong>，<strong>不涉及参数分布</strong>；</p>
+<p>逆向过程称为 <strong>p采样过程</strong>，用<span class="math inline">\(p_{\theta}\left( x_{t-1}|x_t
+\right)\)</span>表示，这一过程是<strong>从噪声中重建出数据分布的过程</strong>。</p>
+<p><img src="/2023/11/08/Diffusion-Models%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E4%B8%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86%E5%92%8C%E4%BB%A3%E7%A0%81%E8%A7%A3%E8%AF%BB/20210714130306607.png" alt="img" style="zoom:67%;"></p>
+<h3 id="前向过程diffusion-process">前向过程（Diffusion Process）</h3>
+<p>要从给定一个从真实数据分布 X0 ~ q（x）中抽样的数据点，前向过程在 0~T
+时间步长内逐步添加噪声，产生一系列有噪声的样本：<span class="math inline">\(x_1,...,x_T\)</span></p>
+<p>扩散模型与其他类型的潜在变量模型的区别在于近似后验<span class="math inline">\(q\left( x_{1:T}|x_0
+\right)\)</span>是一个固定的马尔科夫链，因此可以写成： <span class="math display">\[
+q\left( x_{1:T}|x_0 \right) :=\prod_{t=1}^T{q\left( x_t|x_{t-1} \right)}
+\]</span> 添加高斯噪声的数据通过variance schedule <span class="math inline">\(\beta _1,...,\beta
+_T\)</span>控制，由于前向过程是固定的马尔科夫链，因此variance schedule
+<span class="math inline">\(\beta
+_t\)</span>也是固定的，实际代码中可以通过一个固定的variance
+schedule表来获取。从全局考虑，越接近数据分布添加的噪声对数据分布的影响越大，反之越小。所以后来人用
+cos 函数、指数函数 等方法获取<span class="math inline">\(\beta
+_t\)</span>，取得了更好的效果。<strong>但是需要保证<span class="math inline">\(\beta _t\)</span>足够小这一假设，因为只有<span class="math inline">\(\beta _t\)</span>足够小，逆向过程的<span class="math inline">\(p_{\theta}\left( x_{t-1}|x_t
+\right)\)</span>才是符合高斯分布的，这是我们推导的一个重要前提。</strong></p>
+<p>因此<span class="math inline">\(q\left( x_t|x_{t-1}
+\right)\)</span>可以定义为： <span class="math display">\[
+q\left( x_t|x_{t-1} \right) :=N\left( x_t;\sqrt{1-\beta _t}x_{t-1},\beta
+_tI \right)
+\]</span> 推导过程如下：</p>
+<p><img src="/2023/11/08/Diffusion-Models%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E4%B8%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86%E5%92%8C%E4%BB%A3%E7%A0%81%E8%A7%A3%E8%AF%BB/959594dd68e5d0cba808a8535469747.jpg"></p>
+<p>推导过程中使用VAE中提出的reparameterization
+trick，为了方便表示q采样累成过程，定义：</p>
+<ul>
+<li><span class="math inline">\(\alpha _t=1-\beta _t\)</span></li>
+<li><span class="math inline">\(\bar{\alpha}_t=\prod_{i=1}^T{\alpha
+_i}\)</span></li>
+</ul>
+<p>可得 <span class="math inline">\(x_t\)</span>：</p>
+<p><img src="/2023/11/08/Diffusion-Models%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E4%B8%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86%E5%92%8C%E4%BB%A3%E7%A0%81%E8%A7%A3%E8%AF%BB/image-20231108170040093.png"></p>
+<p>reparameterization trick是VAE中的知识点：损失函数中的期望项从z ~
+<span class="math inline">\(q_{\phi}\left( z|x
+\right)\)</span>中生成样本，抽样是一个随机过程，因此我们<strong>不能反向传播梯度</strong>。<strong>为了使其可训练</strong>，引入了reparameterization
+trick重参数化技巧：通常可以将随机变量z表示为确定性变量<span class="math inline">\(z=T_{\phi}\left( x,\epsilon
+\right)\)</span>，其中<span class="math inline">\(\epsilon\)</span>是辅助独立随机变量，变换函数<span class="math inline">\(T_{\phi}\)</span>通过<span class="math inline">\(\phi\)</span>参数化将<span class="math inline">\(\epsilon\)</span>转换为<span class="math inline">\(z\)</span>。</p>
+<p>例如：</p>
+<p><img src="/2023/11/08/Diffusion-Models%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E4%B8%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86%E5%92%8C%E4%BB%A3%E7%A0%81%E8%A7%A3%E8%AF%BB/image-20231108170611149.png"></p>
+<p><img src="/2023/11/08/Diffusion-Models%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E4%B8%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86%E5%92%8C%E4%BB%A3%E7%A0%81%E8%A7%A3%E8%AF%BB/image-20231108170633337.png"></p>
+<p>注：图例说明重参数化技巧如何使抽样过程可训练</p>
+<p>这里再详细补充一些吧。</p>
+<p>Reparameterization
+trick（重参数化技巧）是一种在训练生成模型中处理随机性潜在变量的方法，特别常见于变分自动编码器（VAE）等模型中。这个技巧的目的是<strong>使模型可微分</strong>（differentiable），以便使用梯度下降等反向传播算法来训练模型，也就是<strong>将随机采样的过程转换为可导的运算，从而使得梯度下降算法可以正常工作</strong>。</p>
+<p>以下是它的基本原理和操作：</p>
+<ul>
+<li><strong>1.背景：</strong>在生成模型中，通常会有一个<strong>随机性的潜在变量</strong>，例如高斯分布中的均值和方差，用于生成样本。这会导致问题，因为<strong>采样操作是不可微的</strong>，无法通过反向传播来更新梯度，从而让模型学习这些分布参数。</li>
+<li><strong>2.重参数化：</strong>为了解决这个问题，Reparameterization
+trick
+提出<strong>将随机采样操作从网络中移动到一个确定性函数中</strong>。这个确定性函数通常是一个线性变换，将从标准高斯分布（均值为0，方差为1）中采样的随机噪声与潜在变量的均值和标准差相结合。这个确定性函数是可微分的，因此梯度可以在这个过程中传播。</li>
+<li><strong>3.具体操作：</strong>在实际操作中，首先<strong>从标准高斯分布中采样一个随机噪声向量（通常记作𝝐）</strong>。然后，<strong>通过一个神经网络或其他可微分的映射函数，将这个随机噪声向量与模型的均值和标准差参数相结合，生成最终的潜在变量</strong>。这个潜在变量被用于生成样本，同时也与损失函数相关联，使得可以通过反向传播来更新梯度。</li>
+</ul>
+<p>举个栗子：</p>
+<p>Variational Bipartite Graph Encoder中作者有这样一个操作：</p>
+<p><img src="/2023/11/08/Diffusion-Models%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E4%B8%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86%E5%92%8C%E4%BB%A3%E7%A0%81%E8%A7%A3%E8%AF%BB/f4850f1bc21f4c8eafd2b6e4207b4b2.png" alt="f4850f1bc21f4c8eafd2b6e4207b4b2" style="zoom:67%;"></p>
+<p>上面(3)式子，和VAE的讲解结合起来看看，貌似能理解了。首先 Z 服从
+N(μ,σ2)的话，大学概率论都学过，那么<span class="math inline">\(ε = σ
+\frac{(Z-μ)}{σ}\)</span>就服从标准正态分布了，也就是 ε
+服从标准正态分布N(0, 1)。 <span class="math inline">\(ε = σ
+\frac{(Z-μ)}{σ}\)</span>左边的等式变式一下，就有Z = μ + ε × σ了，那么从
+N(μ,σ2)采样一个Z，相当于从从标准正态分布N(0, 1)采样一个 ε
+。这样就将随机采样的过程转换为可导的运算，可以进行反向传播了。</p>
+<p>总之，“Reparameterization trick”
+允许模型在训练过程中通过随机采样得到的潜在变量，同时保持了可微性，从而使生成模型更容易优化。这个技巧在生成对抗网络（GANs）、变分自动编码器（VAE）和其他生成模型中广泛应用。</p>
+<h3 id="采样过程reverse-diffusion-process">采样过程（Reverse Diffusion
+Process）</h3>
+<p>如果我们能逆转上述前向过程，从<span class="math inline">\(q\left(
+x_{t-1}|x_t \right)\)</span>当中采样，我们就能从<span class="math inline">\(x_T\)</span>得到<span class="math inline">\(x_0\)</span>。我们前面说明<span class="math inline">\(\beta _t\)</span>足够小假设的时候说明了<span class="math inline">\(q\left( x_{t-1}|x_t
+\right)\)</span>也是符合高斯分布的。但是我们很难得到整个数据集的<span class="math inline">\(q\left( x_{t-1}|x_t
+\right)\)</span>概率分布，因此我们需要学习一个模型<span class="math inline">\(p_{\theta}\)</span>来近似这些条件概率以便进行反向扩散过程：
+<span class="math display">\[
+p_{\theta}\left( x_0:T \right) =p\left( x_T \right)
+\prod_{t=1}^T{p_{\theta}\left( x_{t-1}|x_t \right) \ \ p_{\theta}\left(
+x_{t-1}|x_t \right) =N\left( x_{t-1};\mu _{\theta}\left( x_t,t \right)
+,\sum_{\theta}{\left( x_t,t \right)} \right)}
+\]</span> 我们还是手写一遍推导过程：</p>
+<p><img src="/2023/11/08/Diffusion-Models%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E4%B8%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86%E5%92%8C%E4%BB%A3%E7%A0%81%E8%A7%A3%E8%AF%BB/a48b5b2d560d3d6e1de5a57e9d12e25.jpg"></p>
+<p>其中反向过程的示意图可以这样画：</p>
+<p><img src="/2023/11/08/Diffusion-Models%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E4%B8%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86%E5%92%8C%E4%BB%A3%E7%A0%81%E8%A7%A3%E8%AF%BB/5ea701d0552f5670fa4a5b5e286ab28.png" alt="5ea701d0552f5670fa4a5b5e286ab28" style="zoom: 80%;"></p>
+<p>为了简化后面的推导，我们可以这样写： <span class="math display">\[
+p\left( x_{t-1}|x_t,x_0 \right) \ ~\ N\left( x_{t-1};\tilde{\mu}_t\left(
+x_t,x_0 \right) ,\tilde{\beta}_tI \right)
+\]</span> <span class="math display">\[
+where\ \tilde{\mu}_t\left( x_t,x_0 \right) =\frac{\sqrt{\alpha _t\left(
+1-\bar{\alpha}_{t-1}
+\right)}}{1-\bar{\alpha}_t}x_t+\frac{\sqrt{\bar{\alpha}_{t-1}}\beta
+_t}{1-\bar{\alpha}_t}\frac{1}{\sqrt{\bar{\alpha}_t}}\left(
+x_t-\sqrt{1-\bar{\alpha}_t}z\epsilon \right)
+\]</span> <span class="math display">\[
+=\frac{1}{\sqrt{\alpha _t}}\left( x_t-\frac{\beta
+_t}{\sqrt{1-\bar{\alpha}_t}}\epsilon \right)
+\]</span> <span class="math display">\[
+and\ \ \
+\bar{\beta}_t:=\frac{1-\bar{\alpha}_{t-1}}{1-\bar{\alpha}_t}\beta _t
+\]</span></p>
+<h3 id="推导训练目标">推导训练目标</h3>
+<p>引入变分分布 q 后可以写出关于似然函数<span class="math inline">\(p_{\theta}\)</span>的变分界限： <span class="math display">\[
+-\log p_{\theta}\left( x_0 \right) \le -\log p_{\theta}\left( x_0
+\right) \ +\ D_{KL}\left( q\left( x_{1:T}|x_0 \right) ||p_{\theta}\left(
+x_{1:T}|x_0 \right) \right)
+\]</span> <span class="math display">\[
+=-\log p_{\theta}\left( x_0 \right) +\mathbb{E}_{x_1:T~q\left( x_1:T|x_0
+\right)}\left[ \log \frac{q\left( x_{1:T}|x_0 \right)}{p_{\theta}\left(
+x_{0:T} \right) /p_{\theta}\left( x_0 \right)} \right]
+\]</span> <span class="math display">\[
+=-\log p_{\theta}\left( x_0 \right) +\mathbb{E}_q\left[ \log
+\frac{q\left( x_{1:T}|x_0 \right)}{p_{\theta}\left( x_{0:T}
+\right)}+\log p_{\theta}\left( x_0 \right) \right]
+\]</span> <span class="math display">\[
+=\mathbb{E}_q\left[ \log \frac{q\left( x_{1:T}|x_0
+\right)}{p_{\theta}\left( x_{0:T} \right)} \right]
+\]</span> 所以： <span class="math display">\[
+L_{VLB}=\mathbb{E}_{q\left( x_{0TT} \right)}\left[ \log \frac{q\left(
+x_{1:T}|x_0 \right)}{p_{\theta}\left( x_{0:T} \right)} \right] \ge
+-\mathbb{E}_{q\left( x_0 \right)}\log p_{\theta}\left( x_0 \right)
+\]</span> 这里有些部分可能看不懂，做一些额外的解释：</p>
+<ul>
+<li><span class="math inline">\(D_{KL}\)</span>这里指的是KL散度，这是一个用来衡量两个概率分布的相似性的一个度量指标。</li>
+<li>信息熵为：<span class="math inline">\(H=-\sum_{i=1}^N{p\left( x_i
+\right) \log p\left( x_i \right)}\)</span></li>
+<li>在信息熵的基础上，我们定义 KL 散度为：<span class="math inline">\(D_{KL}\left( p||q \right) =\sum_{i=1}^N{p\left(
+x_i \right) \cdot \left( \log \frac{p\left( x_i \right)}{q\left( x_i
+\right)} \right)}\)</span></li>
+<li><span class="math inline">\(D_{KL}\left( p||q
+\right)\)</span>表示的就是概率 q 与概率 p
+之间的差异，很显然，散度越小，说明 概率 q 与概率 p
+之间越接近，那么估计的概率分布于真实的概率分布也就越接近。</li>
+</ul>
+<p>使用Jenson不等式也可以直接得到相同的结果，假设我们想要最小化交叉熵最为学习目标：</p>
+<p><img src="/2023/11/08/Diffusion-Models%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E4%B8%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86%E5%92%8C%E4%BB%A3%E7%A0%81%E8%A7%A3%E8%AF%BB/image-20231109173906987.png" alt="image-20231109173906987" style="zoom:67%;"></p>
+<p>为了将方程中的每一项转化为可解析计算，目标可以进一步改写为几个KL散度和熵项的组合，通过随机梯度下降优化L的随机项：</p>
+<p><img src="/2023/11/08/Diffusion-Models%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E4%B8%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86%E5%92%8C%E4%BB%A3%E7%A0%81%E8%A7%A3%E8%AF%BB/image-20231109174029275.png" alt="image-20231109174029275" style="zoom:67%;"></p>
+<p>所以随机梯度下降的目标为：</p>
+<p><img src="/2023/11/08/Diffusion-Models%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E4%B8%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86%E5%92%8C%E4%BB%A3%E7%A0%81%E8%A7%A3%E8%AF%BB/image-20231109174144956.png"></p>
+<p>因为XT，X0，X1的分布都是确定的，所以LT、L0都是常数，求导后可以省略，所以L可再简化为只含有Lt-1的想，为了表达方便我们写成Lt：
+<span class="math display">\[
+L_t=\mathbb{E}_{x_0,z}\left[ \frac{1}{2||\sum_{\theta}{\left( x_t,t
+\right) ||\begin{array}{c}
+    2\\
+    2\\
+\end{array}}}||\tilde{\mu}_t\left( x_t,x_0 \right) -\mu _{\theta}\left(
+x_t,t \right) ||\begin{array}{c}
+    2\\
+    \\
+    \\
+\end{array} \right]
+\]</span> <span class="math display">\[
+=\mathbb{E}_{x_0,z}\left[ \frac{1}{2||\sum_{\theta}{||\begin{array}{c}
+    2\\
+    2\\
+\end{array}}}||\frac{1}{\sqrt{\alpha _t}}\left( x_t-\frac{\beta
+_t}{\sqrt{1-\bar{\alpha}_t}}\epsilon \right) -\frac{1}{\sqrt{\alpha
+_t}}\left( x_t-\frac{\beta _t}{\sqrt{1-\bar{\alpha}_t}}\epsilon
+_{\theta}\left( x_t,t \right) ||\begin{array}{c}
+    2\\
+    \\
+    \\
+\end{array} \right) \right]
+\]</span> <span class="math display">\[
+=\mathbb{E}_{x_0,z}\left[ \frac{\beta _{t}^{2}}{2\alpha _t\left(
+1-\bar{\alpha}_t \right) ||\sum_{\theta}{\,\,||\begin{array}{c}
+    2\\
+    2\\
+\end{array}}}||\epsilon -\epsilon _{\theta}\left( x_t,t \right)
+||\begin{array}{c}
+    2\\
+    \\
+    \text{}\\
+\end{array} \right]
+\]</span> <span class="math display">\[
+=\mathbb{E}_{x_0,z}\left[ \frac{\beta _{t}^{2}}{2\alpha _t\left(
+1-\bar{\alpha}_t \right) ||\sum_{\theta}{\,\,||\begin{array}{c}
+    2\\
+    2\\
+\end{array}}}||\epsilon _t-\epsilon _{\theta}\left(
+\sqrt{\bar{\alpha}_t}x_0+\sqrt{1-\bar{\alpha}_t}\epsilon ,t \right)
+||\begin{array}{c}
+    2\\
+    \\
+    \text{}\\
+\end{array} \right]
+\]</span> <span class="math display">\[
+L_t=\mathbb{E}_{x_0,z}\left[ \frac{1}{2||\sum_{\theta}{\left( x_t,t
+\right) ||\begin{array}{c}
+    2\\
+    2\\
+\end{array}}}||\tilde{\mu}_t\left( x_t,x_0 \right) -\mu _{\theta}\left(
+x_t,t \right) ||\begin{array}{c}
+    2\\
+    \\
+    \\
+\end{array} \right]
+\]</span> <span class="math display">\[
+=\mathbb{E}_{x_0,z}\left[ \frac{1}{2||\sum_{\theta}{||\begin{array}{c}
+    2\\
+    2\\
+\end{array}}}||\frac{1}{\sqrt{\alpha _t}}\left( x_t-\frac{\beta
+_t}{\sqrt{1-\bar{\alpha}_t}}\epsilon \right) -\frac{1}{\sqrt{\alpha
+_t}}\left( x_t-\frac{\beta _t}{\sqrt{1-\bar{\alpha}_t}}\epsilon
+_{\theta}\left( x_t,t \right) ||\begin{array}{c}
+    2\\
+    \\
+    \\
+\end{array} \right) \right]
+\]</span> <span class="math display">\[
+=\mathbb{E}_{x_0,z}\left[ \frac{\beta _{t}^{2}}{2\alpha _t\left(
+1-\bar{\alpha}_t \right) ||\sum_{\theta}{\,\,||\begin{array}{c}
+    2\\
+    2\\
+\end{array}}}||\epsilon -\epsilon _{\theta}\left( x_t,t \right)
+||\begin{array}{c}
+    2\\
+    \\
+    \\
+\end{array} \right]
+\]</span> <span class="math display">\[
+=\mathbb{E}_{x_0,z}\left[ \frac{\beta _{t}^{2}}{2\alpha _t\left(
+1-\bar{\alpha}_t \right) ||\sum_{\theta}{\,\,||\begin{array}{c}
+    2\\
+    2\\
+\end{array}}}||\epsilon _t-\epsilon _{\theta}\left(
+\sqrt{\bar{\alpha}_t}x_0+\sqrt{1-\bar{\alpha}_t}\epsilon ,t \right)
+||\begin{array}{c}
+    2\\
+    \\
+    \\
+\end{array} \right]
+\]</span></p>
+<p>训练扩散模型时，忽略加权项的简化目标效果更好： <span class="math display">\[
+L_{t}^{simple}=\mathbb{E}_{x_{0,z_t}}\left[ ||\epsilon -\epsilon
+_{\theta}\left(
+\sqrt{\bar{\alpha}_{\theta}x_0}+\sqrt{1-\bar{\alpha}_t}\epsilon ,t
+\right) ||\begin{array}{c}
+    2\\
+    \\
+    \text{
+}\\
+\end{array} \right]
+\]</span> 其中<span class="math inline">\(z_\theta\)</span>可以理解为使用神经网络对噪声预测，此处的噪声可以看成是数据分布的增广，此处的神经网络一般用Unet，至于为什么要用Unet，我会再写一篇博客。</p>
+<p>至此，我们正式推出了完整训练目标，也就得到了原论文中的训练伪代码：</p>
+<p><img src="/2023/11/08/Diffusion-Models%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E4%B8%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86%E5%92%8C%E4%BB%A3%E7%A0%81%E8%A7%A3%E8%AF%BB/a99e5679d8cdc001e6ee6fe577214a3.jpg"></p>
 
     
 
@@ -298,7 +568,7 @@ Models扩散模型与深度学习(数学原理和代码解读)</h1>
         </li>
         <li>
           <strong>本文链接：</strong>
-          <a href="http://example.com/2023/11/08/Diffusion-Models扩散模型与深度学习-数学原理和代码解读/" title="Diffusion Models扩散模型与深度学习(数学原理和代码解读)" target="_blank">http://example.com/2023/11/08/Diffusion-Models扩散模型与深度学习-数学原理和代码解读/</a>
+          <a href="http://example.com/2023/11/08/Diffusion-Models扩散模型与深度学习-数学原理和代码解读/" title="Diffusion Models扩散模型与深度学习(数学原理深解)" target="_blank">http://example.com/2023/11/08/Diffusion-Models扩散模型与深度学习-数学原理和代码解读/</a>
         </li>
         
         <li>
@@ -431,8 +701,9 @@ Models扩散模型与深度学习(数学原理和代码解读)</h1>
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#diffusion-models%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E4%B8%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86%E5%92%8C%E4%BB%A3%E7%A0%81%E8%A7%A3%E8%AF%BB"><span class="toc-number">1.</span> <span class="toc-text">Diffusion
-Models扩散模型与深度学习(数学原理和代码解读)</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#diffusion-models%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E4%B8%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86%E6%B7%B1%E8%A7%A3"><span class="toc-number">1.</span> <span class="toc-text">Diffusion
+Models扩散模型与深度学习(数学原理深解)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E9%97%AE%E9%A2%98"><span class="toc-number">1.0.1.</span> <span class="toc-text">核心问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E4%BD%93%E8%BF%87%E7%A8%8B"><span class="toc-number">1.0.2.</span> <span class="toc-text">总体过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E5%90%91%E8%BF%87%E7%A8%8Bdiffusion-process"><span class="toc-number">1.0.3.</span> <span class="toc-text">前向过程（Diffusion Process）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%87%E6%A0%B7%E8%BF%87%E7%A8%8Breverse-diffusion-process"><span class="toc-number">1.0.4.</span> <span class="toc-text">采样过程（Reverse Diffusion
+Process）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A8%E5%AF%BC%E8%AE%AD%E7%BB%83%E7%9B%AE%E6%A0%87"><span class="toc-number">1.0.5.</span> <span class="toc-text">推导训练目标</span></a></li></ol></li></ol></li></ol>
                     </div>
                 </span>
             </div>
