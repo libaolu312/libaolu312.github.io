@@ -471,35 +471,43 @@
 
 
 
-
-
-
-
-
-
-  
-  <div id="gitment-ctn"></div>
-  
-    <!-- 中文 -->
-    <link rel="stylesheet" href="/lib/gitment.css">
-    <script src="/lib/gitment.js"></script>
-  
-  <script>
-    <!-- id: "Any-to-Any Generation via Composable Diffusion" -->
-    var gitment = new Gitment({
-      id: "20231020193344",
+  <section id="comments" class="comments">
+      <style>
+        .comments{margin:30px;padding:10px;background:#fff}
+        @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+      </style>
+      
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+    var gitalk = new Gitalk({
+      clientID: '42328a99496b32b78cfb',
+      clientSecret: '8ff71391255b5283f624f252a3ca53d7b9b96f4b',
+      repo: 'libaolu312.github.io',
       owner: 'libaolu312',
-      repo: 'myblog-demo',
-      oauth: {
-        client_id: '7310ea694471182fe2b5',
-        client_secret: 'f721a78a52a0b5c7b4ee99d903f1eeff84a15d93',
-      },
+      admin: 'libaolu312',
+     //id ��Ϊ�˱�֤issue��Ψһ�ԣ�id���Ȳ��ܴ���50�������������ʹ��·������id����һ����ȡ����ò�Ҫ�޸Ĵ������������ܵ������۶�ʧ  
+      id: location.href.slice(location.href.length-25),
+      distractionFreeMode: 'true',
+      labels: 'Comment'.split(',').filter(l => l) ,
     })
-    gitment.render('gitment-ctn')
-  </script>
+    gitalk.render('gitalk-container')
+    </script>
+    
+    
+    
+  </section>
 
 
-  
+
+
+
+
+
+
+
+
 
 
 
