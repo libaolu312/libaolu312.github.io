@@ -492,6 +492,161 @@ hobby）</p>
 
 
   
+    <article id="post-为什么Diffusion-Models钟爱U-net结构" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2023/11/13/%E4%B8%BA%E4%BB%80%E4%B9%88Diffusion-Models%E9%92%9F%E7%88%B1U-net%E7%BB%93%E6%9E%84/" target="_blank">为什么Diffusion Models钟爱U-net结构</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2023/11/13/%E4%B8%BA%E4%BB%80%E4%B9%88Diffusion-Models%E9%92%9F%E7%88%B1U-net%E7%BB%93%E6%9E%84/" class="archive-article-date">
+        <time datetime="2023-11-13T08:05:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-11-13</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <h1 id="为什么diffusion-models钟爱u-net结构">为什么Diffusion
+Models钟爱U-net结构</h1>
+<p>最近在看很多关于Diffusion
+Model的工作，几乎所有的工作都选用了U-net，U-net这其中的作用是在反向过程中预测噪声$$。</p>
+<p>可是为什么一定要用U-net呢？</p>
+<p>为什么几乎所有的工作都是在U-net的基础上呢？（部分3D
+generation选用MLP）</p>
+<p>我们依次来进行探究。</p>
+<h3 id="灵感从gans中来">灵感从GANs中来</h3>
+<p>首次在深层次生成模型中使用U-net结构的是2017年发表的论文《Image-to-Image
+Translation with Conditional Adversarial
+Networks》，也就是大名鼎鼎的Pix2Pix GAN。</p>
+<!--follow：https://github.com/phillipi/pix2pix-->
+<p>在U-net网络中，<strong>输入通过一系列层，逐步下采样，直到bottleneck层</strong>，在这一点上，过程是反向的。<strong>这样的网络要求所有的信息流都要经过所有的层，包括bottleneck</strong>。对于许多图像翻译问题，<strong>在输入和输出之间有大量的低级信息共享</strong>，因此希望将这些信息直接通过网络传递。</p>
+<p>为了能让这些信息顺利传递，在用于医疗分割的《U-net：Convolutional
+networks for biomedical image segmentation》基础上，加入了<strong>jumper
+layer</strong>，在第i层和第n层之间添加jumper
+layer，其中n为总层数。每个jumper
+layer将第i层的所有信道与第n-i层的信道连接起来。</p>
+<p>为了说明U-net的有效性，作者做了消融实验，将jumper
+layer切断，变成了一个简单的encoder-decoder的结构，生成的效果对比如下图：</p>
+<p><img src="/2023/11/13/%E4%B8%BA%E4%BB%80%E4%B9%88Diffusion-Models%E9%92%9F%E7%88%B1U-net%E7%BB%93%E6%9E%84/image-20231113162015871.png" alt="image-20231113162015871" style="zoom:67%;"></p>
+<h3 id="ddpm诞生之初与unet的不解之缘">DDPM诞生之初与Unet的不解之缘</h3>
+<p>《Denoising Diffusion Probabilistic
+Models》是第一篇提出DDPM的文章，在文章中，使用了PixelCNN++，这是一个基于wide
+resnet的U-net结构。</p>
+<!--follow：https://github.com/openai/pixel-cnn-->
+<p>虽然DDPM需要生成器预测噪声的分布，但是此处<strong>噪声可以看成数据分布的增广</strong>，我们需要一个具有强大能力的生成网络，因此选择了PixelCNN++网络。</p>
+<p><img src="/2023/11/13/%E4%B8%BA%E4%BB%80%E4%B9%88Diffusion-Models%E9%92%9F%E7%88%B1U-net%E7%BB%93%E6%9E%84/image-20231113162413386.png" alt="image-20231113162413386" style="zoom:50%;"></p>
+<h3 id="positional-embedding-融入共享参数信息">Positional Embedding
+融入共享参数信息</h3>
+<p>原有的U-net结构不能完全满足扩散模型的需求，我们需要做一些改进，其中融入共享参数信息是首先要解决的问题。</p>
+<p><img src="/2023/11/13/%E4%B8%BA%E4%BB%80%E4%B9%88Diffusion-Models%E9%92%9F%E7%88%B1U-net%E7%BB%93%E6%9E%84/image-20231113162731184.png" alt="image-20231113162731184" style="zoom: 50%;"></p>
+<p>Positional Embedding 是
+transformer中一个重要的组成部分，因为在transformer中不包含RNN和CNN，<strong>为了让模型利用序列的顺序，必须注入一些关于序列中记号的相对或绝对位置的信息</strong>。</p>
+<p>为此添加位置编码在编码器和解码器堆栈的底部。位置编码与具有Embedding
+vector具有相同的维数模型，因此可以将两者相加。位置编码可以是可学习的，也可以是固定的。原始的transformer中将奇数和偶数位置分开，计算公式如下：
+<span class="math display">\[
+PE\left( pos,2i \right) =\sin \left( pos/10000^{2i}/d_{mode} \right)
+\]</span> <span class="math display">\[
+PE\left( pos,2i+1 \right) =\cos \left( pos/10000^{2i}/d_{mode} \right)
+\]</span></p>
+<p>但是在diffusion model当中做了一些简化：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">self.positional_embedding = nn.Parameter(th.randn(embed_dim, spacial_dim ** <span class="number">2</span> + <span class="number">1</span>) / embed_dim ** <span class="number">0.5</span>)</span><br><span class="line">x = x + self.positional_embedding[<span class="literal">None</span>, :, :].to(x.dtype)  <span class="comment"># NC(HW+1)</span></span><br></pre></td></tr></table></figure>
+<h3 id="u-net基础上引入self-attention机制">U-net基础上引入self-attention机制</h3>
+<p>transformer火了之后，attention机制也随之非常流行，U-net结合attention并不是DDPM首次提出，DDPM在U-net基础上引入了self-attention机制，在特征图分辨率上使用自注意力机制。自注意力机制是一种将单个序列的不同位置联系起来以计算序列的表示形式的注意机制。自我注意在阅读理解、抽象摘要、文本蕴含和学习任务独立的句子表征等任务重都得到了成功的应用。</p>
+<p><strong>自注意力机制是注意力机制的变体，其减少了对外部信息的依赖，更擅长捕捉数据或特征的内部相关性。</strong></p>
+<p>原先的transformer在encoder和decoder中使用自注意力机制，也就是上面图中的multi-head
+attention。计算公式如下： <span class="math display">\[
+Attention\left( Q,K,V \right) =soft\max \left( \frac{QK^T}{\sqrt{d_k}}
+\right) V
+\]</span>
+每个attention模块都在每一层的卷积块中间添加，具体的DDPM的attention机制代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">AttentionBlock</span>(nn.Module):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params"></span></span><br><span class="line"><span class="params">        self,</span></span><br><span class="line"><span class="params">        channels,</span></span><br><span class="line"><span class="params">        num_heads=<span class="number">1</span>,</span></span><br><span class="line"><span class="params">        num_head_channels=-<span class="number">1</span>,</span></span><br><span class="line"><span class="params">        use_checkpoint=<span class="literal">False</span>,</span></span><br><span class="line"><span class="params">        use_new_attention_order=<span class="literal">False</span>,</span></span><br><span class="line"><span class="params">    </span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__()</span><br><span class="line">        self.channels = channels</span><br><span class="line">        <span class="keyword">if</span> num_head_channels == -<span class="number">1</span>:</span><br><span class="line">            self.num_heads = num_heads</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">assert</span> (</span><br><span class="line">                channels % num_head_channels == <span class="number">0</span></span><br><span class="line">            ), <span class="string">f&quot;q,k,v channels <span class="subst">&#123;channels&#125;</span> is not divisible by num_head_channels <span class="subst">&#123;num_head_channels&#125;</span>&quot;</span></span><br><span class="line">            self.num_heads = channels // num_head_channels</span><br><span class="line">        self.use_checkpoint = use_checkpoint</span><br><span class="line">        self.norm = normalization(channels)</span><br><span class="line">        self.qkv = conv_nd(<span class="number">1</span>, channels, channels * <span class="number">3</span>, <span class="number">1</span>)</span><br><span class="line">        <span class="keyword">if</span> use_new_attention_order:</span><br><span class="line">            <span class="comment"># split qkv before split heads</span></span><br><span class="line">            self.attention = QKVAttention(self.num_heads)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="comment"># split heads before split qkv</span></span><br><span class="line">            self.attention = QKVAttentionLegacy(self.num_heads)</span><br><span class="line"> </span><br><span class="line">        self.proj_out = zero_module(conv_nd(<span class="number">1</span>, channels, channels, <span class="number">1</span>))</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, x</span>):</span><br><span class="line">        <span class="keyword">return</span> checkpoint(self._forward, (x,), self.parameters(), <span class="literal">True</span>)</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">_forward</span>(<span class="params">self, x</span>):</span><br><span class="line">        b, c, *spatial = x.shape</span><br><span class="line">        x = x.reshape(b, c, -<span class="number">1</span>)</span><br><span class="line">        qkv = self.qkv(self.norm(x))</span><br><span class="line">        h = self.attention(qkv)</span><br><span class="line">        h = self.proj_out(h)</span><br><span class="line">        <span class="keyword">return</span> (x + h).reshape(b, c, *spatial)</span><br></pre></td></tr></table></figure>
+<h3 id="总结">总结</h3>
+<ul>
+<li>U-net的生成能力在GANs中早已被证明是强大有效的</li>
+<li>在之前U-net结构的基础上，加入了attention和PE，形成了DDPM特有的U-net结构</li>
+</ul>
+
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术文档</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/扩散模型//" class="article-tag-list-link color5">扩散模型</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2023/11/13/%E4%B8%BA%E4%BB%80%E4%B9%88Diffusion-Models%E9%92%9F%E7%88%B1U-net%E7%BB%93%E6%9E%84/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Diffusion-Models扩散模型与深度学习-数学原理和代码解读" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1203,108 +1358,6 @@ Models背后的深度学习原理（1）:配分函数</h1>
 
 
   
-    <article id="post-视觉扩散模型综述" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2023/10/17/%E8%A7%86%E8%A7%89%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E7%BB%BC%E8%BF%B0/" target="_blank">视觉扩散模型综述</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2023/10/17/%E8%A7%86%E8%A7%89%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E7%BB%BC%E8%BF%B0/" class="archive-article-date">
-        <time datetime="2023-10-17T13:59:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-10-17</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p><a target="_blank" rel="noopener" href="https://github.com/ChenHsing/Awesome-Video-Diffusion-Models">https://github.com/ChenHsing/Awesome-Video-Diffusion-Models</a></p>
-<p>​		最近一波人工智能生成内容(AIGC)在计算机视觉领域取得了巨大的成功，而扩散模型在其中发挥了关键作用。由于其令人印象深刻的生成能力，扩散模型正逐渐取代基于GANs和自回归transformer的方法，不仅在图像生成和编辑方面，而且在视频相关研究领域都表现出了卓越的性能。</p>
-<h4 id="当前不足"><a href="#当前不足" class="headerlink" title="当前不足"></a>当前不足</h4><p>现有的研究主要集中在图像生成环境中的扩散模型（主要做image generation）</p>
-<p>provide only a coarse coverage of the video diffusion model or place greater emphasis on image model</p>
-    
-    <a class="article-more-a" href="/2023/10/17/%E8%A7%86%E8%A7%89%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E7%BB%BC%E8%BF%B0/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/论文精读//" class="article-tag-list-link color5">论文精读</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2023/10/17/%E8%A7%86%E8%A7%89%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E7%BB%BC%E8%BF%B0/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
@@ -1455,6 +1508,10 @@ Models背后的深度学习原理（1）:配分函数</h1>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Personal homepage</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">技术文档</a>
               </li>
             
             <div class="clearfix"></div>
