@@ -6,23 +6,30 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://libaolu312.github.io">
-  <title>李宝璐</title>
+  <title>DDPM代码详细解读(3):图解模型各部分结构、用ConvNextBlock代替ResNet | 李宝璐</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-    
-    <!-- <meta name="keywords" content="">
-    <meta name="description" content="里面放着李宝璐的碎碎念"> -->
-  
-  <meta name="description" content="里面放着李宝璐的碎碎念">
-<meta property="og:type" content="website">
-<meta property="og:title" content="李宝璐">
-<meta property="og:url" content="https://libaolu312.github.io/page/2/index.html">
+  <meta name="description" content="DDPM代码详细解读(3):图解模型各部分结构、用ConvNextBlock代替ResNet 这里重点分析一下用最新的ConvNextBlock代替ResBlock效果 整体U-net结构 基于ResBlock的U-net版本 之前博客多次介绍了Unet结构，用一张图表示：   image-20231113181500958  代码如下： 1234567891011121314">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DDPM代码详细解读(3):图解模型各部分结构、用ConvNextBlock代替ResNet">
+<meta property="og:url" content="https://libaolu312.github.io/2023/11/13/DDPM%E4%BB%A3%E7%A0%81%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%BB-3-%E5%9B%BE%E8%A7%A3%E6%A8%A1%E5%9E%8B%E5%90%84%E9%83%A8%E5%88%86%E7%BB%93%E6%9E%84%E3%80%81%E7%94%A8ConvNextBlock%E4%BB%A3%E6%9B%BFResNet/index.html">
 <meta property="og:site_name" content="李宝璐">
-<meta property="og:description" content="里面放着李宝璐的碎碎念">
+<meta property="og:description" content="DDPM代码详细解读(3):图解模型各部分结构、用ConvNextBlock代替ResNet 这里重点分析一下用最新的ConvNextBlock代替ResBlock效果 整体U-net结构 基于ResBlock的U-net版本 之前博客多次介绍了Unet结构，用一张图表示：   image-20231113181500958  代码如下： 1234567891011121314">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://libaolu312.github.io/2023/11/13/DDPM%E4%BB%A3%E7%A0%81%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%BB-3-%E5%9B%BE%E8%A7%A3%E6%A8%A1%E5%9E%8B%E5%90%84%E9%83%A8%E5%88%86%E7%BB%93%E6%9E%84%E3%80%81%E7%94%A8ConvNextBlock%E4%BB%A3%E6%9B%BFResNet/image-20231113181500958.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/11/13/DDPM%E4%BB%A3%E7%A0%81%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%BB-3-%E5%9B%BE%E8%A7%A3%E6%A8%A1%E5%9E%8B%E5%90%84%E9%83%A8%E5%88%86%E7%BB%93%E6%9E%84%E3%80%81%E7%94%A8ConvNextBlock%E4%BB%A3%E6%9B%BFResNet/image-20231113181620916.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/11/13/DDPM%E4%BB%A3%E7%A0%81%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%BB-3-%E5%9B%BE%E8%A7%A3%E6%A8%A1%E5%9E%8B%E5%90%84%E9%83%A8%E5%88%86%E7%BB%93%E6%9E%84%E3%80%81%E7%94%A8ConvNextBlock%E4%BB%A3%E6%9B%BFResNet/image-20231113181827628.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/11/13/DDPM%E4%BB%A3%E7%A0%81%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%BB-3-%E5%9B%BE%E8%A7%A3%E6%A8%A1%E5%9E%8B%E5%90%84%E9%83%A8%E5%88%86%E7%BB%93%E6%9E%84%E3%80%81%E7%94%A8ConvNextBlock%E4%BB%A3%E6%9B%BFResNet/image-20231113182444009.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/11/13/DDPM%E4%BB%A3%E7%A0%81%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%BB-3-%E5%9B%BE%E8%A7%A3%E6%A8%A1%E5%9E%8B%E5%90%84%E9%83%A8%E5%88%86%E7%BB%93%E6%9E%84%E3%80%81%E7%94%A8ConvNextBlock%E4%BB%A3%E6%9B%BFResNet/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5rKJ6L-35Y2V6L2m55qE6L-96aOO5bCR5bm0,size_20,color_FFFFFF,t_70,g_se,x_16.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/11/13/DDPM%E4%BB%A3%E7%A0%81%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%BB-3-%E5%9B%BE%E8%A7%A3%E6%A8%A1%E5%9E%8B%E5%90%84%E9%83%A8%E5%88%86%E7%BB%93%E6%9E%84%E3%80%81%E7%94%A8ConvNextBlock%E4%BB%A3%E6%9B%BFResNet/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5rKJ6L-35Y2V6L2m55qE6L-96aOO5bCR5bm0,size_20,color_FFFFFF,t_70,g_se,x_16-1699871177547-3.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/11/13/DDPM%E4%BB%A3%E7%A0%81%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%BB-3-%E5%9B%BE%E8%A7%A3%E6%A8%A1%E5%9E%8B%E5%90%84%E9%83%A8%E5%88%86%E7%BB%93%E6%9E%84%E3%80%81%E7%94%A8ConvNextBlock%E4%BB%A3%E6%9B%BFResNet/image-20231113182927248.png">
+<meta property="article:published_time" content="2023-11-13T09:00:15.000Z">
+<meta property="article:modified_time" content="2023-11-13T10:30:48.121Z">
 <meta property="article:author" content="李宝璐">
+<meta property="article:tag" content="技术笔记">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://libaolu312.github.io/2023/11/13/DDPM%E4%BB%A3%E7%A0%81%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%BB-3-%E5%9B%BE%E8%A7%A3%E6%A8%A1%E5%9E%8B%E5%90%84%E9%83%A8%E5%88%86%E7%BB%93%E6%9E%84%E3%80%81%E7%94%A8ConvNextBlock%E4%BB%A3%E6%9B%BFResNet/image-20231113181500958.png">
   
     <link rel="alternative" href="/atom.xml" title="李宝璐" type="application/atom+xml">
   
@@ -245,48 +252,140 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-
-  
-    <article id="post-Diffusion-Models-Score-based-Generative-Models背后的深度学习原理（1）-配分函数" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-DDPM代码详细解读-3-图解模型各部分结构、用ConvNextBlock代替ResNet" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
   
   
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2023/11/06/Diffusion-Models-Score-based-Generative-Models%E8%83%8C%E5%90%8E%E7%9A%84%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%8E%9F%E7%90%86%EF%BC%881%EF%BC%89-%E9%85%8D%E5%88%86%E5%87%BD%E6%95%B0/" target="_blank">Diffusion Models/Score-based Generative Models背后的深度学习原理（1）:配分函数</a>
-  
+    <h1 class="article-title" itemprop="name">
+      DDPM代码详细解读(3):图解模型各部分结构、用ConvNextBlock代替ResNet
     </h1>
   
 
 
   
   
-<a href="/2023/11/06/Diffusion-Models-Score-based-Generative-Models%E8%83%8C%E5%90%8E%E7%9A%84%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%8E%9F%E7%90%86%EF%BC%881%EF%BC%89-%E9%85%8D%E5%88%86%E5%87%BD%E6%95%B0/" class="archive-article-date">
-        <time datetime="2023-11-06T07:40:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-11-06</time>
+        
+        <span id="busuanzi_container_page_pv" style='display:none' class="archive-article-date">
+              <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+        </span>
+
+<a href="/2023/11/13/DDPM%E4%BB%A3%E7%A0%81%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%BB-3-%E5%9B%BE%E8%A7%A3%E6%A8%A1%E5%9E%8B%E5%90%84%E9%83%A8%E5%88%86%E7%BB%93%E6%9E%84%E3%80%81%E7%94%A8ConvNextBlock%E4%BB%A3%E6%9B%BFResNet/" class="archive-article-date">
+        <time datetime="2023-11-13T09:00:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-11-13</time>
 </a>
 
   
   
     
+<div style="margin-top:10px;">
+  <span class="post-time">
+    <span class="post-meta-item-icon">
+      <!-- fonts.scss -->
+      <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
+      <i class="icon-statistics"></i>
+      <span class="post-meta-item-text"> 字数统计:</span>
+      <span class="post-count">1.4k字</span>
+    </span>
+  </span>
+
+  <span class="post-time">
+    &nbsp; | &nbsp;
+    <span class="post-meta-item-icon">
+      <i class="icon-book icon"></i>
+      <span class="post-meta-item-text"> 阅读时长≈</span>
+      <span class="post-count">8分</span>
+    </span>
+  </span>
+</div>
+
 
   
   </header>
   
   <div class="article-entry" itemprop="articleBody">
     
-    <h1 id="diffusion-modelsscore-based-generative-models背后的深度学习原理1配分函数">Diffusion
-Models/Score-based Generative
-Models背后的深度学习原理（1）:配分函数</h1>
-    
-    <a class="article-more-a" href="/2023/11/06/Diffusion-Models-Score-based-Generative-Models%E8%83%8C%E5%90%8E%E7%9A%84%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%8E%9F%E7%90%86%EF%BC%881%EF%BC%89-%E9%85%8D%E5%88%86%E5%87%BD%E6%95%B0/#more">more >></a>
-    
-    
+    <h1 id="ddpm代码详细解读3图解模型各部分结构用convnextblock代替resnet">DDPM代码详细解读(3):图解模型各部分结构、用ConvNextBlock代替ResNet</h1>
+<p>这里重点分析一下用最新的ConvNextBlock代替ResBlock效果</p>
+<h3 id="整体u-net结构">整体U-net结构</h3>
+<h4 id="基于resblock的u-net版本">基于ResBlock的U-net版本</h4>
+<p>之前博客多次介绍了Unet结构，用一张图表示：</p>
+<figure>
+<img src="/2023/11/13/DDPM%E4%BB%A3%E7%A0%81%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%BB-3-%E5%9B%BE%E8%A7%A3%E6%A8%A1%E5%9E%8B%E5%90%84%E9%83%A8%E5%88%86%E7%BB%93%E6%9E%84%E3%80%81%E7%94%A8ConvNextBlock%E4%BB%A3%E6%9B%BFResNet/image-20231113181500958.png" alt="image-20231113181500958">
+<figcaption aria-hidden="true">image-20231113181500958</figcaption>
+</figure>
+<p>代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">UNet</span>(nn.Module):</span><br><span class="line">    <span class="comment"># T=1000</span></span><br><span class="line">    <span class="comment"># ch=128, base channel of UNet</span></span><br><span class="line">    <span class="comment"># ch_mult=[1, 2, 2, 2], help=&#x27;channel multiplier&#x27;</span></span><br><span class="line">    <span class="comment"># attn=[1], help=&#x27;add attention to these levels&#x27;</span></span><br><span class="line">    <span class="comment"># num_res_blocks=2, help=&#x27;# resblock in each level&#x27;</span></span><br><span class="line">    <span class="comment"># dropout=0.1, help=&#x27;dropout rate of resblock&#x27;</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, T, ch, ch_mult, attn, num_res_blocks, dropout</span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__()</span><br><span class="line">        <span class="keyword">assert</span> <span class="built_in">all</span>([i &lt; <span class="built_in">len</span>(ch_mult) <span class="keyword">for</span> i <span class="keyword">in</span> attn]), <span class="string">&#x27;attn index out of bound&#x27;</span></span><br><span class="line">        tdim = ch * <span class="number">4</span></span><br><span class="line">        self.time_embedding = TimeEmbedding(T, ch, tdim)</span><br><span class="line"> </span><br><span class="line">        self.head = nn.Conv2d(<span class="number">3</span>, ch, kernel_size=<span class="number">3</span>, stride=<span class="number">1</span>, padding=<span class="number">1</span>)</span><br><span class="line">        self.downblocks = nn.ModuleList()</span><br><span class="line">        chs = [ch]  <span class="comment"># record output channel when dowmsample for upsample</span></span><br><span class="line">        now_ch = ch</span><br><span class="line">        <span class="keyword">for</span> i, mult <span class="keyword">in</span> <span class="built_in">enumerate</span>(ch_mult):</span><br><span class="line">            out_ch = ch * mult</span><br><span class="line">            <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(num_res_blocks):</span><br><span class="line">                self.downblocks.append(ResBlock(</span><br><span class="line">                    in_ch=now_ch, out_ch=out_ch, tdim=tdim,</span><br><span class="line">                    dropout=dropout, attn=(i <span class="keyword">in</span> attn)))</span><br><span class="line">                now_ch = out_ch</span><br><span class="line">                chs.append(now_ch)</span><br><span class="line">            <span class="keyword">if</span> i != <span class="built_in">len</span>(ch_mult) - <span class="number">1</span>:</span><br><span class="line">                self.downblocks.append(DownSample(now_ch))</span><br><span class="line">                chs.append(now_ch)</span><br><span class="line"> </span><br><span class="line">        self.middleblocks = nn.ModuleList([</span><br><span class="line">            ResBlock(now_ch, now_ch, tdim, dropout, attn=<span class="literal">True</span>),</span><br><span class="line">            ResBlock(now_ch, now_ch, tdim, dropout, attn=<span class="literal">False</span>),</span><br><span class="line">        ])</span><br><span class="line"> </span><br><span class="line">        self.upblocks = nn.ModuleList()</span><br><span class="line">        <span class="keyword">for</span> i, mult <span class="keyword">in</span> <span class="built_in">reversed</span>(<span class="built_in">list</span>(<span class="built_in">enumerate</span>(ch_mult))):</span><br><span class="line">            out_ch = ch * mult</span><br><span class="line">            <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(num_res_blocks + <span class="number">1</span>):</span><br><span class="line">                self.upblocks.append(ResBlock(</span><br><span class="line">                    in_ch=chs.pop() + now_ch, out_ch=out_ch, tdim=tdim,</span><br><span class="line">                    dropout=dropout, attn=(i <span class="keyword">in</span> attn)))</span><br><span class="line">                now_ch = out_ch</span><br><span class="line">            <span class="keyword">if</span> i != <span class="number">0</span>:</span><br><span class="line">                self.upblocks.append(UpSample(now_ch))</span><br><span class="line">        <span class="keyword">assert</span> <span class="built_in">len</span>(chs) == <span class="number">0</span></span><br><span class="line"> </span><br><span class="line">        self.tail = nn.Sequential(</span><br><span class="line">            nn.GroupNorm(<span class="number">32</span>, now_ch),</span><br><span class="line">            Swish(),</span><br><span class="line">            nn.Conv2d(now_ch, <span class="number">3</span>, <span class="number">3</span>, stride=<span class="number">1</span>, padding=<span class="number">1</span>)</span><br><span class="line">        )</span><br><span class="line">        self.initialize()</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">initialize</span>(<span class="params">self</span>):</span><br><span class="line">        init.xavier_uniform_(self.head.weight)</span><br><span class="line">        init.zeros_(self.head.bias)</span><br><span class="line">        init.xavier_uniform_(self.tail[-<span class="number">1</span>].weight, gain=<span class="number">1e-5</span>)</span><br><span class="line">        init.zeros_(self.tail[-<span class="number">1</span>].bias)</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, x, t</span>):</span><br><span class="line">        <span class="comment"># Timestep embedding</span></span><br><span class="line">        temb = self.time_embedding(t)</span><br><span class="line">        <span class="comment"># Downsampling</span></span><br><span class="line">        h = self.head(x)</span><br><span class="line">        hs = [h]</span><br><span class="line">        <span class="keyword">for</span> layer <span class="keyword">in</span> self.downblocks:</span><br><span class="line">            h = layer(h, temb)</span><br><span class="line">            hs.append(h)</span><br><span class="line">        <span class="comment"># Middle</span></span><br><span class="line">        <span class="keyword">for</span> layer <span class="keyword">in</span> self.middleblocks:</span><br><span class="line">            h = layer(h, temb)</span><br><span class="line">        <span class="comment"># Upsampling</span></span><br><span class="line">        <span class="keyword">for</span> layer <span class="keyword">in</span> self.upblocks:</span><br><span class="line">            <span class="keyword">if</span> <span class="built_in">isinstance</span>(layer, ResBlock):</span><br><span class="line">                h = torch.cat([h, hs.pop()], dim=<span class="number">1</span>)</span><br><span class="line">            h = layer(h, temb)</span><br><span class="line">        h = self.tail(h)</span><br><span class="line"> </span><br><span class="line">        <span class="keyword">assert</span> <span class="built_in">len</span>(hs) == <span class="number">0</span></span><br><span class="line">        <span class="keyword">return</span> h</span><br></pre></td></tr></table></figure>
+<h4 id="基于convnextblock的u-net版本">基于ConvNextBlock的U-net版本</h4>
+<figure>
+<img src="/2023/11/13/DDPM%E4%BB%A3%E7%A0%81%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%BB-3-%E5%9B%BE%E8%A7%A3%E6%A8%A1%E5%9E%8B%E5%90%84%E9%83%A8%E5%88%86%E7%BB%93%E6%9E%84%E3%80%81%E7%94%A8ConvNextBlock%E4%BB%A3%E6%9B%BFResNet/image-20231113181620916.png" alt="image-20231113181620916">
+<figcaption aria-hidden="true">image-20231113181620916</figcaption>
+</figure>
+<p>代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Unet</span>(nn.Module):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params"></span></span><br><span class="line"><span class="params">        self,</span></span><br><span class="line"><span class="params">        dim,    <span class="comment"># 64</span></span></span><br><span class="line"><span class="params">        out_dim = <span class="literal">None</span>,</span></span><br><span class="line"><span class="params">        dim_mults=(<span class="params"><span class="number">1</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">8</span></span>),</span></span><br><span class="line"><span class="params">        channels = <span class="number">3</span>,</span></span><br><span class="line"><span class="params">        with_time_emb = <span class="literal">True</span></span></span><br><span class="line"><span class="params">    </span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__()</span><br><span class="line">        self.channels = channels</span><br><span class="line"> </span><br><span class="line">        dims = [channels, *<span class="built_in">map</span>(<span class="keyword">lambda</span> m: dim * m, dim_mults)]   <span class="comment"># [3, 64, 128, 256, 512]</span></span><br><span class="line">        in_out = <span class="built_in">list</span>(<span class="built_in">zip</span>(dims[:-<span class="number">1</span>], dims[<span class="number">1</span>:]))     <span class="comment"># [(3, 64), (64, 128), (128, 256), (256, 512)]</span></span><br><span class="line"> </span><br><span class="line">        <span class="keyword">if</span> with_time_emb:</span><br><span class="line">            time_dim = dim</span><br><span class="line">            self.time_mlp = nn.Sequential(</span><br><span class="line">                SinusoidalPosEmb(dim),</span><br><span class="line">                nn.Linear(dim, dim * <span class="number">4</span>),</span><br><span class="line">                nn.GELU(),</span><br><span class="line">                nn.Linear(dim * <span class="number">4</span>, dim)</span><br><span class="line">            )</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            time_dim = <span class="literal">None</span></span><br><span class="line">            self.time_mlp = <span class="literal">None</span></span><br><span class="line"> </span><br><span class="line">        self.downs = nn.ModuleList([])</span><br><span class="line">        self.ups = nn.ModuleList([])</span><br><span class="line">        num_resolutions = <span class="built_in">len</span>(in_out)   <span class="comment"># 4</span></span><br><span class="line"> </span><br><span class="line">        <span class="keyword">for</span> ind, (dim_in, dim_out) <span class="keyword">in</span> <span class="built_in">enumerate</span>(in_out):</span><br><span class="line">            is_last = ind &gt;= (num_resolutions - <span class="number">1</span>)</span><br><span class="line"> </span><br><span class="line">            self.downs.append(nn.ModuleList([</span><br><span class="line">                ConvNextBlock(dim_in, dim_out, time_emb_dim = time_dim, norm = ind != <span class="number">0</span>),</span><br><span class="line">                ConvNextBlock(dim_out, dim_out, time_emb_dim = time_dim),</span><br><span class="line">                Residual(PreNorm(dim_out, LinearAttention(dim_out))),</span><br><span class="line">                Downsample(dim_out) <span class="keyword">if</span> <span class="keyword">not</span> is_last <span class="keyword">else</span> nn.Identity()</span><br><span class="line">            ]))</span><br><span class="line"> </span><br><span class="line">        mid_dim = dims[-<span class="number">1</span>]</span><br><span class="line">        self.mid_block1 = ConvNextBlock(mid_dim, mid_dim, time_emb_dim = time_dim)</span><br><span class="line">        self.mid_attn = Residual(PreNorm(mid_dim, LinearAttention(mid_dim)))</span><br><span class="line">        self.mid_block2 = ConvNextBlock(mid_dim, mid_dim, time_emb_dim = time_dim)</span><br><span class="line"> </span><br><span class="line">        <span class="keyword">for</span> ind, (dim_in, dim_out) <span class="keyword">in</span> <span class="built_in">enumerate</span>(<span class="built_in">reversed</span>(in_out[<span class="number">1</span>:])):</span><br><span class="line">            is_last = ind &gt;= (num_resolutions - <span class="number">1</span>)</span><br><span class="line"> </span><br><span class="line">            self.ups.append(nn.ModuleList([</span><br><span class="line">                ConvNextBlock(dim_out * <span class="number">2</span>, dim_in, time_emb_dim = time_dim),</span><br><span class="line">                ConvNextBlock(dim_in, dim_in, time_emb_dim = time_dim),</span><br><span class="line">                Residual(PreNorm(dim_in, LinearAttention(dim_in))),</span><br><span class="line">                Upsample(dim_in) <span class="keyword">if</span> <span class="keyword">not</span> is_last <span class="keyword">else</span> nn.Identity()</span><br><span class="line">            ]))</span><br><span class="line"> </span><br><span class="line">        out_dim = default(out_dim, channels)</span><br><span class="line">        self.final_conv = nn.Sequential(</span><br><span class="line">            ConvNextBlock(dim, dim),</span><br><span class="line">            nn.Conv2d(dim, out_dim, <span class="number">1</span>)</span><br><span class="line">        )</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, x, time</span>):</span><br><span class="line">        t = self.time_mlp(time) <span class="keyword">if</span> exists(self.time_mlp) <span class="keyword">else</span> <span class="literal">None</span></span><br><span class="line"> </span><br><span class="line">        h = []</span><br><span class="line"> </span><br><span class="line">        <span class="keyword">for</span> convnext, convnext2, attn, downsample <span class="keyword">in</span> self.downs:</span><br><span class="line">            x = convnext(x, t)</span><br><span class="line">            x = convnext2(x, t)</span><br><span class="line">            x = attn(x)</span><br><span class="line">            h.append(x)</span><br><span class="line">            x = downsample(x)</span><br><span class="line"> </span><br><span class="line">        x = self.mid_block1(x, t)</span><br><span class="line">        x = self.mid_attn(x)</span><br><span class="line">        x = self.mid_block2(x, t)</span><br><span class="line"> </span><br><span class="line">        <span class="keyword">for</span> convnext, convnext2, attn, upsample <span class="keyword">in</span> self.ups:</span><br><span class="line">            x = torch.cat((x, h.pop()), dim=<span class="number">1</span>)</span><br><span class="line">            x = convnext(x, t)</span><br><span class="line">            x = convnext2(x, t)</span><br><span class="line">            x = attn(x)</span><br><span class="line">            x = upsample(x)</span><br><span class="line"> </span><br><span class="line">        <span class="keyword">return</span> self.final_conv(x)</span><br></pre></td></tr></table></figure>
+<h4 id="原先resnet结构">原先ResNet结构</h4>
+<p>作为Unet结构基础组成部分，Resnet结构负责引入时间 t
+信号，并且attention机制给多模态带来可能，结构图如下：</p>
+<p><img src="/2023/11/13/DDPM%E4%BB%A3%E7%A0%81%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%BB-3-%E5%9B%BE%E8%A7%A3%E6%A8%A1%E5%9E%8B%E5%90%84%E9%83%A8%E5%88%86%E7%BB%93%E6%9E%84%E3%80%81%E7%94%A8ConvNextBlock%E4%BB%A3%E6%9B%BFResNet/image-20231113181827628.png" alt="image-20231113181827628" style="zoom:67%;"></p>
+<p>这里再复习一下前面的代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">ResBlock</span>(nn.Module):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, in_ch, out_ch, tdim, dropout, attn=<span class="literal">False</span></span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__()</span><br><span class="line">        self.block1 = nn.Sequential(</span><br><span class="line">            nn.GroupNorm(<span class="number">32</span>, in_ch),</span><br><span class="line">            Swish(),</span><br><span class="line">            nn.Conv2d(in_ch, out_ch, <span class="number">3</span>, stride=<span class="number">1</span>, padding=<span class="number">1</span>),</span><br><span class="line">        )</span><br><span class="line">        self.temb_proj = nn.Sequential(</span><br><span class="line">            Swish(),</span><br><span class="line">            nn.Linear(tdim, out_ch),</span><br><span class="line">        )</span><br><span class="line">        self.block2 = nn.Sequential(</span><br><span class="line">            nn.GroupNorm(<span class="number">32</span>, out_ch),</span><br><span class="line">            Swish(),</span><br><span class="line">            nn.Dropout(dropout),</span><br><span class="line">            nn.Conv2d(out_ch, out_ch, <span class="number">3</span>, stride=<span class="number">1</span>, padding=<span class="number">1</span>),</span><br><span class="line">        )</span><br><span class="line">        <span class="keyword">if</span> in_ch != out_ch:</span><br><span class="line">            self.shortcut = nn.Conv2d(in_ch, out_ch, <span class="number">1</span>, stride=<span class="number">1</span>, padding=<span class="number">0</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            self.shortcut = nn.Identity()</span><br><span class="line">        <span class="keyword">if</span> attn:</span><br><span class="line">            self.attn = AttnBlock(out_ch)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            self.attn = nn.Identity()</span><br><span class="line">        self.initialize()</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">initialize</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">for</span> module <span class="keyword">in</span> self.modules():</span><br><span class="line">            <span class="keyword">if</span> <span class="built_in">isinstance</span>(module, (nn.Conv2d, nn.Linear)):</span><br><span class="line">                init.xavier_uniform_(module.weight)</span><br><span class="line">                init.zeros_(module.bias)</span><br><span class="line">        init.xavier_uniform_(self.block2[-<span class="number">1</span>].weight, gain=<span class="number">1e-5</span>)</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, x, temb</span>):</span><br><span class="line">        h = self.block1(x)</span><br><span class="line">        h += self.temb_proj(temb)[:, :, <span class="literal">None</span>, <span class="literal">None</span>]</span><br><span class="line">        h = self.block2(h)</span><br><span class="line"> </span><br><span class="line">        h = h + self.shortcut(x)</span><br><span class="line">        h = self.attn(h)</span><br><span class="line">        <span class="keyword">return</span> h</span><br></pre></td></tr></table></figure>
+<h4 id="convnextblock改进">ConvNextBlock改进</h4>
+<!--论文地址：https://arxiv.org/abs/2201.03545-->
+<!--ConvNexts完全由标准ConvNet模块构建，ConvNexts在准确性和可拓展性方面由于transformer，实现了87.8%的ImageNet准确度，在COCO检测和ADE20K分割方面优于Swin Transformer，同时保持了标准ConvNet的简单性和效率。-->
+<p>整体看起来结构和ResNet非常像，结构图如下：</p>
+<p><img src="/2023/11/13/DDPM%E4%BB%A3%E7%A0%81%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%BB-3-%E5%9B%BE%E8%A7%A3%E6%A8%A1%E5%9E%8B%E5%90%84%E9%83%A8%E5%88%86%E7%BB%93%E6%9E%84%E3%80%81%E7%94%A8ConvNextBlock%E4%BB%A3%E6%9B%BFResNet/image-20231113182444009.png" alt="image-20231113182444009" style="zoom: 67%;"></p>
+<p>代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">ConvNextBlock</span>(nn.Module):</span><br><span class="line">    <span class="string">&quot;&quot;&quot; https://arxiv.org/abs/2201.03545 &quot;&quot;&quot;</span></span><br><span class="line"> </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, dim, dim_out, *, time_emb_dim = <span class="literal">None</span>, mult = <span class="number">2</span>, norm = <span class="literal">True</span></span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__()</span><br><span class="line">        self.mlp = nn.Sequential(</span><br><span class="line">            nn.GELU(),</span><br><span class="line">            nn.Linear(time_emb_dim, dim)</span><br><span class="line">        ) <span class="keyword">if</span> exists(time_emb_dim) <span class="keyword">else</span> <span class="literal">None</span></span><br><span class="line"> </span><br><span class="line">        self.ds_conv = nn.Conv2d(dim, dim, <span class="number">7</span>, padding = <span class="number">3</span>, groups = dim)</span><br><span class="line"> </span><br><span class="line">        self.net = nn.Sequential(</span><br><span class="line">            LayerNorm(dim) <span class="keyword">if</span> norm <span class="keyword">else</span> nn.Identity(),</span><br><span class="line">            nn.Conv2d(dim, dim_out * mult, <span class="number">3</span>, padding = <span class="number">1</span>),</span><br><span class="line">            nn.GELU(),</span><br><span class="line">            nn.Conv2d(dim_out * mult, dim_out, <span class="number">3</span>, padding = <span class="number">1</span>)</span><br><span class="line">        )</span><br><span class="line"> </span><br><span class="line">        self.res_conv = nn.Conv2d(dim, dim_out, <span class="number">1</span>) <span class="keyword">if</span> dim != dim_out <span class="keyword">else</span> nn.Identity()</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, x, time_emb = <span class="literal">None</span></span>):</span><br><span class="line">        h = self.ds_conv(x)</span><br><span class="line"> </span><br><span class="line">        <span class="keyword">if</span> exists(self.mlp):</span><br><span class="line">            <span class="keyword">assert</span> exists(time_emb), <span class="string">&#x27;time emb must be passed in&#x27;</span></span><br><span class="line">            condition = self.mlp(time_emb)</span><br><span class="line">            h = h + rearrange(condition, <span class="string">&#x27;b c -&gt; b c 1 1&#x27;</span>)  <span class="comment"># 张量维度变换</span></span><br><span class="line"> </span><br><span class="line">        h = self.net(h)</span><br><span class="line">        <span class="keyword">return</span> h + self.res_conv(x)</span><br></pre></td></tr></table></figure>
+<p>网上有研究工作者给出了二者的效果对比。</p>
+<p>ResNet训练的结果：</p>
+<figure>
+<img src="/2023/11/13/DDPM%E4%BB%A3%E7%A0%81%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%BB-3-%E5%9B%BE%E8%A7%A3%E6%A8%A1%E5%9E%8B%E5%90%84%E9%83%A8%E5%88%86%E7%BB%93%E6%9E%84%E3%80%81%E7%94%A8ConvNextBlock%E4%BB%A3%E6%9B%BFResNet/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5rKJ6L-35Y2V6L2m55qE6L-96aOO5bCR5bm0,size_20,color_FFFFFF,t_70,g_se,x_16.png" alt="img">
+<figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>替换ConvBlock后的效果：</p>
+<figure>
+<img src="/2023/11/13/DDPM%E4%BB%A3%E7%A0%81%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%BB-3-%E5%9B%BE%E8%A7%A3%E6%A8%A1%E5%9E%8B%E5%90%84%E9%83%A8%E5%88%86%E7%BB%93%E6%9E%84%E3%80%81%E7%94%A8ConvNextBlock%E4%BB%A3%E6%9B%BFResNet/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5rKJ6L-35Y2V6L2m55qE6L-96aOO5bCR5bm0,size_20,color_FFFFFF,t_70,g_se,x_16-1699871177547-3.png" alt="img">
+<figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>直观来看确实ConvBlock效果要好一点。</p>
+<h3 id="t-embedding结构">T-embedding结构</h3>
+<p>我们要对 t 做embedding操作，可以使用不同的激活函数：swish() 或
+nn.GELU() ，swish在pytorch中没有现成的，我们可以用 x*sigmoid(x)
+代替。</p>
+<p>一般 embedding 的 out_dim 是 in_dim 的四倍，结构如下：</p>
+<p><img src="/2023/11/13/DDPM%E4%BB%A3%E7%A0%81%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%BB-3-%E5%9B%BE%E8%A7%A3%E6%A8%A1%E5%9E%8B%E5%90%84%E9%83%A8%E5%88%86%E7%BB%93%E6%9E%84%E3%80%81%E7%94%A8ConvNextBlock%E4%BB%A3%E6%9B%BFResNet/image-20231113182927248.png" alt="image-20231113182927248" style="zoom:67%;"></p>
+<h4 id="swish版本代码">swish()版本代码：</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Swish</span>(nn.Module):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, x</span>):</span><br><span class="line">        <span class="keyword">return</span> x * torch.sigmoid(x)</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="keyword">class</span> <span class="title class_">TimeEmbedding</span>(nn.Module):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, T, d_model, dim</span>):</span><br><span class="line">        <span class="keyword">assert</span> d_model % <span class="number">2</span> == <span class="number">0</span></span><br><span class="line">        <span class="built_in">super</span>().__init__()</span><br><span class="line">        emb = torch.arange(<span class="number">0</span>, d_model, step=<span class="number">2</span>) / d_model * math.log(<span class="number">10000</span>)</span><br><span class="line">        emb = torch.exp(-emb)</span><br><span class="line">        pos = torch.arange(T).<span class="built_in">float</span>()</span><br><span class="line">        emb = pos[:, <span class="literal">None</span>] * emb[<span class="literal">None</span>, :]</span><br><span class="line">        <span class="keyword">assert</span> <span class="built_in">list</span>(emb.shape) == [T, d_model // <span class="number">2</span>]</span><br><span class="line">        emb = torch.stack([torch.sin(emb), torch.cos(emb)], dim=-<span class="number">1</span>)</span><br><span class="line">        <span class="keyword">assert</span> <span class="built_in">list</span>(emb.shape) == [T, d_model // <span class="number">2</span>, <span class="number">2</span>]</span><br><span class="line">        emb = emb.view(T, d_model)</span><br><span class="line"> </span><br><span class="line">        self.timembedding = nn.Sequential(</span><br><span class="line">            nn.Embedding.from_pretrained(emb),</span><br><span class="line">            nn.Linear(d_model, dim),</span><br><span class="line">            Swish(),</span><br><span class="line">            nn.Linear(dim, dim),</span><br><span class="line">        )</span><br><span class="line">        self.initialize()</span><br></pre></td></tr></table></figure>
+<h4 id="gelu版本代码">GELU()版本代码：</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">time_dim = dim</span><br><span class="line">self.time_mlp = nn.Sequential(</span><br><span class="line">    SinusoidalPosEmb(dim),</span><br><span class="line">    nn.Linear(dim, dim * <span class="number">4</span>),</span><br><span class="line">    nn.GELU(),</span><br><span class="line">    nn.Linear(dim * <span class="number">4</span>, dim)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<h3 id="论文和代码">论文和代码：</h3>
+<p>代码：https://github.com/lucidrains/denoising-diffusion-pytorch</p>
+<p>论文：https://arxiv.org/abs/2006.11239</p>
 
     
 
+    
+
+    
+    <div class="declare"> 
+      <ul class="post-copyright">
+        <li>
+          <strong>本文作者：</strong>
+          李宝璐
+        </li>
+        <li>
+          <strong>本文链接：</strong>
+          <a href="https://libaolu312.github.io/2023/11/13/DDPM代码详细解读-3-图解模型各部分结构、用ConvNextBlock代替ResNet/" title="DDPM代码详细解读(3):图解模型各部分结构、用ConvNextBlock代替ResNet" target="_blank">https://libaolu312.github.io/2023/11/13/DDPM代码详细解读-3-图解模型各部分结构、用ConvNextBlock代替ResNet/</a>
+        </li>
+        
+        <li>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，均采用 <a href="https://github.com/JoeyBling/hexo-theme-yilia-plus/blob/master/LICENSE" rel="external nofollow" target="_blank">MIT</a> 许可协议。转载请注明出处！
+        </li>
+        
+      </ul>
+    </div>
     
 
   </div>
@@ -318,16 +417,76 @@ Models背后的深度学习原理（1）:配分函数</h1>
 
 
     
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2023/11/06/Diffusion-Models-Score-based-Generative-Models%E8%83%8C%E5%90%8E%E7%9A%84%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%8E%9F%E7%90%86%EF%BC%881%EF%BC%89-%E9%85%8D%E5%88%86%E5%87%BD%E6%95%B0/">展开全文 >></a>
-    </p>
+
     
+    
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <!-- <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a> -->
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://libaolu312.github.io/2023/11/13/DDPM%E4%BB%A3%E7%A0%81%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%BB-3-%E5%9B%BE%E8%A7%A3%E6%A8%A1%E5%9E%8B%E5%90%84%E9%83%A8%E5%88%86%E7%BB%93%E6%9E%84%E3%80%81%E7%94%A8ConvNextBlock%E4%BB%A3%E6%9B%BFResNet/" alt="微信分享二维码"> -->
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
 
     
     <div class="clearfix"></div>
   </div>
   </div>
 </article>
+
+
+<nav id="article-nav">
+  
+  
+    <a href="/2023/11/13/DDPM%E4%BB%A3%E7%A0%81%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%BB-2-Unet%E7%BB%93%E6%9E%84%E3%80%81%E6%AD%A3%E5%90%91%E5%92%8C%E9%80%86%E5%90%91%E8%BF%87%E7%A8%8B%E3%80%81IS%E5%92%8CFID%E6%B5%8B%E8%AF%95%E3%80%81EMA%E4%BC%98%E5%8C%96/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">DDPM代码详细解读(2):Unet结构、正向和逆向过程、IS和FID测试、EMA优化</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -342,919 +501,64 @@ Models背后的深度学习原理（1）:配分函数</h1>
         </div>
         
         
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-在windows11下安装ubuntu子系统并配置深度学习环境" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2023/10/25/%E5%9C%A8windows11%E4%B8%8B%E5%AE%89%E8%A3%85ubuntu%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%B9%B6%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/" target="_blank">在windows11下安装ubuntu子系统并配置深度学习环境</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2023/10/25/%E5%9C%A8windows11%E4%B8%8B%E5%AE%89%E8%A3%85ubuntu%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%B9%B6%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/" class="archive-article-date">
-        <time datetime="2023-10-25T04:21:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-10-25</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <h1 id="事件起因"><a href="#事件起因" class="headerlink" title="事件起因"></a>事件起因</h1><p>之前我在跑深度学习的实验时要么用windows环境跑，要么用租的服务器的ubuntu环境跑，windows由于先天条件，运行时总是报一些稀奇古怪的错误，而且现在大多数的开源代码也都是在linux下跑的，代码调来调去的很麻烦，租的服务器每次配置环境也有些不便，而且现在服务器一天比一天贵，我本机是一张4070的卡，寻思着不用也是浪费，索性就研究一下如何在windows的大环境下配一个linux的子系统。</p>
-<p>通常来说在Linux系统下进行深度学习训练的效率要高于Windows系统，大家通常也是使用Linux常见的发行版本Ubuntu。但是Ubuntu对于日常使用不是很友好，于是就有了折中的方案，使用Windows Subsystem Linux (WSL)。</p>
-<p>为什么不用VMware呢？很简单，VMware虚拟机中的GPU是虚拟出来的，并不能真实调用本机的GPU，所以并无卵用。</p>
-    
-    <a class="article-more-a" href="/2023/10/25/%E5%9C%A8windows11%E4%B8%8B%E5%AE%89%E8%A3%85ubuntu%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%B9%B6%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/环境配置//" class="article-tag-list-link color5">环境配置</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2023/10/25/%E5%9C%A8windows11%E4%B8%8B%E5%AE%89%E8%A3%85ubuntu%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%B9%B6%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#ddpm%E4%BB%A3%E7%A0%81%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%BB3%E5%9B%BE%E8%A7%A3%E6%A8%A1%E5%9E%8B%E5%90%84%E9%83%A8%E5%88%86%E7%BB%93%E6%9E%84%E7%94%A8convnextblock%E4%BB%A3%E6%9B%BFresnet"><span class="toc-number">1.</span> <span class="toc-text">DDPM代码详细解读(3):图解模型各部分结构、用ConvNextBlock代替ResNet</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B4%E4%BD%93u-net%E7%BB%93%E6%9E%84"><span class="toc-number">1.0.1.</span> <span class="toc-text">整体U-net结构</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8Eresblock%E7%9A%84u-net%E7%89%88%E6%9C%AC"><span class="toc-number">1.0.1.1.</span> <span class="toc-text">基于ResBlock的U-net版本</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8Econvnextblock%E7%9A%84u-net%E7%89%88%E6%9C%AC"><span class="toc-number">1.0.1.2.</span> <span class="toc-text">基于ConvNextBlock的U-net版本</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8E%9F%E5%85%88resnet%E7%BB%93%E6%9E%84"><span class="toc-number">1.0.1.3.</span> <span class="toc-text">原先ResNet结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#convnextblock%E6%94%B9%E8%BF%9B"><span class="toc-number">1.0.1.4.</span> <span class="toc-text">ConvNextBlock改进</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#t-embedding%E7%BB%93%E6%9E%84"><span class="toc-number">1.0.2.</span> <span class="toc-text">T-embedding结构</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#swish%E7%89%88%E6%9C%AC%E4%BB%A3%E7%A0%81"><span class="toc-number">1.0.2.1.</span> <span class="toc-text">swish()版本代码：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#gelu%E7%89%88%E6%9C%AC%E4%BB%A3%E7%A0%81"><span class="toc-number">1.0.2.2.</span> <span class="toc-text">GELU()版本代码：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%BA%E6%96%87%E5%92%8C%E4%BB%A3%E7%A0%81"><span class="toc-number">1.0.3.</span> <span class="toc-text">论文和代码：</span></a></li></ol></li></ol></li></ol>
+                    </div>
+                </span>
             </div>
         </div>
         
-        
     </div>
 </aside>
 
 
 
 
-  
-    <article id="post-Any-to-Any-Generation-via-Composable-Diffusion" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2023/10/20/Any-to-Any-Generation-via-Composable-Diffusion/" target="_blank">Any-to-Any Generation via Composable Diffusion</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2023/10/20/Any-to-Any-Generation-via-Composable-Diffusion/" class="archive-article-date">
-        <time datetime="2023-10-20T11:33:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-10-20</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p><img src="/2023/10/20/Any-to-Any-Generation-via-Composable-Diffusion/image-20231020193618805.png" alt="image-20231020193618805"></p>
-<p>​		这篇论文主要介绍了一种名为<strong>Composable Diffusion</strong>的算法，用于生成任意样式的图像。该算法使用一组可组合的扩散操作，从共享的潜在空间中生成图像。这些操作允许使用多个扩散过程来生成图像，以便在不同的分辨率和模式下对潜在空间进行采样。</p>
-<p>​		该算法的关键提出是可组合性，它允许用户在不同的操作序列之间切换，以探索不同的样式和图像。该算法还提供了一种新的形式化分析技术，可以计算操作序列之间的互信息。这种技术提供了一种量化方法，以测量不同操作序列之间的相似性和差异性，并帮助用户理解操作的效果。在实验中，Composable Diffusion比其他流行的生成模型更灵活和可定制，可以生成高质量、多样性和艺术性的图像。</p>
-
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/论文精读//" class="article-tag-list-link color5">论文精读</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2023/10/20/Any-to-Any-Generation-via-Composable-Diffusion/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-视觉扩散模型综述" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2023/10/17/%E8%A7%86%E8%A7%89%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E7%BB%BC%E8%BF%B0/" target="_blank">视觉扩散模型综述</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2023/10/17/%E8%A7%86%E8%A7%89%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E7%BB%BC%E8%BF%B0/" class="archive-article-date">
-        <time datetime="2023-10-17T13:59:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-10-17</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p><a target="_blank" rel="noopener" href="https://github.com/ChenHsing/Awesome-Video-Diffusion-Models">https://github.com/ChenHsing/Awesome-Video-Diffusion-Models</a></p>
-<p>​		最近一波人工智能生成内容(AIGC)在计算机视觉领域取得了巨大的成功，而扩散模型在其中发挥了关键作用。由于其令人印象深刻的生成能力，扩散模型正逐渐取代基于GANs和自回归transformer的方法，不仅在图像生成和编辑方面，而且在视频相关研究领域都表现出了卓越的性能。</p>
-<h4 id="当前不足"><a href="#当前不足" class="headerlink" title="当前不足"></a>当前不足</h4><p>现有的研究主要集中在图像生成环境中的扩散模型（主要做image generation）</p>
-<p>provide only a coarse coverage of the video diffusion model or place greater emphasis on image model</p>
-    
-    <a class="article-more-a" href="/2023/10/17/%E8%A7%86%E8%A7%89%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E7%BB%BC%E8%BF%B0/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/论文精读//" class="article-tag-list-link color5">论文精读</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2023/10/17/%E8%A7%86%E8%A7%89%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E7%BB%BC%E8%BF%B0/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-关键路径及相关知识" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2023/09/26/%E5%85%B3%E9%94%AE%E8%B7%AF%E5%BE%84%E5%8F%8A%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/" target="_blank">关键路径及相关知识</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2023/09/26/%E5%85%B3%E9%94%AE%E8%B7%AF%E5%BE%84%E5%8F%8A%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/" class="archive-article-date">
-        <time datetime="2023-09-26T11:30:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-09-26</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p><strong>关键路径为起点到终点权值加起来最大的路径</strong></p>
-<p><img src="/2023/09/26/%E5%85%B3%E9%94%AE%E8%B7%AF%E5%BE%84%E5%8F%8A%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/63aa74726a00b83b9c02e677a0377b3.jpg" alt="63aa74726a00b83b9c02e677a0377b3"></p>
-    
-    <a class="article-more-a" href="/2023/09/26/%E5%85%B3%E9%94%AE%E8%B7%AF%E5%BE%84%E5%8F%8A%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/课程知识//" class="article-tag-list-link color5">课程知识</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2023/09/26/%E5%85%B3%E9%94%AE%E8%B7%AF%E5%BE%84%E5%8F%8A%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Python-numpy中切片-1-1-分别表示什么" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2023/07/19/Python-numpy%E4%B8%AD%E5%88%87%E7%89%87-1-1-%E5%88%86%E5%88%AB%E8%A1%A8%E7%A4%BA%E4%BB%80%E4%B9%88/" target="_blank">Python numpy中切片 [:, : -1] [:, [-1] ] 分别表示什么</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2023/07/19/Python-numpy%E4%B8%AD%E5%88%87%E7%89%87-1-1-%E5%88%86%E5%88%AB%E8%A1%A8%E7%A4%BA%E4%BB%80%E4%B9%88/" class="archive-article-date">
-        <time datetime="2023-07-19T09:09:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-07-19</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <h1 id="Python-numpy中切片-1-1-分别表示什么"><a href="#Python-numpy中切片-1-1-分别表示什么" class="headerlink" title="Python numpy中切片 [:, : -1] [:, [-1] ] 分别表示什么"></a>Python numpy中切片 [:, : -1] [:, [-1] ] 分别表示什么</h1><p>最近在做数据集处理的时候，发现一个很有意思的东西，其实很早的发现了，只是现在才想起来总结。</p>
-<p>我们在做数据切片的时候，都知道[  起点   :  终点  :  步长  ]</p>
-<p>包括一些常规的正负的操作，在这里我就不多说了，想要了解可以看一下这篇博客：<a target="_blank" rel="noopener" href="https://blog.csdn.net/liuluTL/article/details/104951788?ops_request_misc=&request_id=&biz_id=102&utm_term=%5B:,%20:-1%5D%E5%88%87%E7%89%87&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduweb~default-0-104951788.142%5Ev89%5Econtrol_2,239%5Ev2%5Einsert_chatgpt&spm=1018.2226.3001.4187">彻底搞懂切片</a></p>
-<p>本次我就简单分享几个有意思的特殊切片：</p>
-<p><strong>[ : , : -1]</strong></p>
-<p><strong>[ : , [-1]]</strong></p>
-<p><strong>[ : , -1]</strong></p>
-    
-    <a class="article-more-a" href="/2023/07/19/Python-numpy%E4%B8%AD%E5%88%87%E7%89%87-1-1-%E5%88%86%E5%88%AB%E8%A1%A8%E7%A4%BA%E4%BB%80%E4%B9%88/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/课程知识//" class="article-tag-list-link color5">课程知识</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2023/07/19/Python-numpy%E4%B8%AD%E5%88%87%E7%89%87-1-1-%E5%88%86%E5%88%AB%E8%A1%A8%E7%A4%BA%E4%BB%80%E4%B9%88/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-关于requirements-txt的那点事" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2023/07/01/%E5%85%B3%E4%BA%8Erequirements-txt%E7%9A%84%E9%82%A3%E7%82%B9%E4%BA%8B/" target="_blank">关于requirements.txt的那点事</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2023/07/01/%E5%85%B3%E4%BA%8Erequirements-txt%E7%9A%84%E9%82%A3%E7%82%B9%E4%BA%8B/" class="archive-article-date">
-        <time datetime="2023-07-01T06:21:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-07-01</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <h1 id="关于requirements-txt的那点事"><a href="#关于requirements-txt的那点事" class="headerlink" title="关于requirements.txt的那点事"></a>关于requirements.txt的那点事</h1><h2 id="一、requirements-txt文件的作用"><a href="#一、requirements-txt文件的作用" class="headerlink" title="一、requirements.txt文件的作用"></a>一、requirements.txt文件的作用</h2><p>python的项目在另一个环境上重新构建项目时，往往没有全的所需要的运行环境依赖包，但是我们缺什么包也不太清楚，要具体看程序所写，这样就很麻烦，所以有了requirements.txt文件。</p>
-<p>requirements.txt文件包括了这个项目的所有依赖</p>
-    
-    <a class="article-more-a" href="/2023/07/01/%E5%85%B3%E4%BA%8Erequirements-txt%E7%9A%84%E9%82%A3%E7%82%B9%E4%BA%8B/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/课程知识//" class="article-tag-list-link color5">课程知识</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2023/07/01/%E5%85%B3%E4%BA%8Erequirements-txt%E7%9A%84%E9%82%A3%E7%82%B9%E4%BA%8B/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-重生之我是机试coding怪" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2023/06/26/%E9%87%8D%E7%94%9F%E4%B9%8B%E6%88%91%E6%98%AF%E6%9C%BA%E8%AF%95coding%E6%80%AA/" target="_blank">重生之我是机试coding怪</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2023/06/26/%E9%87%8D%E7%94%9F%E4%B9%8B%E6%88%91%E6%98%AF%E6%9C%BA%E8%AF%95coding%E6%80%AA/" class="archive-article-date">
-        <time datetime="2023-06-26T05:03:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-06-26</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <h1 id="重生之我是机试coding怪"><a href="#重生之我是机试coding怪" class="headerlink" title="重生之我是机试coding怪"></a>重生之我是机试coding怪</h1><p>免责申明：我不是coding很厉害的人，我用的方法也是最笨的方法，但是每道题都可以AC，可以作为参考，网上还有很多比我复杂度更低思路更清晰的方法。</p>
-    
-    <a class="article-more-a" href="/2023/06/26/%E9%87%8D%E7%94%9F%E4%B9%8B%E6%88%91%E6%98%AF%E6%9C%BA%E8%AF%95coding%E6%80%AA/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/机试指南//" class="article-tag-list-link color5">机试指南</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2023/06/26/%E9%87%8D%E7%94%9F%E4%B9%8B%E6%88%91%E6%98%AF%E6%9C%BA%E8%AF%95coding%E6%80%AA/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-RCAN-Image-Super-Resolution-Using-Very-Deep-Residual-Channel-Attention-Networks" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2023/06/23/RCAN-Image-Super-Resolution-Using-Very-Deep-Residual-Channel-Attention-Networks/" target="_blank">RCAN Image Super-Resolution Using Very Deep Residual Channel Attention Networks</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2023/06/23/RCAN-Image-Super-Resolution-Using-Very-Deep-Residual-Channel-Attention-Networks/" class="archive-article-date">
-        <time datetime="2023-06-23T13:52:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-06-23</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <h1 id="Image-Super-Resolution-Using-Very-Deep-Residual-Channel-Attention-Networks"><a href="#Image-Super-Resolution-Using-Very-Deep-Residual-Channel-Attention-Networks" class="headerlink" title="Image Super-Resolution Using Very Deep Residual Channel Attention Networks"></a>Image Super-Resolution Using Very Deep Residual Channel Attention Networks</h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>​		在图像超分辨领域，卷积神经网络的深度非常重要，但<strong>过深的网络却难以训练</strong>。低分辨率的输入以及特征包含丰富的低频信息，但却在通道间被平等对待，因此阻碍了网络的表示能力。<br>​		为了解决上述问题，作者提出了一个深度残差通道注意力网络（RCAN）。其中比较重要的是，作者设计了一个残差中的残差（RIR）结构来构造深层网络，<strong>每个 RIR 结构由数个残差组（RG）以及长跳跃连接（LSC）组成</strong>，<strong>每个 RG 则包含一些残差块和短跳跃连接</strong>（SSC）。<br>​		RIR 结构<strong>允许丰富的低频信息通过多个跳跃连接直接进行传播</strong>，使主网络<strong>专注于学习高频信息</strong>。此外，我们还提出了一种通道注意力机制（CA），通过考虑通道之间的相互依赖性来自适应地重新调整特征。</p>
-    
-    <a class="article-more-a" href="/2023/06/23/RCAN-Image-Super-Resolution-Using-Very-Deep-Residual-Channel-Attention-Networks/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/论文精读//" class="article-tag-list-link color5">论文精读</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2023/06/23/RCAN-Image-Super-Resolution-Using-Very-Deep-Residual-Channel-Attention-Networks/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Deep-Spectral-Representation-Learning-From-Multi-View-Data" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2023/06/22/Deep-Spectral-Representation-Learning-From-Multi-View-Data/" target="_blank">Deep Spectral Representation Learning From Multi-View Data</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2023/06/22/Deep-Spectral-Representation-Learning-From-Multi-View-Data/" class="archive-article-date">
-        <time datetime="2023-06-22T13:20:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-06-22</time>
-</a>
 
-  
-  
+  <section id="comments" class="comments">
+      <style>
+        .comments{margin:30px;padding:10px;background:#fff}
+        @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+      </style>
+      
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+    var gitalk = new Gitalk({
+      clientID: '42328a99496b32b78cfb',
+      clientSecret: '8ff71391255b5283f624f252a3ca53d7b9b96f4b',
+      repo: 'libaolu312.github.io',
+      owner: 'libaolu312',
+      admin: 'libaolu312',
+     //id ��Ϊ�˱�֤issue��Ψһ�ԣ�id���Ȳ��ܴ���50�������������ʹ��·������id����һ����ȡ����ò�Ҫ�޸Ĵ������������ܵ������۶�ʧ  
+      id: location.href.slice(location.href.length-25),
+      distractionFreeMode: 'true',
+      labels: 'Comment'.split(',').filter(l => l) ,
+    })
+    gitalk.render('gitalk-container')
+    </script>
     
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
     
-    
-
     
+  </section>
 
-    
 
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/论文精读//" class="article-tag-list-link color5">论文精读</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
 
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2023/06/22/Deep-Spectral-Representation-Learning-From-Multi-View-Data/">展开全文 >></a>
-    </p>
-    
 
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
 
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
 
 
 
 
-  
-  
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">Next &amp;raquo;</a>
-    </nav>
-  
 
 
           </div>
@@ -1294,8 +598,8 @@ Models背后的深度学习原理（1）:配分函数</h1>
     <script>
 	var yiliaConfig = {
 		mathjax: true,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
