@@ -6,19 +6,48 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://libaolu312.github.io">
-  <title>Archives | 李宝璐</title>
+  <title>Windows Copilot 和 Github Copilot 的安装教程和使用初体验 | 李宝璐</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="里面放着李宝璐的碎碎念">
-<meta property="og:type" content="website">
-<meta property="og:title" content="李宝璐">
-<meta property="og:url" content="https://libaolu312.github.io/archives/index.html">
+  <meta name="description" content="Windows Copilot 和 Github Copilot 的安装教程和使用初体验 2023年11月6日OpenAI的AI春晚上，openai对GPT4进行了史诗级强化，看得我垂涎三尺，but，GPT4也太**贵了，穷苦书生我根本花不起这笔巨款。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Windows Copilot 和 Github Copilot 的安装教程和使用初体验">
+<meta property="og:url" content="https://libaolu312.github.io/2023/11/16/Windows-Copilot-%E5%92%8C-Github-Copilot-%E7%9A%84%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%92%8C%E4%BD%BF%E7%94%A8%E5%88%9D%E4%BD%93%E9%AA%8C/index.html">
 <meta property="og:site_name" content="李宝璐">
-<meta property="og:description" content="里面放着李宝璐的碎碎念">
+<meta property="og:description" content="Windows Copilot 和 Github Copilot 的安装教程和使用初体验 2023年11月6日OpenAI的AI春晚上，openai对GPT4进行了史诗级强化，看得我垂涎三尺，but，GPT4也太**贵了，穷苦书生我根本花不起这笔巨款。">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://libaolu312.github.io/2023/11/16/Windows-Copilot-%E5%92%8C-Github-Copilot-%E7%9A%84%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%92%8C%E4%BD%BF%E7%94%A8%E5%88%9D%E4%BD%93%E9%AA%8C/image-20231116150026673.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/11/16/Windows-Copilot-%E5%92%8C-Github-Copilot-%E7%9A%84%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%92%8C%E4%BD%BF%E7%94%A8%E5%88%9D%E4%BD%93%E9%AA%8C/image-20231116150613042.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/11/16/Windows-Copilot-%E5%92%8C-Github-Copilot-%E7%9A%84%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%92%8C%E4%BD%BF%E7%94%A8%E5%88%9D%E4%BD%93%E9%AA%8C/image-20231116151008009.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/11/16/Windows-Copilot-%E5%92%8C-Github-Copilot-%E7%9A%84%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%92%8C%E4%BD%BF%E7%94%A8%E5%88%9D%E4%BD%93%E9%AA%8C/image-20231116151313738.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/11/16/Windows-Copilot-%E5%92%8C-Github-Copilot-%E7%9A%84%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%92%8C%E4%BD%BF%E7%94%A8%E5%88%9D%E4%BD%93%E9%AA%8C/image-20231116151516387.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/11/16/Windows-Copilot-%E5%92%8C-Github-Copilot-%E7%9A%84%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%92%8C%E4%BD%BF%E7%94%A8%E5%88%9D%E4%BD%93%E9%AA%8C/image-20231116151639235.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/11/16/Windows-Copilot-%E5%92%8C-Github-Copilot-%E7%9A%84%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%92%8C%E4%BD%BF%E7%94%A8%E5%88%9D%E4%BD%93%E9%AA%8C/image-20231116152246264.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/11/16/Windows-Copilot-%E5%92%8C-Github-Copilot-%E7%9A%84%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%92%8C%E4%BD%BF%E7%94%A8%E5%88%9D%E4%BD%93%E9%AA%8C/image-20231116152904455.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/11/16/Windows-Copilot-%E5%92%8C-Github-Copilot-%E7%9A%84%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%92%8C%E4%BD%BF%E7%94%A8%E5%88%9D%E4%BD%93%E9%AA%8C/image-20231116152950237.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/11/16/Windows-Copilot-%E5%92%8C-Github-Copilot-%E7%9A%84%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%92%8C%E4%BD%BF%E7%94%A8%E5%88%9D%E4%BD%93%E9%AA%8C/image-20231116154645303.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/11/16/Windows-Copilot-%E5%92%8C-Github-Copilot-%E7%9A%84%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%92%8C%E4%BD%BF%E7%94%A8%E5%88%9D%E4%BD%93%E9%AA%8C/image-20231116155735050.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/11/16/Windows-Copilot-%E5%92%8C-Github-Copilot-%E7%9A%84%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%92%8C%E4%BD%BF%E7%94%A8%E5%88%9D%E4%BD%93%E9%AA%8C/image-20231116162926510.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/11/16/Windows-Copilot-%E5%92%8C-Github-Copilot-%E7%9A%84%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%92%8C%E4%BD%BF%E7%94%A8%E5%88%9D%E4%BD%93%E9%AA%8C/image-20231116165006870.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/11/16/Windows-Copilot-%E5%92%8C-Github-Copilot-%E7%9A%84%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%92%8C%E4%BD%BF%E7%94%A8%E5%88%9D%E4%BD%93%E9%AA%8C/image-20231116165506673.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/11/16/Windows-Copilot-%E5%92%8C-Github-Copilot-%E7%9A%84%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%92%8C%E4%BD%BF%E7%94%A8%E5%88%9D%E4%BD%93%E9%AA%8C/image-20231116165531211.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/11/16/Windows-Copilot-%E5%92%8C-Github-Copilot-%E7%9A%84%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%92%8C%E4%BD%BF%E7%94%A8%E5%88%9D%E4%BD%93%E9%AA%8C/image-20231116165636053.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/11/16/Windows-Copilot-%E5%92%8C-Github-Copilot-%E7%9A%84%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%92%8C%E4%BD%BF%E7%94%A8%E5%88%9D%E4%BD%93%E9%AA%8C/image-20231116175318576.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/11/16/Windows-Copilot-%E5%92%8C-Github-Copilot-%E7%9A%84%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%92%8C%E4%BD%BF%E7%94%A8%E5%88%9D%E4%BD%93%E9%AA%8C/image-20231116181128547.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/11/16/Windows-Copilot-%E5%92%8C-Github-Copilot-%E7%9A%84%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%92%8C%E4%BD%BF%E7%94%A8%E5%88%9D%E4%BD%93%E9%AA%8C/image-20231118010613128.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/11/16/Windows-Copilot-%E5%92%8C-Github-Copilot-%E7%9A%84%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%92%8C%E4%BD%BF%E7%94%A8%E5%88%9D%E4%BD%93%E9%AA%8C/image-20231118010506969.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/11/16/Windows-Copilot-%E5%92%8C-Github-Copilot-%E7%9A%84%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%92%8C%E4%BD%BF%E7%94%A8%E5%88%9D%E4%BD%93%E9%AA%8C/image-20231118011000629.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/11/16/Windows-Copilot-%E5%92%8C-Github-Copilot-%E7%9A%84%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%92%8C%E4%BD%BF%E7%94%A8%E5%88%9D%E4%BD%93%E9%AA%8C/image-20231118011106730.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/11/16/Windows-Copilot-%E5%92%8C-Github-Copilot-%E7%9A%84%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%92%8C%E4%BD%BF%E7%94%A8%E5%88%9D%E4%BD%93%E9%AA%8C/image-20231118011359692.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/11/16/Windows-Copilot-%E5%92%8C-Github-Copilot-%E7%9A%84%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%92%8C%E4%BD%BF%E7%94%A8%E5%88%9D%E4%BD%93%E9%AA%8C/image-20231118011637501.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/11/16/Windows-Copilot-%E5%92%8C-Github-Copilot-%E7%9A%84%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%92%8C%E4%BD%BF%E7%94%A8%E5%88%9D%E4%BD%93%E9%AA%8C/image-20231118012050630.png">
+<meta property="article:published_time" content="2023-11-16T06:55:57.000Z">
+<meta property="article:modified_time" content="2023-11-17T17:35:17.881Z">
 <meta property="article:author" content="李宝璐">
+<meta property="article:tag" content="技术笔记">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://libaolu312.github.io/2023/11/16/Windows-Copilot-%E5%92%8C-Github-Copilot-%E7%9A%84%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%92%8C%E4%BD%BF%E7%94%A8%E5%88%9D%E4%BD%93%E9%AA%8C/image-20231116150026673.png">
   
     <link rel="alternative" href="/atom.xml" title="李宝璐" type="application/atom+xml">
   
@@ -241,41 +270,234 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-Windows-Copilot-和-Github-Copilot-的安装教程和使用初体验" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2023" class="archive-year">2023</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/11/16/Windows-Copilot-%E5%92%8C-Github-Copilot-%E7%9A%84%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%92%8C%E4%BD%BF%E7%94%A8%E5%88%9D%E4%BD%93%E9%AA%8C/" class="archive-article-date">
-        <time datetime="2023-11-16T06:55:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-11-16</time>
-</a>
-
-        </div>
-    	 
+      <header class="article-header">
   
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/11/16/Windows-Copilot-%E5%92%8C-Github-Copilot-%E7%9A%84%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%92%8C%E4%BD%BF%E7%94%A8%E5%88%9D%E4%BD%93%E9%AA%8C/" target="_blank">Windows Copilot 和 Github Copilot 的安装教程和使用初体验</a>
   
+    <h1 class="article-title" itemprop="name">
+      Windows Copilot 和 Github Copilot 的安装教程和使用初体验
     </h1>
   
 
 
-        <div class="article-info info-on-right">
+  
+  
+        
+        <span id="busuanzi_container_page_pv" style='display:none' class="archive-article-date">
+              <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+        </span>
+
+<a href="/2023/11/16/Windows-Copilot-%E5%92%8C-Github-Copilot-%E7%9A%84%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%92%8C%E4%BD%BF%E7%94%A8%E5%88%9D%E4%BD%93%E9%AA%8C/" class="archive-article-date">
+        <time datetime="2023-11-16T06:55:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-11-16</time>
+</a>
+
+  
+  
+    
+<div style="margin-top:10px;">
+  <span class="post-time">
+    <span class="post-meta-item-icon">
+      <!-- fonts.scss -->
+      <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
+      <i class="icon-statistics"></i>
+      <span class="post-meta-item-text"> 字数统计:</span>
+      <span class="post-count">1.7k字</span>
+    </span>
+  </span>
+
+  <span class="post-time">
+    &nbsp; | &nbsp;
+    <span class="post-meta-item-icon">
+      <i class="icon-book icon"></i>
+      <span class="post-meta-item-text"> 阅读时长≈</span>
+      <span class="post-count">6分</span>
+    </span>
+  </span>
+</div>
+
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <h1 id="windows-copilot-和-github-copilot-的安装教程和使用初体验">Windows
+Copilot 和 Github Copilot 的安装教程和使用初体验</h1>
+<p>2023年11月6日OpenAI的AI春晚上，openai对GPT4进行了史诗级强化，看得我垂涎三尺，but，GPT4也太**贵了，穷苦书生我根本花不起这笔巨款。</p>
+<span id="more"></span>
+<p><img src="/2023/11/16/Windows-Copilot-%E5%92%8C-Github-Copilot-%E7%9A%84%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%92%8C%E4%BD%BF%E7%94%A8%E5%88%9D%E4%BD%93%E9%AA%8C/image-20231116150026673.png" alt="image-20231116150026673" style="zoom: 67%;"></p>
+<p>可我又不满足于仅使用3.5，今天上午我的导师推荐了Copilot，里面集成了很多GPT4的功能，索性来探索一番，作为国内用户，要如何安装使用
+Windows Copilot。</p>
+<h2 id="windows-copilot">Windows Copilot</h2>
+<p>其实直接访问https://copilot.microsoft.com/就可以访问Copilot的内容了，但是可以把它安装在本机之中。</p>
+<p><strong>注：如果打开这个网址是空白，需要科学上网，后续的很多操作都需要科学上网，如何进行科学上网，各位自行解决。</strong></p>
+<p>Windows Copilot在Win11
+23H2版本中已经可以使用了，首先需要的是将我们的版本升级到23H2版本。</p>
+<p><img src="/2023/11/16/Windows-Copilot-%E5%92%8C-Github-Copilot-%E7%9A%84%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%92%8C%E4%BD%BF%E7%94%A8%E5%88%9D%E4%BD%93%E9%AA%8C/image-20231116150613042.png" alt="image-20231116150613042" style="zoom: 50%;"></p>
+<p>现在我这台电脑还是22H2版本</p>
+<h3 id="语言区域国家和地区选择美国">语言区域【国家和地区】选择【美国】</h3>
+<p>首先先改一下这个语言的区域，打开【设置】，找打【时间和语言】，点击【语言和区域】</p>
+<p><img src="/2023/11/16/Windows-Copilot-%E5%92%8C-Github-Copilot-%E7%9A%84%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%92%8C%E4%BD%BF%E7%94%A8%E5%88%9D%E4%BD%93%E9%AA%8C/image-20231116151008009.png" alt="image-20231116151008009" style="zoom: 33%;"></p>
+<p>【国家和区域】选择【美国】</p>
+<p><img src="/2023/11/16/Windows-Copilot-%E5%92%8C-Github-Copilot-%E7%9A%84%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%92%8C%E4%BD%BF%E7%94%A8%E5%88%9D%E4%BD%93%E9%AA%8C/image-20231116151313738.png" alt="image-20231116151313738" style="zoom: 50%;"></p>
+<h3 id="在线更新">在线更新</h3>
+<p>在【Window更新】中勾选【在最新更新可用后立即获取】</p>
+<p><img src="/2023/11/16/Windows-Copilot-%E5%92%8C-Github-Copilot-%E7%9A%84%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%92%8C%E4%BD%BF%E7%94%A8%E5%88%9D%E4%BD%93%E9%AA%8C/image-20231116151516387.png" alt="image-20231116151516387" style="zoom: 33%;"></p>
+<p>点击最上方的在线更新，先把当前的系统更新到最新版本。</p>
+<p><img src="/2023/11/16/Windows-Copilot-%E5%92%8C-Github-Copilot-%E7%9A%84%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%92%8C%E4%BD%BF%E7%94%A8%E5%88%9D%E4%BD%93%E9%AA%8C/image-20231116151639235.png" alt="image-20231116151639235" style="zoom:50%;"></p>
+<p>ok，现在已经更新到22H2的最新版本了。（这里是2023.11.06的最新版本）</p>
+<p><img src="/2023/11/16/Windows-Copilot-%E5%92%8C-Github-Copilot-%E7%9A%84%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%92%8C%E4%BD%BF%E7%94%A8%E5%88%9D%E4%BD%93%E9%AA%8C/image-20231116152246264.png" alt="image-20231116152246264" style="zoom:50%;"></p>
+<h3 id="更新23h2版本">更新23H2版本</h3>
+<p><a target="_blank" rel="noopener" href="https://www.ithaoge.cn/20230927.html?fromMid=457">下载链接</a></p>
+<p>下载好后选择【常规64为Win11】</p>
+<p><img src="/2023/11/16/Windows-Copilot-%E5%92%8C-Github-Copilot-%E7%9A%84%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%92%8C%E4%BD%BF%E7%94%A8%E5%88%9D%E4%BD%93%E9%AA%8C/image-20231116152904455.png" alt="image-20231116152904455" style="zoom:50%;"></p>
+<p>双击进行安装</p>
+<p><img src="/2023/11/16/Windows-Copilot-%E5%92%8C-Github-Copilot-%E7%9A%84%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%92%8C%E4%BD%BF%E7%94%A8%E5%88%9D%E4%BD%93%E9%AA%8C/image-20231116152950237.png" alt="image-20231116152950237" style="zoom:33%;"></p>
+<p>安装完成后重启，就可以看到系统更新到23H2版本啦~</p>
+<p><img src="/2023/11/16/Windows-Copilot-%E5%92%8C-Github-Copilot-%E7%9A%84%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%92%8C%E4%BD%BF%E7%94%A8%E5%88%9D%E4%BD%93%E9%AA%8C/image-20231116154645303.png" alt="image-20231116154645303" style="zoom:50%;"></p>
+<p>可是再更新好23H2版本后并没有Copilot的图标</p>
+<p><img src="/2023/11/16/Windows-Copilot-%E5%92%8C-Github-Copilot-%E7%9A%84%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%92%8C%E4%BD%BF%E7%94%A8%E5%88%9D%E4%BD%93%E9%AA%8C/image-20231116155735050.png" alt="image-20231116155735050" style="zoom: 67%;"></p>
+<p>那么下面就来解决这个问题。</p>
+<h2 id="copilot图标修复">Copilot图标修复</h2>
+<p>在此之前可以看一下微软MVP李祺先生的知乎专栏，其中也提到了Copilot图标修复的问题。</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/640944697">知乎专栏</a></p>
+<p>其中重点使用的是激活工具ViVeTool，网上已经有大神总结好了，也可以去github上下载</p>
+<p><a target="_blank" rel="noopener" href="https://www.ithaoge.cn/Copilot.html?fromMid=457">内网下载地址</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/thebookisclosed/ViVe/releases">github下载地址</a></p>
+<p>下载好后如下：</p>
+<p><img src="/2023/11/16/Windows-Copilot-%E5%92%8C-Github-Copilot-%E7%9A%84%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%92%8C%E4%BD%BF%E7%94%A8%E5%88%9D%E4%BD%93%E9%AA%8C/image-20231116162926510.png" alt="image-20231116162926510" style="zoom:50%;"></p>
+<p>使用说明如下：</p>
+<p>通用的方法：【在线升级激活】 😄 优点：图标自动出现，原生支持 Win+C
+快捷键 🤨 缺点：升级前需要提前设置区域（美国）</p>
+<p>使用以下方法前，建议将 Win11升级到各自渠道的最新版：
+Win11正式版，参考【系统升级指南 03期】，把Win11升级到23H2版本 Win11
+内测版 Beta/Dev/Canary，检查在线更新，升级到最新版
+同时将Edge浏览器升级到最新版</p>
+<p>⏩ 方法一：【ViveTool激活】 😄 优点：图标自动出现，原生支持 Win+C
+快捷键 🤨 缺点：需要下载 ViveTool 工具，修改可能没有效果 vivetool
+/enable /id:44774629,44850061,44776738,42105254,41655236</p>
+<p>⏩ 方法二：【注册表激活】 😄 优点：简单快速，原生支持 Win+C 快捷键 🤨
+缺点：图标重启后可能丢失，可能需要重新设置</p>
+<p>⏩ 方法三：【Copilot】快捷方式 😄
+优点：简单快速，重启不丢失，可固定到任务栏或开始菜单 🤨 缺点：不支持
+Win+C 快捷键调出</p>
+<p>↑第一个文件为快捷方式，点击即可打开Copilot侧边栏，利用了资源管理器和Edge的相关链接。
+快捷方式的具体参数为：</p>
+<blockquote>
+<blockquote>
+<p>修改快捷方式图标：右键单击 Copilot 快捷方式，在属性中选择
+Copilot图标.ico 即可。为了保证显示正常，Copilot图标.ico不能删除</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>固定图标到任务栏：拖到 Copilot快捷方式 到任务栏，即可固定</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>固定图标到开始菜单：右键单击 Copilot
+快捷方式，选择固定到“开始”即可</p>
+</blockquote>
+</blockquote>
+<p>我这里就用方法一：</p>
+<p>使用代码激活：</p>
+<figure>
+<img src="/2023/11/16/Windows-Copilot-%E5%92%8C-Github-Copilot-%E7%9A%84%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%92%8C%E4%BD%BF%E7%94%A8%E5%88%9D%E4%BD%93%E9%AA%8C/image-20231116165006870.png" alt="image-20231116165006870">
+<figcaption aria-hidden="true">image-20231116165006870</figcaption>
+</figure>
+<p>重启之后，可以看到了Copilot的图标了。</p>
+<p><img src="/2023/11/16/Windows-Copilot-%E5%92%8C-Github-Copilot-%E7%9A%84%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%92%8C%E4%BD%BF%E7%94%A8%E5%88%9D%E4%BD%93%E9%AA%8C/image-20231116165506673.png" alt="image-20231116165506673" style="zoom:50%;"></p>
+<p>点开看一下：</p>
+<p><img src="/2023/11/16/Windows-Copilot-%E5%92%8C-Github-Copilot-%E7%9A%84%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%92%8C%E4%BD%BF%E7%94%A8%E5%88%9D%E4%BD%93%E9%AA%8C/image-20231116165531211.png" alt="image-20231116165531211" style="zoom:50%;"></p>
+<p>显示【该服务在你所在的地区不可用】，这里需要<strong>科学上网</strong>了，科学上网之后，可看到如下界面：</p>
+<p><img src="/2023/11/16/Windows-Copilot-%E5%92%8C-Github-Copilot-%E7%9A%84%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%92%8C%E4%BD%BF%E7%94%A8%E5%88%9D%E4%BD%93%E9%AA%8C/image-20231116165636053.png" alt="image-20231116165636053" style="zoom:50%;"></p>
+<p>我还遇到一个问题</p>
+<p><img src="/2023/11/16/Windows-Copilot-%E5%92%8C-Github-Copilot-%E7%9A%84%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%92%8C%E4%BD%BF%E7%94%A8%E5%88%9D%E4%BD%93%E9%AA%8C/image-20231116175318576.png" alt="image-20231116175318576" style="zoom:50%;"></p>
+<p>这里我测试过了，是魔法的问题，把魔法调整好就ok了。</p>
+<p>记得要设置好你的Microsoft Edge的账号啥的，地区也改成【美国】</p>
+<p>这样你的Copilot就可以使用啦~</p>
+<p><img src="/2023/11/16/Windows-Copilot-%E5%92%8C-Github-Copilot-%E7%9A%84%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%92%8C%E4%BD%BF%E7%94%A8%E5%88%9D%E4%BD%93%E9%AA%8C/image-20231116181128547.png" alt="image-20231116181128547" style="zoom:50%;"></p>
+<p>说到底Copilot和New
+Bing区别不是很大，但是Copilot有一个很有意思的代码辅助工具——Github
+Copilot，下面就来看看这个东西怎么样。</p>
+<h1 id="github-copilot-安装">Github Copilot 安装</h1>
+<p>当然这个东西是支持VS Code、Jetbrains全系列、Android
+Studio、RStudio...，基本市面上常见的IDE都是适配的，只不过要付费，可以申请学生包免费，我这里就是申请的学生包，只不过周期很长，如果等不及的话可以付费。</p>
+<h2 id="pycharm版">Pycharm版</h2>
+<p>首先在pycharm的插件市场中搜索Copilot进行安装</p>
+<p><img src="/2023/11/16/Windows-Copilot-%E5%92%8C-Github-Copilot-%E7%9A%84%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%92%8C%E4%BD%BF%E7%94%A8%E5%88%9D%E4%BD%93%E9%AA%8C/image-20231118010613128.png" alt="image-20231118010613128" style="zoom: 33%;"></p>
+<p>安装好后重启IDE，会看到插件已经安装好了，这里会提示你登陆Github，登录前一定要确保你的Github是有使用Copilot的权限的（付费/获取免费的学生包）</p>
+<p><img src="/2023/11/16/Windows-Copilot-%E5%92%8C-Github-Copilot-%E7%9A%84%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%92%8C%E4%BD%BF%E7%94%A8%E5%88%9D%E4%BD%93%E9%AA%8C/image-20231118010506969.png" alt="image-20231118010506969" style="zoom:50%;"></p>
+<p>激活之后再度重启IDE，可以看到右下角的图标（确保此时上面没有斜杠），这样你就可以使用你的Copilot了！！</p>
+<figure>
+<img src="/2023/11/16/Windows-Copilot-%E5%92%8C-Github-Copilot-%E7%9A%84%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%92%8C%E4%BD%BF%E7%94%A8%E5%88%9D%E4%BD%93%E9%AA%8C/image-20231118011000629.png" alt="image-20231118011000629">
+<figcaption aria-hidden="true">image-20231118011000629</figcaption>
+</figure>
+<p>根据你的注释，他就会提醒出对应的代码了</p>
+<figure>
+<img src="/2023/11/16/Windows-Copilot-%E5%92%8C-Github-Copilot-%E7%9A%84%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%92%8C%E4%BD%BF%E7%94%A8%E5%88%9D%E4%BD%93%E9%AA%8C/image-20231118011106730.png" alt="image-20231118011106730">
+<figcaption aria-hidden="true">image-20231118011106730</figcaption>
+</figure>
+<p>因为我比较懒，弄不明白VSCode中的环境，换来换去的麻烦，再者说我最近再用WSL子系统做编译，VSCode对WSL的支持是那种纯linux系统的，而Pycharm可以在本地写代码，调用WSL中的linux做编译，所以为了方便，先对Pycharm进行配置，当让VSCode的可拓展性是更值得追求的，后续如果我下定决心换VSCode的话，也会更新VSCode的相关配置的。</p>
+<p>OK，我还是耐不住寂寞，前来更新VSCode的相关使用了，反正闲着也是闲着，先装好，后面用不用的再说吧。</p>
+<h2 id="vscode版">VSCode版</h2>
+<p>VSCode还是一样的道理，在插件市场中找到Copilot进行下载。</p>
+<p><img src="/2023/11/16/Windows-Copilot-%E5%92%8C-Github-Copilot-%E7%9A%84%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%92%8C%E4%BD%BF%E7%94%A8%E5%88%9D%E4%BD%93%E9%AA%8C/image-20231118011359692.png" alt="image-20231118011359692" style="zoom:33%;"></p>
+<p>之后还是登陆你有使用权限的Github账号，再重启，就可以看到Copilot能够使用了</p>
+<figure>
+<img src="/2023/11/16/Windows-Copilot-%E5%92%8C-Github-Copilot-%E7%9A%84%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%92%8C%E4%BD%BF%E7%94%A8%E5%88%9D%E4%BD%93%E9%AA%8C/image-20231118011637501.png" alt="image-20231118011637501">
+<figcaption aria-hidden="true">image-20231118011637501</figcaption>
+</figure>
+<p>值得一提的是在Vscode中Copilot有一个chat功能，可以辅助你进行代码编写，还可以帮你debug</p>
+<figure>
+<img src="/2023/11/16/Windows-Copilot-%E5%92%8C-Github-Copilot-%E7%9A%84%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%92%8C%E4%BD%BF%E7%94%A8%E5%88%9D%E4%BD%93%E9%AA%8C/image-20231118012050630.png" alt="image-20231118012050630">
+<figcaption aria-hidden="true">image-20231118012050630</figcaption>
+</figure>
+<p>剩下的功能就等我慢慢探索吧~</p>
+<p>ok，我又遇到一个问题，在vscode中使用conda环境会报错，说conda
+activate命令无法使用，这里介绍一个简单粗暴的办法：</p>
+<p>1.打开vscode搜索栏，输入：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">terminal:select Default Profile</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>在弹出菜单中，无论当前配置是什么，选择powershell</p>
+</blockquote>
+<p>2.重新创建终端，执行conda active命令，发现还是出现相同错误。
+3.再次执行1中操作，把配置切换回cmd，然后重新创建终端，执行conda
+active命令，发现问题解除。</p>
+
+    
+
+    
+
+    
+    <div class="declare"> 
+      <ul class="post-copyright">
+        <li>
+          <strong>本文作者：</strong>
+          李宝璐
+        </li>
+        <li>
+          <strong>本文链接：</strong>
+          <a href="https://libaolu312.github.io/2023/11/16/Windows-Copilot-和-Github-Copilot-的安装教程和使用初体验/" title="Windows Copilot 和 Github Copilot 的安装教程和使用初体验" target="_blank">https://libaolu312.github.io/2023/11/16/Windows-Copilot-和-Github-Copilot-的安装教程和使用初体验/</a>
+        </li>
+        
+        <li>
+          <strong>版权声明： </strong>
           
+          本博客所有文章除特别声明外，均采用 <a href="https://github.com/JoeyBling/hexo-theme-yilia-plus/blob/master/LICENSE" rel="external nofollow" target="_blank">MIT</a> 许可协议。转载请注明出处！
+        </li>
+        
+      </ul>
+    </div>
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -287,7 +509,7 @@
 		</ul>
 	</div>
 
-          
+    
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -300,507 +522,150 @@
 	</div>
 
 
+    
+
+    
+    
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <!-- <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a> -->
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://libaolu312.github.io/2023/11/16/Windows-Copilot-%E5%92%8C-Github-Copilot-%E7%9A%84%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%92%8C%E4%BD%BF%E7%94%A8%E5%88%9D%E4%BD%93%E9%AA%8C/" alt="微信分享二维码"> -->
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+
+    
+    <div class="clearfix"></div>
+  </div>
   </div>
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/11/13/DDPM%E4%BB%A3%E7%A0%81%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%BB-3-%E5%9B%BE%E8%A7%A3%E6%A8%A1%E5%9E%8B%E5%90%84%E9%83%A8%E5%88%86%E7%BB%93%E6%9E%84%E3%80%81%E7%94%A8ConvNextBlock%E4%BB%A3%E6%9B%BFResNet/" class="archive-article-date">
-        <time datetime="2023-11-13T09:00:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-11-13</time>
-</a>
 
+
+<nav id="article-nav">
+  
+  
+    <a href="/2023/11/13/DDPM%E4%BB%A3%E7%A0%81%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%BB-3-%E5%9B%BE%E8%A7%A3%E6%A8%A1%E5%9E%8B%E5%90%84%E9%83%A8%E5%88%86%E7%BB%93%E6%9E%84%E3%80%81%E7%94%A8ConvNextBlock%E4%BB%A3%E6%9B%BFResNet/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">DDPM代码详细解读(3):图解模型各部分结构、用ConvNextBlock代替ResNet</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/11/13/DDPM%E4%BB%A3%E7%A0%81%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%BB-3-%E5%9B%BE%E8%A7%A3%E6%A8%A1%E5%9E%8B%E5%90%84%E9%83%A8%E5%88%86%E7%BB%93%E6%9E%84%E3%80%81%E7%94%A8ConvNextBlock%E4%BB%A3%E6%9B%BFResNet/" target="_blank">DDPM代码详细解读(3):图解模型各部分结构、用ConvNextBlock代替ResNet</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/扩散模型//" class="article-tag-list-link color5">扩散模型</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#windows-copilot-%E5%92%8C-github-copilot-%E7%9A%84%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%92%8C%E4%BD%BF%E7%94%A8%E5%88%9D%E4%BD%93%E9%AA%8C"><span class="toc-number">1.</span> <span class="toc-text">Windows
+Copilot 和 Github Copilot 的安装教程和使用初体验</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#windows-copilot"><span class="toc-number">1.1.</span> <span class="toc-text">Windows Copilot</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%AD%E8%A8%80%E5%8C%BA%E5%9F%9F%E5%9B%BD%E5%AE%B6%E5%92%8C%E5%9C%B0%E5%8C%BA%E9%80%89%E6%8B%A9%E7%BE%8E%E5%9B%BD"><span class="toc-number">1.1.1.</span> <span class="toc-text">语言区域【国家和地区】选择【美国】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%A8%E7%BA%BF%E6%9B%B4%E6%96%B0"><span class="toc-number">1.1.2.</span> <span class="toc-text">在线更新</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9B%B4%E6%96%B023h2%E7%89%88%E6%9C%AC"><span class="toc-number">1.1.3.</span> <span class="toc-text">更新23H2版本</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#copilot%E5%9B%BE%E6%A0%87%E4%BF%AE%E5%A4%8D"><span class="toc-number">1.2.</span> <span class="toc-text">Copilot图标修复</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#github-copilot-%E5%AE%89%E8%A3%85"><span class="toc-number">2.</span> <span class="toc-text">Github Copilot 安装</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#pycharm%E7%89%88"><span class="toc-number">2.1.</span> <span class="toc-text">Pycharm版</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vscode%E7%89%88"><span class="toc-number">2.2.</span> <span class="toc-text">VSCode版</span></a></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
+        
+    </div>
+</aside>
+
+
+
+
+
+  <section id="comments" class="comments">
+      <style>
+        .comments{margin:30px;padding:10px;background:#fff}
+        @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+      </style>
+      
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+    var gitalk = new Gitalk({
+      clientID: '42328a99496b32b78cfb',
+      clientSecret: '8ff71391255b5283f624f252a3ca53d7b9b96f4b',
+      repo: 'libaolu312.github.io',
+      owner: 'libaolu312',
+      admin: 'libaolu312',
+     //id ��Ϊ�˱�֤issue��Ψһ�ԣ�id���Ȳ��ܴ���50�������������ʹ��·������id����һ����ȡ����ò�Ҫ�޸Ĵ������������ܵ������۶�ʧ  
+      id: location.href.slice(location.href.length-25),
+      distractionFreeMode: 'true',
+      labels: 'Comment'.split(',').filter(l => l) ,
+    })
+    gitalk.render('gitalk-container')
+    </script>
     
     
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/11/13/DDPM%E4%BB%A3%E7%A0%81%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%BB-2-Unet%E7%BB%93%E6%9E%84%E3%80%81%E6%AD%A3%E5%90%91%E5%92%8C%E9%80%86%E5%90%91%E8%BF%87%E7%A8%8B%E3%80%81IS%E5%92%8CFID%E6%B5%8B%E8%AF%95%E3%80%81EMA%E4%BC%98%E5%8C%96/" class="archive-article-date">
-        <time datetime="2023-11-13T08:59:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-11-13</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/11/13/DDPM%E4%BB%A3%E7%A0%81%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%BB-2-Unet%E7%BB%93%E6%9E%84%E3%80%81%E6%AD%A3%E5%90%91%E5%92%8C%E9%80%86%E5%90%91%E8%BF%87%E7%A8%8B%E3%80%81IS%E5%92%8CFID%E6%B5%8B%E8%AF%95%E3%80%81EMA%E4%BC%98%E5%8C%96/" target="_blank">DDPM代码详细解读(2):Unet结构、正向和逆向过程、IS和FID测试、EMA优化</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/扩散模型//" class="article-tag-list-link color5">扩散模型</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/11/13/DDPM%E4%BB%A3%E7%A0%81%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%BB-1-%E6%95%B0%E6%8D%AE%E9%9B%86%E5%87%86%E5%A4%87%E3%80%81%E8%B6%85%E5%8F%82%E6%95%B0%E8%AE%BE%E7%BD%AE%E3%80%81loss%E8%AE%BE%E8%AE%A1%E3%80%81%E5%85%B3%E9%94%AE%E5%8F%82%E6%95%B0%E8%AE%A1%E7%AE%97/" class="archive-article-date">
-        <time datetime="2023-11-13T08:58:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-11-13</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/11/13/DDPM%E4%BB%A3%E7%A0%81%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%BB-1-%E6%95%B0%E6%8D%AE%E9%9B%86%E5%87%86%E5%A4%87%E3%80%81%E8%B6%85%E5%8F%82%E6%95%B0%E8%AE%BE%E7%BD%AE%E3%80%81loss%E8%AE%BE%E8%AE%A1%E3%80%81%E5%85%B3%E9%94%AE%E5%8F%82%E6%95%B0%E8%AE%A1%E7%AE%97/" target="_blank">DDPM代码详细解读(1):数据集准备、超参数设置、loss设计、关键参数计算</a>
-  
-    </h1>
-  
+  </section>
 
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/扩散模型//" class="article-tag-list-link color5">扩散模型</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/11/13/%E4%B8%BA%E4%BB%80%E4%B9%88Diffusion-Models%E9%92%9F%E7%88%B1U-net%E7%BB%93%E6%9E%84/" class="archive-article-date">
-        <time datetime="2023-11-13T08:05:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-11-13</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/11/13/%E4%B8%BA%E4%BB%80%E4%B9%88Diffusion-Models%E9%92%9F%E7%88%B1U-net%E7%BB%93%E6%9E%84/" target="_blank">为什么Diffusion Models钟爱U-net结构</a>
-  
-    </h1>
-  
 
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/扩散模型//" class="article-tag-list-link color5">扩散模型</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/11/08/Diffusion-Models%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E4%B8%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86%E5%92%8C%E4%BB%A3%E7%A0%81%E8%A7%A3%E8%AF%BB/" class="archive-article-date">
-        <time datetime="2023-11-08T07:12:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-11-08</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/11/08/Diffusion-Models%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E4%B8%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86%E5%92%8C%E4%BB%A3%E7%A0%81%E8%A7%A3%E8%AF%BB/" target="_blank">Diffusion Models扩散模型与深度学习(数学原理深解)</a>
-  
-    </h1>
-  
 
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/扩散模型//" class="article-tag-list-link color5">扩散模型</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/11/06/%E5%90%84%E7%B1%BB%E6%A8%A1%E5%9E%8B%E6%80%BB%E7%BB%93/" class="archive-article-date">
-        <time datetime="2023-11-06T11:11:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-11-06</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/11/06/%E5%90%84%E7%B1%BB%E6%A8%A1%E5%9E%8B%E6%80%BB%E7%BB%93/" target="_blank">各类模型总结</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/深度学习//" class="article-tag-list-link color5">深度学习</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/11/06/Diffusion-Models-Score-based-Generative-Models%E8%83%8C%E5%90%8E%E7%9A%84%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%8E%9F%E7%90%86%EF%BC%883%EF%BC%89-%E8%92%99%E7%89%B9%E5%8D%A1%E6%B4%9B%E9%87%87%E6%A0%B7%E6%B3%95%E5%92%8C%E9%87%8D%E8%A6%81%E9%87%87%E6%A0%B7%E6%B3%95/" class="archive-article-date">
-        <time datetime="2023-11-06T07:40:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-11-06</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/11/06/Diffusion-Models-Score-based-Generative-Models%E8%83%8C%E5%90%8E%E7%9A%84%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%8E%9F%E7%90%86%EF%BC%883%EF%BC%89-%E8%92%99%E7%89%B9%E5%8D%A1%E6%B4%9B%E9%87%87%E6%A0%B7%E6%B3%95%E5%92%8C%E9%87%8D%E8%A6%81%E9%87%87%E6%A0%B7%E6%B3%95/" target="_blank">Diffusion Models/Score-based Generative Models背后的深度学习原理（3）:蒙特卡洛采样法和重要采样法</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/扩散模型//" class="article-tag-list-link color5">扩散模型</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/11/06/Diffusion-Models-Score-based-Generative-Models%E8%83%8C%E5%90%8E%E7%9A%84%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%8E%9F%E7%90%86%EF%BC%882%EF%BC%89-%E5%9F%BA%E4%BA%8E%E8%83%BD%E9%87%8F%E6%A8%A1%E5%9E%8B%E5%92%8C%E5%8F%97%E9%99%90%E7%8E%BB%E5%B0%94%E5%85%B9%E6%9B%BC%E6%9C%BA/" class="archive-article-date">
-        <time datetime="2023-11-06T07:40:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-11-06</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/11/06/Diffusion-Models-Score-based-Generative-Models%E8%83%8C%E5%90%8E%E7%9A%84%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%8E%9F%E7%90%86%EF%BC%882%EF%BC%89-%E5%9F%BA%E4%BA%8E%E8%83%BD%E9%87%8F%E6%A8%A1%E5%9E%8B%E5%92%8C%E5%8F%97%E9%99%90%E7%8E%BB%E5%B0%94%E5%85%B9%E6%9B%BC%E6%9C%BA/" target="_blank">Diffusion Models/Score-based Generative Models背后的深度学习原理（2）:基于能量模型和受限玻尔兹曼机</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/扩散模型//" class="article-tag-list-link color5">扩散模型</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/11/06/Diffusion-Models-Score-based-Generative-Models%E8%83%8C%E5%90%8E%E7%9A%84%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%8E%9F%E7%90%86%EF%BC%881%EF%BC%89-%E9%85%8D%E5%88%86%E5%87%BD%E6%95%B0/" class="archive-article-date">
-        <time datetime="2023-11-06T07:40:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-11-06</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/11/06/Diffusion-Models-Score-based-Generative-Models%E8%83%8C%E5%90%8E%E7%9A%84%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%8E%9F%E7%90%86%EF%BC%881%EF%BC%89-%E9%85%8D%E5%88%86%E5%87%BD%E6%95%B0/" target="_blank">Diffusion Models/Score-based Generative Models背后的深度学习原理（1）:配分函数</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/扩散模型//" class="article-tag-list-link color5">扩散模型</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="page-number" href="/archives/page/3/">3</a><a class="page-number" href="/archives/page/4/">4</a><a class="extend next" rel="next" href="/archives/page/2/">Next &amp;raquo;</a>
-    </nav>
-  
 
 
           </div>
@@ -841,8 +706,8 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: true,
