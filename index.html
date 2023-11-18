@@ -492,6 +492,200 @@ hobby）</p>
 
 
   
+    <article id="post-针对户型图数据集的调研" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2023/11/18/%E9%92%88%E5%AF%B9%E6%88%B7%E5%9E%8B%E5%9B%BE%E6%95%B0%E6%8D%AE%E9%9B%86%E7%9A%84%E8%B0%83%E7%A0%94/" target="_blank">针对户型图数据集的调研</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2023/11/18/%E9%92%88%E5%AF%B9%E6%88%B7%E5%9E%8B%E5%9B%BE%E6%95%B0%E6%8D%AE%E9%9B%86%E7%9A%84%E8%B0%83%E7%A0%94/" class="archive-article-date">
+        <time datetime="2023-11-18T06:42:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-11-18</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <h1 id="针对户型图数据集的调研">针对户型图数据集的调研</h1>
+<p>最近要做一个多媒体领域的方向综合设计，题目是<strong>基于扩散模型的户型图数据增强系统设计与实现</strong>，所以目前对现有的数据集进行调研。</p>
+<p>之前的博客有对最基本的DDPM的详细说明，包括数学原理、公式推导、代码详解，现在我们将目光聚焦到数据集，一个标准的扩散模型需要什么样的数据集呢？很显然，如果你只是想做
+Img-to-Img，那你的数据集就是单纯的img就好了，不需要额外的标注；如果你想做Text-to-Image，那么你就需要文本和图像成对的数据集进行训练，其他的多模态也同理。</p>
+<p>ok，我们现在已经确定需要的是纯图片数据集，其实我们知道，像户型图这种小众的数据集，纯图的还是比较难找的，我们可以找一些之前做户型图任务的相关工作，看看他们用的是什么数据集，如果是纯图的，那最好，如果不是，那我们就想办法把它变成纯图的。当然，也要做好最坏的打算，如果真的很难找到，那就写个爬虫，从一些售房的网站上爬取一些户型图下来。</p>
+<h2 id="之前关于户型图的工作">之前关于户型图的工作</h2>
+<h3 id="housediffusioncvpr-2023-sfu">HouseDiffusion（CVPR 2023
+SFU）</h3>
+<p><a target="_blank" rel="noopener" href="https://deepai.org/publication/housediffusion-vector-floorplan-generation-via-a-diffusion-model-with-discrete-and-continuous-denoising">论文地址</a></p>
+<p>HouseDiffusion: Vector Floorplan Generation via a Diffusion Model
+with Discrete and Continuous
+Denoising，22年完成，今年中稿CVPR的一篇工作，先不用管这篇工作的核心贡献是什么，我们只需要关注他用了什么数据集训练？用什么数据集评估？</p>
+<p>ok，找到了：</p>
+<p><img src="/2023/11/18/%E9%92%88%E5%AF%B9%E6%88%B7%E5%9E%8B%E5%9B%BE%E6%95%B0%E6%8D%AE%E9%9B%86%E7%9A%84%E8%B0%83%E7%A0%94/image-20231118160123017.png" alt="image-20231118160123017" style="zoom: 67%;"></p>
+<p><img src="/2023/11/18/%E9%92%88%E5%AF%B9%E6%88%B7%E5%9E%8B%E5%9B%BE%E6%95%B0%E6%8D%AE%E9%9B%86%E7%9A%84%E8%B0%83%E7%A0%94/image-20231118160152852.png" alt="image-20231118160152852" style="zoom:67%;"></p>
+<p>作者用了 <strong>RPLAN</strong> ，并且在此基础上提出了一个
+<strong>Non-ManhattanRPLAN</strong>
+（在RPLAN基础上，在外墙随机添加两个角）</p>
+<p><img src="/2023/11/18/%E9%92%88%E5%AF%B9%E6%88%B7%E5%9E%8B%E5%9B%BE%E6%95%B0%E6%8D%AE%E9%9B%86%E7%9A%84%E8%B0%83%E7%A0%94/image-20231118160354149.png" alt="image-20231118160354149" style="zoom:50%;"></p>
+<p>通过后面的Experiment可以看出来，基本都是围绕<strong>RPLAN</strong>这个数据集进行测试的。那我们<strong>标记一下RPLAN这个数据集</strong>，再看看别的。</p>
+<h2 id="diffusion-models-for-computational-design-at-the-example-of-floor-plans">Diffusion
+Models for Computational Design at the Example of Floor Plans</h2>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2307.02511">论文地址</a></p>
+<p>Diffusion Models for Computational Design at the Example of Floor
+Plans，这个是今年7月的一篇比较新的工作，我们还是只关注数据集，具体这篇工作的创新点，有空再看。</p>
+<p>ok，虽然这篇工作中并没有提到他具体用了什么数据集，但是通过读论文后我们可以知道，<strong>Nbimer（毕马汇）提供了一个5000+的CAD户型图数据集</strong>，ok，我们也标注一下这个数据集。</p>
+<p><a target="_blank" rel="noopener" href="https://nbimer.com/materials/huxing/">Nbimer</a></p>
+<h3 id="residential-ﬂoor-plan-recognition-and-reconstruction">Residential
+ﬂoor plan recognition and reconstruction</h3>
+<p><a target="_blank" rel="noopener" href="https://openaccess.thecvf.com/content/CVPR2021/html/Lv_Residential_Floor_Plan_Recognition_and_Reconstruction_CVPR_2021_paper.html">论文地址</a></p>
+<p>Residential ﬂoor plan recognition and reconstruction收录于CVPR
+2019，由阿里巴巴的团队提出。</p>
+<p>这篇文章提出的数据集是居住房屋平面图数据集(RFP)。研究者从互联网搜索引擎中爬取了7000个居住房屋平面图数据，这些数据主要是中国城市建筑的家庭平面图。研究者通过手动标注来标记墙壁的起始端点、终止端点和厚度。每个墙壁的每个部分都用一条带有宽度的线表示。他们还标注了门、窗户和门口的起始点、终止点和厚度。门、窗户和门口都位于特定的墙壁上。每个房间由多个墙壁的部分环绕，研究者也手动标注了房间类型，包括客厅、卧室、浴室、阳台、厨房、图书馆和其他类型的房间。研究者使用栅格化将当前标注转换为逐像素的注释，其中每个像素表示一种类型。</p>
+<p>很可惜的是，作者并没有提供数据集的下载链接，只是提供了爬取数据的网址，我想可能是因为版权费用的原因吧。</p>
+<h3 id="cubicasa5k-a-dataset-and-an-improved-multi-task-model-for-floorplan-image-analysis">CubiCasa5K:
+A Dataset and an Improved Multi-task Model for Floorplan Image
+Analysis</h3>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1904.01920v1.pdf">论文地址</a></p>
+<p>CubiCasa5K: A Dataset and an Improved Multi-task Model for Floorplan
+Image
+Analysis这篇论文由cubicasa公司在2019年发表，比较可惜的是，截止到目前我并没有查询到这篇论文中稿的信息，不过比较好的是cubicasa公司开源了该数据集，这个数据集看起来也很不错，可以重点标记一下。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/CubiCasa/CubiCasa5k">数据集下载地址</a></p>
+<h2 id="数据集汇总">数据集汇总</h2>
+<h3 id="rplan">RPLAN</h3>
+<p>这个数据集在户型图的相关工作中出现的次数可谓太多了，我们重点看一下这个数据集。</p>
+<p>RPLAN数据集来源自论文：Data-driven Interior Plan Generation for
+Residential Buildings SIGGRAPH 2019 USTC</p>
+<p><a target="_blank" rel="noopener" href="http://staff.ustc.edu.cn/~fuxm/projects/DeepLayout/index.html">论文链接</a></p>
+<p>平面图数据集的英文是Floo<strong>r Plan</strong>
+Dataset，我觉得作者给这个数据集命名时应该是提取了其中的RPLAN四个字母。</p>
+<p>我仔细一看才发现，这篇论文的一作就是我这个综合设计的指导老师<a target="_blank" rel="noopener" href="https://wutomwu.github.io/">吴文明</a>老师，这篇论文是SIGGRAPH（图形学顶中顶中顶刊，国内能发这个刊的组凤毛麟角），我们就来详细看看这个数据集。</p>
+<p>作者从亚洲房地产市场的真实住宅楼中收集了超过12万份平面图。每个平面图在18m×18m的正方形区域内都有一个矢量图形表示，包括几何和语义信息。为了应用学习方案，作者将每个平面图转换为256×256的图像。</p>
+<p><img src="/2023/11/18/%E9%92%88%E5%AF%B9%E6%88%B7%E5%9E%8B%E5%9B%BE%E6%95%B0%E6%8D%AE%E9%9B%86%E7%9A%84%E8%B0%83%E7%A0%94/image-20231118204254227.png" alt="image-20231118204254227" style="zoom:50%;"></p>
+<p><a target="_blank" rel="noopener" href="https://docs.google.com/forms/d/e/1FAIpQLSfwteilXzURRKDI5QopWCyOGkeb_CFFbRwtQ0SOPhEg0KGSfw/viewform?usp=sf_link">数据集下载地址</a></p>
+<p>我们来看下这个数据集吧</p>
+<p><img src="/2023/11/18/%E9%92%88%E5%AF%B9%E6%88%B7%E5%9E%8B%E5%9B%BE%E6%95%B0%E6%8D%AE%E9%9B%86%E7%9A%84%E8%B0%83%E7%A0%94/image-20231118205116343.png" alt="image-20231118205116343" style="zoom: 50%;"></p>
+<p><img src="/2023/11/18/%E9%92%88%E5%AF%B9%E6%88%B7%E5%9E%8B%E5%9B%BE%E6%95%B0%E6%8D%AE%E9%9B%86%E7%9A%84%E8%B0%83%E7%A0%94/image-20231118205131775.png" alt="image-20231118205131775" style="zoom: 50%;"></p>
+<p><img src="/2023/11/18/%E9%92%88%E5%AF%B9%E6%88%B7%E5%9E%8B%E5%9B%BE%E6%95%B0%E6%8D%AE%E9%9B%86%E7%9A%84%E8%B0%83%E7%A0%94/image-20231118205151809.png" alt="image-20231118205151809" style="zoom: 50%;"></p>
+<p><img src="/2023/11/18/%E9%92%88%E5%AF%B9%E6%88%B7%E5%9E%8B%E5%9B%BE%E6%95%B0%E6%8D%AE%E9%9B%86%E7%9A%84%E8%B0%83%E7%A0%94/image-20231118205209928.png" alt="image-20231118205209928" style="zoom: 50%;"></p>
+<p><img src="/2023/11/18/%E9%92%88%E5%AF%B9%E6%88%B7%E5%9E%8B%E5%9B%BE%E6%95%B0%E6%8D%AE%E9%9B%86%E7%9A%84%E8%B0%83%E7%A0%94/image-20231118205232738.png" alt="image-20231118205232738" style="zoom:50%;"></p>
+<p><img src="/2023/11/18/%E9%92%88%E5%AF%B9%E6%88%B7%E5%9E%8B%E5%9B%BE%E6%95%B0%E6%8D%AE%E9%9B%86%E7%9A%84%E8%B0%83%E7%A0%94/image-20231118205249719.png" alt="image-20231118205249719" style="zoom:50%;"></p>
+<p>看起来和论文里的效果还是有区别的，具体的问题我再探究一下。</p>
+<h3 id="nbimer">Nbimer</h3>
+<p>这个数据集纯纯耍流氓，不仅得一个一个下，一天的免费下载额度只有3次，纯纯恰烂钱，直接pass掉。</p>
+<p><img src="/2023/11/18/%E9%92%88%E5%AF%B9%E6%88%B7%E5%9E%8B%E5%9B%BE%E6%95%B0%E6%8D%AE%E9%9B%86%E7%9A%84%E8%B0%83%E7%A0%94/image-20231118214939140.png" alt="image-20231118214939140" style="zoom: 25%;"></p>
+<h3 id="cubicasa5k">CubiCasa5K</h3>
+<p><a target="_blank" rel="noopener" href="https://github.com/CubiCasa/CubiCasa5k">数据集下载地址</a></p>
+<p>这个数据集大概5.5G，其中每张数据的质量还是很高的：</p>
+<p><img src="/2023/11/18/%E9%92%88%E5%AF%B9%E6%88%B7%E5%9E%8B%E5%9B%BE%E6%95%B0%E6%8D%AE%E9%9B%86%E7%9A%84%E8%B0%83%E7%A0%94/image-20231118222838105.png" alt="image-20231118222838105" style="zoom: 50%;"></p>
+<p><img src="/2023/11/18/%E9%92%88%E5%AF%B9%E6%88%B7%E5%9E%8B%E5%9B%BE%E6%95%B0%E6%8D%AE%E9%9B%86%E7%9A%84%E8%B0%83%E7%A0%94/image-20231118222929266.png" alt="image-20231118222929266" style="zoom:50%;"></p>
+<p>不过比较可惜的是数据的一致性并不高，将其作为扩散模型的原料，效果不一定好，而且其中出现的标注，对于diffusion
+model的生成来说可能还是要求过高了，具体效果我还需要试一试。</p>
+<h3 id="interiornet">InteriorNet</h3>
+<p><a target="_blank" rel="noopener" href="https://interiornet.org/">数据集下载地址</a></p>
+<p>该数据由论文 InteriorNet: Mega-scale Multi-sensor Photo-realistic
+Indoor Scenes Dataset 提出，由Imperial College London提出。</p>
+<figure>
+<img src="/2023/11/18/%E9%92%88%E5%AF%B9%E6%88%B7%E5%9E%8B%E5%9B%BE%E6%95%B0%E6%8D%AE%E9%9B%86%E7%9A%84%E8%B0%83%E7%A0%94/image-20231118215738603.png" alt="image-20231118215738603">
+<figcaption aria-hidden="true">image-20231118215738603</figcaption>
+</figure>
+<p>这个数据集主要是3D的数据，不太适合此次的任务，所以先pass掉。</p>
+<h2 id="构建自己的数据集">构建自己的数据集</h2>
+<h3 id="爬取一些网站的户型图数据">爬取一些网站的户型图数据</h3>
+<p>直接用其他研究工作者的数据集有点不好意思，我寻思还是自己爬取一些数据，插在里面，填补一下我小小的自尊心</p>
+<p>爬虫代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">##正式版</span></span><br><span class="line"><span class="comment">#导入所需要的包</span></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> aiohttp</span><br><span class="line"><span class="keyword">import</span> asyncio</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#查看一下robots协议</span></span><br><span class="line">res = requests.get(<span class="string">&quot;https://bj.lianjia.com/ershoufang/robots.txt&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(res.text)</span><br><span class="line"></span><br><span class="line"><span class="comment">#选择要查询的城市</span></span><br><span class="line">q=<span class="built_in">input</span>(<span class="string">&quot;请输入你想查询的城市的拼音首字母&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#用于存放房屋信息的列表</span></span><br><span class="line">htmldata = []</span><br><span class="line"></span><br><span class="line"><span class="comment">#用于存放异步协程时所需要的图片下载链接</span></span><br><span class="line">hreff = []</span><br><span class="line"></span><br><span class="line"><span class="comment">#爬取第1,2页</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="number">3</span>):</span><br><span class="line">    pg=<span class="string">&quot;pg&quot;</span>+<span class="built_in">str</span>(i)</span><br><span class="line">    url = <span class="string">f&quot;https://<span class="subst">&#123;q&#125;</span>.lianjia.com/ershoufang/<span class="subst">&#123;pg&#125;</span>/&quot;</span></span><br><span class="line">    headers = &#123;</span><br><span class="line">        <span class="string">&quot;User-Agent&quot;</span>: <span class="string">&quot;Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">print</span>(q)</span><br><span class="line"></span><br><span class="line">    resp = requests.get(url,headers=headers)</span><br><span class="line">    resp.encoding=<span class="string">&quot;utf-8&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> resp.status_code==<span class="number">200</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;访问正常！&quot;</span>)</span><br><span class="line"></span><br><span class="line">        main_page = BeautifulSoup(resp.text,<span class="string">&quot;html.parser&quot;</span>)</span><br><span class="line">        alist=main_page.find(<span class="string">&quot;ul&quot;</span>,class_=<span class="string">&quot;sellListContent&quot;</span>).find_all(<span class="string">&quot;div&quot;</span>,class_=<span class="string">&quot;title&quot;</span>)</span><br><span class="line">        <span class="comment">#用BeautifulSoup找到ul属性为sellListContent下所有div属性为title的内容</span></span><br><span class="line"></span><br><span class="line">        obj = re.<span class="built_in">compile</span>(<span class="string">r&#x27;.*?href=&quot;(?P&lt;href&gt;.*?)&quot;&#x27;</span>,re.S)</span><br><span class="line">        obj2 = re.<span class="built_in">compile</span>(<span class="string">r&#x27;.*?blank&quot;&gt;(?P&lt;name&gt;.*?)&lt;/a&gt;&#x27;</span>,re.S)</span><br><span class="line">        <span class="comment">#用正则表表达式去匹配子页面的url（href）和标题（name）</span></span><br><span class="line"></span><br><span class="line">        alist2=<span class="built_in">str</span>(alist)</span><br><span class="line">        <span class="comment">#将列表变为字符串方便正则表达式去匹配</span></span><br><span class="line"></span><br><span class="line">        result = obj.finditer(alist2)</span><br><span class="line">        result2 = obj2.finditer(alist2)</span><br><span class="line">        a=[]</span><br><span class="line">        <span class="keyword">for</span> it2 <span class="keyword">in</span> result2:</span><br><span class="line">            name=it2.group(<span class="string">&quot;name&quot;</span>)</span><br><span class="line">            a.append(name+<span class="string">&quot;.jpg&quot;</span>)</span><br><span class="line">        <span class="comment">#用于存放图片的名字（name.jpg）</span></span><br><span class="line"></span><br><span class="line">        k=<span class="number">0</span></span><br><span class="line">        <span class="comment"># filename = &#x27;E:\\大三上\\课程\\数据抓取与数据清洗\\期末作业\\期末大作业\\bj二手房.csv&#x27;</span></span><br><span class="line">        filename = <span class="string">&#x27;D:\\CodingObjects\\Diffusion-Model\\信息.csv&#x27;</span></span><br><span class="line">        <span class="comment">#存放二手房详细信息csv的路径</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> it <span class="keyword">in</span> result:</span><br><span class="line">            <span class="comment">##############################################</span></span><br><span class="line">            <span class="comment">#part1 提取房屋的信息</span></span><br><span class="line"></span><br><span class="line">            href = it.group(<span class="string">&quot;href&quot;</span>)</span><br><span class="line">            html_resp = requests.get(url=href,headers=headers)</span><br><span class="line"></span><br><span class="line">            <span class="comment">#用xpath去提取信息</span></span><br><span class="line">            html = etree.HTML(html_resp.text)</span><br><span class="line"></span><br><span class="line">            <span class="comment">#标题</span></span><br><span class="line">            bt = html.xpath(<span class="string">&quot;/html/body/div[3]/div/div/div[1]/h1/text()&quot;</span>)</span><br><span class="line">            <span class="comment">#总价</span></span><br><span class="line">            zj = html.xpath(<span class="string">&quot;/html/body/div[5]/div[2]/div[3]/span[1]/text()&quot;</span>)</span><br><span class="line">            <span class="comment">#每平方的单价</span></span><br><span class="line">            dj = html.xpath(<span class="string">&quot;/html/body/div[5]/div[2]/div[3]/div[1]/div[1]/span/text()&quot;</span>)</span><br><span class="line">            <span class="comment">#地段</span></span><br><span class="line">            dd = html.xpath(<span class="string">&quot;//div[@class=&#x27;overview&#x27;]//div/span/a/text()&quot;</span>)</span><br><span class="line">            <span class="comment">## 房屋基本属性</span></span><br><span class="line">            <span class="comment">#基本信息的标题</span></span><br><span class="line">            bt2 = html.xpath(<span class="string">&quot;//div[@class=&#x27;base&#x27;]//span/text()&quot;</span>)</span><br><span class="line">            <span class="comment">#基本信息的内容</span></span><br><span class="line">            nr2 = html.xpath(<span class="string">&quot;//div[@class=&#x27;base&#x27;]//li/text()&quot;</span>)</span><br><span class="line">            <span class="comment">## 房源交易属性</span></span><br><span class="line">            <span class="comment"># 交易标题</span></span><br><span class="line">            bt3 =html.xpath(<span class="string">&quot;//div[@class=&#x27;transaction&#x27;]//span[1]//text()&quot;</span>)</span><br><span class="line">            <span class="comment"># 交易信息内容</span></span><br><span class="line">            nr3 = html.xpath(<span class="string">&quot;//div[@class=&#x27;transaction&#x27;]//span[2]//text()&quot;</span>)</span><br><span class="line">            <span class="comment">## 特色信息</span></span><br><span class="line">            <span class="comment"># 特色标题</span></span><br><span class="line">            bt4 = html.xpath(<span class="string">&quot;//div[@class=&#x27;baseattribute clear&#x27;]/div[@class=&#x27;name&#x27;]/text()&quot;</span>)</span><br><span class="line">            <span class="comment"># 特色内容</span></span><br><span class="line">            nr4 = html.xpath(<span class="string">&quot;//div[@class=&#x27;baseattribute clear&#x27;]/div[@class=&#x27;content&#x27;]/text()&quot;</span>)</span><br><span class="line">            <span class="comment">#把信息都存放到htmldict字典中</span></span><br><span class="line">            htmldict=<span class="built_in">dict</span>(<span class="built_in">zip</span>([<span class="string">&#x27;标题&#x27;</span>, <span class="string">&#x27;总价格&#x27;</span>, <span class="string">&#x27;单价&#x27;</span>, <span class="string">&#x27;地段&#x27;</span>] + bt2 + bt3 + bt4,[bt, zj, dj, dd] + nr2 + nr3 + nr4))</span><br><span class="line"></span><br><span class="line">            <span class="comment">#存到htmldata中</span></span><br><span class="line">            htmldata.append(htmldict)</span><br><span class="line"></span><br><span class="line">            <span class="comment">##############################################</span></span><br><span class="line">            <span class="comment">#part2 提取户型图</span></span><br><span class="line"></span><br><span class="line">            href=it.group(<span class="string">&quot;href&quot;</span>)</span><br><span class="line"></span><br><span class="line">            child_page_resp = requests.get(href)</span><br><span class="line">            child_page_resp.enconding = <span class="string">&quot;utf-8&quot;</span></span><br><span class="line">            child_page_text = child_page_resp.text</span><br><span class="line"></span><br><span class="line">            child_page = BeautifulSoup(child_page_text,<span class="string">&quot;html.parser&quot;</span>)</span><br><span class="line"></span><br><span class="line">            img = child_page.find(<span class="string">&quot;div&quot;</span>,class_=<span class="string">&quot;m-content&quot;</span>).find(<span class="string">&quot;div&quot;</span>,class_=<span class="string">&quot;layout&quot;</span>).find(<span class="string">&quot;img&quot;</span>)</span><br><span class="line">            <span class="comment">#print(img.get(&quot;src&quot;))</span></span><br><span class="line">            src = img.get(<span class="string">&quot;src&quot;</span>)</span><br><span class="line">            hreff.append(src)</span><br><span class="line">            img_resp = requests.get(src)</span><br><span class="line">            img_resp.content</span><br><span class="line"></span><br><span class="line">            <span class="comment">#有的名字里带有XXX元/月，其中/会影响路径，因此把/替换为空</span></span><br><span class="line">            img_name = a[k].replace(<span class="string">&quot;/&quot;</span>,<span class="string">&quot;&quot;</span>)</span><br><span class="line">            path=<span class="string">&quot;D:\\CodingObjects\\Diffusion-Model\\户型图bj1\\&quot;</span></span><br><span class="line">            <span class="comment"># filename = &#x27;D:\\CodingObjects\\Diffusion-Model\\信息.csv&#x27;</span></span><br><span class="line">            <span class="keyword">with</span> <span class="built_in">open</span>(path+img_name,mode=<span class="string">&quot;wb&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">                f.write(img_resp.content)</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;over&quot;</span>,img_name)</span><br><span class="line"></span><br><span class="line">            <span class="comment">#设置一个间隔</span></span><br><span class="line">            time.sleep(<span class="number">0.5</span>)</span><br><span class="line"></span><br><span class="line">            <span class="comment">#k是用来控制第几个名字的（a[k]）</span></span><br><span class="line">            k=k+<span class="number">1</span></span><br><span class="line"></span><br><span class="line">        f.close()</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;over&quot;</span>+pg)</span><br><span class="line"></span><br><span class="line">    <span class="comment">#将房屋详细信息存入csv</span></span><br><span class="line">    pd.DataFrame(htmldata).to_csv(filename, encoding=<span class="string">&#x27;GB18030&#x27;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;csv over&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment">#关闭所有请求</span></span><br><span class="line">    res.close()</span><br><span class="line">    resp.close()</span><br><span class="line">    html_resp.close()</span><br><span class="line">    child_page_resp.close()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> resp.status_code==<span class="number">404</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;页面不存在&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> resp.status_code==<span class="number">403</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;页面禁止访问&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#############################方法二 ：用异步协程来抓取图片</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">aiodownload</span>(<span class="params">urlhref</span>):</span><br><span class="line">    path1 = <span class="string">&quot;D:\\CodingObjects\\Diffusion-Model\\户型图bj2\\&quot;</span></span><br><span class="line">    name1 = urlhref.rsplit(<span class="string">&quot;/&quot;</span>,<span class="number">1</span>)[<span class="number">1</span>]</span><br><span class="line">    <span class="keyword">async</span> <span class="keyword">with</span> aiohttp.ClientSession() <span class="keyword">as</span> session:</span><br><span class="line">        <span class="keyword">async</span> <span class="keyword">with</span> session.get(urlhref) <span class="keyword">as</span> resp1:</span><br><span class="line">            <span class="keyword">with</span> <span class="built_in">open</span>(path1+name1,mode=<span class="string">&quot;wb&quot;</span>) <span class="keyword">as</span> f1:</span><br><span class="line">                f1.write(<span class="keyword">await</span> resp1.content.read())</span><br><span class="line">    <span class="built_in">print</span>(urlhref,<span class="string">&quot;完成&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    tasks = []</span><br><span class="line">    <span class="keyword">for</span> urlhref <span class="keyword">in</span> hreff:</span><br><span class="line">        tasks.append(aiodownload(urlhref))</span><br><span class="line">    <span class="keyword">await</span> asyncio.wait(tasks)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__==<span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    time1 = time.time()</span><br><span class="line">    <span class="keyword">await</span> main()</span><br><span class="line">    time2 = time.time()</span><br><span class="line">    <span class="built_in">print</span>(time2-time1)</span><br></pre></td></tr></table></figure>
+<p>结果如下：</p>
+<figure>
+<img src="/2023/11/18/%E9%92%88%E5%AF%B9%E6%88%B7%E5%9E%8B%E5%9B%BE%E6%95%B0%E6%8D%AE%E9%9B%86%E7%9A%84%E8%B0%83%E7%A0%94/image-20231118231208989.png" alt="image-20231118231208989">
+<figcaption aria-hidden="true">image-20231118231208989</figcaption>
+</figure>
+<h3 id="最终数据集">最终数据集</h3>
+<p>目前我都想法是使用两个版本的数据集：</p>
+<ul>
+<li>第一个版本用：RPLAN</li>
+<li>第二个版本用：CubiCasa5K + 自己爬取的数据集</li>
+</ul>
+<p>具体最后验收时用那个，还得看具体训练出来的效果而定。</p>
+
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/扩散模型//" class="article-tag-list-link color5">扩散模型</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2023/11/18/%E9%92%88%E5%AF%B9%E6%88%B7%E5%9E%8B%E5%9B%BE%E6%95%B0%E6%8D%AE%E9%9B%86%E7%9A%84%E8%B0%83%E7%A0%94/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Windows-Copilot-和-Github-Copilot-的安装教程和使用初体验" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1177,107 +1371,6 @@ sequence模型是一类End-to-End的算法框架，也就是从序列到序列�
     
     <p class="article-more-link">
       <a class="article-more-a" href="/2023/11/06/%E5%90%84%E7%B1%BB%E6%A8%A1%E5%9E%8B%E6%80%BB%E7%BB%93/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Diffusion-Models-Score-based-Generative-Models背后的深度学习原理（3）-蒙特卡洛采样法和重要采样法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2023/11/06/Diffusion-Models-Score-based-Generative-Models%E8%83%8C%E5%90%8E%E7%9A%84%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%8E%9F%E7%90%86%EF%BC%883%EF%BC%89-%E8%92%99%E7%89%B9%E5%8D%A1%E6%B4%9B%E9%87%87%E6%A0%B7%E6%B3%95%E5%92%8C%E9%87%8D%E8%A6%81%E9%87%87%E6%A0%B7%E6%B3%95/" target="_blank">Diffusion Models/Score-based Generative Models背后的深度学习原理（3）:蒙特卡洛采样法和重要采样法</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2023/11/06/Diffusion-Models-Score-based-Generative-Models%E8%83%8C%E5%90%8E%E7%9A%84%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%8E%9F%E7%90%86%EF%BC%883%EF%BC%89-%E8%92%99%E7%89%B9%E5%8D%A1%E6%B4%9B%E9%87%87%E6%A0%B7%E6%B3%95%E5%92%8C%E9%87%8D%E8%A6%81%E9%87%87%E6%A0%B7%E6%B3%95/" class="archive-article-date">
-        <time datetime="2023-11-06T07:40:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-11-06</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <h1 id="diffusion-modelsscore-based-generative-models背后的深度学习原理3蒙特卡洛采样法和重要采样法">Diffusion
-Models/Score-based Generative
-Models背后的深度学习原理（3）:蒙特卡洛采样法和重要采样法</h1>
-    
-    <a class="article-more-a" href="/2023/11/06/Diffusion-Models-Score-based-Generative-Models%E8%83%8C%E5%90%8E%E7%9A%84%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%8E%9F%E7%90%86%EF%BC%883%EF%BC%89-%E8%92%99%E7%89%B9%E5%8D%A1%E6%B4%9B%E9%87%87%E6%A0%B7%E6%B3%95%E5%92%8C%E9%87%8D%E8%A6%81%E9%87%87%E6%A0%B7%E6%B3%95/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/扩散模型//" class="article-tag-list-link color5">扩散模型</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2023/11/06/Diffusion-Models-Score-based-Generative-Models%E8%83%8C%E5%90%8E%E7%9A%84%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%8E%9F%E7%90%86%EF%BC%883%EF%BC%89-%E8%92%99%E7%89%B9%E5%8D%A1%E6%B4%9B%E9%87%87%E6%A0%B7%E6%B3%95%E5%92%8C%E9%87%8D%E8%A6%81%E9%87%87%E6%A0%B7%E6%B3%95/">展开全文 >></a>
     </p>
     
 
