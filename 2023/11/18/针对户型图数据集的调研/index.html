@@ -10,12 +10,12 @@
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="针对户型图数据集的调研 最近要做一个多媒体领域的方向综合设计，题目是基于扩散模型的户型图数据增强系统设计与实现，所以目前对现有的数据集进行调研。 之前的博客有对最基本的DDPM的详细说明，包括数学原理、公式推导、代码详解，现在我们将目光聚焦到数据集，一个标准的扩散模型需要什么样的数据集呢？很显然，如果你只是想做 Img-to-Img，那你的数据集就是单纯的img就好了，不需要额外的标注；如果">
+  <meta name="description" content="针对户型图数据集的调研 最近要做一个多媒体领域的方向综合设计，题目是基于扩散模型的户型图数据增强系统设计与实现，所以目前对现有的数据集进行调研。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="针对户型图数据集的调研">
 <meta property="og:url" content="https://libaolu312.github.io/2023/11/18/%E9%92%88%E5%AF%B9%E6%88%B7%E5%9E%8B%E5%9B%BE%E6%95%B0%E6%8D%AE%E9%9B%86%E7%9A%84%E8%B0%83%E7%A0%94/index.html">
 <meta property="og:site_name" content="李宝璐">
-<meta property="og:description" content="针对户型图数据集的调研 最近要做一个多媒体领域的方向综合设计，题目是基于扩散模型的户型图数据增强系统设计与实现，所以目前对现有的数据集进行调研。 之前的博客有对最基本的DDPM的详细说明，包括数学原理、公式推导、代码详解，现在我们将目光聚焦到数据集，一个标准的扩散模型需要什么样的数据集呢？很显然，如果你只是想做 Img-to-Img，那你的数据集就是单纯的img就好了，不需要额外的标注；如果">
+<meta property="og:description" content="针对户型图数据集的调研 最近要做一个多媒体领域的方向综合设计，题目是基于扩散模型的户型图数据增强系统设计与实现，所以目前对现有的数据集进行调研。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://libaolu312.github.io/2023/11/18/%E9%92%88%E5%AF%B9%E6%88%B7%E5%9E%8B%E5%9B%BE%E6%95%B0%E6%8D%AE%E9%9B%86%E7%9A%84%E8%B0%83%E7%A0%94/image-20231118160123017.png">
 <meta property="og:image" content="https://libaolu312.github.io/2023/11/18/%E9%92%88%E5%AF%B9%E6%88%B7%E5%9E%8B%E5%9B%BE%E6%95%B0%E6%8D%AE%E9%9B%86%E7%9A%84%E8%B0%83%E7%A0%94/image-20231118160152852.png">
@@ -33,7 +33,7 @@
 <meta property="og:image" content="https://libaolu312.github.io/2023/11/18/%E9%92%88%E5%AF%B9%E6%88%B7%E5%9E%8B%E5%9B%BE%E6%95%B0%E6%8D%AE%E9%9B%86%E7%9A%84%E8%B0%83%E7%A0%94/image-20231118215738603.png">
 <meta property="og:image" content="https://libaolu312.github.io/2023/11/18/%E9%92%88%E5%AF%B9%E6%88%B7%E5%9E%8B%E5%9B%BE%E6%95%B0%E6%8D%AE%E9%9B%86%E7%9A%84%E8%B0%83%E7%A0%94/image-20231118231208989.png">
 <meta property="article:published_time" content="2023-11-18T06:42:21.000Z">
-<meta property="article:modified_time" content="2023-11-18T15:12:31.085Z">
+<meta property="article:modified_time" content="2023-11-18T15:19:11.591Z">
 <meta property="article:author" content="李宝璐">
 <meta property="article:tag" content="技术笔记">
 <meta name="twitter:card" content="summary">
@@ -315,6 +315,7 @@
     
     <h1 id="针对户型图数据集的调研">针对户型图数据集的调研</h1>
 <p>最近要做一个多媒体领域的方向综合设计，题目是<strong>基于扩散模型的户型图数据增强系统设计与实现</strong>，所以目前对现有的数据集进行调研。</p>
+<span id="more"></span>
 <p>之前的博客有对最基本的DDPM的详细说明，包括数学原理、公式推导、代码详解，现在我们将目光聚焦到数据集，一个标准的扩散模型需要什么样的数据集呢？很显然，如果你只是想做
 Img-to-Img，那你的数据集就是单纯的img就好了，不需要额外的标注；如果你想做Text-to-Image，那么你就需要文本和图像成对的数据集进行训练，其他的多模态也同理。</p>
 <p>ok，我们现在已经确定需要的是纯图片数据集，其实我们知道，像户型图这种小众的数据集，纯图的还是比较难找的，我们可以找一些之前做户型图任务的相关工作，看看他们用的是什么数据集，如果是纯图的，那最好，如果不是，那我们就想办法把它变成纯图的。当然，也要做好最坏的打算，如果真的很难找到，那就写个爬虫，从一些售房的网站上爬取一些户型图下来。</p>
