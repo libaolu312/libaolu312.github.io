@@ -6,19 +6,25 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://libaolu312.github.io">
-  <title>Archives | 李宝璐</title>
+  <title>DiffuseVAE:完美结合VAE 和 Diffusion Models | 李宝璐</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="里面放着李宝璐的碎碎念">
-<meta property="og:type" content="website">
-<meta property="og:title" content="李宝璐">
-<meta property="og:url" content="https://libaolu312.github.io/archives/page/4/index.html">
+  <meta name="description" content="VAE 简介 在Diffusion Models面前，VAE是一个古老而经典的生成式模型，先简单介绍一下。   image-20231120213835932  变分自动编码机从自动编码机演化而来，整个训练框架就是在对样本x进行编解码。 \(q\) 是将样本 \(x\) 编码为隐变量 \(z\)，而 \(p\) 又将隐含变量 \(z\) 解码成\(f(z)\)，进而最小化重构误差。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DiffuseVAE:完美结合VAE 和 Diffusion Models">
+<meta property="og:url" content="https://libaolu312.github.io/2023/11/20/DiffuseVAE-%E5%AE%8C%E7%BE%8E%E7%BB%93%E5%90%88VAE-%E5%92%8C-Diffusion-Models/index.html">
 <meta property="og:site_name" content="李宝璐">
-<meta property="og:description" content="里面放着李宝璐的碎碎念">
+<meta property="og:description" content="VAE 简介 在Diffusion Models面前，VAE是一个古老而经典的生成式模型，先简单介绍一下。   image-20231120213835932  变分自动编码机从自动编码机演化而来，整个训练框架就是在对样本x进行编解码。 \(q\) 是将样本 \(x\) 编码为隐变量 \(z\)，而 \(p\) 又将隐含变量 \(z\) 解码成\(f(z)\)，进而最小化重构误差。">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://libaolu312.github.io/2023/11/20/DiffuseVAE-%E5%AE%8C%E7%BE%8E%E7%BB%93%E5%90%88VAE-%E5%92%8C-Diffusion-Models/image-20231120213835932.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/11/20/DiffuseVAE-%E5%AE%8C%E7%BE%8E%E7%BB%93%E5%90%88VAE-%E5%92%8C-Diffusion-Models/image-20231120231740117.png">
+<meta property="article:published_time" content="2023-11-20T13:37:00.000Z">
+<meta property="article:modified_time" content="2023-11-20T15:31:58.845Z">
 <meta property="article:author" content="李宝璐">
+<meta property="article:tag" content="技术笔记">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://libaolu312.github.io/2023/11/20/DiffuseVAE-%E5%AE%8C%E7%BE%8E%E7%BB%93%E5%90%88VAE-%E5%92%8C-Diffusion-Models/image-20231120213835932.png">
   
     <link rel="alternative" href="/atom.xml" title="李宝璐" type="application/atom+xml">
   
@@ -241,159 +247,144 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-DiffuseVAE-完美结合VAE-和-Diffusion-Models" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2023" class="archive-year">2023</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/06/04/%E8%BF%90%E5%8A%A8/" class="archive-article-date">
-        <time datetime="2023-06-04T12:55:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-06-04</time>
-</a>
-
-        </div>
-    	 
+      <header class="article-header">
   
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/06/04/%E8%BF%90%E5%8A%A8/" target="_blank">运动</a>
   
+    <h1 class="article-title" itemprop="name">
+      DiffuseVAE:完美结合VAE 和 Diffusion Models
     </h1>
   
 
 
-        <div class="article-info info-on-right">
+  
+  
+        
+        <span id="busuanzi_container_page_pv" style='display:none' class="archive-article-date">
+              <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+        </span>
+
+<a href="/2023/11/20/DiffuseVAE-%E5%AE%8C%E7%BE%8E%E7%BB%93%E5%90%88VAE-%E5%92%8C-Diffusion-Models/" class="archive-article-date">
+        <time datetime="2023-11-20T13:37:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-11-20</time>
+</a>
+
+  
+  
+    
+<div style="margin-top:10px;">
+  <span class="post-time">
+    <span class="post-meta-item-icon">
+      <!-- fonts.scss -->
+      <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
+      <i class="icon-statistics"></i>
+      <span class="post-meta-item-text"> 字数统计:</span>
+      <span class="post-count">960字</span>
+    </span>
+  </span>
+
+  <span class="post-time">
+    &nbsp; | &nbsp;
+    <span class="post-meta-item-icon">
+      <i class="icon-book icon"></i>
+      <span class="post-meta-item-text"> 阅读时长≈</span>
+      <span class="post-count">3分</span>
+    </span>
+  </span>
+</div>
+
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <h2 id="vae-简介">VAE 简介</h2>
+<p>在Diffusion
+Models面前，VAE是一个古老而经典的生成式模型，先简单介绍一下。</p>
+<figure>
+<img src="/2023/11/20/DiffuseVAE-%E5%AE%8C%E7%BE%8E%E7%BB%93%E5%90%88VAE-%E5%92%8C-Diffusion-Models/image-20231120213835932.png" alt="image-20231120213835932">
+<figcaption aria-hidden="true">image-20231120213835932</figcaption>
+</figure>
+<p>变分自动编码机从自动编码机演化而来，<strong>整个训练框架就是在对样本x进行编解码</strong>。</p>
+<p><span class="math inline">\(q\)</span> 是将样本 <span class="math inline">\(x\)</span> 编码为隐变量 <span class="math inline">\(z\)</span>，而 <span class="math inline">\(p\)</span> 又将隐含变量 <span class="math inline">\(z\)</span> 解码成<span class="math inline">\(f(z)\)</span>，进而最小化重构误差。</p>
+<p>训练的目的是<strong>学习出编码器的映射函数和解码器的映射函数</strong>，所以训练过程实际上是在<strong>进行变分推断</strong>，即寻找出某一个函数来优化目标。因此取名为<strong>变分编码器VAE(Variational
+Auto-encoder)</strong>。</p>
+<p>由于解码器无法梯度反转，所以VAE提出了重参数化的trick，这个trick在DDPM推导中同样使用了。</p>
+<p>VAE的训练目标是最大化数据对数似然的证据下限（ELBO）： <span class="math display">\[
+\mathcal{L}\left( \theta ,\phi \right) =\mathbb{E}_{q_{\phi}\left( z|x
+\right)}\left[ \log p_{\theta}\left( x|z \right) \right]
+-\mathcal{D}_{KL}\left[ q_{\phi}\left( z|x \right) ||p\left( z \right)
+\right]
+\]</span></p>
+<h2 id="vae优缺点与ddpm优缺点">VAE优缺点与DDPM优缺点</h2>
+<h3 id="vae优缺点">VAE优缺点</h3>
+<p><strong>VAE基于显式似然的生成模型，通常也用于学习数据的低维潜在表示</strong>。</p>
+<p>一个显著的劣势就是<strong>没有对抗网络，不能融合高频信息，所以会更趋向于产生模糊的图片</strong>。</p>
+<p>先进的生成式模型都需要更大维度的潜在空间，因此VAE生成样本质量，与隐式似然相对应的GANs相比存在显著的差距。</p>
+<h3 id="ddpm优缺点">DDPM优缺点</h3>
+<p><strong>去噪扩散概率模型(DDPM)需要昂贵的迭代采样过程，并且缺乏低维的潜在表示</strong>，限制了这些模型对下游应用的实际适用性。</p>
+<h2 id="ddpm-vae完美结合二者优点">DDPM + VAE：完美结合二者优点</h2>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2201.00308">论文：DiffuseVAE:
+Efficient, Controllable and High-Fidelity Generation from
+Low-Dimensional Latents</a></p>
+<figure>
+<img src="/2023/11/20/DiffuseVAE-%E5%AE%8C%E7%BE%8E%E7%BB%93%E5%90%88VAE-%E5%92%8C-Diffusion-Models/image-20231120231740117.png" alt="image-20231120231740117">
+<figcaption aria-hidden="true">image-20231120231740117</figcaption>
+</figure>
+<p><strong>生成过程拆解成VAE和DDPM两个阶段</strong>。在第一阶段，任何任意条件作用信号
+<span class="math inline">\(y\)</span>
+都可以首先使用单个随机层VAE建模。在第二阶段，使用以 <span class="math inline">\(y\)</span> 为条件的DDPM和 <span class="math inline">\(y\)</span> 的低维VAE潜码表示对训练数据 <span class="math inline">\(x\)</span>
+进行建模。即第一阶段对训练数据拟合成VAE，第二阶段使用以训练数据的VAE重建(
+<span class="math inline">\(\hat{x}\)</span> ) 为条件的DDPM对 <span class="math inline">\(x\)</span>进行建模。</p>
+<p>在之前条件DDPM中的内容聊过，后续很多文章的创新点都放在怎样加入condition约束生成上。这篇VAE结合DDPM的方法同样属于条件DDPM的范畴。</p>
+<p>现在加入VAE信息变成了一种低维空间上的约束，而t-1时刻的数据可以看成一种高维数据方面的约束。有了低维空间+高维空间两种约束，更加强大的condition作用下，能够重建出更合理的数据分布。</p>
+<h2 id="有监督生成无监督生成">有监督生成？无监督生成？</h2>
+<p>在条件DDPM的博客中就聊过，引入latent <span class="math inline">\(z\)</span>，甚至直接引入原图基础上相关的某种flow，本质上将个无监督学习变成了有监督学习。所以作者要证明这个结构的优越性/有效性，必须要证明在unconditional
+上的表现，这也是所有condition方面做创新的DDPM论文必须要说明清楚的一点。</p>
+<p>与GANs的训练类似，生成器和鉴别器训练最好不是同步的，同时也为了证明unconditional情景下的生成能力，需要先在没有条件的输入下训练DDPM，即关注
+<span class="math inline">\(p_{\phi}\left( x_{0:T}|z \right)\)</span>
+分布，然后用两阶段优化的方式，先优化VAE，再优化DDPM。</p>
+<p>引用：</p>
+<ul>
+<li>https://arxiv.org/abs/2201.00308</li>
+<li>https://github.com/kpandey008/DiffuseVAE</li>
+<li>https://www.cnblogs.com/huangshiyu13/p/6209016.html</li>
+<li>https://xduwq.blog.csdn.net/article/details/120861817</li>
+<li>https://xduwq.blog.csdn.net/article/details/122802646</li>
+</ul>
+
+    
+
+    
+
+    
+    <div class="declare"> 
+      <ul class="post-copyright">
+        <li>
+          <strong>本文作者：</strong>
+          李宝璐
+        </li>
+        <li>
+          <strong>本文链接：</strong>
+          <a href="https://libaolu312.github.io/2023/11/20/DiffuseVAE-完美结合VAE-和-Diffusion-Models/" title="DiffuseVAE:完美结合VAE 和 Diffusion Models" target="_blank">https://libaolu312.github.io/2023/11/20/DiffuseVAE-完美结合VAE-和-Diffusion-Models/</a>
+        </li>
+        
+        <li>
+          <strong>版权声明： </strong>
           
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">剪影</a>
-        		</li>
-      		
-		</ul>
-	</div>
+          本博客所有文章除特别声明外，均采用 <a href="https://github.com/JoeyBling/hexo-theme-yilia-plus/blob/master/LICENSE" rel="external nofollow" target="_blank">MIT</a> 许可协议。转载请注明出处！
+        </li>
+        
+      </ul>
+    </div>
+    
 
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/剪影//" class="article-tag-list-link color3">剪影</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
   </div>
-</article>
-  
+  <div class="article-info article-info-index">
     
     
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/05/06/Personal%20homepage/" class="archive-article-date">
-        <time datetime="2023-05-06T13:05:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-05-06</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/05/06/Personal%20homepage/" target="_blank">Personal homepage</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Personal homepage</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Personal-homepage//" class="article-tag-list-link color3">Personal homepage</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-      
-        </div></section>
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2022" class="archive-year">2022</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2022/07/01/YOLOv5/" class="archive-article-date">
-        <time datetime="2022-07-01T12:33:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-07-01</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2022/07/01/YOLOv5/" target="_blank">YOLOv5</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -405,196 +396,162 @@
 		</ul>
 	</div>
 
-          
+    
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/论文精读//" class="article-tag-list-link color5">论文精读</a>
+        			<a href="/categories/扩散模型//" class="article-tag-list-link color5">扩散模型</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
+    
+
+    
+    
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <!-- <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a> -->
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://libaolu312.github.io/2023/11/20/DiffuseVAE-%E5%AE%8C%E7%BE%8E%E7%BB%93%E5%90%88VAE-%E5%92%8C-Diffusion-Models/" alt="微信分享二维码"> -->
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+
+    
+    <div class="clearfix"></div>
+  </div>
   </div>
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2022/07/01/VGG/" class="archive-article-date">
-        <time datetime="2022-07-01T09:13:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-07-01</time>
-</a>
 
+
+<nav id="article-nav">
+  
+  
+    <a href="/2023/11/20/%E6%9D%A1%E4%BB%B6DDPM-Diffusion-Model%E7%9A%84%E7%AC%AC%E4%B8%89%E4%B8%AA%E5%B7%85%E5%B3%B0%E4%B9%8B%E4%BD%9C/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">条件DDPM:Diffusion Model的第三个巅峰之作</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2022/07/01/VGG/" target="_blank">VGG</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/论文精读//" class="article-tag-list-link color5">论文精读</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#vae-%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">VAE 简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vae%E4%BC%98%E7%BC%BA%E7%82%B9%E4%B8%8Eddpm%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="toc-number">2.</span> <span class="toc-text">VAE优缺点与DDPM优缺点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#vae%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="toc-number">2.1.</span> <span class="toc-text">VAE优缺点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ddpm%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="toc-number">2.2.</span> <span class="toc-text">DDPM优缺点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ddpm-vae%E5%AE%8C%E7%BE%8E%E7%BB%93%E5%90%88%E4%BA%8C%E8%80%85%E4%BC%98%E7%82%B9"><span class="toc-number">3.</span> <span class="toc-text">DDPM + VAE：完美结合二者优点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%89%E7%9B%91%E7%9D%A3%E7%94%9F%E6%88%90%E6%97%A0%E7%9B%91%E7%9D%A3%E7%94%9F%E6%88%90"><span class="toc-number">4.</span> <span class="toc-text">有监督生成？无监督生成？</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
+        
+    </div>
+</aside>
+
+
+
+
+
+  <section id="comments" class="comments">
+      <style>
+        .comments{margin:30px;padding:10px;background:#fff}
+        @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+      </style>
+      
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+    var gitalk = new Gitalk({
+      clientID: '42328a99496b32b78cfb',
+      clientSecret: '8ff71391255b5283f624f252a3ca53d7b9b96f4b',
+      repo: 'libaolu312.github.io',
+      owner: 'libaolu312',
+      admin: 'libaolu312',
+     //id ��Ϊ�˱�֤issue��Ψһ�ԣ�id���Ȳ��ܴ���50�������������ʹ��·������id����һ����ȡ����ò�Ҫ�޸Ĵ������������ܵ������۶�ʧ  
+      id: location.href.slice(location.href.length-25),
+      distractionFreeMode: 'true',
+      labels: 'Comment'.split(',').filter(l => l) ,
+    })
+    gitalk.render('gitalk-container')
+    </script>
     
     
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2022/07/01/LSTM/" class="archive-article-date">
-        <time datetime="2022-07-01T08:44:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-07-01</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2022/07/01/LSTM/" target="_blank">LSTM</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/论文精读//" class="article-tag-list-link color5">论文精读</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2022/05/07/ResNet/" class="archive-article-date">
-        <time datetime="2022-05-07T06:59:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-05-07</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2022/05/07/ResNet/" target="_blank">ResNet</a>
-  
-    </h1>
-  
+  </section>
 
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/论文精读//" class="article-tag-list-link color5">论文精读</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
 
-    
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/archives/page/3/">&amp;laquo; Prev</a><a class="page-number" href="/archives/">1</a><a class="page-number" href="/archives/page/2/">2</a><a class="page-number" href="/archives/page/3/">3</a><span class="page-number current">4</span>
-    </nav>
-  
+
+
+
+
+
+
 
 
           </div>
@@ -635,8 +592,8 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: true,

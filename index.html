@@ -492,6 +492,346 @@ hobby）</p>
 
 
   
+    <article id="post-DiffuseVAE-完美结合VAE-和-Diffusion-Models" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2023/11/20/DiffuseVAE-%E5%AE%8C%E7%BE%8E%E7%BB%93%E5%90%88VAE-%E5%92%8C-Diffusion-Models/" target="_blank">DiffuseVAE:完美结合VAE 和 Diffusion Models</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2023/11/20/DiffuseVAE-%E5%AE%8C%E7%BE%8E%E7%BB%93%E5%90%88VAE-%E5%92%8C-Diffusion-Models/" class="archive-article-date">
+        <time datetime="2023-11-20T13:37:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-11-20</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <h2 id="vae-简介">VAE 简介</h2>
+<p>在Diffusion
+Models面前，VAE是一个古老而经典的生成式模型，先简单介绍一下。</p>
+<figure>
+<img src="/2023/11/20/DiffuseVAE-%E5%AE%8C%E7%BE%8E%E7%BB%93%E5%90%88VAE-%E5%92%8C-Diffusion-Models/image-20231120213835932.png" alt="image-20231120213835932">
+<figcaption aria-hidden="true">image-20231120213835932</figcaption>
+</figure>
+<p>变分自动编码机从自动编码机演化而来，<strong>整个训练框架就是在对样本x进行编解码</strong>。</p>
+<p><span class="math inline">\(q\)</span> 是将样本 <span class="math inline">\(x\)</span> 编码为隐变量 <span class="math inline">\(z\)</span>，而 <span class="math inline">\(p\)</span> 又将隐含变量 <span class="math inline">\(z\)</span> 解码成<span class="math inline">\(f(z)\)</span>，进而最小化重构误差。</p>
+<p>训练的目的是<strong>学习出编码器的映射函数和解码器的映射函数</strong>，所以训练过程实际上是在<strong>进行变分推断</strong>，即寻找出某一个函数来优化目标。因此取名为<strong>变分编码器VAE(Variational
+Auto-encoder)</strong>。</p>
+<p>由于解码器无法梯度反转，所以VAE提出了重参数化的trick，这个trick在DDPM推导中同样使用了。</p>
+<p>VAE的训练目标是最大化数据对数似然的证据下限（ELBO）： <span class="math display">\[
+\mathcal{L}\left( \theta ,\phi \right) =\mathbb{E}_{q_{\phi}\left( z|x
+\right)}\left[ \log p_{\theta}\left( x|z \right) \right]
+-\mathcal{D}_{KL}\left[ q_{\phi}\left( z|x \right) ||p\left( z \right)
+\right]
+\]</span></p>
+<h2 id="vae优缺点与ddpm优缺点">VAE优缺点与DDPM优缺点</h2>
+<h3 id="vae优缺点">VAE优缺点</h3>
+<p><strong>VAE基于显式似然的生成模型，通常也用于学习数据的低维潜在表示</strong>。</p>
+<p>一个显著的劣势就是<strong>没有对抗网络，不能融合高频信息，所以会更趋向于产生模糊的图片</strong>。</p>
+<p>先进的生成式模型都需要更大维度的潜在空间，因此VAE生成样本质量，与隐式似然相对应的GANs相比存在显著的差距。</p>
+<h3 id="ddpm优缺点">DDPM优缺点</h3>
+<p><strong>去噪扩散概率模型(DDPM)需要昂贵的迭代采样过程，并且缺乏低维的潜在表示</strong>，限制了这些模型对下游应用的实际适用性。</p>
+<h2 id="ddpm-vae完美结合二者优点">DDPM + VAE：完美结合二者优点</h2>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2201.00308">论文：DiffuseVAE:
+Efficient, Controllable and High-Fidelity Generation from
+Low-Dimensional Latents</a></p>
+<figure>
+<img src="/2023/11/20/DiffuseVAE-%E5%AE%8C%E7%BE%8E%E7%BB%93%E5%90%88VAE-%E5%92%8C-Diffusion-Models/image-20231120231740117.png" alt="image-20231120231740117">
+<figcaption aria-hidden="true">image-20231120231740117</figcaption>
+</figure>
+<p><strong>生成过程拆解成VAE和DDPM两个阶段</strong>。在第一阶段，任何任意条件作用信号
+<span class="math inline">\(y\)</span>
+都可以首先使用单个随机层VAE建模。在第二阶段，使用以 <span class="math inline">\(y\)</span> 为条件的DDPM和 <span class="math inline">\(y\)</span> 的低维VAE潜码表示对训练数据 <span class="math inline">\(x\)</span>
+进行建模。即第一阶段对训练数据拟合成VAE，第二阶段使用以训练数据的VAE重建(
+<span class="math inline">\(\hat{x}\)</span> ) 为条件的DDPM对 <span class="math inline">\(x\)</span>进行建模。</p>
+<p>在之前条件DDPM中的内容聊过，后续很多文章的创新点都放在怎样加入condition约束生成上。这篇VAE结合DDPM的方法同样属于条件DDPM的范畴。</p>
+<p>现在加入VAE信息变成了一种低维空间上的约束，而t-1时刻的数据可以看成一种高维数据方面的约束。有了低维空间+高维空间两种约束，更加强大的condition作用下，能够重建出更合理的数据分布。</p>
+<h2 id="有监督生成无监督生成">有监督生成？无监督生成？</h2>
+<p>在条件DDPM的博客中就聊过，引入latent <span class="math inline">\(z\)</span>，甚至直接引入原图基础上相关的某种flow，本质上将个无监督学习变成了有监督学习。所以作者要证明这个结构的优越性/有效性，必须要证明在unconditional
+上的表现，这也是所有condition方面做创新的DDPM论文必须要说明清楚的一点。</p>
+<p>与GANs的训练类似，生成器和鉴别器训练最好不是同步的，同时也为了证明unconditional情景下的生成能力，需要先在没有条件的输入下训练DDPM，即关注
+<span class="math inline">\(p_{\phi}\left( x_{0:T}|z \right)\)</span>
+分布，然后用两阶段优化的方式，先优化VAE，再优化DDPM。</p>
+<p>引用：</p>
+<ul>
+<li>https://arxiv.org/abs/2201.00308</li>
+<li>https://github.com/kpandey008/DiffuseVAE</li>
+<li>https://www.cnblogs.com/huangshiyu13/p/6209016.html</li>
+<li>https://xduwq.blog.csdn.net/article/details/120861817</li>
+<li>https://xduwq.blog.csdn.net/article/details/122802646</li>
+</ul>
+
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/扩散模型//" class="article-tag-list-link color5">扩散模型</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2023/11/20/DiffuseVAE-%E5%AE%8C%E7%BE%8E%E7%BB%93%E5%90%88VAE-%E5%92%8C-Diffusion-Models/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-条件DDPM-Diffusion-Model的第三个巅峰之作" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2023/11/20/%E6%9D%A1%E4%BB%B6DDPM-Diffusion-Model%E7%9A%84%E7%AC%AC%E4%B8%89%E4%B8%AA%E5%B7%85%E5%B3%B0%E4%B9%8B%E4%BD%9C/" target="_blank">条件DDPM:Diffusion Model的第三个巅峰之作</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2023/11/20/%E6%9D%A1%E4%BB%B6DDPM-Diffusion-Model%E7%9A%84%E7%AC%AC%E4%B8%89%E4%B8%AA%E5%B7%85%E5%B3%B0%E4%B9%8B%E4%BD%9C/" class="archive-article-date">
+        <time datetime="2023-11-20T12:40:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-11-20</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <blockquote>
+<p>前言：DDPM2020年诞生，短短一年的时间，模型上有两个巨大的改进，其中一个就是condition的引入，很多后续DDPM相关的论文都会讨论这一点，有些文章称之为latent
+variable。和当年GAN的发展类似，CGAN和DCGAN的出现极大程度上促进了GAN的发扬光大，意义重大。本文基于前面几篇文章继续聊一聊:</p>
+</blockquote>
+<h2 id="诞生之初unconditional无条件生成">诞生之初：unconditional无条件生成</h2>
+<p><a target="_blank" rel="noopener" href="https://proceedings.neurips.cc/paper/2020/hash/4c5bcfec8584af0d967f1ab10179ca4b-Abstract.html">论文：Denoising
+Diffusion Probabilistic Models</a></p>
+<p>根据郎之万动力方程的推导，最终的生成表达式中依赖神经网络对噪声的预测可以生成图像，但是这种生成是没有任何约束的，也就是说<strong>给定纯高斯噪声，我们就能生成图片</strong>。好处是我们的<strong>输入不受任何控制，只要是高斯噪声就可以</strong>，坏处是我们<strong>无法监督这一过程，最终生成的结果不受控制</strong>。比如在SUN数据集上，我们能任意生成各种各样的图像:</p>
+<figure>
+<img src="/2023/11/20/%E6%9D%A1%E4%BB%B6DDPM-Diffusion-Model%E7%9A%84%E7%AC%AC%E4%B8%89%E4%B8%AA%E5%B7%85%E5%B3%B0%E4%B9%8B%E4%BD%9C/e5df4135f677630708e0f2623d760791.png" alt="img">
+<figcaption aria-hidden="true">img</figcaption>
+</figure>
+<h2 id="首次引入condition分类器指导">首次引入condition：分类器指导</h2>
+<p><a target="_blank" rel="noopener" href="https://proceedings.neurips.cc/paper_files/paper/2021/hash/49ad23d1ec9fa4bd8d77d02681df5cfa-Abstract.html">论文：Diffusion
+Models Beat GANs on Image Synthesis</a></p>
+<p>在上一篇文章发表几个月之后，第一个condition
+DDPM诞生了。这篇文章在lmageNet上训练了一个分类器，用这个分类器控制标签。这个分类器是unet结构，带有attention
+pool，添加随机crops减少过拟合。</p>
+<p>用 <span class="math inline">\(y\)</span> 表示标签，<span class="math inline">\(p_{\phi}\left( y|x_t,t \right)\)</span>
+代表分类器，使用梯度 $<em>{x_t} p</em>{}( y|x_t,t ) $
+来<strong>指导扩散过程朝向任意类别标签 <span class="math inline">\(y\)</span>
+发展</strong>。简而言之，<strong>将类信息合并到规范化层中，利用分类器<span class="math inline">\(p_{\phi}\left( y|x_t,t
+\right)\)</span>改进生成器</strong>。</p>
+<p>反向sample过程中，在 <span class="math inline">\(x_{t+1}\)</span> 和
+<span class="math inline">\(y\)</span> 条件下生成 <span class="math inline">\(x_t\)</span> ，可以写成以下式子： <span class="math display">\[
+p_{\theta ,\phi}\left( x_t|x_{t+1},y \right) =Zp_{\theta}\left(
+x_t|x_{t+1} \right) p_{\phi}\left( y|x_t \right)
+\]</span> 其中大写的 <span class="math inline">\(Z\)</span>
+是一个常数，文章里详细证明了这个公式成立。 其中 <span class="math inline">\(p_{\theta}( x_t|x_{t+1})\)</span> 和 unconditional
+DDPM是一样的，因此只多了 <span class="math inline">\(p_{\phi}\left(
+y|x_t \right)\)</span> 这一项。</p>
+<p>同时这篇文章还重点探索了一个<strong>缩放因子 <span class="math inline">\(s\)</span></strong>
+的作用，缩放因子放缩的是分类器梯度 <span class="math inline">\(\sum{\nabla _{x_t}\,\,\log p_{\phi}\left( y|x_t,t
+\right)}\)</span>
+之和，实验表明<strong>缩放因子越大，重建出来的FID越小，即重建质量越高</strong>。</p>
+<p>开源的代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">cond_fn</span>(<span class="params">x, t, y=<span class="literal">None</span></span>):</span><br><span class="line">    <span class="keyword">assert</span> y <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span></span><br><span class="line">    <span class="keyword">with</span> th.enable_grad():</span><br><span class="line">        x_in = x.detach().requires_grad_(<span class="literal">True</span>)</span><br><span class="line">        logits = classifier(x_in, t)</span><br><span class="line">        log_probs = F.log_softmax(logits, dim=-<span class="number">1</span>)</span><br><span class="line">        selected = log_probs[<span class="built_in">range</span>(<span class="built_in">len</span>(logits)), y.view(-<span class="number">1</span>)]</span><br><span class="line">        <span class="keyword">return</span> th.autograd.grad(selected.<span class="built_in">sum</span>(), x_in)[<span class="number">0</span>] * args.classifier_scale</span><br></pre></td></tr></table></figure>
+<figure>
+<img src="/2023/11/20/%E6%9D%A1%E4%BB%B6DDPM-Diffusion-Model%E7%9A%84%E7%AC%AC%E4%B8%89%E4%B8%AA%E5%B7%85%E5%B3%B0%E4%B9%8B%E4%BD%9C/104d4f0b3349d26ea1721ff481c89303.png" alt="img">
+<figcaption aria-hidden="true">img</figcaption>
+</figure>
+<h2 id="发扬光大sample全程加入参考图片">发扬光大：sample全程加入参考图片</h2>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2108.02938">论文：ILVR:Conditioning
+Method for Denoising Diffusion Probabilistic Models</a></p>
+<p>时间来到一年后，一篇ICCV上的oral论文重点讨论了一种conditional方式，<strong>在sample过程中加入参考</strong>
+<strong>图片，引导重建的图像和参考图像相似</strong>。</p>
+<figure>
+<img src="/2023/11/20/%E6%9D%A1%E4%BB%B6DDPM-Diffusion-Model%E7%9A%84%E7%AC%AC%E4%B8%89%E4%B8%AA%E5%B7%85%E5%B3%B0%E4%B9%8B%E4%BD%9C/60fafba7094a630524b3ebe131552552.png" alt="img">
+<figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>这就不仅仅是标签/类别控制了，从某种意义上来说，我们能控制生成的风格，这样DDPM就能和GAN
+样，完成图像修复、P图、风格迁移甚至多模态等任务!</p>
+<p>参考图片定义为 <span class="math inline">\(y\)</span>
+。现在我们需要再条件 <span class="math inline">\(c\)</span> 和 <span class="math inline">\(x_t\)</span> 推导 <span class="math inline">\(x_{t-1}\)</span> ， <span class="math inline">\(\phi _N\)</span>
+表示一个低通滤波器，这个低通滤波器可以是
+Bilinear、Lanczos3、Lanczos2、Bicubic
+等，这个<strong>低通滤波器的作用是确保生成图像和参考图像在低通维度信息上接近</strong>，条件
+<span class="math inline">\(c\)</span> 用来确保生成图像 <span class="math inline">\(\phi _N(x_0)\)</span> 和参考图像 <span class="math inline">\(\phi _N(y)\)</span> 相等，因此方程式可以写成：
+<span class="math display">\[
+p_{\theta}\left( x_{t-1}|x_t,c \right) \approx p_{\theta}\left(
+x_{t-1}|x_t,\phi _N\left( x_{t-1} \right) =\phi _N\left( y_{t-1} \right)
+\right)
+\]</span> <span class="math display">\[
+x_{t-1}^{&#39;}~p_{\theta}\left( x_{t-1}^{&#39;}|x_t \right)
+\]</span> <span class="math display">\[
+x_{t-1}=\phi \left( y_{t-1} \right) +\left( I-\phi \right) \left(
+x_{t-1}^{&#39;} \right)
+\]</span></p>
+<p>再次，我们将condition部分和uncondition的部分分开了，这篇论文重点探究了downsampling
+<span class="math inline">\(N\)</span> 因子对实验的影响，设 <span class="math inline">\(\mu\)</span>
+是无条件DDPM生成集合，这个集合的特点：</p>
+<ul>
+<li>参考图像选择的最小要求</li>
+<li>参考有向子集的用户可控性，定义了参考图像的语义相似度</li>
+</ul>
+<p>随着因子N的增加，可以从更广的图像集合中进行采样，采样后的图像更加多样化，与参考图像的语义相似度也更低。<strong>与参考图像的感知相似度是有下采样因子控制的</strong>，高因子
+<span class="math inline">\(N\)</span>
+的样本具有参考样本的粗特征，而低因子 <span class="math inline">\(N\)</span> 的样本也具有参考样本的特征。</p>
+<p>看一下代码，这个 <span class="math inline">\(N\)</span>
+实际上就是一个resize系数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">down = Resizer(shape, <span class="number">1</span> / args.down_N).to(<span class="built_in">next</span>(model.parameters()).device)</span><br><span class="line">up = Resizer(shape_d, args.down_N).to(<span class="built_in">next</span>(model.parameters()).device)</span><br></pre></td></tr></table></figure>
+<p>这个resize操作来自：</p>
+<blockquote>
+<p>https://github.com/assafshocher/resizer</p>
+</blockquote>
+<p>这个作者真牛逼，仅仅对做一个resize操作来研究sanple的性质。</p>
+<h2 id="流水线式创新潜在变量约束">流水线式创新：潜在变量约束</h2>
+<p>在得到前文的思路启发之后，此类文章如雨后春笋式量产，不乏CVPR
+Oral这样的好文章，比如这篇文章：</p>
+<p><a target="_blank" rel="noopener" href="https://openaccess.thecvf.com/content/CVPR2021/html/Luo_Diffusion_Probabilistic_Models_for_3D_Point_Cloud_Generation_CVPR_2021_paper.html">论文：Diffusion
+Probabilistic Models for 3D Point Cloud Generation</a></p>
+<h2 id="结尾">结尾</h2>
+<p>Condition的引入是DDPM的一个重大突破，现在已经被广泛运用在DDPM论文中。</p>
+<p>DDPM有一个致命的问题，就是运算量过大，采样时间过长，如何加速？后面再聊。</p>
+
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/扩散模型//" class="article-tag-list-link color5">扩散模型</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2023/11/20/%E6%9D%A1%E4%BB%B6DDPM-Diffusion-Model%E7%9A%84%E7%AC%AC%E4%B8%89%E4%B8%AA%E5%B7%85%E5%B3%B0%E4%B9%8B%E4%BD%9C/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-从VAE到Diffusion-Models" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -534,6 +874,134 @@ model被证明与基于分数的模型score-based
 model有着密切的联系</strong>，<strong>这两种模型最近在随机微分方程的框架下得到统一</strong>。
 时间来到2021年，diffusion
 model的论文如雨后春笋一般冒出，在<strong>图片生成、语音生成、视频生成、文本生成、三维模型生成、时间序列生成、点云生成</strong>等方面取得了巨大成功。</p>
+<h2 id="温习vae">温习VAE</h2>
+<p>我们考虑以下的生成模型： <span class="math display">\[
+p_{\theta}\left( x \right) =\int_z{p_{\theta}\left( x|z \right)
+p_{\theta}\left( z \right)}
+\]</span> 其中 <span class="math inline">\(z\)</span>
+代表潜在的数据分布，<span class="math inline">\(x\)</span>
+代表真实的数据分布。我们用MLE估计模型参数，用蒙特卡洛采样近似 <span class="math inline">\(z\)</span> 上的积分，方程如下： <span class="math display">\[
+\theta ^*=\underset{\theta}{arg\max}\mathbb{E}_{x~\hat{p}\left( x
+\right) ,z~p\left( z \right)}\left[ \log\text{\ }p_{\theta}\left(
+x|z;\theta \right) \right]
+\]</span> 但是这种方法不缩放到高维的 <span class="math inline">\(z\)</span> ，因为一个随机的潜在编码 <span class="math inline">\(z\)</span> 的可能性 <span class="math inline">\(p(z)\)</span>
+对应于任何特定高维中的数据点都是非常小的。</p>
+<p>所以VAE通过从一个新的分布<span class="math inline">\(q_{\phi}\left(
+z|x \right)\)</span>当中进行采样，并与生成模型一起优化，将其写为： <span class="math display">\[
+\log\text{\ }p\left( x \right) \ge \mathbb{E}_{z~q_{\phi}\left( z|x
+\right)}\left[ \log\text{\ }\frac{p_{\theta}\left( x|z \right) p\left( z
+\right)}{q_{\phi}\left( z|x \right)} \right]
+\]</span>
+神经网络训练过程中肯定需要求解梯度，VAE中有一个著名的重参数化技巧，<strong>将采样过程定义为确定性的数据依赖函数和数据独立噪声的组合</strong>，避免了直接求解梯度。</p>
+<p><img src="/2023/11/20/%E4%BB%8EVAE%E5%88%B0Diffusion-Models/image-20231120204940318.png" alt="image-20231120204940318" style="zoom:50%;"></p>
+<h2 id="从vae到层次vae">从VAE到层次VAE</h2>
+<p>我们这里引入了两个潜在变量 <span class="math inline">\(z_1\)</span>
+和 <span class="math inline">\(z_2\)</span>，我们的联合分布便写成了：
+<span class="math display">\[
+p\left( x \right) =\int_{z1}{\int_{z2}{p_{\theta}\left( x,z_1,z_2
+\right) dz_1,dz_2}}
+\]</span> 同样的，我们的优化目标模型转移图就成了： <span class="math display">\[
+\log\text{\,\,}p\left( x \right) \ge \mathbb{E}_{z1,z2~q_{\phi}\left(
+z1,z2|x \right)}\left[ \log\text{\,\,}\frac{p_{\theta}\left( x,z_1,z_2
+\right)}{q_{\phi}\left( z_1,z_2|x \right)} \right]
+\]</span>
+<img src="/2023/11/20/%E4%BB%8EVAE%E5%88%B0Diffusion-Models/image-20231120205342296.png" alt="image-20231120205342296" style="zoom:50%;"></p>
+<h2 id="从层次vae到diffusion-probabilistic-models">从层次VAE到Diffusion
+Probabilistic Models</h2>
+<p>我们考虑在一个 0-T
+的时间内，逐渐往原始数据中添加噪声，添加的噪声逐渐增加：
+<img src="/2023/11/20/%E4%BB%8EVAE%E5%88%B0Diffusion-Models/image-20231120205554180.png" alt="image-20231120205554180" style="zoom:50%;"></p>
+<p>我们<strong>将Diffusion
+Model看成多个分层的VAE来实现，将它们区别开来的是一个独特的推理模型，它不包含可学习的参数，并且被构造成最终的潜在分布
+<span class="math inline">\(q(x_T)\)</span>，收敛于一个标准高斯分布。</strong></p>
+<p>Diffusion Model的变分下界写成： <span class="math display">\[
+-\mathcal{L}=\mathbb{E}_q\left[ -\log p\left( x_T \right) -\sum_{t\ge
+1}^T{\log \frac{p_{\theta}\left( x_{t-1}|x_t \right)}{q\left(
+x_t|x_{t-1} \right)}} \right]
+\]</span></p>
+<blockquote>
+<p>注意将其对比层次VAE的变分下界看。</p>
+</blockquote>
+<p>我们<strong>不需要再训练的每一步上做一个完整的正向和反向过程，只需要在每一个minibatch中优化<span class="math inline">\(p_{\theta}\left( x_{t-1}|x_t
+\right)\)</span>即可。</strong></p>
+<h2 id="从diffusion-probabilistic-models到denoising-diffusion-probabilistic-mdoels">从Diffusion
+Probabilistic Models到Denoising Diffusion Probabilistic Mdoels</h2>
+<p>首先假设数据符合高斯分布，并且数据分布之间是独立的（独立性假设），关于这一部分的推导可以看之前的博客。
+<span class="math display">\[
+p\left( x_{t-1}|x_t,x_0 \right) \ ~\ N\left( x_{t-1};\tilde{\mu}_t\left(
+x_t,x_0 \right) ,\tilde{\beta}_tI \right)
+\]</span></p>
+<p><span class="math display">\[
+where\ \tilde{\mu}_t\left( x_t,x_0 \right) =\frac{\sqrt{\alpha _t\left(
+1-\bar{\alpha}_{t-1}
+\right)}}{1-\bar{\alpha}_t}x_t+\frac{\sqrt{\bar{\alpha}_{t-1}}\beta
+_t}{1-\bar{\alpha}_t}\frac{1}{\sqrt{\bar{\alpha}_t}}\left(
+x_t-\sqrt{1-\bar{\alpha}_t}z\epsilon \right)
+\]</span></p>
+<p><span class="math display">\[
+=\frac{1}{\sqrt{\alpha _t}}\left( x_t-\frac{\beta
+_t}{\sqrt{1-\bar{\alpha}_t}}\epsilon \right)
+\]</span></p>
+<p><span class="math display">\[
+and\ \ \
+\bar{\beta}_t:=\frac{1-\bar{\alpha}_{t-1}}{1-\bar{\alpha}_t}\beta _t
+\]</span></p>
+<p>记为方程(1)</p>
+<p>用<span class="math inline">\(x_0\)</span>表示原始的数据分布，<span class="math inline">\(x_t\)</span>表示t时刻的数据分布。根据上面的推导，用<span class="math inline">\(x_t\)</span>表示<span class="math inline">\(x_0\)</span>： <span class="math display">\[
+x_t\left( x_0,\epsilon \right)
+=\sqrt{\bar{\alpha}_t}x_0+\sqrt{1-\bar{\alpha}_t}\epsilon
+\]</span> 同样的，<span class="math inline">\(x_0\)</span>可以用<span class="math inline">\(x_t\)</span>表示为： <span class="math display">\[
+x_0=\frac{x_t\left( x_0,\epsilon \right)
+-\sqrt{1-\bar{\alpha}_t}\epsilon}{\sqrt{\bar{\alpha}_t}}
+\]</span> 我们的优化目标可以写成： <span class="math display">\[
+L_{t-1}=\mathbb{E}_{t,xt,x0}\left[ \frac{1}{2\sigma
+_{t}^{2}}||\tilde{\mu}_t\left( x_t,x_0 \right) -\mu _{\theta}\left(
+x_t,t \right) || \right] +C
+\]</span> 前向过程的后验分布写成<span class="math inline">\(x_t\left(
+x_0,\epsilon \right)\)</span>，方程(1)就可以化简成： <span class="math display">\[
+\tilde{\mu}_t\left( x_t\left( x_0,\epsilon \right)
+,\frac{1}{\sqrt{\bar{\alpha}_t}}\left( x_t\left( x_0,\epsilon \right)
+-\sqrt{1-\bar{\alpha}_t}\epsilon \right) \right)
+\]</span> <span class="math display">\[
+=\frac{\beta _t\sqrt{\bar{\alpha}_{t-1}}\left( x_t-\epsilon
+\sqrt{1-\bar{\alpha}_t} \right)}{\sqrt{\bar{\alpha}_t}\left(
+1-\bar{\alpha}_t \right)}+\frac{\sqrt{\alpha _t}\left(
+1-\bar{\alpha}_{t-1} \right)}{1-\bar{\alpha}_t}x_t
+\]</span> <span class="math display">\[
+=\left( \frac{\beta
+_t\sqrt{\bar{\alpha}_{t-1}}}{\sqrt{\bar{\alpha}_t}\left(
+1-\bar{\alpha}_t \right)}+\frac{\sqrt{\alpha _t}\left(
+1-\bar{\alpha}_{t-1} \right)}{1-\bar{\alpha}_t} \right) x_t-\frac{\beta
+_t\sqrt{\bar{\alpha}_{t-1}}\sqrt{1-\bar{\alpha}_t}}{\sqrt{\bar{\alpha}_t}\left(
+1-\bar{\alpha}_t \right)}
+\]</span></p>
+<p>至此，我们的训练目标进一步化简： <span class="math display">\[
+L_{t-1}-C=\mathbb{E}_{x0,\epsilon ,t}\left[ \frac{1}{2\sigma
+_{t}^{2}}\lVert \frac{1}{\sqrt{\alpha _t}}.\left( x_t\left( x_0,\epsilon
+\right) -\frac{\beta _t}{\sqrt{1-\bar{\alpha}_t}}\epsilon \right) -\mu
+_{\theta}\left( x_t\left( x_0,\epsilon \right) ,t \right) ||\right]
+\]</span>
+经过上述的推导，我们已经从最开始的预测数据分布变为：<strong>提供模型预测仿射变换</strong>。这个仿射变换是一个与时间相关的常数和一个自由参数的组合。这种参数化方法，<strong>只需要用神经网络负责预测噪声的柱状结构</strong>。至此我们<strong>从学习数据分布变成学习噪声分布</strong>，噪声可以看成数据分布的增广，蕴含了许多潜在的数据分布信息。</p>
+<p>所以省略掉前置diffusion固定参数，最终的化简目标就可以写成： <span class="math display">\[
+\mathbb{E}_{x0,\epsilon ,t}\left[ \lVert \epsilon -\epsilon
+_{\theta}\left( x_t\left( x_0,\epsilon \right) ,t \right) || \right]
+\]</span></p>
+<h2 id="总结vae和diffusion-model的异同">总结：VAE和Diffusion
+Model的异同</h2>
+<h3 id="相同之处">相同之处：</h3>
+<ul>
+<li>在逆向过程中，将一些潜在变量进行采样，并用神经网络将其转化为数据.</li>
+<li>有相应的正向过程，将数据转化为一系列的潜在表征.</li>
+<li>训练目标是数据似然的下界，可以用类似于VAE的方式导出.</li>
+<li>DDPM中使用的变分边界强调了与变分自动编码器和神经压缩的进一步联系</li>
+</ul>
+<h3 id="不同之处">不同之处：</h3>
+<ul>
+<li>DDPM中的正向过程没有学习参数</li>
+<li>DDPM中的正向过程逐步破坏所有关于输入的信息，这样最终的分布q(xT|x0)通过构造是一个标准高斯分布。但是对于VAEs，却希望z包含关于x的一些信息。</li>
+<li>在DDPM中，每个潜在值的维数必须与数据匹配。在VAEs中，可以降低维度.</li>
+<li>在DDPM中，每个生成层共享相同的神经网络参数。（因为网络较深，并且存在大量重复信息，设置参数共享利用参数存在大量冗余的特点，目的都是为了减少参数数量，达到减少运算量去除冗余的目的。）</li>
+</ul>
 
     
 
@@ -1141,212 +1609,6 @@ Copilot 和 Github Copilot 的安装教程和使用初体验</h1>
     
     <p class="article-more-link">
       <a class="article-more-a" href="/2023/11/13/DDPM%E4%BB%A3%E7%A0%81%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%BB-2-Unet%E7%BB%93%E6%9E%84%E3%80%81%E6%AD%A3%E5%90%91%E5%92%8C%E9%80%86%E5%90%91%E8%BF%87%E7%A8%8B%E3%80%81IS%E5%92%8CFID%E6%B5%8B%E8%AF%95%E3%80%81EMA%E4%BC%98%E5%8C%96/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-DDPM代码详细解读-1-数据集准备、超参数设置、loss设计、关键参数计算" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2023/11/13/DDPM%E4%BB%A3%E7%A0%81%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%BB-1-%E6%95%B0%E6%8D%AE%E9%9B%86%E5%87%86%E5%A4%87%E3%80%81%E8%B6%85%E5%8F%82%E6%95%B0%E8%AE%BE%E7%BD%AE%E3%80%81loss%E8%AE%BE%E8%AE%A1%E3%80%81%E5%85%B3%E9%94%AE%E5%8F%82%E6%95%B0%E8%AE%A1%E7%AE%97/" target="_blank">DDPM代码详细解读(1):数据集准备、超参数设置、loss设计、关键参数计算</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2023/11/13/DDPM%E4%BB%A3%E7%A0%81%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%BB-1-%E6%95%B0%E6%8D%AE%E9%9B%86%E5%87%86%E5%A4%87%E3%80%81%E8%B6%85%E5%8F%82%E6%95%B0%E8%AE%BE%E7%BD%AE%E3%80%81loss%E8%AE%BE%E8%AE%A1%E3%80%81%E5%85%B3%E9%94%AE%E5%8F%82%E6%95%B0%E8%AE%A1%E7%AE%97/" class="archive-article-date">
-        <time datetime="2023-11-13T08:58:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-11-13</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <h1 id="ddpm代码详细解读1数据集准备超参数设置loss设计关键参数计算">DDPM代码详细解读(1):数据集准备、超参数设置、loss设计、关键参数计算</h1>
-<p>之前照猫画虎复现了DDPM，但是其中许多代码很不好理解，遂写此博客进行学习记录。</p>
-    
-    <a class="article-more-a" href="/2023/11/13/DDPM%E4%BB%A3%E7%A0%81%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%BB-1-%E6%95%B0%E6%8D%AE%E9%9B%86%E5%87%86%E5%A4%87%E3%80%81%E8%B6%85%E5%8F%82%E6%95%B0%E8%AE%BE%E7%BD%AE%E3%80%81loss%E8%AE%BE%E8%AE%A1%E3%80%81%E5%85%B3%E9%94%AE%E5%8F%82%E6%95%B0%E8%AE%A1%E7%AE%97/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/扩散模型//" class="article-tag-list-link color5">扩散模型</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2023/11/13/DDPM%E4%BB%A3%E7%A0%81%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%BB-1-%E6%95%B0%E6%8D%AE%E9%9B%86%E5%87%86%E5%A4%87%E3%80%81%E8%B6%85%E5%8F%82%E6%95%B0%E8%AE%BE%E7%BD%AE%E3%80%81loss%E8%AE%BE%E8%AE%A1%E3%80%81%E5%85%B3%E9%94%AE%E5%8F%82%E6%95%B0%E8%AE%A1%E7%AE%97/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-为什么Diffusion-Models钟爱U-net结构" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2023/11/13/%E4%B8%BA%E4%BB%80%E4%B9%88Diffusion-Models%E9%92%9F%E7%88%B1U-net%E7%BB%93%E6%9E%84/" target="_blank">为什么Diffusion Models钟爱U-net结构</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2023/11/13/%E4%B8%BA%E4%BB%80%E4%B9%88Diffusion-Models%E9%92%9F%E7%88%B1U-net%E7%BB%93%E6%9E%84/" class="archive-article-date">
-        <time datetime="2023-11-13T08:05:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-11-13</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <h1 id="为什么diffusion-models钟爱u-net结构">为什么Diffusion
-Models钟爱U-net结构</h1>
-<p>最近在看很多关于Diffusion
-Model的工作，几乎所有的工作都选用了U-net，U-net这其中的作用是在反向过程中预测噪声$$。</p>
-<p>可是为什么一定要用U-net呢？</p>
-<p>为什么几乎所有的工作都是在U-net的基础上呢？（部分3D
-generation选用MLP）</p>
-<p>我们依次来进行探究。</p>
-    
-    <a class="article-more-a" href="/2023/11/13/%E4%B8%BA%E4%BB%80%E4%B9%88Diffusion-Models%E9%92%9F%E7%88%B1U-net%E7%BB%93%E6%9E%84/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/扩散模型//" class="article-tag-list-link color5">扩散模型</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2023/11/13/%E4%B8%BA%E4%BB%80%E4%B9%88Diffusion-Models%E9%92%9F%E7%88%B1U-net%E7%BB%93%E6%9E%84/">展开全文 >></a>
     </p>
     
 

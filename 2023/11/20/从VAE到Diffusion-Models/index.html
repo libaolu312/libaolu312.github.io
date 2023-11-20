@@ -17,11 +17,15 @@
 <meta property="og:site_name" content="李宝璐">
 <meta property="og:description" content="Diffusion Model简史 GANs诞生于2014年，diffusion model比GANs小一岁，第一篇difusion model论文《DeepUnsupervised Learning using Nonequilibrium Thermodynamics》发表与2015年。这两种全新的生成式模型刚被提出来的时候，都是一个全新的理论，但在各种任务运用上效果并不是非常理想。只不">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://libaolu312.github.io/2023/11/20/%E4%BB%8EVAE%E5%88%B0Diffusion-Models/image-20231120204940318.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/11/20/%E4%BB%8EVAE%E5%88%B0Diffusion-Models/image-20231120205342296.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/11/20/%E4%BB%8EVAE%E5%88%B0Diffusion-Models/image-20231120205554180.png">
 <meta property="article:published_time" content="2023-11-20T12:32:07.000Z">
-<meta property="article:modified_time" content="2023-11-20T12:34:48.680Z">
+<meta property="article:modified_time" content="2023-11-20T13:35:52.498Z">
 <meta property="article:author" content="李宝璐">
 <meta property="article:tag" content="技术笔记">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://libaolu312.github.io/2023/11/20/%E4%BB%8EVAE%E5%88%B0Diffusion-Models/image-20231120204940318.png">
   
     <link rel="alternative" href="/atom.xml" title="李宝璐" type="application/atom+xml">
   
@@ -277,7 +281,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">283字</span>
+      <span class="post-count">1.9k字</span>
     </span>
   </span>
 
@@ -286,7 +290,7 @@
     <span class="post-meta-item-icon">
       <i class="icon-book icon"></i>
       <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">1分</span>
+      <span class="post-count">8分</span>
     </span>
   </span>
 </div>
@@ -310,6 +314,134 @@ model被证明与基于分数的模型score-based
 model有着密切的联系</strong>，<strong>这两种模型最近在随机微分方程的框架下得到统一</strong>。
 时间来到2021年，diffusion
 model的论文如雨后春笋一般冒出，在<strong>图片生成、语音生成、视频生成、文本生成、三维模型生成、时间序列生成、点云生成</strong>等方面取得了巨大成功。</p>
+<h2 id="温习vae">温习VAE</h2>
+<p>我们考虑以下的生成模型： <span class="math display">\[
+p_{\theta}\left( x \right) =\int_z{p_{\theta}\left( x|z \right)
+p_{\theta}\left( z \right)}
+\]</span> 其中 <span class="math inline">\(z\)</span>
+代表潜在的数据分布，<span class="math inline">\(x\)</span>
+代表真实的数据分布。我们用MLE估计模型参数，用蒙特卡洛采样近似 <span class="math inline">\(z\)</span> 上的积分，方程如下： <span class="math display">\[
+\theta ^*=\underset{\theta}{arg\max}\mathbb{E}_{x~\hat{p}\left( x
+\right) ,z~p\left( z \right)}\left[ \log\text{\ }p_{\theta}\left(
+x|z;\theta \right) \right]
+\]</span> 但是这种方法不缩放到高维的 <span class="math inline">\(z\)</span> ，因为一个随机的潜在编码 <span class="math inline">\(z\)</span> 的可能性 <span class="math inline">\(p(z)\)</span>
+对应于任何特定高维中的数据点都是非常小的。</p>
+<p>所以VAE通过从一个新的分布<span class="math inline">\(q_{\phi}\left(
+z|x \right)\)</span>当中进行采样，并与生成模型一起优化，将其写为： <span class="math display">\[
+\log\text{\ }p\left( x \right) \ge \mathbb{E}_{z~q_{\phi}\left( z|x
+\right)}\left[ \log\text{\ }\frac{p_{\theta}\left( x|z \right) p\left( z
+\right)}{q_{\phi}\left( z|x \right)} \right]
+\]</span>
+神经网络训练过程中肯定需要求解梯度，VAE中有一个著名的重参数化技巧，<strong>将采样过程定义为确定性的数据依赖函数和数据独立噪声的组合</strong>，避免了直接求解梯度。</p>
+<p><img src="/2023/11/20/%E4%BB%8EVAE%E5%88%B0Diffusion-Models/image-20231120204940318.png" alt="image-20231120204940318" style="zoom:50%;"></p>
+<h2 id="从vae到层次vae">从VAE到层次VAE</h2>
+<p>我们这里引入了两个潜在变量 <span class="math inline">\(z_1\)</span>
+和 <span class="math inline">\(z_2\)</span>，我们的联合分布便写成了：
+<span class="math display">\[
+p\left( x \right) =\int_{z1}{\int_{z2}{p_{\theta}\left( x,z_1,z_2
+\right) dz_1,dz_2}}
+\]</span> 同样的，我们的优化目标模型转移图就成了： <span class="math display">\[
+\log\text{\,\,}p\left( x \right) \ge \mathbb{E}_{z1,z2~q_{\phi}\left(
+z1,z2|x \right)}\left[ \log\text{\,\,}\frac{p_{\theta}\left( x,z_1,z_2
+\right)}{q_{\phi}\left( z_1,z_2|x \right)} \right]
+\]</span>
+<img src="/2023/11/20/%E4%BB%8EVAE%E5%88%B0Diffusion-Models/image-20231120205342296.png" alt="image-20231120205342296" style="zoom:50%;"></p>
+<h2 id="从层次vae到diffusion-probabilistic-models">从层次VAE到Diffusion
+Probabilistic Models</h2>
+<p>我们考虑在一个 0-T
+的时间内，逐渐往原始数据中添加噪声，添加的噪声逐渐增加：
+<img src="/2023/11/20/%E4%BB%8EVAE%E5%88%B0Diffusion-Models/image-20231120205554180.png" alt="image-20231120205554180" style="zoom:50%;"></p>
+<p>我们<strong>将Diffusion
+Model看成多个分层的VAE来实现，将它们区别开来的是一个独特的推理模型，它不包含可学习的参数，并且被构造成最终的潜在分布
+<span class="math inline">\(q(x_T)\)</span>，收敛于一个标准高斯分布。</strong></p>
+<p>Diffusion Model的变分下界写成： <span class="math display">\[
+-\mathcal{L}=\mathbb{E}_q\left[ -\log p\left( x_T \right) -\sum_{t\ge
+1}^T{\log \frac{p_{\theta}\left( x_{t-1}|x_t \right)}{q\left(
+x_t|x_{t-1} \right)}} \right]
+\]</span></p>
+<blockquote>
+<p>注意将其对比层次VAE的变分下界看。</p>
+</blockquote>
+<p>我们<strong>不需要再训练的每一步上做一个完整的正向和反向过程，只需要在每一个minibatch中优化<span class="math inline">\(p_{\theta}\left( x_{t-1}|x_t
+\right)\)</span>即可。</strong></p>
+<h2 id="从diffusion-probabilistic-models到denoising-diffusion-probabilistic-mdoels">从Diffusion
+Probabilistic Models到Denoising Diffusion Probabilistic Mdoels</h2>
+<p>首先假设数据符合高斯分布，并且数据分布之间是独立的（独立性假设），关于这一部分的推导可以看之前的博客。
+<span class="math display">\[
+p\left( x_{t-1}|x_t,x_0 \right) \ ~\ N\left( x_{t-1};\tilde{\mu}_t\left(
+x_t,x_0 \right) ,\tilde{\beta}_tI \right)
+\]</span></p>
+<p><span class="math display">\[
+where\ \tilde{\mu}_t\left( x_t,x_0 \right) =\frac{\sqrt{\alpha _t\left(
+1-\bar{\alpha}_{t-1}
+\right)}}{1-\bar{\alpha}_t}x_t+\frac{\sqrt{\bar{\alpha}_{t-1}}\beta
+_t}{1-\bar{\alpha}_t}\frac{1}{\sqrt{\bar{\alpha}_t}}\left(
+x_t-\sqrt{1-\bar{\alpha}_t}z\epsilon \right)
+\]</span></p>
+<p><span class="math display">\[
+=\frac{1}{\sqrt{\alpha _t}}\left( x_t-\frac{\beta
+_t}{\sqrt{1-\bar{\alpha}_t}}\epsilon \right)
+\]</span></p>
+<p><span class="math display">\[
+and\ \ \
+\bar{\beta}_t:=\frac{1-\bar{\alpha}_{t-1}}{1-\bar{\alpha}_t}\beta _t
+\]</span></p>
+<p>记为方程(1)</p>
+<p>用<span class="math inline">\(x_0\)</span>表示原始的数据分布，<span class="math inline">\(x_t\)</span>表示t时刻的数据分布。根据上面的推导，用<span class="math inline">\(x_t\)</span>表示<span class="math inline">\(x_0\)</span>： <span class="math display">\[
+x_t\left( x_0,\epsilon \right)
+=\sqrt{\bar{\alpha}_t}x_0+\sqrt{1-\bar{\alpha}_t}\epsilon
+\]</span> 同样的，<span class="math inline">\(x_0\)</span>可以用<span class="math inline">\(x_t\)</span>表示为： <span class="math display">\[
+x_0=\frac{x_t\left( x_0,\epsilon \right)
+-\sqrt{1-\bar{\alpha}_t}\epsilon}{\sqrt{\bar{\alpha}_t}}
+\]</span> 我们的优化目标可以写成： <span class="math display">\[
+L_{t-1}=\mathbb{E}_{t,xt,x0}\left[ \frac{1}{2\sigma
+_{t}^{2}}||\tilde{\mu}_t\left( x_t,x_0 \right) -\mu _{\theta}\left(
+x_t,t \right) || \right] +C
+\]</span> 前向过程的后验分布写成<span class="math inline">\(x_t\left(
+x_0,\epsilon \right)\)</span>，方程(1)就可以化简成： <span class="math display">\[
+\tilde{\mu}_t\left( x_t\left( x_0,\epsilon \right)
+,\frac{1}{\sqrt{\bar{\alpha}_t}}\left( x_t\left( x_0,\epsilon \right)
+-\sqrt{1-\bar{\alpha}_t}\epsilon \right) \right)
+\]</span> <span class="math display">\[
+=\frac{\beta _t\sqrt{\bar{\alpha}_{t-1}}\left( x_t-\epsilon
+\sqrt{1-\bar{\alpha}_t} \right)}{\sqrt{\bar{\alpha}_t}\left(
+1-\bar{\alpha}_t \right)}+\frac{\sqrt{\alpha _t}\left(
+1-\bar{\alpha}_{t-1} \right)}{1-\bar{\alpha}_t}x_t
+\]</span> <span class="math display">\[
+=\left( \frac{\beta
+_t\sqrt{\bar{\alpha}_{t-1}}}{\sqrt{\bar{\alpha}_t}\left(
+1-\bar{\alpha}_t \right)}+\frac{\sqrt{\alpha _t}\left(
+1-\bar{\alpha}_{t-1} \right)}{1-\bar{\alpha}_t} \right) x_t-\frac{\beta
+_t\sqrt{\bar{\alpha}_{t-1}}\sqrt{1-\bar{\alpha}_t}}{\sqrt{\bar{\alpha}_t}\left(
+1-\bar{\alpha}_t \right)}
+\]</span></p>
+<p>至此，我们的训练目标进一步化简： <span class="math display">\[
+L_{t-1}-C=\mathbb{E}_{x0,\epsilon ,t}\left[ \frac{1}{2\sigma
+_{t}^{2}}\lVert \frac{1}{\sqrt{\alpha _t}}.\left( x_t\left( x_0,\epsilon
+\right) -\frac{\beta _t}{\sqrt{1-\bar{\alpha}_t}}\epsilon \right) -\mu
+_{\theta}\left( x_t\left( x_0,\epsilon \right) ,t \right) ||\right]
+\]</span>
+经过上述的推导，我们已经从最开始的预测数据分布变为：<strong>提供模型预测仿射变换</strong>。这个仿射变换是一个与时间相关的常数和一个自由参数的组合。这种参数化方法，<strong>只需要用神经网络负责预测噪声的柱状结构</strong>。至此我们<strong>从学习数据分布变成学习噪声分布</strong>，噪声可以看成数据分布的增广，蕴含了许多潜在的数据分布信息。</p>
+<p>所以省略掉前置diffusion固定参数，最终的化简目标就可以写成： <span class="math display">\[
+\mathbb{E}_{x0,\epsilon ,t}\left[ \lVert \epsilon -\epsilon
+_{\theta}\left( x_t\left( x_0,\epsilon \right) ,t \right) || \right]
+\]</span></p>
+<h2 id="总结vae和diffusion-model的异同">总结：VAE和Diffusion
+Model的异同</h2>
+<h3 id="相同之处">相同之处：</h3>
+<ul>
+<li>在逆向过程中，将一些潜在变量进行采样，并用神经网络将其转化为数据.</li>
+<li>有相应的正向过程，将数据转化为一系列的潜在表征.</li>
+<li>训练目标是数据似然的下界，可以用类似于VAE的方式导出.</li>
+<li>DDPM中使用的变分边界强调了与变分自动编码器和神经压缩的进一步联系</li>
+</ul>
+<h3 id="不同之处">不同之处：</h3>
+<ul>
+<li>DDPM中的正向过程没有学习参数</li>
+<li>DDPM中的正向过程逐步破坏所有关于输入的信息，这样最终的分布q(xT|x0)通过构造是一个标准高斯分布。但是对于VAEs，却希望z包含关于x的一些信息。</li>
+<li>在DDPM中，每个潜在值的维数必须与数据匹配。在VAEs中，可以降低维度.</li>
+<li>在DDPM中，每个生成层共享相同的神经网络参数。（因为网络较深，并且存在大量重复信息，设置参数共享利用参数存在大量冗余的特点，目的都是为了减少参数数量，达到减少运算量去除冗余的目的。）</li>
+</ul>
 
     
 
@@ -428,6 +560,15 @@ model的论文如雨后春笋一般冒出，在<strong>图片生成、语音生�
 
 <nav id="article-nav">
   
+    <a href="/2023/11/20/%E6%9D%A1%E4%BB%B6DDPM-Diffusion-Model%E7%9A%84%E7%AC%AC%E4%B8%89%E4%B8%AA%E5%B7%85%E5%B3%B0%E4%B9%8B%E4%BD%9C/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          条件DDPM:Diffusion Model的第三个巅峰之作
+        
+      </div>
+    </a>
+  
   
     <a href="/2023/11/20/%E4%B8%BA%E4%BB%80%E4%B9%88Diffusion-Models%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E5%8F%AF%E4%BB%A5%E6%88%90%E4%B8%BAScore-based-Models/" id="article-nav-older" class="article-nav-link-wrap">
       <div class="article-nav-title">为什么Diffusion Models扩散模型可以成为Score-based Models</div>
@@ -457,7 +598,10 @@ model的论文如雨后春笋一般冒出，在<strong>图片生成、语音生�
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#diffusion-model%E7%AE%80%E5%8F%B2"><span class="toc-number">1.</span> <span class="toc-text">Diffusion Model简史</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#diffusion-model%E7%AE%80%E5%8F%B2"><span class="toc-number">1.</span> <span class="toc-text">Diffusion Model简史</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B8%A9%E4%B9%A0vae"><span class="toc-number">2.</span> <span class="toc-text">温习VAE</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8Evae%E5%88%B0%E5%B1%82%E6%AC%A1vae"><span class="toc-number">3.</span> <span class="toc-text">从VAE到层次VAE</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8E%E5%B1%82%E6%AC%A1vae%E5%88%B0diffusion-probabilistic-models"><span class="toc-number">4.</span> <span class="toc-text">从层次VAE到Diffusion
+Probabilistic Models</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8Ediffusion-probabilistic-models%E5%88%B0denoising-diffusion-probabilistic-mdoels"><span class="toc-number">5.</span> <span class="toc-text">从Diffusion
+Probabilistic Models到Denoising Diffusion Probabilistic Mdoels</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93vae%E5%92%8Cdiffusion-model%E7%9A%84%E5%BC%82%E5%90%8C"><span class="toc-number">6.</span> <span class="toc-text">总结：VAE和Diffusion
+Model的异同</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%B8%E5%90%8C%E4%B9%8B%E5%A4%84"><span class="toc-number">6.1.</span> <span class="toc-text">相同之处：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8D%E5%90%8C%E4%B9%8B%E5%A4%84"><span class="toc-number">6.2.</span> <span class="toc-text">不同之处：</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
