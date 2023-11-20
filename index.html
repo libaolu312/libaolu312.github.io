@@ -492,6 +492,284 @@ hobby）</p>
 
 
   
+    <article id="post-从VAE到Diffusion-Models" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2023/11/20/%E4%BB%8EVAE%E5%88%B0Diffusion-Models/" target="_blank">从VAE到Diffusion Models</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2023/11/20/%E4%BB%8EVAE%E5%88%B0Diffusion-Models/" class="archive-article-date">
+        <time datetime="2023-11-20T12:32:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-11-20</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <h2 id="diffusion-model简史">Diffusion Model简史</h2>
+<p>GANs诞生于2014年，diffusion model比GANs小一岁，第一篇difusion
+model论文《DeepUnsupervised Learning using Nonequilibrium
+Thermodynamics》发表与2015年。这两种全新的生成式模型刚被提出来的时候，都是一个全新的理论，但在各种任务运用上效果并不是非常理想。只不过GANs诞生后，DCGAN、WGAN等GANS的变式模型在各种任务上取得了巨大的成功，很快GANs便变得非常流行。</p>
+<p>diffusion model沉寂了好几年，直到2020年《Denoising Diffusion
+Probabilistic
+Models》以稳定的变分目标训练的模型在图像生成方面可以匹配或超过GANs。随后在论文《Score-Based
+GenerativeModeling through Stochastic Differential
+Equations》论文中，<strong>diffusion
+model被证明与基于分数的模型score-based
+model有着密切的联系</strong>，<strong>这两种模型最近在随机微分方程的框架下得到统一</strong>。
+时间来到2021年，diffusion
+model的论文如雨后春笋一般冒出，在<strong>图片生成、语音生成、视频生成、文本生成、三维模型生成、时间序列生成、点云生成</strong>等方面取得了巨大成功。</p>
+
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/扩散模型//" class="article-tag-list-link color5">扩散模型</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2023/11/20/%E4%BB%8EVAE%E5%88%B0Diffusion-Models/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-为什么Diffusion-Models扩散模型可以成为Score-based-Models" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2023/11/20/%E4%B8%BA%E4%BB%80%E4%B9%88Diffusion-Models%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E5%8F%AF%E4%BB%A5%E6%88%90%E4%B8%BAScore-based-Models/" target="_blank">为什么Diffusion Models扩散模型可以成为Score-based Models</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2023/11/20/%E4%B8%BA%E4%BB%80%E4%B9%88Diffusion-Models%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E5%8F%AF%E4%BB%A5%E6%88%90%E4%B8%BAScore-based-Models/" class="archive-article-date">
+        <time datetime="2023-11-20T11:36:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-11-20</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <h1 id="为什么diffusion-models扩散模型可以成为score-based-models">为什么Diffusion
+Models扩散模型可以成为Score-based Models</h1>
+<p>之前已经对DDPM有过十分详细的推导和理解：</p>
+<p><a href="https://libaolu312.github.io/2023/11/08/Diffusion-Models%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E4%B8%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86%E5%92%8C%E4%BB%A3%E7%A0%81%E8%A7%A3%E8%AF%BB/">Diffusion
+Models深解</a></p>
+<h2 id="正向过程与反向过程">正向过程与反向过程</h2>
+<p>下图表示了全过程，其中<span class="math inline">\(x_0\)</span>是完整的原先分布，，所以位于上方的p过程是从噪声反向重建，位于下方的q过程是从完整分布训练过程。</p>
+<p><img src="/2023/11/20/%E4%B8%BA%E4%BB%80%E4%B9%88Diffusion-Models%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E5%8F%AF%E4%BB%A5%E6%88%90%E4%B8%BAScore-based-Models/image-20231120200114804.png" alt="image-20231120200114804" style="zoom:50%;"></p>
+<p>用公式表示则为：</p>
+<h3 id="反向过程">反向过程：</h3>
+<p><span class="math display">\[
+p_{\theta}\left( x_0:T \right) =p\left( x_T \right)
+\prod_{t=1}^T{p_{\theta}\left( x_{t-1}|x_t \right)}
+\]</span></p>
+<p><span class="math display">\[
+p_{\theta}\left( x_{t-1}|x_t \right) =N\left( x_{t-1};\mu
+_{\theta}\left( x_t,t \right) ,\sum_{\theta}{\left( x_t,t \right)}
+\right)
+\]</span></p>
+<h3 id="正向过程">正向过程：</h3>
+<p><span class="math display">\[
+q\left( x_{1:T}|x_0 \right) :=\prod_{t=1}^T{q\left( x_t|x_{t-1} \right)}
+\]</span></p>
+<p><span class="math display">\[
+q\left( x_t|x_{t-1} \right) :=N\left( x_t;\sqrt{1-\beta _t}x_{t-1},\beta
+_tI \right)
+\]</span></p>
+<h3 id="参数解释">参数解释：</h3>
+<p><span class="math inline">\(\beta _1,\beta _2......\beta
+_t\)</span>：前向过程方差。在训练中一般固定，与t的值一一对应。</p>
+<p><span class="math inline">\(\alpha _1,\alpha _2......\alpha
+_t\)</span>：<span class="math inline">\(\alpha _t=1-\beta _t\)</span>
+。与<span class="math inline">\(\beta _t\)</span> 一样，一般固定。</p>
+<h2 id="训练目标">训练目标</h2>
+<p>训练目标用对数似然估计表示：</p>
+<figure>
+<img src="/2023/11/20/%E4%B8%BA%E4%BB%80%E4%B9%88Diffusion-Models%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E5%8F%AF%E4%BB%A5%E6%88%90%E4%B8%BAScore-based-Models/image-20231120201007834.png" alt="image-20231120201007834">
+<figcaption aria-hidden="true">image-20231120201007834</figcaption>
+</figure>
+<p>刚才说了<span class="math inline">\(\beta,\alpha\)</span>一般是固定值，因此利用随机梯度下降法可以化简上面的似然对数训练目标：</p>
+<p>因为<span class="math inline">\(x_t\)</span>代表最终时刻，也就是全为噪声的时刻，所以<span class="math inline">\(L_T\)</span>是常数，<span class="math inline">\(L_0\)</span>可以忽略，因此训练目标就可以化简成只含有剩下的这一项：</p>
+<p><img src="/2023/11/20/%E4%B8%BA%E4%BB%80%E4%B9%88Diffusion-Models%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E5%8F%AF%E4%BB%A5%E6%88%90%E4%B8%BAScore-based-Models/image-20231120201327936.png" alt="image-20231120201327936" style="zoom: 50%;"></p>
+<h2 id="化简训练目标">化简训练目标</h2>
+<p>我们已经把训练目标化简了，但是这还不够，接下来进一步化简。</p>
+<p>因为： <span class="math display">\[
+p_{\theta}\left( x_{t-1}|x_t \right) =N\left( x_{t-1};\mu
+_{\theta}\left( x_t,t \right) ,\sum_{\theta}{\left( x_t,t \right)}
+\right)
+\]</span> 又因为：(因为只考虑对角线) <span class="math display">\[
+\sum_{\theta}{\left( x_t,t \right)}=\sigma _{t}^{2}I
+\]</span> 代表未经训练的时间相关常数，所以进一步化简为： <span class="math display">\[
+p_{\theta}\left( x_{t-1}|x_t \right) =N\left( x_{t-1};\mu
+_{\theta}\left( x_t,t \right) ,\sigma _{t}^{2}I \right)
+\]</span> 将协方差带入后，我们的训练目标就变成了这样： <span class="math display">\[
+L_{t-1}=\mathbb{E}_q\left[ \frac{1}{2\sigma
+_{t}^{2}}||\tilde{\mu}_t\left( x_t,x_0 \right) -\mu _{\theta}\left(
+x_t,t \right) ||_{}^{2} \right] +C
+\]</span></p>
+<h2 id="从训练目标解释为什么又称为score-based-models">从训练目标解释为什么又称为score-based
+models</h2>
+<p>从我们刚才推导出来的训练目标来看，我们最终的<strong>训练目标化简成两个均值之间的距离</strong>，再除以一个常数。</p>
+<p><strong>其中<span class="math inline">\(\tilde{\mu}_t\left( x_t,x_0
+\right)\)</span>代表从<span class="math inline">\(x_0\)</span>逐渐添加噪声得到<span class="math inline">\(x_t\)</span>的均值，<span class="math inline">\(\mu _{\theta}\left( x_t,t
+\right)\)</span>代表神经网络重建匹配得到的均值。</strong></p>
+<p><strong>要让这两个score匹配，因为匹配了才能使训练目标最小化，所以Diffusion
+Model又称为 score-based model。</strong></p>
+<h2 id="从数据的匹配到噪声的匹配">从数据的匹配到噪声的匹配</h2>
+<p>不管是GAN还是VAE，都是从数据重建数据，但是通过上面的推导，<strong>DDPM实现了从通过神经网络预测含有重建信息的噪声，达到重建的效果。</strong></p>
+<p>实际上，<strong>噪声可以看成数据的增广，代表更广泛的数据分布。而t时刻包含了原本数据分布信息。</strong></p>
+<p>这个特点为后来用<strong>潜在变量<span class="math inline">\(z\)</span>约束噪声生成、二分法查找<span class="math inline">\(z\)</span>降低训练难度</strong>等优化方法提供了可能性。</p>
+<h2 id="噪声重建相比于数据重建有什么好处呢">噪声重建相比于数据重建有什么好处呢？</h2>
+<p>VAE和GAN都需要对抗训练，带来<strong>模型坍缩</strong>的问题，这个问题在Diffusion
+Model上可以解决。</p>
+
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/扩散模型//" class="article-tag-list-link color5">扩散模型</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2023/11/20/%E4%B8%BA%E4%BB%80%E4%B9%88Diffusion-Models%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E5%8F%AF%E4%BB%A5%E6%88%90%E4%B8%BAScore-based-Models/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-针对户型图数据集的调研" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1069,214 +1347,6 @@ generation选用MLP）</p>
     
     <p class="article-more-link">
       <a class="article-more-a" href="/2023/11/13/%E4%B8%BA%E4%BB%80%E4%B9%88Diffusion-Models%E9%92%9F%E7%88%B1U-net%E7%BB%93%E6%9E%84/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Diffusion-Models扩散模型与深度学习-数学原理和代码解读" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2023/11/08/Diffusion-Models%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E4%B8%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86%E5%92%8C%E4%BB%A3%E7%A0%81%E8%A7%A3%E8%AF%BB/" target="_blank">Diffusion Models扩散模型与深度学习(数学原理深解)</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2023/11/08/Diffusion-Models%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E4%B8%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86%E5%92%8C%E4%BB%A3%E7%A0%81%E8%A7%A3%E8%AF%BB/" class="archive-article-date">
-        <time datetime="2023-11-08T07:12:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-11-08</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <h1 id="diffusion-models扩散模型与深度学习数学原理深解">Diffusion
-Models扩散模型与深度学习(数学原理深解)</h1>
-<p>前面的三次博客已经深入的说明了配分函数、基于能量模型、受限玻尔兹曼机、蒙特卡洛采样法和重要采样法等数学原理，这些都是扩散模型所蕴含的底层数学原理，那么现在就开始真正理解一下扩散模型。</p>
-    
-    <a class="article-more-a" href="/2023/11/08/Diffusion-Models%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E4%B8%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86%E5%92%8C%E4%BB%A3%E7%A0%81%E8%A7%A3%E8%AF%BB/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/扩散模型//" class="article-tag-list-link color5">扩散模型</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2023/11/08/Diffusion-Models%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E4%B8%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86%E5%92%8C%E4%BB%A3%E7%A0%81%E8%A7%A3%E8%AF%BB/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-各类模型总结" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2023/11/06/%E5%90%84%E7%B1%BB%E6%A8%A1%E5%9E%8B%E6%80%BB%E7%BB%93/" target="_blank">各类模型总结</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2023/11/06/%E5%90%84%E7%B1%BB%E6%A8%A1%E5%9E%8B%E6%80%BB%E7%BB%93/" class="archive-article-date">
-        <time datetime="2023-11-06T11:11:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-11-06</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <h1 id="sequence-to-sequencce">Sequence to Sequencce</h1>
-<p>对于自然语言处理中的机器翻译模型中，由于输入输出的序列长度通常不同，所以RNN是不能处理这类问题的，因为对于多少个输入
-一定会产生多少个输出 所以LSTM也是一样，所以就需要S to S模型</p>
-<p>sequence to
-sequence模型是一类End-to-End的算法框架，也就是从序列到序列的转换模型框架。一般是通过Encoder-Decoder（编码-解码）框架实现</p>
-<figure>
-<img src="/2023/11/06/%E5%90%84%E7%B1%BB%E6%A8%A1%E5%9E%8B%E6%80%BB%E7%BB%93/wps1.png" alt="img">
-<figcaption aria-hidden="true">img</figcaption>
-</figure>
-    
-    <a class="article-more-a" href="/2023/11/06/%E5%90%84%E7%B1%BB%E6%A8%A1%E5%9E%8B%E6%80%BB%E7%BB%93/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/深度学习//" class="article-tag-list-link color5">深度学习</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2023/11/06/%E5%90%84%E7%B1%BB%E6%A8%A1%E5%9E%8B%E6%80%BB%E7%BB%93/">展开全文 >></a>
     </p>
     
 
