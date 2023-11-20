@@ -521,7 +521,8 @@ hobby）</p>
   
   <div class="article-entry" itemprop="articleBody">
     
-    <h2 id="vae-简介">VAE 简介</h2>
+    <span id="more"></span>
+<h2 id="vae-简介">VAE 简介</h2>
 <p>在Diffusion
 Models面前，VAE是一个古老而经典的生成式模型，先简单介绍一下。</p>
 <figure>
@@ -675,97 +676,9 @@ Low-Dimensional Latents</a></p>
 <p>前言：DDPM2020年诞生，短短一年的时间，模型上有两个巨大的改进，其中一个就是condition的引入，很多后续DDPM相关的论文都会讨论这一点，有些文章称之为latent
 variable。和当年GAN的发展类似，CGAN和DCGAN的出现极大程度上促进了GAN的发扬光大，意义重大。本文基于前面几篇文章继续聊一聊:</p>
 </blockquote>
-<h2 id="诞生之初unconditional无条件生成">诞生之初：unconditional无条件生成</h2>
-<p><a target="_blank" rel="noopener" href="https://proceedings.neurips.cc/paper/2020/hash/4c5bcfec8584af0d967f1ab10179ca4b-Abstract.html">论文：Denoising
-Diffusion Probabilistic Models</a></p>
-<p>根据郎之万动力方程的推导，最终的生成表达式中依赖神经网络对噪声的预测可以生成图像，但是这种生成是没有任何约束的，也就是说<strong>给定纯高斯噪声，我们就能生成图片</strong>。好处是我们的<strong>输入不受任何控制，只要是高斯噪声就可以</strong>，坏处是我们<strong>无法监督这一过程，最终生成的结果不受控制</strong>。比如在SUN数据集上，我们能任意生成各种各样的图像:</p>
-<figure>
-<img src="/2023/11/20/%E6%9D%A1%E4%BB%B6DDPM-Diffusion-Model%E7%9A%84%E7%AC%AC%E4%B8%89%E4%B8%AA%E5%B7%85%E5%B3%B0%E4%B9%8B%E4%BD%9C/e5df4135f677630708e0f2623d760791.png" alt="img">
-<figcaption aria-hidden="true">img</figcaption>
-</figure>
-<h2 id="首次引入condition分类器指导">首次引入condition：分类器指导</h2>
-<p><a target="_blank" rel="noopener" href="https://proceedings.neurips.cc/paper_files/paper/2021/hash/49ad23d1ec9fa4bd8d77d02681df5cfa-Abstract.html">论文：Diffusion
-Models Beat GANs on Image Synthesis</a></p>
-<p>在上一篇文章发表几个月之后，第一个condition
-DDPM诞生了。这篇文章在lmageNet上训练了一个分类器，用这个分类器控制标签。这个分类器是unet结构，带有attention
-pool，添加随机crops减少过拟合。</p>
-<p>用 <span class="math inline">\(y\)</span> 表示标签，<span class="math inline">\(p_{\phi}\left( y|x_t,t \right)\)</span>
-代表分类器，使用梯度 $<em>{x_t} p</em>{}( y|x_t,t ) $
-来<strong>指导扩散过程朝向任意类别标签 <span class="math inline">\(y\)</span>
-发展</strong>。简而言之，<strong>将类信息合并到规范化层中，利用分类器<span class="math inline">\(p_{\phi}\left( y|x_t,t
-\right)\)</span>改进生成器</strong>。</p>
-<p>反向sample过程中，在 <span class="math inline">\(x_{t+1}\)</span> 和
-<span class="math inline">\(y\)</span> 条件下生成 <span class="math inline">\(x_t\)</span> ，可以写成以下式子： <span class="math display">\[
-p_{\theta ,\phi}\left( x_t|x_{t+1},y \right) =Zp_{\theta}\left(
-x_t|x_{t+1} \right) p_{\phi}\left( y|x_t \right)
-\]</span> 其中大写的 <span class="math inline">\(Z\)</span>
-是一个常数，文章里详细证明了这个公式成立。 其中 <span class="math inline">\(p_{\theta}( x_t|x_{t+1})\)</span> 和 unconditional
-DDPM是一样的，因此只多了 <span class="math inline">\(p_{\phi}\left(
-y|x_t \right)\)</span> 这一项。</p>
-<p>同时这篇文章还重点探索了一个<strong>缩放因子 <span class="math inline">\(s\)</span></strong>
-的作用，缩放因子放缩的是分类器梯度 <span class="math inline">\(\sum{\nabla _{x_t}\,\,\log p_{\phi}\left( y|x_t,t
-\right)}\)</span>
-之和，实验表明<strong>缩放因子越大，重建出来的FID越小，即重建质量越高</strong>。</p>
-<p>开源的代码如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">cond_fn</span>(<span class="params">x, t, y=<span class="literal">None</span></span>):</span><br><span class="line">    <span class="keyword">assert</span> y <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span></span><br><span class="line">    <span class="keyword">with</span> th.enable_grad():</span><br><span class="line">        x_in = x.detach().requires_grad_(<span class="literal">True</span>)</span><br><span class="line">        logits = classifier(x_in, t)</span><br><span class="line">        log_probs = F.log_softmax(logits, dim=-<span class="number">1</span>)</span><br><span class="line">        selected = log_probs[<span class="built_in">range</span>(<span class="built_in">len</span>(logits)), y.view(-<span class="number">1</span>)]</span><br><span class="line">        <span class="keyword">return</span> th.autograd.grad(selected.<span class="built_in">sum</span>(), x_in)[<span class="number">0</span>] * args.classifier_scale</span><br></pre></td></tr></table></figure>
-<figure>
-<img src="/2023/11/20/%E6%9D%A1%E4%BB%B6DDPM-Diffusion-Model%E7%9A%84%E7%AC%AC%E4%B8%89%E4%B8%AA%E5%B7%85%E5%B3%B0%E4%B9%8B%E4%BD%9C/104d4f0b3349d26ea1721ff481c89303.png" alt="img">
-<figcaption aria-hidden="true">img</figcaption>
-</figure>
-<h2 id="发扬光大sample全程加入参考图片">发扬光大：sample全程加入参考图片</h2>
-<p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2108.02938">论文：ILVR:Conditioning
-Method for Denoising Diffusion Probabilistic Models</a></p>
-<p>时间来到一年后，一篇ICCV上的oral论文重点讨论了一种conditional方式，<strong>在sample过程中加入参考</strong>
-<strong>图片，引导重建的图像和参考图像相似</strong>。</p>
-<figure>
-<img src="/2023/11/20/%E6%9D%A1%E4%BB%B6DDPM-Diffusion-Model%E7%9A%84%E7%AC%AC%E4%B8%89%E4%B8%AA%E5%B7%85%E5%B3%B0%E4%B9%8B%E4%BD%9C/60fafba7094a630524b3ebe131552552.png" alt="img">
-<figcaption aria-hidden="true">img</figcaption>
-</figure>
-<p>这就不仅仅是标签/类别控制了，从某种意义上来说，我们能控制生成的风格，这样DDPM就能和GAN
-样，完成图像修复、P图、风格迁移甚至多模态等任务!</p>
-<p>参考图片定义为 <span class="math inline">\(y\)</span>
-。现在我们需要再条件 <span class="math inline">\(c\)</span> 和 <span class="math inline">\(x_t\)</span> 推导 <span class="math inline">\(x_{t-1}\)</span> ， <span class="math inline">\(\phi _N\)</span>
-表示一个低通滤波器，这个低通滤波器可以是
-Bilinear、Lanczos3、Lanczos2、Bicubic
-等，这个<strong>低通滤波器的作用是确保生成图像和参考图像在低通维度信息上接近</strong>，条件
-<span class="math inline">\(c\)</span> 用来确保生成图像 <span class="math inline">\(\phi _N(x_0)\)</span> 和参考图像 <span class="math inline">\(\phi _N(y)\)</span> 相等，因此方程式可以写成：
-<span class="math display">\[
-p_{\theta}\left( x_{t-1}|x_t,c \right) \approx p_{\theta}\left(
-x_{t-1}|x_t,\phi _N\left( x_{t-1} \right) =\phi _N\left( y_{t-1} \right)
-\right)
-\]</span> <span class="math display">\[
-x_{t-1}^{&#39;}~p_{\theta}\left( x_{t-1}^{&#39;}|x_t \right)
-\]</span> <span class="math display">\[
-x_{t-1}=\phi \left( y_{t-1} \right) +\left( I-\phi \right) \left(
-x_{t-1}^{&#39;} \right)
-\]</span></p>
-<p>再次，我们将condition部分和uncondition的部分分开了，这篇论文重点探究了downsampling
-<span class="math inline">\(N\)</span> 因子对实验的影响，设 <span class="math inline">\(\mu\)</span>
-是无条件DDPM生成集合，这个集合的特点：</p>
-<ul>
-<li>参考图像选择的最小要求</li>
-<li>参考有向子集的用户可控性，定义了参考图像的语义相似度</li>
-</ul>
-<p>随着因子N的增加，可以从更广的图像集合中进行采样，采样后的图像更加多样化，与参考图像的语义相似度也更低。<strong>与参考图像的感知相似度是有下采样因子控制的</strong>，高因子
-<span class="math inline">\(N\)</span>
-的样本具有参考样本的粗特征，而低因子 <span class="math inline">\(N\)</span> 的样本也具有参考样本的特征。</p>
-<p>看一下代码，这个 <span class="math inline">\(N\)</span>
-实际上就是一个resize系数：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">down = Resizer(shape, <span class="number">1</span> / args.down_N).to(<span class="built_in">next</span>(model.parameters()).device)</span><br><span class="line">up = Resizer(shape_d, args.down_N).to(<span class="built_in">next</span>(model.parameters()).device)</span><br></pre></td></tr></table></figure>
-<p>这个resize操作来自：</p>
-<blockquote>
-<p>https://github.com/assafshocher/resizer</p>
-</blockquote>
-<p>这个作者真牛逼，仅仅对做一个resize操作来研究sanple的性质。</p>
-<h2 id="流水线式创新潜在变量约束">流水线式创新：潜在变量约束</h2>
-<p>在得到前文的思路启发之后，此类文章如雨后春笋式量产，不乏CVPR
-Oral这样的好文章，比如这篇文章：</p>
-<p><a target="_blank" rel="noopener" href="https://openaccess.thecvf.com/content/CVPR2021/html/Luo_Diffusion_Probabilistic_Models_for_3D_Point_Cloud_Generation_CVPR_2021_paper.html">论文：Diffusion
-Probabilistic Models for 3D Point Cloud Generation</a></p>
-<h2 id="结尾">结尾</h2>
-<p>Condition的引入是DDPM的一个重大突破，现在已经被广泛运用在DDPM论文中。</p>
-<p>DDPM有一个致命的问题，就是运算量过大，采样时间过长，如何加速？后面再聊。</p>
-
+    
+    <a class="article-more-a" href="/2023/11/20/%E6%9D%A1%E4%BB%B6DDPM-Diffusion-Model%E7%9A%84%E7%AC%AC%E4%B8%89%E4%B8%AA%E5%B7%85%E5%B3%B0%E4%B9%8B%E4%BD%9C/#more">more >></a>
+    
     
 
     
@@ -861,7 +774,8 @@ Probabilistic Models for 3D Point Cloud Generation</a></p>
   
   <div class="article-entry" itemprop="articleBody">
     
-    <h2 id="diffusion-model简史">Diffusion Model简史</h2>
+    <span id="more"></span>
+<h2 id="diffusion-model简史">Diffusion Model简史</h2>
 <p>GANs诞生于2014年，diffusion model比GANs小一岁，第一篇difusion
 model论文《DeepUnsupervised Learning using Nonequilibrium
 Thermodynamics》发表与2015年。这两种全新的生成式模型刚被提出来的时候，都是一个全新的理论，但在各种任务运用上效果并不是非常理想。只不过GANs诞生后，DCGAN、WGAN等GANS的变式模型在各种任务上取得了巨大的成功，很快GANs便变得非常流行。</p>
@@ -1098,8 +1012,7 @@ Model的异同</h2>
   
   <div class="article-entry" itemprop="articleBody">
     
-    <h1 id="为什么diffusion-models扩散模型可以成为score-based-models">为什么Diffusion
-Models扩散模型可以成为Score-based Models</h1>
+    <span id="more"></span>
 <p>之前已经对DDPM有过十分详细的推导和理解：</p>
 <p><a href="https://libaolu312.github.io/2023/11/08/Diffusion-Models%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E4%B8%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86%E5%92%8C%E4%BB%A3%E7%A0%81%E8%A7%A3%E8%AF%BB/">Diffusion
 Models深解</a></p>
