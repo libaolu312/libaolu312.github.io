@@ -6,19 +6,31 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://libaolu312.github.io">
-  <title>Archives | 李宝璐</title>
+  <title>论文精读:AutoStory: Generating Diverse Storytelling Images with Minimal Human Effort | 李宝璐</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="里面放着李宝璐的碎碎念">
-<meta property="og:type" content="website">
-<meta property="og:title" content="李宝璐">
-<meta property="og:url" content="https://libaolu312.github.io/archives/page/4/index.html">
+  <meta name="description" content="前言：精读论文：AutoStory: Generating Diverse Storytelling Images with Minimal Human Effort，该论文与2023-11-23日上传至arXiv上，该工作由浙江大学提出，主要关注的点在于对一个文本故事进行可视化和多轮图像生成的一致性（包括角色与非角色）  工作主页 arXiv主页 [未开源] 1 对论文的初印象">
+<meta property="og:type" content="article">
+<meta property="og:title" content="论文精读:AutoStory: Generating Diverse Storytelling Images with Minimal Human Effort">
+<meta property="og:url" content="https://libaolu312.github.io/2023/12/08/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-AutoStory-Generating-Diverse-Storytelling-Images-with-Minimal-Human-Effort/index.html">
 <meta property="og:site_name" content="李宝璐">
-<meta property="og:description" content="里面放着李宝璐的碎碎念">
+<meta property="og:description" content="前言：精读论文：AutoStory: Generating Diverse Storytelling Images with Minimal Human Effort，该论文与2023-11-23日上传至arXiv上，该工作由浙江大学提出，主要关注的点在于对一个文本故事进行可视化和多轮图像生成的一致性（包括角色与非角色）  工作主页 arXiv主页 [未开源] 1 对论文的初印象">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://libaolu312.github.io/2023/12/08/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-AutoStory-Generating-Diverse-Storytelling-Images-with-Minimal-Human-Effort/2UHdBjqY9nk.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/12/08/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-AutoStory-Generating-Diverse-Storytelling-Images-with-Minimal-Human-Effort/2UHlIRWRyoj.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/12/08/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-AutoStory-Generating-Diverse-Storytelling-Images-with-Minimal-Human-Effort/image-20231212034101351.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/12/08/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-AutoStory-Generating-Diverse-Storytelling-Images-with-Minimal-Human-Effort/image-20231212034141309.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/12/08/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-AutoStory-Generating-Diverse-Storytelling-Images-with-Minimal-Human-Effort/image-20231212034414756.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/12/08/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-AutoStory-Generating-Diverse-Storytelling-Images-with-Minimal-Human-Effort/image-20231212034453659.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/12/08/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-AutoStory-Generating-Diverse-Storytelling-Images-with-Minimal-Human-Effort/image-20231212034602394.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/12/08/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-AutoStory-Generating-Diverse-Storytelling-Images-with-Minimal-Human-Effort/image-20231212034730453.png">
+<meta property="article:published_time" content="2023-12-07T18:31:25.000Z">
+<meta property="article:modified_time" content="2023-12-11T19:55:57.746Z">
 <meta property="article:author" content="李宝璐">
+<meta property="article:tag" content="技术笔记">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://libaolu312.github.io/2023/12/08/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-AutoStory-Generating-Diverse-Storytelling-Images-with-Minimal-Human-Effort/2UHdBjqY9nk.png">
   
     <link rel="alternative" href="/atom.xml" title="李宝璐" type="application/atom+xml">
   
@@ -241,576 +253,533 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-论文精读-AutoStory-Generating-Diverse-Storytelling-Images-with-Minimal-Human-Effort" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 class="article-title" itemprop="name">
+      论文精读:AutoStory: Generating Diverse Storytelling Images with Minimal Human Effort
+    </h1>
+  
+
+
+  
+  
+        
+        <span id="busuanzi_container_page_pv" style='display:none' class="archive-article-date">
+              <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+        </span>
+
+<a href="/2023/12/08/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-AutoStory-Generating-Diverse-Storytelling-Images-with-Minimal-Human-Effort/" class="archive-article-date">
+        <time datetime="2023-12-07T18:31:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-12-08</time>
+</a>
+
   
   
     
+<div style="margin-top:10px;">
+  <span class="post-time">
+    <span class="post-meta-item-icon">
+      <!-- fonts.scss -->
+      <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
+      <i class="icon-statistics"></i>
+      <span class="post-meta-item-text"> 字数统计:</span>
+      <span class="post-count">3.2k字</span>
+    </span>
+  </span>
+
+  <span class="post-time">
+    &nbsp; | &nbsp;
+    <span class="post-meta-item-icon">
+      <i class="icon-book icon"></i>
+      <span class="post-meta-item-text"> 阅读时长≈</span>
+      <span class="post-count">12分</span>
+    </span>
+  </span>
+</div>
+
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
     
+    <blockquote>
+<p>前言：精读论文：AutoStory: Generating Diverse Storytelling Images
+with Minimal Human
+Effort，该论文与2023-11-23日上传至arXiv上，该工作由浙江大学提出，主要关注的点在于对一个文本故事进行可视化和多轮图像生成的一致性（包括角色与非角色）</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://aim-uofa.github.io/AutoStory/">工作主页</a></p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2311.11243">arXiv主页</a></p>
+<p>[未开源]</p>
+<h2 id="对论文的初印象">1 对论文的初印象</h2>
+<p>AutoStory: Generating Diverse Storytelling Images with Minimal Human
+Effort AutoStory：用最少的人力生成多样化的故事图像 标题给的很直白</p>
+<h2 id="前情提要">2 前情提要</h2>
+<h3 id="故事可视化">2.1 故事可视化</h3>
+<p>旨在生成一系列与文本中描述的故事相匹配的图像，要求生成的图像满足高质量、与<strong>文本描述一致以及角色身份的一致性</strong>。</p>
+<h3 id="现有的做法">2.2 现有的做法</h3>
+<p>现有的方法通过<strong>只考虑几个特定的角色和场景</strong>，或者<strong>要求用户提供每个图像的控制条件（如草图）</strong>，大大简化了问题。然而，这些简化使得这些方法不能用于实际应用。</p>
+<h2 id="this-work">2.3 This Work</h2>
+<p>提出了一种自动化的故事可视化系统，该系统可以有效地生成多样化、高质量和一致的故事图像集，并<strong>将人类互动降至最低</strong>。</p>
+<h3 id="具体的做法笼统">2.4 具体的做法（笼统）</h3>
+<p><strong>利用大型语言模型的理解和规划能力进行布局规划（layout）</strong>，然后<strong>利用大型文本到图像模型基于布局（layout）生成复杂的故事图像</strong>。</p>
+<p>根据实验发现：</p>
+<ul>
+<li><strong>稀疏控制条件（spare control conditions，如边界框 bounding
+box）</strong>适用于布局规划</li>
+<li><strong>密集控制条件（dense control conditions，例如草图和关键点
+sketches and keypoints）</strong>适用于生成高质量的图像内容。</li>
+</ul>
+<p>为了两全其美，设计了一个<strong>密集条件生成模块（作为桥梁）</strong>，<strong>将简单的边界框布局转换为草图或关键点控制条件</strong>，用于最终图像生成，这不仅提高了图像质量，还允许简单直观的用户交互。</p>
+<p>We exploit few-shot parameter-efficient fine-tuning techniques for
+foundation models。</p>
+<p>AutoStory结合定制的生成技术，通过<strong>只对每个角色的几个图像进行训练</strong>，同时将其推广到不同的角色、场景和风格，实现了身份一致性生成。</p>
+<p>此外，这篇工作提出了一种简单而有效的方法来生成多视角一致的人物图像，消除了收集或绘制人物图像对人力的依赖。</p>
+<p>具体来说，提出了一种 training-free
+的身份一致性建模方法，<strong>将多个视图视为视频，and jointly generating
+the textures with temporal-aware
+attention</strong>。还通过利用视图条件下的3D先验图像翻译模型来提高生成的角色图像的多样性，而不影响身份一致性。</p>
+<h2 id="method">3 Method</h2>
+<h4 id="目标">目标</h4>
+<p>用<strong>最少的人力</strong>（最少的人工准备和交互）生成高质量、多样化且具有一致性的讲故事的图像。</p>
+<blockquote>
+<p>PS：用来讲故事的图像是有很强的场景复杂性的。</p>
+</blockquote>
+<h4 id="总体想法">总体想法</h4>
+<p><strong>LLM的理解能力和planning能力 +
+T2I模型的生成能力。</strong></p>
+<h4 id="总体pipeline如下所示">总体pipeline如下所示</h4>
+<p><img src="/2023/12/08/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-AutoStory-Generating-Diverse-Storytelling-Images-with-Minimal-Human-Effort/2UHdBjqY9nk.png" alt="image.png"> 这个过程可以分为两个阶段：</p>
+<ul>
+<li><strong>条件准备阶段</strong>（condition preparation）</li>
+<li><strong>条件图像生成阶段</strong>（condition image generation)</li>
+</ul>
+<h4 id="具体来说">具体来说</h4>
+<ul>
+<li>首先<strong>利用LLM将文本故事描述转换为讲故事图像的layout</strong>。</li>
+<li>LLM生成的讲故事图像layout属于稀疏控制条件（spare control
+conditions），最好<strong>把其转换成密集控制条件</strong>（dense control
+conditions），针对这一点，也需要提出一个方法将稀疏的 bounding box
+转换成密集的 control signals。</li>
+<li>根据转换好的 layout 生成具有合理场景安排的故事图像。</li>
+<li>最后再通过一种方法来提高生成图像的角色一致性。</li>
+</ul>
+<p>总体来讲这样的方法<strong>只需要在少数图像上微调T2I模型，训练难度不大</strong>。</p>
+<p>下面来一个一个步骤展开来说。</p>
+<h2 id="text-story---layout-generation">4 Text Story -&gt; Layout
+Generation</h2>
+<p>这部分也分两个步骤：</p>
+<ul>
+<li><strong>story pre-processing</strong></li>
+<li><strong>layout generation</strong></li>
+</ul>
+<h3 id="story-pre-processing">4.1 Story Pre-processing</h3>
+<p>用户的输入可以是：</p>
+<ul>
+<li>完整的故事 <span class="math inline">\(S\)</span></li>
+<li>故事的简单描述 <span class="math inline">\(D\)</span></li>
+</ul>
+<p><strong>当输入的是故事的简单描述 <span class="math inline">\(D\)</span>
+时会使用LLM来生成特定的故事情节</strong>，即： <span class="math display">\[
+S=LLM\left( F_{D2S},D \right)
+\]</span> 过程如图所示：
+<img src="/2023/12/08/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-AutoStory-Generating-Diverse-Storytelling-Images-with-Minimal-Human-Effort/2UHlIRWRyoj.png" alt="image.png" style="zoom:67%;">
+<span class="math inline">\(F_{D2S}\)</span> 是帮助 LLM 生成故事的
+instruction</p>
+<p>举个例子，在获取到故事 <span class="math inline">\(S\)</span>
+之后，要求LLM将故事分成 <strong><span class="math inline">\(K\)</span>
+panels</strong>，每个 panel 对应于一个图像（就很像之前的[IMG] token）：
+<span class="math display">\[
+\left[ P_1,P_2,...,P_K \right] =LLM\left( F_{S2P},S,K \right)
+\]</span> <span class="math inline">\(F_{S2P}\)</span>
+是指导模型根据故事生成 panels 的 instruction ，<span class="math inline">\(P_i\)</span> 是文本描述的第 <span class="math inline">\(i\)</span> 个 panel 。</p>
+<p>至此，就完成了故事的预处理。</p>
+<h3 id="layout-generation">4.2 Layout Generation</h3>
+<p>将故事划分为 panels 之后，利用 LLM 从每个 panel 中提取 scene layout
+： <span class="math display">\[
+\left[ \sigma _1,\sigma _2,...,\sigma _K \right] =LLM\left(
+F_{P2L},\left[ P_1,P_2,...,P_K \right] \right)
+\]</span> - <span class="math inline">\(F_{P2L}\)</span>是指导模型根据
+panel 生成 layout 的 instruction， - <span class="math inline">\(\sigma
+_i\)</span> 是第 <span class="math inline">\(i\)</span> 个 panel 的
+scene layout，which consists of a global prompt <span class="math inline">\(p_{i}^{global}\)</span> and several local prompts
+with corresponding localized bounding boxes：</p>
+<p><span class="math display">\[
+\sigma _i=\left\{ p_{i}^{global},\left( p_{i1}^{local},b_{i1} \right)
+,\left( p_{i2}^{local},b_{i2} \right) ,...,\left(
+p_{ik_i}^{local},b_{ik_i} \right) \right\}
+\]</span> - <span class="math inline">\(k_i\)</span> is the number of
+local prompts in the i-th story image - <span class="math inline">\(p_{ij}^{local}\)</span> 和 <span class="math inline">\(b_{ij}^{local}\)</span> are the j-th local prompt
+and bounding box in the i-th story image。 - global prompt
+描述整个故事图像的全局上下文 - local prompt
+则侧重于单个对象的细节这种设计通过将故事图像生成的复杂性解耦为多个简单任务，帮助我们显著提高图像生成的质量。</p>
+<p><img src="/2023/12/08/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-AutoStory-Generating-Diverse-Storytelling-Images-with-Minimal-Human-Effort/image-20231212034101351.png" alt="image-20231212034101351" style="zoom:67%;"></p>
+<h2 id="dense-condition-generation-密集条件生成">5 Dense Condition
+Generation 密集条件生成</h2>
+<figure>
+<img src="/2023/12/08/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-AutoStory-Generating-Diverse-Storytelling-Images-with-Minimal-Human-Effort/image-20231212034141309.png" alt="image-20231212034141309">
+<figcaption aria-hidden="true">image-20231212034141309</figcaption>
+</figure>
+<h3 id="motivation">5.1 Motivation</h3>
+<p>之前已经说过了，<strong>稀疏的 bounding box
+很难生成高质量的图片</strong>，也有可能造成图像于 layout
+不匹配的情况。</p>
+<p>造成这些情况的原因主要是 <strong>bounding box
+所提供的信息有限</strong>，因此需要引入 dense sketch or keypoint
+作为guidances，因此在刚才生成的 layout 的基础上，引入一个 dense
+condition 生成模块。</p>
+<h3 id="subject-generation">5.2 Subject Generation</h3>
+<p>首先<strong>根据 local prompts 逐个生成 individual
+objects</strong></p>
+<p>这个过程可以表示为：<span class="math inline">\(I_{ij}=DM\left(
+p_{ij}^{local} \right) ,j=1,2,...,k_i\)</span></p>
+<p><span class="math inline">\(I_{ij}\)</span> 表示第<span class="math inline">\(i\)</span>个 panel 中的第 <span class="math inline">\(j\)</span> 个 subject，由于单个对象生成 prompt
+的简单性，生成过程相对容易，因此能够获得高质量的 single-object
+生成结果。</p>
+<h3 id="extracting-per-subject-dense-condition">5.3 Extracting
+Per-subject Dense Condition</h3>
+<ul>
+<li>在获取到single-object的生成结果后，使用open-vocabulary object
+detection方法（<strong>Grounding-DINO</strong>），对local
+prompt描述的对象进行定位，并且获得 localization box <span class="math inline">\(b_{ij}^{\det}\)</span>。</li>
+<li>之后，使用 <strong>SAM</strong> 来获得对象的 segementation mask
+<span class="math inline">\(m_{ij}\)</span>（<span class="math inline">\(b_{ij}^{\det}\)</span>作为 SAM 的 prompt）。</li>
+<li>在 T2I Adapter之后，使用 <strong>PidiNet</strong> 来获得 the outer
+edges of the mask（这个可以被用作可控图像生成的dense
+sketch）（对于人类角色，也可以使用HRNet来获取人类姿态关节点作为dense
+conditions）</li>
+</ul>
+<h3 id="composing-dense-conditions">5.4 Composing Dense Conditions</h3>
+<p>最后，<strong>将前面得到的single-object的dense control
+condition粘贴到layout中对应的corresponding bounding
+box中，以获得整个图像的dense condition</strong>。</p>
+<h2 id="controllable-storytelling-image-generation">6 Controllable
+Storytelling Image Generation</h2>
+<p><strong>可控的故事图像生成</strong></p>
+<p>这部分的工作：<strong>通过引入额外的控制信号来提高图像生成的质量</strong>。</p>
+<h3 id="sparse-layout-control稀疏layout-control">6.1 Sparse Layout
+Control（稀疏layout control）</h3>
+<p>之前通过 LLM 获得了故事图像的总体 layout，下买就按照 layout
+生成故事图像的详细内容。</p>
+<p>选择在 <strong>Mix-of-Show</strong>
+中的区域采样方法，因为这个方法不引入额外的模型参数/优化过程。（下面具体来说这个过程）</p>
+<p><strong>在cross-attention中</strong>，the feature inside the box
+<span class="math inline">\(b_{ij}\)</span> 被替换成： <span class="math display">\[
+Attn\left( W^Qz_{ij},W^KE\left( p_{ij}^{local} \right) ,W^VE\left(
+p_{i}^{local} \right) \right)
+\]</span> 通过这种方式，我们<strong>强制每个box中的image latent feature
+聚焦在相应的local
+object上</strong>，因此生成的图像可以确认布局也可以避免对象之间的属性混淆。</p>
+<p>整个基于global prompt和 sparse bounding box
+layout的生成过程可以写成： <span class="math display">\[
+DM\left( p_{i}^{global};\sigma _i \right)
+\]</span>
+当然以上的过程都是基于稀疏layout来做的，和之前工作的做法没什么不同，下面的才是核心。</p>
+<h3 id="dense-control">6.2 Dense Control</h3>
+<p>上面那种方法生成的图像质量难免会差一点（之前也说过了），那么为了进一步提升图像质量，通过之前生成的dense
+condition来生成图像。</p>
+<p>具体来说，我们将dense control
+signals注入到一个轻量级的T2I-Adapter，conditional
+generation过程可以表示为： <span class="math display">\[
+DM\left( p_{i}^{global};\sigma _i,\left\{ A,C_i \right\} \right)
+\]</span> - <span class="math inline">\(C_i\)</span> 是第<span class="math inline">\(i\)</span>个story image的dense condition - <span class="math inline">\(A\)</span> 是用于dense
+control的T2I-Adapter的型号</p>
+<p>PS：这里使用的<strong>dense
+condition都是自动生成的</strong>，避免了之前工作中人工绘制草图的繁琐过程。</p>
+<h3 id="identity-preservation">6.3 Identity Preservation</h3>
+<p>Identity Preservation过程挺重要的，这里借助Mix-of-Show中的思想。</p>
+<p>给一个subject几个图像，用ED-LoRA对每个subject微调权重，以捕捉详细的subject特征。</p>
+<p>使用梯度融合（gradient fusion）对单个角色的多个ED-LoRA进行合并，to
+guarantee the identity of all characters in the story。</p>
+<p>融合后的LoRA权重表示为 <span class="math inline">\(\varDelta
+W\)</span>， 那么最终的生成过程可以写成： <span class="math display">\[
+DM\left( p_{i}^{global};\sigma _i,\left\{ A,C_i \right\} ,\varDelta W
+\right)
+\]</span></p>
+<h2 id="eliminating-character-wise-data-collection">7 Eliminating
+Character-wise Data Collection</h2>
+<p>这部分主要对一致性角色生成进行讨论。</p>
+<p><img src="/2023/12/08/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-AutoStory-Generating-Diverse-Storytelling-Images-with-Minimal-Human-Effort/image-20231212034414756.png" alt="image-20231212034414756" style="zoom:67%;"></p>
+<h3 id="the-requirement-of-character-data对角色数据的要求">7.1 The
+Requirement of Character Data（对角色数据的要求）</h3>
+<p>To train a customized model of a character in a
+story，需要几个角色的图像来进行模型微调（可以写成 <span class="math inline">\(\left\{ I_{i}^{sub} \right\}
+,i=1,2,...,n\)</span>，n是图像的数量）</p>
+<p>为了获得针对单个角色的有效定制模型，训练数据需要满足：</p>
+<ul>
+<li><strong>身份一致性</strong>，训练图像的角色的texture和structure应该一致。</li>
+<li><strong>多样性</strong>，训练数据应该有所不同，例如在viewpoints，来避免模型过拟合。</li>
+</ul>
+<h3 id="identity-consistency-身份一致性">7.2 Identity Consistency
+（身份一致性）</h3>
+<p><img src="/2023/12/08/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-AutoStory-Generating-Diverse-Storytelling-Images-with-Minimal-Human-Effort/image-20231212034453659.png" alt="image-20231212034453659" style="zoom:67%;"></p>
+<p><strong>将单个角色的多个图像视为视频中的不同帧</strong>，并使用扩散模型同时生成它们，在这个过程中，<strong>DM中的self-attention要被扩展到其它”视频帧“</strong>，来增强图像之间的依赖性，以获得角色一致性的生成结果。</p>
+<p>在self-attention中，<strong>让每个帧中的latent
+features关注前一帧和第一帧中的特征</strong>，来建立依赖关系，这个过程可以表示为：
+<span class="math display">\[
+Attn\left( W^Qz_i,W^K\left[ z_0,z_{i-1} \right] ,W^V\left[ z_0,z_{i-1}
+\right] \right)
+\]</span> - <span class="math inline">\(z_i\)</span> 是当前帧的latent
+feature，<span class="math inline">\(z_0\)</span> 和 <span class="math inline">\(z_{i-1}\)</span> 是第一帧和前一帧的latent
+feature。</p>
+<ul>
+<li>[·，·]是串联运算（concatenation operation）</li>
+</ul>
+<h3 id="diversity多样性">7.3 Diversity（多样性）</h3>
+<p>上面的方法可以保证生成图像的角色一致性，但是每次生成出来的图像的多样性是不足的。</p>
+<p>因此<strong>在不同帧中注入various
+conditions，来增强生成的角色多样性</strong>。</p>
+<p>为了获得这些多样但角色一致的条件：</p>
+<ul>
+<li>首先通过 <span class="math inline">\(I_{i}^{cond}=DM\left(
+p_{i}^{sub} \right)\)</span> 生成一张图像（<span class="math inline">\(p_{i}^{sub}\)</span> 是LLM生成的角色的描述）</li>
+<li>使用训练好的view-point conditioned image translation
+model从不同的viewpoints获得角色的图像。</li>
+</ul>
+<p><img src="/2023/12/08/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-AutoStory-Generating-Diverse-Storytelling-Images-with-Minimal-Human-Effort/image-20231212034602394.png" alt="image-20231212034602394" style="zoom:67%;"></p>
+<p>最后，提取这些图像的sketches或keypoints作为控制条件。</p>
+<p>具体来说，对于第<span class="math inline">\(i\)</span>个角色图像：</p>
+<ul>
+<li>Randomly generate the relative camera rotation <span class="math inline">\(R_{ij}\in \mathbb{R}^3\)</span> 和 the relative
+translation <span class="math inline">\(T_{ij}\in \mathbb{R}^3\)</span>
+of the desired viewpoint。</li>
+<li>使用<strong>One-2-3-45</strong> 生成 desired viewpoints
+中object的图像：</li>
+</ul>
+<p><span class="math display">\[
+I_{ij}^{cond}=f\left( T_{i}^{cond},R_{ij},T_{ij} \right) ,j=1,2,...,n
+\]</span>
+之后，从这些图像中提取非人类角色的sketches/人类角色的keypoints。</p>
+<p>最后，在生成过程中使用T2I-Adapter将control
+guidance注入到相应帧的latent feature中。</p>
+<p>为了进一步保证生成数据的质量，使用CLIP评分对生成的数据进行过滤，选择与文本描述一致的图像作为训练数据进行定制生成。</p>
+<h3 id="本节总结">7.4 本节总结</h3>
+<p>在Eliminating Character-wise Data
+Collection这一节中，将提出的无需训练的身份一致性建模方法与视点条件图像翻译模型相结合，以实现身份一致性和角色生成的多样性。</p>
+<p>一种更简单的方法是直接使用视点条件图像翻译模型中的多视图图像作为定制的训练数据。</p>
+<p>但是在实验过程中发现，直接生成的结果往往会出现失真，或者不同视点的图像在颜色和纹理上存在较大差异。</p>
+<p><img src="/2023/12/08/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-AutoStory-Generating-Diverse-Storytelling-Images-with-Minimal-Human-Effort/image-20231212034730453.png" alt="image-20231212034730453" style="zoom:67%;"></p>
+<p>出于这个原因，需要利用上面的一致性建模方法来为每个角色获得纹理和结构一致的图像。</p>
+<h2 id="实验部分">实验部分</h2>
+<p>后续更新</p>
+
+    
+
+    
+
+    
+    <div class="declare"> 
+      <ul class="post-copyright">
+        <li>
+          <strong>本文作者：</strong>
+          李宝璐
+        </li>
+        <li>
+          <strong>本文链接：</strong>
+          <a href="https://libaolu312.github.io/2023/12/08/论文精读-AutoStory-Generating-Diverse-Storytelling-Images-with-Minimal-Human-Effort/" title="论文精读:AutoStory: Generating Diverse Storytelling Images with Minimal Human Effort" target="_blank">https://libaolu312.github.io/2023/12/08/论文精读-AutoStory-Generating-Diverse-Storytelling-Images-with-Minimal-Human-Effort/</a>
+        </li>
+        
+        <li>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，均采用 <a href="https://github.com/JoeyBling/hexo-theme-yilia-plus/blob/master/LICENSE" rel="external nofollow" target="_blank">MIT</a> 许可协议。转载请注明出处！
+        </li>
+        
+      </ul>
+    </div>
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/AIGC//" class="article-tag-list-link color5">AIGC</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+
+    
+    
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <!-- <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a> -->
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://libaolu312.github.io/2023/12/08/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-AutoStory-Generating-Diverse-Storytelling-Images-with-Minimal-Human-Effort/" alt="微信分享二维码"> -->
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+
+<nav id="article-nav">
+  
+    <a href="/2023/12/09/%E4%B8%80%E8%87%B4%E6%80%A7%E8%A7%92%E8%89%B2%E7%94%9F%E6%88%90%E9%97%AE%E9%A2%98%E7%9A%84%E6%B1%87%E6%80%BB%E4%B8%8E%E6%8E%A2%E7%A9%B6/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          一致性角色生成问题的汇总与探究
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2023/12/07/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-The-Chosen-One-Consistent-Characters-in-Text-to-Image-Diffusion-Models/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">论文精读:The Chosen One: Consistent Characters in Text-to-Image Diffusion Models</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9%E8%AE%BA%E6%96%87%E7%9A%84%E5%88%9D%E5%8D%B0%E8%B1%A1"><span class="toc-number">1.</span> <span class="toc-text">1 对论文的初印象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E6%83%85%E6%8F%90%E8%A6%81"><span class="toc-number">2.</span> <span class="toc-text">2 前情提要</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%85%E4%BA%8B%E5%8F%AF%E8%A7%86%E5%8C%96"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 故事可视化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8E%B0%E6%9C%89%E7%9A%84%E5%81%9A%E6%B3%95"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 现有的做法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#this-work"><span class="toc-number">3.</span> <span class="toc-text">2.3 This Work</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B7%E4%BD%93%E7%9A%84%E5%81%9A%E6%B3%95%E7%AC%BC%E7%BB%9F"><span class="toc-number">3.1.</span> <span class="toc-text">2.4 具体的做法（笼统）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#method"><span class="toc-number">4.</span> <span class="toc-text">3 Method</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9B%AE%E6%A0%87"><span class="toc-number">4.0.1.</span> <span class="toc-text">目标</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%BB%E4%BD%93%E6%83%B3%E6%B3%95"><span class="toc-number">4.0.2.</span> <span class="toc-text">总体想法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%BB%E4%BD%93pipeline%E5%A6%82%E4%B8%8B%E6%89%80%E7%A4%BA"><span class="toc-number">4.0.3.</span> <span class="toc-text">总体pipeline如下所示</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B7%E4%BD%93%E6%9D%A5%E8%AF%B4"><span class="toc-number">4.0.4.</span> <span class="toc-text">具体来说</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#text-story---layout-generation"><span class="toc-number">5.</span> <span class="toc-text">4 Text Story -&gt; Layout
+Generation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#story-pre-processing"><span class="toc-number">5.1.</span> <span class="toc-text">4.1 Story Pre-processing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#layout-generation"><span class="toc-number">5.2.</span> <span class="toc-text">4.2 Layout Generation</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#dense-condition-generation-%E5%AF%86%E9%9B%86%E6%9D%A1%E4%BB%B6%E7%94%9F%E6%88%90"><span class="toc-number">6.</span> <span class="toc-text">5 Dense Condition
+Generation 密集条件生成</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#motivation"><span class="toc-number">6.1.</span> <span class="toc-text">5.1 Motivation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#subject-generation"><span class="toc-number">6.2.</span> <span class="toc-text">5.2 Subject Generation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#extracting-per-subject-dense-condition"><span class="toc-number">6.3.</span> <span class="toc-text">5.3 Extracting
+Per-subject Dense Condition</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#composing-dense-conditions"><span class="toc-number">6.4.</span> <span class="toc-text">5.4 Composing Dense Conditions</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#controllable-storytelling-image-generation"><span class="toc-number">7.</span> <span class="toc-text">6 Controllable
+Storytelling Image Generation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#sparse-layout-control%E7%A8%80%E7%96%8Flayout-control"><span class="toc-number">7.1.</span> <span class="toc-text">6.1 Sparse Layout
+Control（稀疏layout control）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#dense-control"><span class="toc-number">7.2.</span> <span class="toc-text">6.2 Dense Control</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#identity-preservation"><span class="toc-number">7.3.</span> <span class="toc-text">6.3 Identity Preservation</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#eliminating-character-wise-data-collection"><span class="toc-number">8.</span> <span class="toc-text">7 Eliminating
+Character-wise Data Collection</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#the-requirement-of-character-data%E5%AF%B9%E8%A7%92%E8%89%B2%E6%95%B0%E6%8D%AE%E7%9A%84%E8%A6%81%E6%B1%82"><span class="toc-number">8.1.</span> <span class="toc-text">7.1 The
+Requirement of Character Data（对角色数据的要求）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#identity-consistency-%E8%BA%AB%E4%BB%BD%E4%B8%80%E8%87%B4%E6%80%A7"><span class="toc-number">8.2.</span> <span class="toc-text">7.2 Identity Consistency
+（身份一致性）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#diversity%E5%A4%9A%E6%A0%B7%E6%80%A7"><span class="toc-number">8.3.</span> <span class="toc-text">7.3 Diversity（多样性）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AC%E8%8A%82%E6%80%BB%E7%BB%93"><span class="toc-number">8.4.</span> <span class="toc-text">7.4 本节总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E9%83%A8%E5%88%86"><span class="toc-number">9.</span> <span class="toc-text">实验部分</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
+        
+    </div>
+</aside>
+
+
+
+
+
+  <section id="comments" class="comments">
+      <style>
+        .comments{margin:30px;padding:10px;background:#fff}
+        @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+      </style>
       
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2023" class="archive-year">2023</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/06/22/Deep-Spectral-Representation-Learning-From-Multi-View-Data/" class="archive-article-date">
-        <time datetime="2023-06-22T13:20:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-06-22</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/06/22/Deep-Spectral-Representation-Learning-From-Multi-View-Data/" target="_blank">Deep Spectral Representation Learning From Multi-View Data</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/论文精读//" class="article-tag-list-link color5">论文精读</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+    var gitalk = new Gitalk({
+      clientID: '42328a99496b32b78cfb',
+      clientSecret: '8ff71391255b5283f624f252a3ca53d7b9b96f4b',
+      repo: 'libaolu312.github.io',
+      owner: 'libaolu312',
+      admin: 'libaolu312',
+     //id ��Ϊ�˱�֤issue��Ψһ�ԣ�id���Ȳ��ܴ���50�������������ʹ��·������id����һ����ȡ����ò�Ҫ�޸Ĵ������������ܵ������۶�ʧ  
+      id: location.href.slice(location.href.length-25),
+      distractionFreeMode: 'true',
+      labels: 'Comment'.split(',').filter(l => l) ,
+    })
+    gitalk.render('gitalk-container')
+    </script>
     
     
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" class="archive-article-date">
-        <time datetime="2023-06-12T14:05:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-06-12</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/06/12/OS%E8%AF%BE%E8%AE%BEFAT32U%E7%9B%98%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" target="_blank">OS课设FAT32U盘文件系统</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/操作系统//" class="article-tag-list-link color5">操作系统</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/06/12/CS231N-%E7%BA%BF%E6%80%A7%E5%88%86%E7%B1%BB%E3%80%81%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/" class="archive-article-date">
-        <time datetime="2023-06-11T16:38:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-06-12</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/06/12/CS231N-%E7%BA%BF%E6%80%A7%E5%88%86%E7%B1%BB%E3%80%81%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%92%8C%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D/" target="_blank">CS231N-损失函数和梯度下降</a>
-  
-    </h1>
-  
+  </section>
 
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/深度学习知识//" class="article-tag-list-link color2">深度学习知识</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/06/12/%E7%9F%A5%E8%AF%86%E8%92%B8%E9%A6%8F%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86-%E7%BB%BC%E8%BF%B0/" class="archive-article-date">
-        <time datetime="2023-06-11T16:28:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-06-12</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/06/12/%E7%9F%A5%E8%AF%86%E8%92%B8%E9%A6%8F%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86-%E7%BB%BC%E8%BF%B0/" target="_blank">知识蒸馏算法原理+综述</a>
-  
-    </h1>
-  
 
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/深度学习知识//" class="article-tag-list-link color2">深度学习知识</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/06/10/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AF%BE%E8%AE%BE%E4%BB%A3%E7%A0%81%E8%AF%A6%E8%A7%A3/" class="archive-article-date">
-        <time datetime="2023-06-10T12:23:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-06-10</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/06/10/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AF%BE%E8%AE%BE%E4%BB%A3%E7%A0%81%E8%AF%A6%E8%A7%A3/" target="_blank">数据库课设代码详解</a>
-  
-    </h1>
-  
 
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/数据库//" class="article-tag-list-link color4">数据库</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/06/08/%E2%80%9C%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AF%BE%E8%AE%BE-%E9%AB%98%E6%A0%A1%E7%A7%91%E7%A0%94%E7%B3%BB%E7%BB%9F%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%95%E2%80%9D/" class="archive-article-date">
-        <time datetime="2023-06-08T10:48:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-06-08</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/06/08/%E2%80%9C%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AF%BE%E8%AE%BE-%E9%AB%98%E6%A0%A1%E7%A7%91%E7%A0%94%E7%B3%BB%E7%BB%9F%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%95%E2%80%9D/" target="_blank">“数据库课设--高校科研系统开发记录”</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/数据库//" class="article-tag-list-link color4">数据库</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/06/06/%E7%8E%B0%E7%8A%B6%E5%8F%8A%E5%AF%B9%E6%9C%AA%E6%9D%A5%E7%9A%84%E6%80%9D%E8%80%83/" class="archive-article-date">
-        <time datetime="2023-06-06T10:38:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-06-06</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/06/06/%E7%8E%B0%E7%8A%B6%E5%8F%8A%E5%AF%B9%E6%9C%AA%E6%9D%A5%E7%9A%84%E6%80%9D%E8%80%83/" target="_blank">现状及对未来的思考</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">碎碎念</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/碎碎念//" class="article-tag-list-link color4">碎碎念</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/06/04/%E8%BF%90%E5%8A%A8/" class="archive-article-date">
-        <time datetime="2023-06-04T12:55:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-06-04</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/06/04/%E8%BF%90%E5%8A%A8/" target="_blank">运动</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">剪影</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/剪影//" class="article-tag-list-link color3">剪影</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/05/06/Personal%20homepage/" class="archive-article-date">
-        <time datetime="2023-05-06T13:05:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-05-06</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/05/06/Personal%20homepage/" target="_blank">Personal homepage</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Personal homepage</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Personal-homepage//" class="article-tag-list-link color3">Personal homepage</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-      
-        </div></section>
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2022" class="archive-year">2022</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2022/07/01/YOLOv5/" class="archive-article-date">
-        <time datetime="2022-07-01T12:33:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-07-01</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2022/07/01/YOLOv5/" target="_blank">YOLOv5</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/论文精读//" class="article-tag-list-link color5">论文精读</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/archives/page/3/">&amp;laquo; Prev</a><a class="page-number" href="/archives/">1</a><a class="page-number" href="/archives/page/2/">2</a><a class="page-number" href="/archives/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/archives/page/5/">5</a><a class="extend next" rel="next" href="/archives/page/5/">Next &amp;raquo;</a>
-    </nav>
-  
 
 
           </div>
@@ -851,8 +820,8 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: true,

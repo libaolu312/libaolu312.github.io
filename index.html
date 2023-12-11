@@ -483,6 +483,895 @@ of Technology</p>
 
 
   
+    <article id="post-论文简读-Alpha-CLIP-A-CLIP-Model-Focusing-on-Wherever-You-Want" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2023/12/11/%E8%AE%BA%E6%96%87%E7%AE%80%E8%AF%BB-Alpha-CLIP-A-CLIP-Model-Focusing-on-Wherever-You-Want/" target="_blank">论文简读:Alpha-CLIP: A CLIP Model Focusing on Wherever You Want</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2023/12/11/%E8%AE%BA%E6%96%87%E7%AE%80%E8%AF%BB-Alpha-CLIP-A-CLIP-Model-Focusing-on-Wherever-You-Want/" class="archive-article-date">
+        <time datetime="2023-12-10T18:32:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-12-11</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <blockquote>
+<p>前言：上海交大联合多所高校共同发布的Alpha-CLIP，这个Alpha-CLIP是CLIP的加强版，我觉得这个Alpha-CLIP可以方法很多领域的工作中，所以对这篇工作进行简读，了解基本原理，重点看它是怎么和其它基础模型进行结合的，并将其引入到当前的工作中。</p>
+</blockquote>
+<h2 id="motivation">1 Motivation</h2>
+<p>Contrastive Language-Image
+Pre-training（CLIP），为了更好的理解和控制图像编辑，<strong>将重点放在感兴趣的特定区域</strong>变得很重要，这个Alpha-CLIP是CLIP的增强版本，带有<strong>辅助alpha通道来建议关注区域</strong>，并<strong>通过构建的millions的RGBAregion-text对数据进行微调</strong>。</p>
+<p>Alpha-CLIP既保留了CLIP的视觉识别能力，又能精确控制图像内容的重点。</p>
+<h2 id="简要介绍">2 简要介绍</h2>
+<p>之前改进CLIP的做法：</p>
+<ul>
+<li><strong>第一种方法</strong>：<strong>将感兴趣的区域裁剪成不同的小块/对图像、特征和attention
+masks进行mask来排除不相关区域</strong>。但是这种方法破坏了（in
+cropping）并忽略了（in
+masking）上下文信息，而上下文信息对于精确的图像理解和推理很重要。</li>
+<li><strong>第二种方法</strong>：在提供给CLIP的图像上，<strong>通过circles/mask
+coutour来突出感兴趣的区域</strong>。这种方法虽然user-friendly，但它改变了图像的原始内容，这将导致不良的识别和生成结果。</li>
+</ul>
+<figure>
+<img src="/2023/12/11/%E8%AE%BA%E6%96%87%E7%AE%80%E8%AF%BB-Alpha-CLIP-A-CLIP-Model-Focusing-on-Wherever-You-Want/image-20231212040043382.png" alt="image-20231212040043382">
+<figcaption aria-hidden="true">image-20231212040043382</figcaption>
+</figure>
+<p>为了<strong>在不损害原始图像的情况下实现区域聚焦</strong>，这里提出了Alpha-CLIP，它通过额外的alpha通道输入合并感兴趣的区域来改进CLIP。</p>
+<p>引入的<strong>alpha通道与RGB通道一起</strong>，使Alpha-CLIP能够专注于指定区域，同时保持对上下文信息的感知。</p>
+<p>虽然使用CLIP模型初始化，但alpha-CLIP的训练仍需要大量的region-text对数据，使用Segment
+Anything Model（SAM）和
+用于图像字幕的多模态大模型（如BLIP-2），开发一个有效的pipeline来生成millions的易于转换为RGBA-text
+data的region-text pairs数据。</p>
+<p>经过region-text 和 image-text
+数据的混合训练后，alpha-CLIP可以在保持CLIP视觉识别精度的同时，专注于特定区域。</p>
+<h3 id="rgba-region-text-pair-generation">2.1 RGBA Region-Text Pair
+Generation</h3>
+<p>工作的第一部分是 RGBA Region-Text Pair
+Generation，但这一部分是在说用什么数据在训练这个Alpha-CLIP，同时说明了这个数据是怎么生成的，作者构建了一套新的pipeline来生成
+region-text pair数据。</p>
+<p><img src="/2023/12/11/%E8%AE%BA%E6%96%87%E7%AE%80%E8%AF%BB-Alpha-CLIP-A-CLIP-Model-Focusing-on-Wherever-You-Want/image-20231212040546572.png" alt="image-20231212040546572" style="zoom:67%;"></p>
+<p>但是我们使用这个Alpha-CLIP基本是会直接调用预训练好的，所以这部分先不用太关注。</p>
+<blockquote>
+<p>PS：当你的工作中需要对Alpha-CLIP做微调的时候，一定要看这部分。</p>
+</blockquote>
+<h3 id="alpha-clip">2.2 Alpha-CLIP</h3>
+<h4 id="model-structure">Model structure</h4>
+<p><img src="/2023/12/11/%E8%AE%BA%E6%96%87%E7%AE%80%E8%AF%BB-Alpha-CLIP-A-CLIP-Model-Focusing-on-Wherever-You-Want/image-20231212040601821.png" alt="image-20231212040601821" style="zoom:67%;"></p>
+<p>Alpha-CLIP 主要是对 CLIP 的结构进行轻微修改和微调。</p>
+<p>在 CLIP 图像编码器的 ViT
+结构中，在第一层对图像进行RGB卷积（图中蓝色部分）。</p>
+<p>引入了一个与 RGB Conv 层平行的额外 Alpha Conv 层，它使 CLIP
+图像编码器能够接受额外的Alpha通道作为输入。</p>
+<p>Alpha 通道输入设置为[0,1]的范围，其中1表示前景，0表示背景。将Alpha
+Conv核权值初始化为零，确保初始Alpha-CLIP 忽略Alpha通道作为输入。</p>
+<h3 id="training-method">Training Method</h3>
+<ul>
+<li>在训练过程中，保持 CLIP 的 text encoder 不变，完整地训练 Alpha-CLIP
+图像编码器。</li>
+<li>与处理alpha通道输入的第一个卷积层相比，对随后的变压器块应用了较低的学习率。</li>
+<li>为了保持 CLIP
+对完整图像的全局识别能力，在训练过程中采用了<strong>特定的数据采样策略</strong>：设置采样比，表示为<span class="math inline">\(r_s = 0.1\)</span> ，以便<strong>偶尔用原始
+图像-文本对 替换生成的 RGBA -文本对</strong>，并将alpha通道设置为full
+1。</li>
+</ul>
+<h3 id="alpha-clip-for-downstream-tasks">Alpha-CLIP for downstream
+tasks</h3>
+<p>经过训练，Alpha-CLIP具有专注于指定区域和控制编辑的能力。Alpha-CLIP可以通过<strong>即插即用</strong>的方式提高CLIP在各种基线上的性能，包括识别、MLLM和2D/3D生成等各种下游任务。</p>
+<p><img src="/2023/12/11/%E8%AE%BA%E6%96%87%E7%AE%80%E8%AF%BB-Alpha-CLIP-A-CLIP-Model-Focusing-on-Wherever-You-Want/image-20231212041124254.png" alt="image-20231212041124254" style="zoom:67%;"></p>
+<h2 id="在下游任务中如何应用alpha-clip">3
+在下游任务中如何应用Alpha-CLIP</h2>
+<h3 id="图像分类">3.1 图像分类</h3>
+<p><img src="/2023/12/11/%E8%AE%BA%E6%96%87%E7%AE%80%E8%AF%BB-Alpha-CLIP-A-CLIP-Model-Focusing-on-Wherever-You-Want/640.png" alt="图片" style="zoom:67%;"></p>
+<p>对于ImagNet的一张图片，可以通过alpha-map控制CLIP去关注鱼或渔夫。</p>
+<p><img src="/2023/12/11/%E8%AE%BA%E6%96%87%E7%AE%80%E8%AF%BB-Alpha-CLIP-A-CLIP-Model-Focusing-on-Wherever-You-Want/640-1702325735530-4.png" alt="图片" style="zoom:67%;"></p>
+<p>以ImageNet的Zero-Shot
+Classification作为评价指标，在对全图进行识别时，Alpha-CLIP可以保持原本CLIP的分类准确率。进一步地，在给出了需要关注区域的长方形box或者mask时，Alpha-CLIP可以进一步提升分类准确率。</p>
+<h3 id="与llm结合">3.2 与LLM结合</h3>
+<p><img src="/2023/12/11/%E8%AE%BA%E6%96%87%E7%AE%80%E8%AF%BB-Alpha-CLIP-A-CLIP-Model-Focusing-on-Wherever-You-Want/image-20231212041710905.png" alt="image-20231212041710905" style="zoom:67%;"></p>
+<p><img src="/2023/12/11/%E8%AE%BA%E6%96%87%E7%AE%80%E8%AF%BB-Alpha-CLIP-A-CLIP-Model-Focusing-on-Wherever-You-Want/image-20231212041730367.png" alt="image-20231212041730367" style="zoom:67%;"></p>
+<p><img src="/2023/12/11/%E8%AE%BA%E6%96%87%E7%AE%80%E8%AF%BB-Alpha-CLIP-A-CLIP-Model-Focusing-on-Wherever-You-Want/image-20231212041748772.png" alt="image-20231212041748772" style="zoom:67%;"></p>
+<p>将主流的LLaVA-1.5中的CLIP基座模型替换为Alpha-CLIP，用户可以通过简单地用画笔标记处需要关注的区域，从而进行指定区域的对话交互。</p>
+<p>在定量实验方面，通过LLaVA测试了MLLM的region
+caption能力。通过在RefCOCO和VG上分别进行finetune，取得了SOTA的region
+caption分数。</p>
+<p><img src="/2023/12/11/%E8%AE%BA%E6%96%87%E7%AE%80%E8%AF%BB-Alpha-CLIP-A-CLIP-Model-Focusing-on-Wherever-You-Want/640-1702325897577-7.png" alt="图片" style="zoom:67%;"></p>
+<h3 id="与diffusion-model结合">3.3 与Diffusion Model结合</h3>
+<p><img src="/2023/12/11/%E8%AE%BA%E6%96%87%E7%AE%80%E8%AF%BB-Alpha-CLIP-A-CLIP-Model-Focusing-on-Wherever-You-Want/image-20231212041907976.png" alt="image-20231212041907976" style="zoom:67%;"></p>
+<p><img src="/2023/12/11/%E8%AE%BA%E6%96%87%E7%AE%80%E8%AF%BB-Alpha-CLIP-A-CLIP-Model-Focusing-on-Wherever-You-Want/image-20231212041932224.png" alt="image-20231212041932224" style="zoom:67%;"></p>
+<p>Stable-Diffusion是目前主流的2D图片生成模型，其Image
+Variation版本可以实现“图生图”，其中图片的编码器也是CLIP模型。通过将该模型替换为Alpha-CLIP，可以实现更复杂图片中指定物体的生成(同时较好地保留背景)。如上图所示，使用原始的CLIP会生成同时具有狮子和老虎特征的“狮虎兽”，而Alpha-CLIP能够很好地区分两个物体，从而指导Stable
+Diffusion模型生成更专一的图片。更多结果见下图<img src="/2023/12/11/%E8%AE%BA%E6%96%87%E7%AE%80%E8%AF%BB-Alpha-CLIP-A-CLIP-Model-Focusing-on-Wherever-You-Want/image-20231212042111993.png" alt="image-20231212042111993" style="zoom:67%;"></p>
+<h2 id="总结">总结</h2>
+<p>本文介绍的这项工作提出了Alpha-CLIP模型，该模型引入了一个额外的alpha通道，用于指定感兴趣的区域。通过对数百万个RGBA区域-文本对进行训练，Alpha-CLIP不仅表现出卓越的区域关注能力，而且确保其输出空间与原始的CLIP模型保持一致。这种一致性使得Alpha-CLIP在CLIP的各种下游应用中能够轻松替代，无缝衔接。</p>
+<p>实验证明了，当提供特定关注的区域时，Alpha-CLIP展现出了更强大的Zero-Shot识别能力，并验证了它在许多下游任务中的有用性。CLIP的应用远远超出了本文的范围。</p>
+<p>但是现在的Alpha-CLIP有一个很大的局限性，即Alpha通道不能再中间值之外进行泛化（只能接受0,1两个值），也就是无法指令注意力幅度，这将会是基于Alpha-CLIP的一个改进方向。</p>
+
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/AIGC//" class="article-tag-list-link color5">AIGC</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2023/12/11/%E8%AE%BA%E6%96%87%E7%AE%80%E8%AF%BB-Alpha-CLIP-A-CLIP-Model-Focusing-on-Wherever-You-Want/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-一致性角色生成问题的汇总与探究" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2023/12/09/%E4%B8%80%E8%87%B4%E6%80%A7%E8%A7%92%E8%89%B2%E7%94%9F%E6%88%90%E9%97%AE%E9%A2%98%E7%9A%84%E6%B1%87%E6%80%BB%E4%B8%8E%E6%8E%A2%E7%A9%B6/" target="_blank">一致性角色生成问题的汇总与探究</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2023/12/09/%E4%B8%80%E8%87%B4%E6%80%A7%E8%A7%92%E8%89%B2%E7%94%9F%E6%88%90%E9%97%AE%E9%A2%98%E7%9A%84%E6%B1%87%E6%80%BB%E4%B8%8E%E6%8E%A2%E7%A9%B6/" class="archive-article-date">
+        <time datetime="2023-12-09T09:38:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-12-09</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <blockquote>
+<p>关于一致性角色问题的论文相关汇总及分析探究</p>
+</blockquote>
+    
+    <a class="article-more-a" href="/2023/12/09/%E4%B8%80%E8%87%B4%E6%80%A7%E8%A7%92%E8%89%B2%E7%94%9F%E6%88%90%E9%97%AE%E9%A2%98%E7%9A%84%E6%B1%87%E6%80%BB%E4%B8%8E%E6%8E%A2%E7%A9%B6/#more">more >></a>
+    
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/AIGC//" class="article-tag-list-link color5">AIGC</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2023/12/09/%E4%B8%80%E8%87%B4%E6%80%A7%E8%A7%92%E8%89%B2%E7%94%9F%E6%88%90%E9%97%AE%E9%A2%98%E7%9A%84%E6%B1%87%E6%80%BB%E4%B8%8E%E6%8E%A2%E7%A9%B6/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-论文精读-AutoStory-Generating-Diverse-Storytelling-Images-with-Minimal-Human-Effort" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2023/12/08/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-AutoStory-Generating-Diverse-Storytelling-Images-with-Minimal-Human-Effort/" target="_blank">论文精读:AutoStory: Generating Diverse Storytelling Images with Minimal Human Effort</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2023/12/08/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-AutoStory-Generating-Diverse-Storytelling-Images-with-Minimal-Human-Effort/" class="archive-article-date">
+        <time datetime="2023-12-07T18:31:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-12-08</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <blockquote>
+<p>前言：精读论文：AutoStory: Generating Diverse Storytelling Images
+with Minimal Human
+Effort，该论文与2023-11-23日上传至arXiv上，该工作由浙江大学提出，主要关注的点在于对一个文本故事进行可视化和多轮图像生成的一致性（包括角色与非角色）</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://aim-uofa.github.io/AutoStory/">工作主页</a></p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2311.11243">arXiv主页</a></p>
+<p>[未开源]</p>
+<h2 id="对论文的初印象">1 对论文的初印象</h2>
+<p>AutoStory: Generating Diverse Storytelling Images with Minimal Human
+Effort AutoStory：用最少的人力生成多样化的故事图像 标题给的很直白</p>
+<h2 id="前情提要">2 前情提要</h2>
+<h3 id="故事可视化">2.1 故事可视化</h3>
+<p>旨在生成一系列与文本中描述的故事相匹配的图像，要求生成的图像满足高质量、与<strong>文本描述一致以及角色身份的一致性</strong>。</p>
+<h3 id="现有的做法">2.2 现有的做法</h3>
+<p>现有的方法通过<strong>只考虑几个特定的角色和场景</strong>，或者<strong>要求用户提供每个图像的控制条件（如草图）</strong>，大大简化了问题。然而，这些简化使得这些方法不能用于实际应用。</p>
+<h2 id="this-work">2.3 This Work</h2>
+<p>提出了一种自动化的故事可视化系统，该系统可以有效地生成多样化、高质量和一致的故事图像集，并<strong>将人类互动降至最低</strong>。</p>
+<h3 id="具体的做法笼统">2.4 具体的做法（笼统）</h3>
+<p><strong>利用大型语言模型的理解和规划能力进行布局规划（layout）</strong>，然后<strong>利用大型文本到图像模型基于布局（layout）生成复杂的故事图像</strong>。</p>
+<p>根据实验发现：</p>
+<ul>
+<li><strong>稀疏控制条件（spare control conditions，如边界框 bounding
+box）</strong>适用于布局规划</li>
+<li><strong>密集控制条件（dense control conditions，例如草图和关键点
+sketches and keypoints）</strong>适用于生成高质量的图像内容。</li>
+</ul>
+<p>为了两全其美，设计了一个<strong>密集条件生成模块（作为桥梁）</strong>，<strong>将简单的边界框布局转换为草图或关键点控制条件</strong>，用于最终图像生成，这不仅提高了图像质量，还允许简单直观的用户交互。</p>
+<p>We exploit few-shot parameter-efficient fine-tuning techniques for
+foundation models。</p>
+<p>AutoStory结合定制的生成技术，通过<strong>只对每个角色的几个图像进行训练</strong>，同时将其推广到不同的角色、场景和风格，实现了身份一致性生成。</p>
+<p>此外，这篇工作提出了一种简单而有效的方法来生成多视角一致的人物图像，消除了收集或绘制人物图像对人力的依赖。</p>
+<p>具体来说，提出了一种 training-free
+的身份一致性建模方法，<strong>将多个视图视为视频，and jointly generating
+the textures with temporal-aware
+attention</strong>。还通过利用视图条件下的3D先验图像翻译模型来提高生成的角色图像的多样性，而不影响身份一致性。</p>
+<h2 id="method">3 Method</h2>
+<h4 id="目标">目标</h4>
+<p>用<strong>最少的人力</strong>（最少的人工准备和交互）生成高质量、多样化且具有一致性的讲故事的图像。</p>
+<blockquote>
+<p>PS：用来讲故事的图像是有很强的场景复杂性的。</p>
+</blockquote>
+<h4 id="总体想法">总体想法</h4>
+<p><strong>LLM的理解能力和planning能力 +
+T2I模型的生成能力。</strong></p>
+<h4 id="总体pipeline如下所示">总体pipeline如下所示</h4>
+<p><img src="/2023/12/08/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-AutoStory-Generating-Diverse-Storytelling-Images-with-Minimal-Human-Effort/2UHdBjqY9nk.png" alt="image.png"> 这个过程可以分为两个阶段：</p>
+<ul>
+<li><strong>条件准备阶段</strong>（condition preparation）</li>
+<li><strong>条件图像生成阶段</strong>（condition image generation)</li>
+</ul>
+<h4 id="具体来说">具体来说</h4>
+<ul>
+<li>首先<strong>利用LLM将文本故事描述转换为讲故事图像的layout</strong>。</li>
+<li>LLM生成的讲故事图像layout属于稀疏控制条件（spare control
+conditions），最好<strong>把其转换成密集控制条件</strong>（dense control
+conditions），针对这一点，也需要提出一个方法将稀疏的 bounding box
+转换成密集的 control signals。</li>
+<li>根据转换好的 layout 生成具有合理场景安排的故事图像。</li>
+<li>最后再通过一种方法来提高生成图像的角色一致性。</li>
+</ul>
+<p>总体来讲这样的方法<strong>只需要在少数图像上微调T2I模型，训练难度不大</strong>。</p>
+<p>下面来一个一个步骤展开来说。</p>
+<h2 id="text-story---layout-generation">4 Text Story -&gt; Layout
+Generation</h2>
+<p>这部分也分两个步骤：</p>
+<ul>
+<li><strong>story pre-processing</strong></li>
+<li><strong>layout generation</strong></li>
+</ul>
+<h3 id="story-pre-processing">4.1 Story Pre-processing</h3>
+<p>用户的输入可以是：</p>
+<ul>
+<li>完整的故事 <span class="math inline">\(S\)</span></li>
+<li>故事的简单描述 <span class="math inline">\(D\)</span></li>
+</ul>
+<p><strong>当输入的是故事的简单描述 <span class="math inline">\(D\)</span>
+时会使用LLM来生成特定的故事情节</strong>，即： <span class="math display">\[
+S=LLM\left( F_{D2S},D \right)
+\]</span> 过程如图所示：
+<img src="/2023/12/08/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-AutoStory-Generating-Diverse-Storytelling-Images-with-Minimal-Human-Effort/2UHlIRWRyoj.png" alt="image.png" style="zoom:67%;">
+<span class="math inline">\(F_{D2S}\)</span> 是帮助 LLM 生成故事的
+instruction</p>
+<p>举个例子，在获取到故事 <span class="math inline">\(S\)</span>
+之后，要求LLM将故事分成 <strong><span class="math inline">\(K\)</span>
+panels</strong>，每个 panel 对应于一个图像（就很像之前的[IMG] token）：
+<span class="math display">\[
+\left[ P_1,P_2,...,P_K \right] =LLM\left( F_{S2P},S,K \right)
+\]</span> <span class="math inline">\(F_{S2P}\)</span>
+是指导模型根据故事生成 panels 的 instruction ，<span class="math inline">\(P_i\)</span> 是文本描述的第 <span class="math inline">\(i\)</span> 个 panel 。</p>
+<p>至此，就完成了故事的预处理。</p>
+<h3 id="layout-generation">4.2 Layout Generation</h3>
+<p>将故事划分为 panels 之后，利用 LLM 从每个 panel 中提取 scene layout
+： <span class="math display">\[
+\left[ \sigma _1,\sigma _2,...,\sigma _K \right] =LLM\left(
+F_{P2L},\left[ P_1,P_2,...,P_K \right] \right)
+\]</span> - <span class="math inline">\(F_{P2L}\)</span>是指导模型根据
+panel 生成 layout 的 instruction， - <span class="math inline">\(\sigma
+_i\)</span> 是第 <span class="math inline">\(i\)</span> 个 panel 的
+scene layout，which consists of a global prompt <span class="math inline">\(p_{i}^{global}\)</span> and several local prompts
+with corresponding localized bounding boxes：</p>
+<p><span class="math display">\[
+\sigma _i=\left\{ p_{i}^{global},\left( p_{i1}^{local},b_{i1} \right)
+,\left( p_{i2}^{local},b_{i2} \right) ,...,\left(
+p_{ik_i}^{local},b_{ik_i} \right) \right\}
+\]</span> - <span class="math inline">\(k_i\)</span> is the number of
+local prompts in the i-th story image - <span class="math inline">\(p_{ij}^{local}\)</span> 和 <span class="math inline">\(b_{ij}^{local}\)</span> are the j-th local prompt
+and bounding box in the i-th story image。 - global prompt
+描述整个故事图像的全局上下文 - local prompt
+则侧重于单个对象的细节这种设计通过将故事图像生成的复杂性解耦为多个简单任务，帮助我们显著提高图像生成的质量。</p>
+<p><img src="/2023/12/08/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-AutoStory-Generating-Diverse-Storytelling-Images-with-Minimal-Human-Effort/image-20231212034101351.png" alt="image-20231212034101351" style="zoom:67%;"></p>
+<h2 id="dense-condition-generation-密集条件生成">5 Dense Condition
+Generation 密集条件生成</h2>
+<figure>
+<img src="/2023/12/08/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-AutoStory-Generating-Diverse-Storytelling-Images-with-Minimal-Human-Effort/image-20231212034141309.png" alt="image-20231212034141309">
+<figcaption aria-hidden="true">image-20231212034141309</figcaption>
+</figure>
+<h3 id="motivation">5.1 Motivation</h3>
+<p>之前已经说过了，<strong>稀疏的 bounding box
+很难生成高质量的图片</strong>，也有可能造成图像于 layout
+不匹配的情况。</p>
+<p>造成这些情况的原因主要是 <strong>bounding box
+所提供的信息有限</strong>，因此需要引入 dense sketch or keypoint
+作为guidances，因此在刚才生成的 layout 的基础上，引入一个 dense
+condition 生成模块。</p>
+<h3 id="subject-generation">5.2 Subject Generation</h3>
+<p>首先<strong>根据 local prompts 逐个生成 individual
+objects</strong></p>
+<p>这个过程可以表示为：<span class="math inline">\(I_{ij}=DM\left(
+p_{ij}^{local} \right) ,j=1,2,...,k_i\)</span></p>
+<p><span class="math inline">\(I_{ij}\)</span> 表示第<span class="math inline">\(i\)</span>个 panel 中的第 <span class="math inline">\(j\)</span> 个 subject，由于单个对象生成 prompt
+的简单性，生成过程相对容易，因此能够获得高质量的 single-object
+生成结果。</p>
+<h3 id="extracting-per-subject-dense-condition">5.3 Extracting
+Per-subject Dense Condition</h3>
+<ul>
+<li>在获取到single-object的生成结果后，使用open-vocabulary object
+detection方法（<strong>Grounding-DINO</strong>），对local
+prompt描述的对象进行定位，并且获得 localization box <span class="math inline">\(b_{ij}^{\det}\)</span>。</li>
+<li>之后，使用 <strong>SAM</strong> 来获得对象的 segementation mask
+<span class="math inline">\(m_{ij}\)</span>（<span class="math inline">\(b_{ij}^{\det}\)</span>作为 SAM 的 prompt）。</li>
+<li>在 T2I Adapter之后，使用 <strong>PidiNet</strong> 来获得 the outer
+edges of the mask（这个可以被用作可控图像生成的dense
+sketch）（对于人类角色，也可以使用HRNet来获取人类姿态关节点作为dense
+conditions）</li>
+</ul>
+<h3 id="composing-dense-conditions">5.4 Composing Dense Conditions</h3>
+<p>最后，<strong>将前面得到的single-object的dense control
+condition粘贴到layout中对应的corresponding bounding
+box中，以获得整个图像的dense condition</strong>。</p>
+<h2 id="controllable-storytelling-image-generation">6 Controllable
+Storytelling Image Generation</h2>
+<p><strong>可控的故事图像生成</strong></p>
+<p>这部分的工作：<strong>通过引入额外的控制信号来提高图像生成的质量</strong>。</p>
+<h3 id="sparse-layout-control稀疏layout-control">6.1 Sparse Layout
+Control（稀疏layout control）</h3>
+<p>之前通过 LLM 获得了故事图像的总体 layout，下买就按照 layout
+生成故事图像的详细内容。</p>
+<p>选择在 <strong>Mix-of-Show</strong>
+中的区域采样方法，因为这个方法不引入额外的模型参数/优化过程。（下面具体来说这个过程）</p>
+<p><strong>在cross-attention中</strong>，the feature inside the box
+<span class="math inline">\(b_{ij}\)</span> 被替换成： <span class="math display">\[
+Attn\left( W^Qz_{ij},W^KE\left( p_{ij}^{local} \right) ,W^VE\left(
+p_{i}^{local} \right) \right)
+\]</span> 通过这种方式，我们<strong>强制每个box中的image latent feature
+聚焦在相应的local
+object上</strong>，因此生成的图像可以确认布局也可以避免对象之间的属性混淆。</p>
+<p>整个基于global prompt和 sparse bounding box
+layout的生成过程可以写成： <span class="math display">\[
+DM\left( p_{i}^{global};\sigma _i \right)
+\]</span>
+当然以上的过程都是基于稀疏layout来做的，和之前工作的做法没什么不同，下面的才是核心。</p>
+<h3 id="dense-control">6.2 Dense Control</h3>
+<p>上面那种方法生成的图像质量难免会差一点（之前也说过了），那么为了进一步提升图像质量，通过之前生成的dense
+condition来生成图像。</p>
+<p>具体来说，我们将dense control
+signals注入到一个轻量级的T2I-Adapter，conditional
+generation过程可以表示为： <span class="math display">\[
+DM\left( p_{i}^{global};\sigma _i,\left\{ A,C_i \right\} \right)
+\]</span> - <span class="math inline">\(C_i\)</span> 是第<span class="math inline">\(i\)</span>个story image的dense condition - <span class="math inline">\(A\)</span> 是用于dense
+control的T2I-Adapter的型号</p>
+<p>PS：这里使用的<strong>dense
+condition都是自动生成的</strong>，避免了之前工作中人工绘制草图的繁琐过程。</p>
+<h3 id="identity-preservation">6.3 Identity Preservation</h3>
+<p>Identity Preservation过程挺重要的，这里借助Mix-of-Show中的思想。</p>
+<p>给一个subject几个图像，用ED-LoRA对每个subject微调权重，以捕捉详细的subject特征。</p>
+<p>使用梯度融合（gradient fusion）对单个角色的多个ED-LoRA进行合并，to
+guarantee the identity of all characters in the story。</p>
+<p>融合后的LoRA权重表示为 <span class="math inline">\(\varDelta
+W\)</span>， 那么最终的生成过程可以写成： <span class="math display">\[
+DM\left( p_{i}^{global};\sigma _i,\left\{ A,C_i \right\} ,\varDelta W
+\right)
+\]</span></p>
+<h2 id="eliminating-character-wise-data-collection">7 Eliminating
+Character-wise Data Collection</h2>
+<p>这部分主要对一致性角色生成进行讨论。</p>
+<p><img src="/2023/12/08/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-AutoStory-Generating-Diverse-Storytelling-Images-with-Minimal-Human-Effort/image-20231212034414756.png" alt="image-20231212034414756" style="zoom:67%;"></p>
+<h3 id="the-requirement-of-character-data对角色数据的要求">7.1 The
+Requirement of Character Data（对角色数据的要求）</h3>
+<p>To train a customized model of a character in a
+story，需要几个角色的图像来进行模型微调（可以写成 <span class="math inline">\(\left\{ I_{i}^{sub} \right\}
+,i=1,2,...,n\)</span>，n是图像的数量）</p>
+<p>为了获得针对单个角色的有效定制模型，训练数据需要满足：</p>
+<ul>
+<li><strong>身份一致性</strong>，训练图像的角色的texture和structure应该一致。</li>
+<li><strong>多样性</strong>，训练数据应该有所不同，例如在viewpoints，来避免模型过拟合。</li>
+</ul>
+<h3 id="identity-consistency-身份一致性">7.2 Identity Consistency
+（身份一致性）</h3>
+<p><img src="/2023/12/08/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-AutoStory-Generating-Diverse-Storytelling-Images-with-Minimal-Human-Effort/image-20231212034453659.png" alt="image-20231212034453659" style="zoom:67%;"></p>
+<p><strong>将单个角色的多个图像视为视频中的不同帧</strong>，并使用扩散模型同时生成它们，在这个过程中，<strong>DM中的self-attention要被扩展到其它”视频帧“</strong>，来增强图像之间的依赖性，以获得角色一致性的生成结果。</p>
+<p>在self-attention中，<strong>让每个帧中的latent
+features关注前一帧和第一帧中的特征</strong>，来建立依赖关系，这个过程可以表示为：
+<span class="math display">\[
+Attn\left( W^Qz_i,W^K\left[ z_0,z_{i-1} \right] ,W^V\left[ z_0,z_{i-1}
+\right] \right)
+\]</span> - <span class="math inline">\(z_i\)</span> 是当前帧的latent
+feature，<span class="math inline">\(z_0\)</span> 和 <span class="math inline">\(z_{i-1}\)</span> 是第一帧和前一帧的latent
+feature。</p>
+<ul>
+<li>[·，·]是串联运算（concatenation operation）</li>
+</ul>
+<h3 id="diversity多样性">7.3 Diversity（多样性）</h3>
+<p>上面的方法可以保证生成图像的角色一致性，但是每次生成出来的图像的多样性是不足的。</p>
+<p>因此<strong>在不同帧中注入various
+conditions，来增强生成的角色多样性</strong>。</p>
+<p>为了获得这些多样但角色一致的条件：</p>
+<ul>
+<li>首先通过 <span class="math inline">\(I_{i}^{cond}=DM\left(
+p_{i}^{sub} \right)\)</span> 生成一张图像（<span class="math inline">\(p_{i}^{sub}\)</span> 是LLM生成的角色的描述）</li>
+<li>使用训练好的view-point conditioned image translation
+model从不同的viewpoints获得角色的图像。</li>
+</ul>
+<p><img src="/2023/12/08/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-AutoStory-Generating-Diverse-Storytelling-Images-with-Minimal-Human-Effort/image-20231212034602394.png" alt="image-20231212034602394" style="zoom:67%;"></p>
+<p>最后，提取这些图像的sketches或keypoints作为控制条件。</p>
+<p>具体来说，对于第<span class="math inline">\(i\)</span>个角色图像：</p>
+<ul>
+<li>Randomly generate the relative camera rotation <span class="math inline">\(R_{ij}\in \mathbb{R}^3\)</span> 和 the relative
+translation <span class="math inline">\(T_{ij}\in \mathbb{R}^3\)</span>
+of the desired viewpoint。</li>
+<li>使用<strong>One-2-3-45</strong> 生成 desired viewpoints
+中object的图像：</li>
+</ul>
+<p><span class="math display">\[
+I_{ij}^{cond}=f\left( T_{i}^{cond},R_{ij},T_{ij} \right) ,j=1,2,...,n
+\]</span>
+之后，从这些图像中提取非人类角色的sketches/人类角色的keypoints。</p>
+<p>最后，在生成过程中使用T2I-Adapter将control
+guidance注入到相应帧的latent feature中。</p>
+<p>为了进一步保证生成数据的质量，使用CLIP评分对生成的数据进行过滤，选择与文本描述一致的图像作为训练数据进行定制生成。</p>
+<h3 id="本节总结">7.4 本节总结</h3>
+<p>在Eliminating Character-wise Data
+Collection这一节中，将提出的无需训练的身份一致性建模方法与视点条件图像翻译模型相结合，以实现身份一致性和角色生成的多样性。</p>
+<p>一种更简单的方法是直接使用视点条件图像翻译模型中的多视图图像作为定制的训练数据。</p>
+<p>但是在实验过程中发现，直接生成的结果往往会出现失真，或者不同视点的图像在颜色和纹理上存在较大差异。</p>
+<p><img src="/2023/12/08/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-AutoStory-Generating-Diverse-Storytelling-Images-with-Minimal-Human-Effort/image-20231212034730453.png" alt="image-20231212034730453" style="zoom:67%;"></p>
+<p>出于这个原因，需要利用上面的一致性建模方法来为每个角色获得纹理和结构一致的图像。</p>
+<h2 id="实验部分">实验部分</h2>
+<p>后续更新</p>
+
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/AIGC//" class="article-tag-list-link color5">AIGC</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2023/12/08/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-AutoStory-Generating-Diverse-Storytelling-Images-with-Minimal-Human-Effort/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-论文精读-The-Chosen-One-Consistent-Characters-in-Text-to-Image-Diffusion-Models" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2023/12/07/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-The-Chosen-One-Consistent-Characters-in-Text-to-Image-Diffusion-Models/" target="_blank">论文精读:The Chosen One: Consistent Characters in Text-to-Image Diffusion Models</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2023/12/07/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-The-Chosen-One-Consistent-Characters-in-Text-to-Image-Diffusion-Models/" class="archive-article-date">
+        <time datetime="2023-12-06T18:30:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-12-07</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <blockquote>
+<p>前言：精读论文：The Chosen One: Consistent Characters in
+Text-to-Image Diffusion
+Models，该论文与2023-11-30日上传至arXiv上，该工作由Google
+Research主导，主要关注的点在于多轮图像生成的角色一致性问题。这篇文章的代码还没有开源，但是作者建立的github仓库已经有1.2K的follow了</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://omriavrahami.com/the-chosen-one/">工作主页</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/ZichengDuan/TheChosenOne">github仓库</a>
+[未开源]</p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2311.10093">arXiv主页</a></p>
+<h2 id="对论文的初印象">1 对论文的初印象</h2>
+<p>The Chosen One: Consistent Characters in Text-to-Image Diffusion
+Models</p>
+<p>The Chosen One：文本到图像扩散模型中的一致字符</p>
+<p>看到题目标题以为是直接输入prompts就可以生成一致角色的，其实并不是，其实是通过一些小trick，变相的实现了这样的效果，对基础模型的细节也没有做特别大的改变，总体来看还是有局限性的。</p>
+<h2 id="motivation">2 Motivation</h2>
+<p><strong>文本到图像生成模型难以生成一致的角色。</strong></p>
+<p><strong>目前的方法：</strong></p>
+<ul>
+<li>依赖于目标字符的多个预先存在的图像</li>
+<li>涉及劳动密集型的手动过程</li>
+</ul>
+<blockquote>
+<p>原文：Despite the increasingly impressive abilities of text-toimage
+generative models, these models struggle with such consistent
+generation, a shortcoming that we aim to rectify in this work.</p>
+</blockquote>
+<p><strong>This work：</strong></p>
+<ul>
+<li>提出了一种完全自动化的解决方案，用于<strong>一致的角色生成</strong>，<strong>唯一的输入是文本prompts</strong>。</li>
+<li>引入了一个迭代过程，在每个阶段，识别一组具有相似身份的连贯图像，并从该集合中提取更一致的身份。</li>
+</ul>
+<p><strong>基于这样一个假设：</strong></p>
+<ul>
+<li>对于某个prompt，一个足够大的生成图像集中会包含具有共享特征的图像组。</li>
+<li>给定这样一个簇，提取其中的“common ground”。</li>
+<li>重复这样一个过程，可以增加生成图像的一致性，同时仍然符合原始的prompt。</li>
+</ul>
+<p><strong>核心的处理思路：</strong></p>
+<ul>
+<li>1：根据文本prompt生成一组图像</li>
+<li>2：使用预训练好的特征提取器（feature
+extractor）将它们embed到Euclidean space</li>
+<li>3：对这些embedding进行聚类，选择the most cohesive的簇。</li>
+<li>4：将这个簇作为生成模型的下一次输入，会生成一组一致性更像的图像集（同时描述输入的prompt）</li>
+<li>5：重复这个过程直到收敛</li>
+</ul>
+<p><strong>贡献点：</strong></p>
+<ul>
+<li>（1）将一致角色生成任务形式化</li>
+<li>（2）为这项任务提出了一种新颖的解决方案</li>
+<li>（3）除了user
+study之外，还定量和定性地评估方法，以证明其有效性。</li>
+</ul>
+<h1 id="method">3 Method</h1>
+<h2 id="笼统阐述">3.1 笼统阐述</h2>
+<ul>
+<li><p>一个T2I的模型 <span class="math inline">\(M_{\varTheta}\)</span>（由 <span class="math inline">\(\varTheta\)</span> 参数化，<span class="math inline">\(\varTheta\)</span> 由一组模型权重 <span class="math inline">\(\theta\)</span> 和一组自动以文本embedding <span class="math inline">\(\tau\)</span> 组成 ）</p></li>
+<li><p>一个文本prompt <span class="math inline">\(p\)</span></p></li>
+<li><p>需要找到一种表示形式 <span class="math inline">\(\varTheta \left(
+p \right)\)</span> ，参数化模型 <span class="math inline">\(\varTheta
+\left( p \right)\)</span> 能够在新的上下文中生成由 <span class="math inline">\(p\)</span> 描述的角色一致性图像。</p></li>
+</ul>
+<p><strong>算法如下：</strong></p>
+<p><img src="/2023/12/07/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-The-Chosen-One-Consistent-Characters-in-Text-to-Image-Diffusion-Models/image-20231212024706488.png" alt="image-20231212024706488" style="zoom:67%;"></p>
+<p><strong>算法执行前提：</strong></p>
+<ul>
+<li>1：有一个由扩散模型M生成的由相同文本prompt驱动的足够大的图像集</li>
+<li>2：这个图像集with different
+seeds，将反应生成的图像集的不均匀密度</li>
+</ul>
+<p>我们希望找到一些具有共同特征的图像组，其中一组图像中的“common
+ground（共同点）”可以用于细化表示 <span class="math inline">\(\varTheta
+\left( p \right)\)</span>。</p>
+<h2 id="identity-clustering-身份集群">3.2 Identity Clustering
+身份集群</h2>
+<p><strong>Step1：使用 <span class="math inline">\(M_{\varTheta}\)</span> 开始每次迭代（使用 <span class="math inline">\(\varTheta\)</span> 进行参数化），生成 <span class="math inline">\(N\)</span>
+个图像集合，每个图像对应一个不同的随机种子。</strong></p>
+<p><strong>Step2：使用特征提取器 <span class="math inline">\(F\)</span>，将每张图像 embed 到 high-dimensional
+semantic embedding space（高维语义嵌入空间）。形成一组 embeddings
+：</strong> <span class="math display">\[
+S=\bigcup_N{F\left( M_{\varTheta}\left( p \right) \right)}
+\]</span> &gt; 实验中，用DINOv2作为特征提取器 <span class="math inline">\(F\)</span></p>
+<p><strong>公式解释：</strong></p>
+<ul>
+<li><span class="math inline">\(F\)</span>
+是特征提取器，用于将图像嵌入到高维语义嵌入空间中。</li>
+<li>对于每张生成的图像 <span class="math inline">\(M_{\varTheta}(p)\)</span>，其中 <span class="math inline">\(p\)</span> 是随机种子，使用特征提取器 <span class="math inline">\(F\)</span> 得到该图像的 embedding 。</li>
+<li>这样就得到了一组嵌入集合 <span class="math inline">\(S\)</span>，其中每个元素是一个图像的嵌入。这个嵌入过程通过公式表示为：</li>
+</ul>
+<p><span class="math display">\[
+   S = \bigcup_N{F\left( M_{\varTheta}\left( p \right) \right)}
+\]</span> 其中 <span class="math inline">\(\bigcup_N\)</span> 表示将
+<span class="math inline">\(N\)</span> 个集合合并在一起，<span class="math inline">\(F\left( M_{\varTheta}\left( p \right)
+\right)\)</span> 表示将生成的图像 <span class="math inline">\(M_{\varTheta}(p)\)</span> 的嵌入。</p>
+<p><strong>Step3：使用K-Means++算法，根据embedding
+space中embedding的余弦相似度进行聚类。通过删除所有大小地狱预定阈值 <span class="math inline">\(d_{\min -c}\)</span>
+的簇（这么做的原因：之前工作表明个性化算法容易在小数据集上过度拟合）</strong></p>
+<p><strong>Step4：剩下的簇中，选择最内聚的那个簇作为 identity
+extraction阶段的输入</strong>，如下图：</p>
+<p><img src="/2023/12/07/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-The-Chosen-One-Consistent-Characters-in-Text-to-Image-Diffusion-Models/2U5YCSVuMCG.png" alt="image.png" style="zoom:67%;"></p>
+<p><strong>（其中黑色簇是最具内聚性的)</strong></p>
+<p>如何定义簇的内聚性呢？</p>
+<p>将簇<span class="math inline">\(c\)</span>的内聚性定义为<span class="math inline">\(c\)</span>的成员与其质心<span class="math inline">\(c_{cen}\)</span>之间的平均距离： <span class="math display">\[
+cohesion\left( c \right) =\frac{1}{\left| c \right|}\sum_{e\in c}{\lVert
+e-c_{cen} \rVert ^2}
+\]</span> &gt; 实验具体配置： &gt; &gt; 特征提取器：DINOv2 &gt; &gt;
+DINOv2嵌入空间中的高维嵌入使用t-SNE投影到2D中，根据他们的K-Means++簇进行着色，黑色簇是最紧的。</p>
+<h2 id="identity-extraction-身份提取">3.3 Identity Extraction
+身份提取</h2>
+<p>根据当前迭代中生成的图像集的多样性，最内聚的聚类可能仍然表现出不一致的身份，如下图所示：
+<img src="/2023/12/07/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-The-Chosen-One-Consistent-Characters-in-Text-to-Image-Diffusion-Models/2U5axhyx5F2.png" alt="image.png"> 因此，<span class="math inline">\(\varTheta\)</span>并没有适合一致性的生成，应该通过在聚类好的图像<span class="math inline">\(c_{cohesive}\)</span>上进一步训练来改进它，以提取更一致的角色。</p>
+<p>这种进一步细化是使用 T2I
+的个性化方法进行的，其目的是从已经描述一致身份的几张图像的给定集合中提取角色。（当我们将它们应用于一组不完全一致的图像时，这些图像是根据它们彼此的语义相似性来选择的，这一事实使这些方法能够从它们中提取出一个共同的身份。)</p>
+<blockquote>
+<p>实验设置：</p>
+<p>扩散模型：Stable iffusion XL（SDXL）</p>
+<p>两个text encoder：CLIP 和 OpenCLIP</p>
+</blockquote>
+<p>使用 Textual Inversion（文本反转）来添加一对信的文本token <span class="math inline">\(\tau\)</span>，两个text encoder各一个。</p>
+<p>但是实验中发现这个parameter space is not expressive
+enough（参数空间不够表达），所以还需要LoRA来微调模型权重 <span class="math inline">\(\theta\)</span>。</p>
+<p>使用standard denoising loss（标准去噪损失）： <span class="math display">\[
+\mathcal{L}_{rec}=\mathbb{E}_{x~c_{cohesive},z~E\left( x \right)
+,\epsilon ~\mathcal{N}\left( 0,1 \right) ,t}\left[ \lVert \epsilon
+-\epsilon _{\varTheta \left( p \right)}\left( z_t,t \right) \rVert
+_{2}^{2} \right]
+\]</span></p>
+<p><strong>公式解释：</strong></p>
+<ul>
+<li><span class="math inline">\(c_{cohesive}\)</span> ：选择的聚类</li>
+<li><span class="math inline">\(E\left(x\right)\)</span>
+：SDXL的VAE编码器</li>
+<li><span class="math inline">\(\epsilon\)</span> ：样本的噪声</li>
+<li><span class="math inline">\(t\)</span> ：时间步长</li>
+<li><span class="math inline">\(z_t\)</span> ：是time step <span class="math inline">\(t\)</span>时的latent <span class="math inline">\(z\)</span> 噪声</li>
+<li>在 <span class="math inline">\(\varTheta =\left( \theta ,\tau
+\right)\)</span> 上优化 <span class="math inline">\(\mathcal{L}_{rec}\)</span> （即the union of the
+LoRA weights and the newly-added textual tokens.）</li>
+</ul>
+<h2 id="convergence-收敛">3.4 Convergence 收敛</h2>
+<p>注意一点，上述过程中每次迭代提取的representation <span class="math inline">\(\varTheta\)</span> 是用于下一次迭代生成<span class="math inline">\(N\)</span>个图像。</p>
+<p>整个收敛过程并不是使用固定的迭代次数，而是会使用一个收敛标准：</p>
+<ul>
+<li>每次迭代后，计算新生成图像的所有N个embedding之间的average pairwise
+Euclidean distance（平均成对欧几里德距离）</li>
+<li>直到该距离小于预定的阈值<span class="math inline">\(d_{conv}\)</span> 时停止。</li>
+<li>最后，需要注意的是，这个方法是不确定的，即在相同的输入prompt <span class="math inline">\(p\)</span>上，会产生不同的一致性角色。</li>
+</ul>
+<h2 id="experiments">4 Experiments</h2>
+<p>这个论文我是打算复现的，复现后更新。</p>
+
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/AIGC//" class="article-tag-list-link color5">AIGC</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2023/12/07/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-The-Chosen-One-Consistent-Characters-in-Text-to-Image-Diffusion-Models/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-训练自己的户型图扩散模型" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -516,7 +1405,8 @@ of Technology</p>
 <p>前言：上次做了户型图数据集调研，并构建了自己的户型图数据集，这次使用构建好的数据集训练自己的Diffusion
 Model</p>
 <p>本次我训练了四个版本的Diffusion Model for Floor Plan
-datasets，分别是： cubicasa5k-Simple-DM</p>
+datasets，分别是：</p>
+<p>cubicasa5k-Simple-DM</p>
 <p>cubicasa5k-Large-DM</p>
 <p>RPLAN-DM</p>
 <p>Myself-DM（自己从网上爬取的数据集）</p>
@@ -900,412 +1790,9 @@ Diffusion Models</h1>
 
 
   
-    <article id="post-条件DDPM-Diffusion-Model的第三个巅峰之作" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2023/11/20/%E6%9D%A1%E4%BB%B6DDPM-Diffusion-Model%E7%9A%84%E7%AC%AC%E4%B8%89%E4%B8%AA%E5%B7%85%E5%B3%B0%E4%B9%8B%E4%BD%9C/" target="_blank">条件DDPM:Diffusion Model的第三个巅峰之作</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2023/11/20/%E6%9D%A1%E4%BB%B6DDPM-Diffusion-Model%E7%9A%84%E7%AC%AC%E4%B8%89%E4%B8%AA%E5%B7%85%E5%B3%B0%E4%B9%8B%E4%BD%9C/" class="archive-article-date">
-        <time datetime="2023-11-20T12:40:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-11-20</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <h1 id="条件ddpmdiffusion-model的第三个巅峰之作">条件DDPM:Diffusion
-Model的第三个巅峰之作</h1>
-<blockquote>
-<p>前言：DDPM2020年诞生，短短一年的时间，模型上有两个巨大的改进，其中一个就是condition的引入，很多后续DDPM相关的论文都会讨论这一点，有些文章称之为latent
-variable。和当年GAN的发展类似，CGAN和DCGAN的出现极大程度上促进了GAN的发扬光大，意义重大。本文基于前面几篇文章继续聊一聊:</p>
-</blockquote>
-    
-    <a class="article-more-a" href="/2023/11/20/%E6%9D%A1%E4%BB%B6DDPM-Diffusion-Model%E7%9A%84%E7%AC%AC%E4%B8%89%E4%B8%AA%E5%B7%85%E5%B3%B0%E4%B9%8B%E4%BD%9C/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/扩散模型//" class="article-tag-list-link color5">扩散模型</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2023/11/20/%E6%9D%A1%E4%BB%B6DDPM-Diffusion-Model%E7%9A%84%E7%AC%AC%E4%B8%89%E4%B8%AA%E5%B7%85%E5%B3%B0%E4%B9%8B%E4%BD%9C/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-从VAE到Diffusion-Models" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2023/11/20/%E4%BB%8EVAE%E5%88%B0Diffusion-Models/" target="_blank">从VAE到Diffusion Models</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2023/11/20/%E4%BB%8EVAE%E5%88%B0Diffusion-Models/" class="archive-article-date">
-        <time datetime="2023-11-20T12:32:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-11-20</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <h1 id="从vae到diffusion-models">从VAE到Diffusion Models</h1>
-    
-    <a class="article-more-a" href="/2023/11/20/%E4%BB%8EVAE%E5%88%B0Diffusion-Models/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/扩散模型//" class="article-tag-list-link color5">扩散模型</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2023/11/20/%E4%BB%8EVAE%E5%88%B0Diffusion-Models/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-为什么Diffusion-Models扩散模型可以成为Score-based-Models" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2023/11/20/%E4%B8%BA%E4%BB%80%E4%B9%88Diffusion-Models%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E5%8F%AF%E4%BB%A5%E6%88%90%E4%B8%BAScore-based-Models/" target="_blank">为什么Diffusion Models扩散模型可以成为Score-based Models</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2023/11/20/%E4%B8%BA%E4%BB%80%E4%B9%88Diffusion-Models%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E5%8F%AF%E4%BB%A5%E6%88%90%E4%B8%BAScore-based-Models/" class="archive-article-date">
-        <time datetime="2023-11-20T11:36:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-11-20</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <h1 id="为什么diffusion-models扩散模型可以成为score-based-models">为什么Diffusion
-Models扩散模型可以成为Score-based Models</h1>
-    
-    <a class="article-more-a" href="/2023/11/20/%E4%B8%BA%E4%BB%80%E4%B9%88Diffusion-Models%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E5%8F%AF%E4%BB%A5%E6%88%90%E4%B8%BAScore-based-Models/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/扩散模型//" class="article-tag-list-link color5">扩散模型</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2023/11/20/%E4%B8%BA%E4%BB%80%E4%B9%88Diffusion-Models%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E5%8F%AF%E4%BB%A5%E6%88%90%E4%B8%BAScore-based-Models/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-针对户型图数据集的调研" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2023/11/18/%E9%92%88%E5%AF%B9%E6%88%B7%E5%9E%8B%E5%9B%BE%E6%95%B0%E6%8D%AE%E9%9B%86%E7%9A%84%E8%B0%83%E7%A0%94/" target="_blank">针对户型图数据集的调研</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2023/11/18/%E9%92%88%E5%AF%B9%E6%88%B7%E5%9E%8B%E5%9B%BE%E6%95%B0%E6%8D%AE%E9%9B%86%E7%9A%84%E8%B0%83%E7%A0%94/" class="archive-article-date">
-        <time datetime="2023-11-18T06:42:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-11-18</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <h1 id="针对户型图数据集的调研">针对户型图数据集的调研</h1>
-<p>最近要做一个多媒体领域的方向综合设计，题目是<strong>基于扩散模型的户型图数据增强系统设计与实现</strong>，所以目前对现有的数据集进行调研。</p>
-    
-    <a class="article-more-a" href="/2023/11/18/%E9%92%88%E5%AF%B9%E6%88%B7%E5%9E%8B%E5%9B%BE%E6%95%B0%E6%8D%AE%E9%9B%86%E7%9A%84%E8%B0%83%E7%A0%94/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/扩散模型//" class="article-tag-list-link color5">扩散模型</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2023/11/18/%E9%92%88%E5%AF%B9%E6%88%B7%E5%9E%8B%E5%9B%BE%E6%95%B0%E6%8D%AE%E9%9B%86%E7%9A%84%E8%B0%83%E7%A0%94/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
     </nav>
   
 
