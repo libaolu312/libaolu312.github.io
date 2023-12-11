@@ -17,11 +17,17 @@
 <meta property="og:site_name" content="李宝璐">
 <meta property="og:description" content="关于一致性角色问题的论文相关汇总及分析探究">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://libaolu312.github.io/2023/12/09/%E4%B8%80%E8%87%B4%E6%80%A7%E8%A7%92%E8%89%B2%E7%94%9F%E6%88%90%E9%97%AE%E9%A2%98%E7%9A%84%E6%B1%87%E6%80%BB%E4%B8%8E%E6%8E%A2%E7%A9%B6/640.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/12/09/%E4%B8%80%E8%87%B4%E6%80%A7%E8%A7%92%E8%89%B2%E7%94%9F%E6%88%90%E9%97%AE%E9%A2%98%E7%9A%84%E6%B1%87%E6%80%BB%E4%B8%8E%E6%8E%A2%E7%A9%B6/640-1702326523320-3.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/12/09/%E4%B8%80%E8%87%B4%E6%80%A7%E8%A7%92%E8%89%B2%E7%94%9F%E6%88%90%E9%97%AE%E9%A2%98%E7%9A%84%E6%B1%87%E6%80%BB%E4%B8%8E%E6%8E%A2%E7%A9%B6/640-1702326535676-6.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/12/09/%E4%B8%80%E8%87%B4%E6%80%A7%E8%A7%92%E8%89%B2%E7%94%9F%E6%88%90%E9%97%AE%E9%A2%98%E7%9A%84%E6%B1%87%E6%80%BB%E4%B8%8E%E6%8E%A2%E7%A9%B6/640-1702326547147-9.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/12/09/%E4%B8%80%E8%87%B4%E6%80%A7%E8%A7%92%E8%89%B2%E7%94%9F%E6%88%90%E9%97%AE%E9%A2%98%E7%9A%84%E6%B1%87%E6%80%BB%E4%B8%8E%E6%8E%A2%E7%A9%B6/640-1702326562804-12.png">
 <meta property="article:published_time" content="2023-12-09T09:38:53.000Z">
-<meta property="article:modified_time" content="2023-12-11T20:25:58.172Z">
+<meta property="article:modified_time" content="2023-12-11T20:30:36.080Z">
 <meta property="article:author" content="李宝璐">
 <meta property="article:tag" content="技术笔记">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://libaolu312.github.io/2023/12/09/%E4%B8%80%E8%87%B4%E6%80%A7%E8%A7%92%E8%89%B2%E7%94%9F%E6%88%90%E9%97%AE%E9%A2%98%E7%9A%84%E6%B1%87%E6%80%BB%E4%B8%8E%E6%8E%A2%E7%A9%B6/640.png">
   
     <link rel="alternative" href="/atom.xml" title="李宝璐" type="application/atom+xml">
   
@@ -277,7 +283,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">249字</span>
+      <span class="post-count">1.1k字</span>
     </span>
   </span>
 
@@ -286,7 +292,7 @@
     <span class="post-meta-item-icon">
       <i class="icon-book icon"></i>
       <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">1分</span>
+      <span class="post-count">3分</span>
     </span>
   </span>
 </div>
@@ -309,7 +315,45 @@
 <p>下面就汇总几篇相关的工作，并且对各个工作展开探讨。</p>
 <h2 id="the-chosen-one-consistent-characters-in-text-to-image-diffusion-models">The
 Chosen One: Consistent Characters in Text-to-Image Diffusion Models</h2>
-<p>这篇写过博客了</p>
+<p>这篇写过博客了，<a href>博客链接</a></p>
+<p>总的来说就是一个聚类</p>
+<figure>
+<img src="/2023/12/09/%E4%B8%80%E8%87%B4%E6%80%A7%E8%A7%92%E8%89%B2%E7%94%9F%E6%88%90%E9%97%AE%E9%A2%98%E7%9A%84%E6%B1%87%E6%80%BB%E4%B8%8E%E6%8E%A2%E7%A9%B6/640.png" alt="图片">
+<figcaption aria-hidden="true">图片</figcaption>
+</figure>
+<p>它的本质是，用SDXL根据提示词出很多图像，看了原文，应该是生成了120张，然后把这些图进行聚类，找到那堆最合适的数据，去训LoRA</p>
+<p>但是这个不适用于本身已经设计好的图像，只能用模型去生成，局限性太大，成本比较高。</p>
+<h2 id="autostory-generating-diverse-storytelling-images-with-minimal-human-effort">AutoStory:
+Generating Diverse Storytelling Images with Minimal Human Effort</h2>
+<p>这个主要是为了自动生成绘本故事，可以预先输入需要参考的形象，也可以直接用文字描述去生成绘本故事。</p>
+<p>既然是故事，就涉及到一些故事编写问题和分镜问题。</p>
+<p>这篇论文在获取故事要求后，先生成几段故事，每段故事要对应一个图像。</p>
+<p>然后，会根据每个分镜的故事内容，生成一些画面布局，也就是下图的Layout。至于这个是怎么生成的？是拿了一些场景去与LLM一起训过的。</p>
+<p>每个物体位置都是使用全局prompt和局部prompt去最终确定的。全局prompt描述整个故事图像的全局上下文，而局部prompt则侧重于单个对象的细节。</p>
+<p><img src="/2023/12/09/%E4%B8%80%E8%87%B4%E6%80%A7%E8%A7%92%E8%89%B2%E7%94%9F%E6%88%90%E9%97%AE%E9%A2%98%E7%9A%84%E6%B1%87%E6%80%BB%E4%B8%8E%E6%8E%A2%E7%A9%B6/640-1702326523320-3.png" alt="图片" style="zoom:67%;"></p>
+<p>是不是觉得到layout这一步就可以生成了？</p>
+<p>但是只用layout，生成的质量不太稳定，并且有些图像和布局不完全匹配，可以看下实验结果，第二列的就是只有layout。</p>
+<p><img src="/2023/12/09/%E4%B8%80%E8%87%B4%E6%80%A7%E8%A7%92%E8%89%B2%E7%94%9F%E6%88%90%E9%97%AE%E9%A2%98%E7%9A%84%E6%B1%87%E6%80%BB%E4%B8%8E%E6%8E%A2%E7%A9%B6/640-1702326535676-6.png" alt="图片" style="zoom:67%;"></p>
+<p>由于边界框提供的信息有限,在有限的指导下，让模型一次生成大量内容比较困难，后面就引入了一个Dense
+Condition，也就是草图或是关键点指导。</p>
+<p>这一步主要是，先根据局部的框，利用局部prompt逐个生成图像，就能获得一个比较高质量的单目标生成图。</p>
+<figure>
+<img src="/2023/12/09/%E4%B8%80%E8%87%B4%E6%80%A7%E8%A7%92%E8%89%B2%E7%94%9F%E6%88%90%E9%97%AE%E9%A2%98%E7%9A%84%E6%B1%87%E6%80%BB%E4%B8%8E%E6%8E%A2%E7%A9%B6/640-1702326547147-9.png" alt="图片">
+<figcaption aria-hidden="true">图片</figcaption>
+</figure>
+<p>接下来就是提取这个边界，用的是Grouning-DINO先检测到物体的边界，然后用SAM得到蒙版，这样就很容易获取到目标边缘了，上面的图画的也比较明白。</p>
+<p>如果是人物的话，也可以用人体骨骼关键点来进行条件控制。</p>
+<p>然后把控制用的条件图粘贴到原图像对应的layout中，用t2i-Adapter相关方法进行控制。</p>
+<p><img src="/2023/12/09/%E4%B8%80%E8%87%B4%E6%80%A7%E8%A7%92%E8%89%B2%E7%94%9F%E6%88%90%E9%97%AE%E9%A2%98%E7%9A%84%E6%B1%87%E6%80%BB%E4%B8%8E%E6%8E%A2%E7%A9%B6/640-1702326562804-12.png" alt="图片" style="zoom:67%;"></p>
+<p>上面的操作都是全自动的，更多细节操作在论文里，可以看看。</p>
+<p>其实使用T2I-Adapter生成多角色图这块，就是参考的腾讯的Mix-of-Show工作，这个有源码可以看看。</p>
+<p>现在的问题就是，这个一致性的角色是怎么生成的，只看到了总流程图上有俩lora，但是原文的方法中并没提到这个，但是引言和实验结果都有提到，是参考了ICML2023
+oral paper《Cones: Concept Neurons in Diffusion Models for Customized
+Generation》</p>
+<p>他这个论文主要是发现了模型中的一小簇神经元对应了某个概念，因此可以更轻量化地训练lora吧，具体怎么搞的还没开，没有源码，但是论文给了训练参数，可以研究下。</p>
+<h2 id="mix-of-show">Mix-of-Show</h2>
+<h2 id="talecrafter">TaleCrafter</h2>
+<h2 id="cones-concept">Cones Concept</h2>
 
     
 
@@ -467,7 +511,8 @@ Chosen One: Consistent Characters in Text-to-Image Diffusion Models</h2>
                 <span class="tooltip-content">
                     <div class="toc-article">
                     <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E8%87%B4%E6%80%A7%E8%A7%92%E8%89%B2%E9%97%AE%E9%A2%98"><span class="toc-number">1.</span> <span class="toc-text">一致性角色问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#the-chosen-one-consistent-characters-in-text-to-image-diffusion-models"><span class="toc-number">2.</span> <span class="toc-text">The
-Chosen One: Consistent Characters in Text-to-Image Diffusion Models</span></a></li></ol>
+Chosen One: Consistent Characters in Text-to-Image Diffusion Models</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#autostory-generating-diverse-storytelling-images-with-minimal-human-effort"><span class="toc-number">3.</span> <span class="toc-text">AutoStory:
+Generating Diverse Storytelling Images with Minimal Human Effort</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mix-of-show"><span class="toc-number">4.</span> <span class="toc-text">Mix-of-Show</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#talecrafter"><span class="toc-number">5.</span> <span class="toc-text">TaleCrafter</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#cones-concept"><span class="toc-number">6.</span> <span class="toc-text">Cones Concept</span></a></li></ol>
                     </div>
                 </span>
             </div>
