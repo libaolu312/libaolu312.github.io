@@ -10,12 +10,12 @@
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="前言：上海交大联合多所高校共同发布的Alpha-CLIP，这个Alpha-CLIP是CLIP的加强版，我觉得这个Alpha-CLIP可以方法很多领域的工作中，所以对这篇工作进行简读，了解基本原理，重点看它是怎么和其它基础模型进行结合的，并将其引入到当前的工作中。  1 Motivation Contrastive Language-Image Pre-training（CLIP），为了">
+  <meta name="description" content="前言：上海交大联合多所高校共同发布的Alpha-CLIP，这个Alpha-CLIP是CLIP的加强版，我觉得这个Alpha-CLIP可以方法很多领域的工作中，所以对这篇工作进行简读，了解基本原理，重点看它是怎么和其它基础模型进行结合的，并将其引入到当前的工作中。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="论文简读:Alpha-CLIP: A CLIP Model Focusing on Wherever You Want">
 <meta property="og:url" content="https://libaolu312.github.io/2023/12/11/%E8%AE%BA%E6%96%87%E7%AE%80%E8%AF%BB-Alpha-CLIP-A-CLIP-Model-Focusing-on-Wherever-You-Want/index.html">
 <meta property="og:site_name" content="李宝璐">
-<meta property="og:description" content="前言：上海交大联合多所高校共同发布的Alpha-CLIP，这个Alpha-CLIP是CLIP的加强版，我觉得这个Alpha-CLIP可以方法很多领域的工作中，所以对这篇工作进行简读，了解基本原理，重点看它是怎么和其它基础模型进行结合的，并将其引入到当前的工作中。  1 Motivation Contrastive Language-Image Pre-training（CLIP），为了">
+<meta property="og:description" content="前言：上海交大联合多所高校共同发布的Alpha-CLIP，这个Alpha-CLIP是CLIP的加强版，我觉得这个Alpha-CLIP可以方法很多领域的工作中，所以对这篇工作进行简读，了解基本原理，重点看它是怎么和其它基础模型进行结合的，并将其引入到当前的工作中。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://libaolu312.github.io/2023/12/11/%E8%AE%BA%E6%96%87%E7%AE%80%E8%AF%BB-Alpha-CLIP-A-CLIP-Model-Focusing-on-Wherever-You-Want/image-20231212040043382.png">
 <meta property="og:image" content="https://libaolu312.github.io/2023/12/11/%E8%AE%BA%E6%96%87%E7%AE%80%E8%AF%BB-Alpha-CLIP-A-CLIP-Model-Focusing-on-Wherever-You-Want/image-20231212040546572.png">
@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://libaolu312.github.io/2023/12/11/%E8%AE%BA%E6%96%87%E7%AE%80%E8%AF%BB-Alpha-CLIP-A-CLIP-Model-Focusing-on-Wherever-You-Want/image-20231212041932224.png">
 <meta property="og:image" content="https://libaolu312.github.io/2023/12/11/%E8%AE%BA%E6%96%87%E7%AE%80%E8%AF%BB-Alpha-CLIP-A-CLIP-Model-Focusing-on-Wherever-You-Want/image-20231212042111993.png">
 <meta property="article:published_time" content="2023-12-10T18:32:04.000Z">
-<meta property="article:modified_time" content="2023-12-11T20:23:54.733Z">
+<meta property="article:modified_time" content="2023-12-11T20:34:01.263Z">
 <meta property="article:author" content="李宝璐">
 <meta property="article:tag" content="技术笔记">
 <meta name="twitter:card" content="summary">
@@ -314,6 +314,7 @@
     <blockquote>
 <p>前言：上海交大联合多所高校共同发布的Alpha-CLIP，这个Alpha-CLIP是CLIP的加强版，我觉得这个Alpha-CLIP可以方法很多领域的工作中，所以对这篇工作进行简读，了解基本原理，重点看它是怎么和其它基础模型进行结合的，并将其引入到当前的工作中。</p>
 </blockquote>
+<span id="more"></span>
 <h2 id="motivation">1 Motivation</h2>
 <p>Contrastive Language-Image
 Pre-training（CLIP），为了更好的理解和控制图像编辑，<strong>将重点放在感兴趣的特定区域</strong>变得很重要，这个Alpha-CLIP是CLIP的增强版本，带有<strong>辅助alpha通道来建议关注区域</strong>，并<strong>通过构建的millions的RGBAregion-text对数据进行微调</strong>。</p>
