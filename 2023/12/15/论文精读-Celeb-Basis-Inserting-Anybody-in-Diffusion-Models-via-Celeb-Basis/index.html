@@ -6,19 +6,30 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://libaolu312.github.io">
-  <title>Archives | 李宝璐</title>
+  <title>论文精读Celeb Basis:Inserting Anybody in Diffusion Models via Celeb Basis | 李宝璐</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="里面放着李宝璐的碎碎念">
-<meta property="og:type" content="website">
-<meta property="og:title" content="李宝璐">
-<meta property="og:url" content="https://libaolu312.github.io/archives/page/2/index.html">
+  <meta name="description" content="前言：这又是一篇关于角色一致性的工作（也是subject driven相关的工作），这篇工作由中山大学联合腾讯AI lab发布，在2023.6发布在arXiv上。这篇工作提供了一种很有意思的 Celeb Basis 的想法，可以迁移到其他的一致性工作中。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="论文精读Celeb Basis:Inserting Anybody in Diffusion Models via Celeb Basis">
+<meta property="og:url" content="https://libaolu312.github.io/2023/12/15/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-Celeb-Basis-Inserting-Anybody-in-Diffusion-Models-via-Celeb-Basis/index.html">
 <meta property="og:site_name" content="李宝璐">
-<meta property="og:description" content="里面放着李宝璐的碎碎念">
+<meta property="og:description" content="前言：这又是一篇关于角色一致性的工作（也是subject driven相关的工作），这篇工作由中山大学联合腾讯AI lab发布，在2023.6发布在arXiv上。这篇工作提供了一种很有意思的 Celeb Basis 的想法，可以迁移到其他的一致性工作中。">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://libaolu312.github.io/2023/12/15/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-Celeb-Basis-Inserting-Anybody-in-Diffusion-Models-via-Celeb-Basis/image-20231215182253387.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/12/15/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-Celeb-Basis-Inserting-Anybody-in-Diffusion-Models-via-Celeb-Basis/image-20231215182328163.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/12/15/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-Celeb-Basis-Inserting-Anybody-in-Diffusion-Models-via-Celeb-Basis/image-20231215182352715.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/12/15/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-Celeb-Basis-Inserting-Anybody-in-Diffusion-Models-via-Celeb-Basis/image-20231215182352715.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/12/15/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-Celeb-Basis-Inserting-Anybody-in-Diffusion-Models-via-Celeb-Basis/image-20231215190828807.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/12/15/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-Celeb-Basis-Inserting-Anybody-in-Diffusion-Models-via-Celeb-Basis/image-20231215190848203.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/12/15/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-Celeb-Basis-Inserting-Anybody-in-Diffusion-Models-via-Celeb-Basis/image-20231215200744524.png">
+<meta property="article:published_time" content="2023-12-15T09:58:57.000Z">
+<meta property="article:modified_time" content="2023-12-15T14:17:00.233Z">
 <meta property="article:author" content="李宝璐">
+<meta property="article:tag" content="技术笔记">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://libaolu312.github.io/2023/12/15/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-Celeb-Basis-Inserting-Anybody-in-Diffusion-Models-via-Celeb-Basis/image-20231215182253387.png">
   
     <link rel="alternative" href="/atom.xml" title="李宝璐" type="application/atom+xml">
   
@@ -241,566 +252,459 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-论文精读-Celeb-Basis-Inserting-Anybody-in-Diffusion-Models-via-Celeb-Basis" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 class="article-title" itemprop="name">
+      论文精读Celeb Basis:Inserting Anybody in Diffusion Models via Celeb Basis
+    </h1>
+  
+
+
+  
+  
+        
+        <span id="busuanzi_container_page_pv" style='display:none' class="archive-article-date">
+              <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+        </span>
+
+<a href="/2023/12/15/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-Celeb-Basis-Inserting-Anybody-in-Diffusion-Models-via-Celeb-Basis/" class="archive-article-date">
+        <time datetime="2023-12-15T09:58:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-12-15</time>
+</a>
+
   
   
     
+<div style="margin-top:10px;">
+  <span class="post-time">
+    <span class="post-meta-item-icon">
+      <!-- fonts.scss -->
+      <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
+      <i class="icon-statistics"></i>
+      <span class="post-meta-item-text"> 字数统计:</span>
+      <span class="post-count">2.8k字</span>
+    </span>
+  </span>
+
+  <span class="post-time">
+    &nbsp; | &nbsp;
+    <span class="post-meta-item-icon">
+      <i class="icon-book icon"></i>
+      <span class="post-meta-item-text"> 阅读时长≈</span>
+      <span class="post-count">10分</span>
+    </span>
+  </span>
+</div>
+
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
     
+    <blockquote>
+<p>前言：这又是一篇关于角色一致性的工作（也是subject
+driven相关的工作），这篇工作由中山大学联合腾讯AI
+lab发布，在2023.6发布在arXiv上。这篇工作提供了一种很有意思的 Celeb Basis
+的想法，可以迁移到其他的一致性工作中。</p>
+</blockquote>
+<span id="more"></span>
+<h1 id="abstract">1 Abstract</h1>
+<p>现在存在对预训练大型文本到图像模型进行<strong>定制化</strong>的精细需求。</p>
+<ul>
+<li><strong>先前的方法</strong>：所新增的concept在组合能力方面往往较原始concept较弱，即使在训练过程中提供了数张图像。</li>
+<li><strong>提出的方法</strong>：只需<strong>一张人脸照片</strong>和仅<strong>1024个可学习参数</strong>，在<strong>3分钟内</strong>将独特的个体无缝集成到预训练扩散模型中。这样可以轻松生成这个人的图像，以任何姿势或位置与任何人进行互动，并根据文本提示做任何想象得出的事情。</li>
+<li><strong>具体的做法</strong>：首先分析并构建了来自预训练大型text
+encoder的embedding
+space中明确定义的<strong>celeb</strong>（名人基础）。然后，给定一个人脸照片作为目标身份，通过<strong>优化该基础的权重并锁定所有其他参数，生成其自身的嵌入</strong>。借助所提出的celeb，定制的模型中的新身份展示了比之前的个性化方法更好的概念组合能力。此外，这个模型还可以<strong>同时学习多个新身份，并在彼此之间进行互动</strong>，而先前的定制模型则无法做到。</li>
+</ul>
+<h1 id="method">2 Method</h1>
+<p>这项工作的重点：将human concept注入扩散模型中。</p>
+<p>受到<strong>3DMM</strong>
+的启发，该模型<strong>用明确定义的basis上的平均值和权重值的组合代表新的面部特征</strong>。</p>
+<p>构建了一个类似的basis，用于预训练stable
+diffusion中名人姓名的embedding，通过basis
+coefficients（基础系数），能够将任何新的人物表示为训练过的扩散模型中的一部分。</p>
+<h4 id="方法总览">2.1 方法总览</h4>
+<p><img src="/2023/12/15/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-Celeb-Basis-Inserting-Anybody-in-Diffusion-Models-via-Celeb-Basis/image-20231215182253387.png" alt="image-20231215182253387" style="zoom:67%;"></p>
+<ul>
+<li><p>首先从互联网收集了一批名人的姓名，并用stable
+diffusion对其进行筛选。通过这样做，<strong>获得了691个名人姓名</strong>，并使用<strong>CLIP
+的tokenizer</strong>（分词器）<strong>提取文本嵌入</strong>。</p></li>
+<li><p>然后，通过<strong>主成分分析（PCA</strong>）构建了一个<strong>celeb
+basis</strong>。</p></li>
+<li><p>为了<strong>用PCA系数表示一个新的人物</strong>，使用预训练的<strong>人脸识别网络作为给定照片的特征提取器</strong>，并<strong>学习一系列系数来重新加权celeb
+basis</strong>，从而<strong>使得新的面孔可以被预训练的CLIP transformer
+encoder识别</strong>。在此过程中，只使用一张人脸照片，并固定去噪UNet和Stable
+Diffusion的text encoder，以避免过拟合。</p>
+<p><img src="/2023/12/15/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-Celeb-Basis-Inserting-Anybody-in-Diffusion-Models-via-Celeb-Basis/image-20231215182328163.png" alt="image-20231215182328163" style="zoom: 50%;"></p></li>
+</ul>
+<p>训练后，<strong>只需要存储celeb
+basis的1024个系数来表示新添加的身份</strong>，因为basis是模型共享的。然而简单而言，经过训练的新个体的概念组成能力得以很好地保留，因为只对训练的CLIP模型的text
+embedding进行重新加权，并在扩散过程中冻结权重。</p>
+<p>值得注意的是，所提出的方法能够在任何给定的位置和姿势下生成一个注入脸部的照片。此外，它还打开了一些新的可能性，比如<strong>同时学习多个新的个体</strong>，并促进这些新生成的身份之间的<strong>无缝互动</strong>。</p>
+<p><img src="/2023/12/15/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-Celeb-Basis-Inserting-Anybody-in-Diffusion-Models-via-Celeb-Basis/image-20231215182352715.png" alt="image-20231215182352715" style="zoom: 50%;"></p>
+<p><strong>所以整体method分两部分</strong>：</p>
+<ul>
+<li>首先通过名人的姓名在文本编码器的嵌入空间上分析和建立了celeb
+basis。</li>
+<li>然后设计了一个基于面部编码器的方法，以优化celeb
+basis的系数，用于文本到图像扩散模型的定制化。</li>
+</ul>
+<p>下面分开来说。</p>
+<h2 id="celeb-basis">3 Celeb Basis</h2>
+<h4 id="preliminary-text-embeddings-in-text-to-image-diffusion-models">3.1
+Preliminary: Text Embeddings in Text-to-Image Diffusion Models</h4>
+<p>在一个T2I模型中，给定如下组件：</p>
+<ul>
+<li>Text prompts：<span class="math inline">\(u\)</span></li>
+<li>CLIP中的Text encoder：<span class="math inline">\(e_{text}\)</span></li>
+</ul>
+<p>（1）首先，按顺序将 <span class="math inline">\(u\)</span>
+分割并编码为 <span class="math inline">\(l\)</span> 个 integer
+tokens（可能是120,23034...），通过查找dictionary，获得 <span class="math inline">\(l\)</span> 个 word embeddings 组成的 embedding
+group <span class="math inline">\(g =
+[v_1，...，v_l]\)</span>（每个embedding <span class="math inline">\(v_i\in \mathbb{R}^d\)</span>）。</p>
+<p>（2）然后，text transformer <span class="math inline">\(\tau_{text}\)</span> 在 <span class="math inline">\(e_{text}\)</span> 中对 <span class="math inline">\(g\)</span> 进行编码并生成文本条件 <span class="math inline">\(\tau_{text}(g)\)</span>。</p>
+<p>（3）条件 <span class="math inline">\(\tau_{text}(g)\)</span>
+被馈送到条件去噪扩散模型 <span class="math inline">\(\epsilon
+_{\theta}\left( z_t,t,\tau _{text}\left( g \right) \right)\)</span>
+中，并按照迭代去噪过程合成输出图像（其中 <span class="math inline">\(t\)</span> 是时间戳，<span class="math inline">\(z_t\)</span> 是图像或噪声到 <span class="math inline">\(t\)</span> 的潜变）</p>
+<p>之前的文本到图像模型个性化方法已经显示了文本嵌入 <span class="math inline">\(g\)</span>
+在个性化语义概念中的重要性。然而，在文本到图像模型的个性化中，它们只将其视为优化目标，而不是改善其表示。</p>
+<h4 id="interpolating-abilities-of-text-embeddings-文本嵌入的插值能力">3.2
+Interpolating Abilities of Text Embeddings 文本嵌入的插值能力</h4>
+<p>之前的研究已经表明，文本嵌入的混合有利于文本分类，这里需要验证一下<strong>文本到图像生成中的插值能力</strong>。</p>
+<p>随机选择两个名人名字的嵌入 <span class="math inline">\(v_1\)</span>
+和 <span class="math inline">\(v_2\)</span> ，并将它们线性组合成 <span class="math inline">\(\hat{v}=\lambda v_1+\left( 1-\lambda \right)
+v_2\)</span> 。</p>
+<p>有趣的是，插值嵌入 <span class="math inline">\(\hat{v}\)</span>
+生成的图像也包含一个人脸，并且所有生成的图像在与其他名人的表演和互动中表现良好。受上述发现的启发，<strong>可以构建了一个Celeb
+basis，以便每个新的身份可以处于由名人嵌入形成的空间中</strong>。</p>
+<p><img src="/2023/12/15/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-Celeb-Basis-Inserting-Anybody-in-Diffusion-Models-via-Celeb-Basis/image-20231215182352715.png" alt="image-20231215182352715" style="zoom: 50%;"></p>
+<h4 id="build-celeb-basis-from-embeddings-of-the-collected-celebrities">3.3
+Build Celeb Basis from Embeddings of the Collected Celebrities</h4>
+<p><strong>Step1:</strong></p>
+<p>首先从维基百科中爬取了大约1500名名人的姓名作为初始集合。然后，用stable
+diffusion构建了一个手动过滤器，通过构造每个姓名的prompt并合成图像。</p>
+<p>满意的名人姓名应该<strong>有生成具有一致身份的人物图像的能力，并与其他名人在合成结果中互动</strong>。</p>
+<p>最终得到了 <span class="math inline">\(m = 691\)</span>
+个满意的名人姓名，其中每个姓名 <span class="math inline">\(u_i\)</span>
+可以被分词和编码成一个名人嵌入组 <span class="math inline">\(g_i=\left[
+v_{1}^{i},...,v_{k_i}^{i} \right]\)</span></p>
+<p>但是每个名字的长度 <span class="math inline">\(k_i\)</span>
+可能不同，因为每个名字可能包含多个单词（或者分词器会将单词划分为子单词）。为了简化公式，我们组成了<strong>非重复的嵌入</strong>，使得每个
+<span class="math inline">\(g_i\)</span>
+<strong>只包含前两个嵌入</strong>（即对于所有 <span class="math inline">\(m\)</span> 个名人，<span class="math inline">\(k_i
+= 2\)</span>）。</p>
+<p>使用 <span class="math inline">\(C_1\)</span> 和 <span class="math inline">\(C_2\)</span>（<span class="math inline">\(C_k=\left[ v_{k}^{1},...,v_{k}^{m}
+\right]\)</span>）来分别表示每个 <span class="math inline">\(g_i\)</span>
+的第一个和最后一个嵌入，可以理解它们为 first name 和 last name
+的嵌入集合。</p>
+<p><img src="/2023/12/15/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-Celeb-Basis-Inserting-Anybody-in-Diffusion-Models-via-Celeb-Basis/image-20231215190828807.png" alt="image-20231215190828807" style="zoom:50%;"></p>
+<p><strong>Step2:</strong></p>
+<p>现在需要进一步构建一个紧凑的搜索空间（受到了 <strong>3DMM</strong>
+的启发，该方法使用 <strong>PCA</strong>
+<strong>将高维扫描的三维面部坐标映射到一个紧凑的低维空间</strong>）</p>
+<p>对于每个嵌入集合 <span class="math inline">\(C_k\)</span>：</p>
+<ul>
+<li>计算其均值： <span class="math inline">\(\bar{C}_k=\frac{1}{m}\sum_{i=1}^m{v_{k}^{i}}\)</span></li>
+<li>计算其 PCA 映射矩阵： <span class="math inline">\(B_k=PCA\left(
+C_k,p \right)\)</span></li>
+</ul>
+<blockquote>
+<p><span class="math inline">\(\bar{C}_k\in \mathbb{R}^d\)</span></p>
+<p><span class="math inline">\(PCA\left( X,p \right)\)</span> 表示将矩阵
+<span class="math inline">\(X\in \mathbb{R}^{m×d}\)</span> 的第二维降为
+<span class="math inline">\(p (p &lt; d)\)</span>个主成分的 PCA
+操作，即将<span class="math inline">\(C_k=\left[ v_{k}^{1},...,v_{k}^{m}
+\right]\)</span> 转换为 <span class="math inline">\(B_k=\left[
+b_{k}^{1},...,b_{k}^{p} \right]\)</span></p>
+</blockquote>
+<p><strong>均值嵌入 <span class="math inline">\(\bar{C}_k\)</span>
+仍然代表一张脸，可以通过对 <span class="math inline">\(B_k\)</span>
+应用一些系数来得到新的脸。</strong></p>
+<p><img src="/2023/12/15/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-Celeb-Basis-Inserting-Anybody-in-Diffusion-Models-via-Celeb-Basis/image-20231215190848203.png" alt="image-20231215190848203" style="zoom:50%;"></p>
+<p><strong>总览：</strong></p>
+<p>Celeb Basis是根据两个basis<span class="math inline">\(\left[
+\bar{C}_1,B_1 \right]\)</span> 和 <span class="math inline">\(\left[
+\bar{C}_2,B_2 \right]\)</span> 来定义的，就像名字的first name和last
+name一样。</p>
+<p>使用相应的主成分 <span class="math inline">\(A_1\)</span> 和 <span class="math inline">\(A_2\)</span>（<span class="math inline">\(A_k=\left[ \alpha _{k}^{1},...,\alpha _{k}^{p}
+\right]\)</span>）来表示新的身份。</p>
+<p>对于每个新的人 <span class="math inline">\(\hat{g}\)</span>
+，<strong>使用Celeb Basis的两个p维系数来表示</strong>，可以写为： <span class="math display">\[
+\hat{g}=\left[ \hat{v}_1,\hat{v}_2 \right] ,\ \ \ \
+\hat{v}_k=\bar{C}_k+\sum_{x=1}^p{\alpha _{k}^{x}b_{k}^{x}}
+\]</span></p>
+<blockquote>
+<p>在实验中，p=512
+为了控制生成的身份，使用人脸编码器作为个性化方法来优化系数。(下面介绍)</p>
+</blockquote>
+<h2 id="stable-diffusion-personalization-via-celeb-basis">4 Stable
+Diffusion Personalization via Celeb Basis</h2>
+<h4 id="fast-coefficients-optimization-for-specific-identity-系数优化-training过程">4.1
+Fast Coefficients Optimization for Specific Identity 系数优化
+（Training过程）</h4>
+<p>给定一张单独的面部照片，<strong>使用Celeb
+Basis将目标身份的给定面部图像 <span class="math inline">\(x\)</span>
+嵌入预训练的文本到图像扩散模型中</strong>。</p>
+<p><img src="/2023/12/15/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-Celeb-Basis-Inserting-Anybody-in-Diffusion-Models-via-Celeb-Basis/image-20231215200744524.png" alt="image-20231215200744524" style="zoom:67%;"></p>
+<p>由于直接优化很难找到优化权重，所以考虑<strong>使用预训练的SOTA人脸识别模型
+<span class="math inline">\(F\)</span>（F为ArcFace），来捕捉身份鉴别模式</strong>。</p>
+<p>具体而言，<strong>采用 <span class="math inline">\(F\)</span>
+来提取512维的面部嵌入作为先验</strong>。</p>
+<p>然后，<strong>使用一个单层 MLP + L2 Norm 来将面部先验映射到调制系数
+<span class="math inline">\(A_1\)</span> 和 <span class="math inline">\(A_2\)</span></strong>。根据公式 <span class="math inline">\(\hat{g}=\left[ \hat{v}_1,\hat{v}_2 \right] ,\ \ \
+\ \hat{v}_k=\bar{C}_k+\sum_{x=1}^p{\alpha
+_{k}^{x}b_{k}^{x}}\)</span>，可以使用预定义的Basis<strong>获得 <span class="math inline">\(x\)</span> 的嵌入组 <span class="math inline">\(\hat{g}\)</span></strong>。</p>
+<p>将 <span class="math inline">\(\hat{g}\)</span> 的text prompts表示为
+<span class="math inline">\(V^*\)</span>，<strong>将 <span class="math inline">\(V^*\)</span> 纳入到 input face 的 text prompts
+，这样就可以将其和“A photo of <span class="math inline">\(V^*\)</span>”、“A depiction of <span class="math inline">\(V^*\)</span>”等之间建立训练对</strong>。这里只使用简单的扩散去噪损失：
+<span class="math display">\[
+\mathbb{E}_{\epsilon ~N\left( 0,1 \right) ,x,t,g}\left[ \lVert \epsilon
+-\epsilon _{\theta}\left( z_t,t,\tau _{text}\left( g \right) \right)
+\rVert \right]
+\]</span></p>
+<blockquote>
+<p><span class="math inline">\(\epsilon\)</span>
+是未经缩放的噪声样本</p>
+<p><span class="math inline">\(g\)</span> 表示包含 <span class="math inline">\(\hat{g}\)</span> 的text embedding</p>
+</blockquote>
+<p>在训练过程中，<strong>只需要优化 MLP
+的权重</strong>，而其他模块（Celeb Basis模块、面部编码器 <span class="math inline">\(F\)</span>、CLIP transformer <span class="math inline">\(\tau_{text}\)</span> 和 UNet <span class="math inline">\(\epsilon _{\theta}\)</span>） 均保持固定。</p>
+<p>因此，<strong>训练的文本到图像网络的原始组合能力得到良好保留，避免了遗忘问题</strong>。由于只有一张照片，所以在监督数据上使用<strong>颜色抖动、随机调整大小和随机位移作为数据增强</strong>，以避免过拟合。</p>
+<p>实验中发现即使没有正则化数据集，在先前的方法中也能够良好工作，显示了所提出方法的强大学习能力。</p>
+<p>由于所提出的方法只涉及少量参数，<strong>在 NVIDIA A100 GPU
+上每个个体只需要大约3分钟的时间</strong>，这也比以前更快。</p>
+<h4 id="testing">4.2 Testing</h4>
+<p>经过训练，<strong>只需要保存Celeb Basis的两组系数 <span class="math inline">\(A_1\)</span> 和 <span class="math inline">\(A_2\)</span></strong> 。</p>
+<p>在实验中，<span class="math inline">\(p =
+512\)</span>，仅需要<strong>1024个参数</strong>和<strong>半精度浮点数的2-3KB存储消耗</strong>。</p>
+<p>然后，用户可以使用多个动作描述prompts（例如“一张<span class="math inline">\(V^*\)</span>弹吉他的照片”）来构建prompts，以合成满意的图像。</p>
+<h4 id="multiple-identities-jointly-optimization-多重身份联合">4.3
+Multiple Identities Jointly Optimization 多重身份联合</h4>
+<p><strong>使用共享的 MLP
+映射层一次学习多个身份</strong>（例如10个）。</p>
+<p>具体来说，仅需将训练图像扩展到10个，并使用与single
+identity类似的过程联合训练这些图像。在没有特定设计的情况下，上面的方法可以成功生成<strong>每个身份的权重</strong>。训练后，这个方法可以在每个新身份之间进行交互，而先前的方法则无法如实验所示。</p>
+
+    
+
+    
+
+    
+    <div class="declare"> 
+      <ul class="post-copyright">
+        <li>
+          <strong>本文作者：</strong>
+          李宝璐
+        </li>
+        <li>
+          <strong>本文链接：</strong>
+          <a href="https://libaolu312.github.io/2023/12/15/论文精读-Celeb-Basis-Inserting-Anybody-in-Diffusion-Models-via-Celeb-Basis/" title="论文精读Celeb Basis:Inserting Anybody in Diffusion Models via Celeb Basis" target="_blank">https://libaolu312.github.io/2023/12/15/论文精读-Celeb-Basis-Inserting-Anybody-in-Diffusion-Models-via-Celeb-Basis/</a>
+        </li>
+        
+        <li>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，均采用 <a href="https://github.com/JoeyBling/hexo-theme-yilia-plus/blob/master/LICENSE" rel="external nofollow" target="_blank">MIT</a> 许可协议。转载请注明出处！
+        </li>
+        
+      </ul>
+    </div>
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/AIGC//" class="article-tag-list-link color5">AIGC</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+
+    
+    
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <!-- <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a> -->
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://libaolu312.github.io/2023/12/15/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-Celeb-Basis-Inserting-Anybody-in-Diffusion-Models-via-Celeb-Basis/" alt="微信分享二维码"> -->
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+
+<nav id="article-nav">
+  
+    <a href="/2023/12/15/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BBPix2Pix-Image-to-Image-Translation-with-Conditional-Adversarial-Networks/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          论文精读Pix2Pix:Image-to-Image Translation with Conditional Adversarial Networks
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2023/12/11/%E8%AE%BA%E6%96%87%E7%AE%80%E8%AF%BB-Alpha-CLIP-A-CLIP-Model-Focusing-on-Wherever-You-Want/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">论文简读:Alpha-CLIP: A CLIP Model Focusing on Wherever You Want</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#abstract"><span class="toc-number">1.</span> <span class="toc-text">1 Abstract</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#method"><span class="toc-number">2.</span> <span class="toc-text">2 Method</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E6%80%BB%E8%A7%88"><span class="toc-number">2.0.0.1.</span> <span class="toc-text">2.1 方法总览</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#celeb-basis"><span class="toc-number">2.1.</span> <span class="toc-text">3 Celeb Basis</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#preliminary-text-embeddings-in-text-to-image-diffusion-models"><span class="toc-number">2.1.0.1.</span> <span class="toc-text">3.1
+Preliminary: Text Embeddings in Text-to-Image Diffusion Models</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#interpolating-abilities-of-text-embeddings-%E6%96%87%E6%9C%AC%E5%B5%8C%E5%85%A5%E7%9A%84%E6%8F%92%E5%80%BC%E8%83%BD%E5%8A%9B"><span class="toc-number">2.1.0.2.</span> <span class="toc-text">3.2
+Interpolating Abilities of Text Embeddings 文本嵌入的插值能力</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#build-celeb-basis-from-embeddings-of-the-collected-celebrities"><span class="toc-number">2.1.0.3.</span> <span class="toc-text">3.3
+Build Celeb Basis from Embeddings of the Collected Celebrities</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#stable-diffusion-personalization-via-celeb-basis"><span class="toc-number">2.2.</span> <span class="toc-text">4 Stable
+Diffusion Personalization via Celeb Basis</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#fast-coefficients-optimization-for-specific-identity-%E7%B3%BB%E6%95%B0%E4%BC%98%E5%8C%96-training%E8%BF%87%E7%A8%8B"><span class="toc-number">2.2.0.1.</span> <span class="toc-text">4.1
+Fast Coefficients Optimization for Specific Identity 系数优化
+（Training过程）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#testing"><span class="toc-number">2.2.0.2.</span> <span class="toc-text">4.2 Testing</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#multiple-identities-jointly-optimization-%E5%A4%9A%E9%87%8D%E8%BA%AB%E4%BB%BD%E8%81%94%E5%90%88"><span class="toc-number">2.2.0.3.</span> <span class="toc-text">4.3
+Multiple Identities Jointly Optimization 多重身份联合</span></a></li></ol></li></ol></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
+        
+    </div>
+</aside>
+
+
+
+
+
+  <section id="comments" class="comments">
+      <style>
+        .comments{margin:30px;padding:10px;background:#fff}
+        @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+      </style>
       
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2023" class="archive-year">2023</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/11/20/%E6%9D%A1%E4%BB%B6DDPM-Diffusion-Model%E7%9A%84%E7%AC%AC%E4%B8%89%E4%B8%AA%E5%B7%85%E5%B3%B0%E4%B9%8B%E4%BD%9C/" class="archive-article-date">
-        <time datetime="2023-11-20T12:40:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-11-20</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/11/20/%E6%9D%A1%E4%BB%B6DDPM-Diffusion-Model%E7%9A%84%E7%AC%AC%E4%B8%89%E4%B8%AA%E5%B7%85%E5%B3%B0%E4%B9%8B%E4%BD%9C/" target="_blank">条件DDPM:Diffusion Model的第三个巅峰之作</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/扩散模型//" class="article-tag-list-link color5">扩散模型</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+    var gitalk = new Gitalk({
+      clientID: '42328a99496b32b78cfb',
+      clientSecret: '8ff71391255b5283f624f252a3ca53d7b9b96f4b',
+      repo: 'libaolu312.github.io',
+      owner: 'libaolu312',
+      admin: 'libaolu312',
+     //id ��Ϊ�˱�֤issue��Ψһ�ԣ�id���Ȳ��ܴ���50�������������ʹ��·������id����һ����ȡ����ò�Ҫ�޸Ĵ������������ܵ������۶�ʧ  
+      id: location.href.slice(location.href.length-25),
+      distractionFreeMode: 'true',
+      labels: 'Comment'.split(',').filter(l => l) ,
+    })
+    gitalk.render('gitalk-container')
+    </script>
     
     
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/11/20/%E4%BB%8EVAE%E5%88%B0Diffusion-Models/" class="archive-article-date">
-        <time datetime="2023-11-20T12:32:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-11-20</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/11/20/%E4%BB%8EVAE%E5%88%B0Diffusion-Models/" target="_blank">从VAE到Diffusion Models</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/扩散模型//" class="article-tag-list-link color5">扩散模型</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/11/20/%E4%B8%BA%E4%BB%80%E4%B9%88Diffusion-Models%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E5%8F%AF%E4%BB%A5%E6%88%90%E4%B8%BAScore-based-Models/" class="archive-article-date">
-        <time datetime="2023-11-20T11:36:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-11-20</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/11/20/%E4%B8%BA%E4%BB%80%E4%B9%88Diffusion-Models%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E5%8F%AF%E4%BB%A5%E6%88%90%E4%B8%BAScore-based-Models/" target="_blank">为什么Diffusion Models扩散模型可以成为Score-based Models</a>
-  
-    </h1>
-  
+  </section>
 
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/扩散模型//" class="article-tag-list-link color5">扩散模型</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/11/18/%E9%92%88%E5%AF%B9%E6%88%B7%E5%9E%8B%E5%9B%BE%E6%95%B0%E6%8D%AE%E9%9B%86%E7%9A%84%E8%B0%83%E7%A0%94/" class="archive-article-date">
-        <time datetime="2023-11-18T06:42:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-11-18</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/11/18/%E9%92%88%E5%AF%B9%E6%88%B7%E5%9E%8B%E5%9B%BE%E6%95%B0%E6%8D%AE%E9%9B%86%E7%9A%84%E8%B0%83%E7%A0%94/" target="_blank">针对户型图数据集的调研</a>
-  
-    </h1>
-  
 
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/扩散模型//" class="article-tag-list-link color5">扩散模型</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/11/16/Windows-Copilot-%E5%92%8C-Github-Copilot-%E7%9A%84%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%92%8C%E4%BD%BF%E7%94%A8%E5%88%9D%E4%BD%93%E9%AA%8C/" class="archive-article-date">
-        <time datetime="2023-11-16T06:55:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-11-16</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/11/16/Windows-Copilot-%E5%92%8C-Github-Copilot-%E7%9A%84%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%92%8C%E4%BD%BF%E7%94%A8%E5%88%9D%E4%BD%93%E9%AA%8C/" target="_blank">Windows Copilot 和 Github Copilot 的安装教程和使用初体验</a>
-  
-    </h1>
-  
 
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/技术笔记//" class="article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/11/13/DDPM%E4%BB%A3%E7%A0%81%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%BB-3-%E5%9B%BE%E8%A7%A3%E6%A8%A1%E5%9E%8B%E5%90%84%E9%83%A8%E5%88%86%E7%BB%93%E6%9E%84%E3%80%81%E7%94%A8ConvNextBlock%E4%BB%A3%E6%9B%BFResNet/" class="archive-article-date">
-        <time datetime="2023-11-13T09:00:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-11-13</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/11/13/DDPM%E4%BB%A3%E7%A0%81%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%BB-3-%E5%9B%BE%E8%A7%A3%E6%A8%A1%E5%9E%8B%E5%90%84%E9%83%A8%E5%88%86%E7%BB%93%E6%9E%84%E3%80%81%E7%94%A8ConvNextBlock%E4%BB%A3%E6%9B%BFResNet/" target="_blank">DDPM代码详细解读(3):图解模型各部分结构、用ConvNextBlock代替ResNet</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/扩散模型//" class="article-tag-list-link color5">扩散模型</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/11/13/DDPM%E4%BB%A3%E7%A0%81%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%BB-2-Unet%E7%BB%93%E6%9E%84%E3%80%81%E6%AD%A3%E5%90%91%E5%92%8C%E9%80%86%E5%90%91%E8%BF%87%E7%A8%8B%E3%80%81IS%E5%92%8CFID%E6%B5%8B%E8%AF%95%E3%80%81EMA%E4%BC%98%E5%8C%96/" class="archive-article-date">
-        <time datetime="2023-11-13T08:59:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-11-13</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/11/13/DDPM%E4%BB%A3%E7%A0%81%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%BB-2-Unet%E7%BB%93%E6%9E%84%E3%80%81%E6%AD%A3%E5%90%91%E5%92%8C%E9%80%86%E5%90%91%E8%BF%87%E7%A8%8B%E3%80%81IS%E5%92%8CFID%E6%B5%8B%E8%AF%95%E3%80%81EMA%E4%BC%98%E5%8C%96/" target="_blank">DDPM代码详细解读(2):Unet结构、正向和逆向过程、IS和FID测试、EMA优化</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/扩散模型//" class="article-tag-list-link color5">扩散模型</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/11/13/DDPM%E4%BB%A3%E7%A0%81%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%BB-1-%E6%95%B0%E6%8D%AE%E9%9B%86%E5%87%86%E5%A4%87%E3%80%81%E8%B6%85%E5%8F%82%E6%95%B0%E8%AE%BE%E7%BD%AE%E3%80%81loss%E8%AE%BE%E8%AE%A1%E3%80%81%E5%85%B3%E9%94%AE%E5%8F%82%E6%95%B0%E8%AE%A1%E7%AE%97/" class="archive-article-date">
-        <time datetime="2023-11-13T08:58:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-11-13</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/11/13/DDPM%E4%BB%A3%E7%A0%81%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%BB-1-%E6%95%B0%E6%8D%AE%E9%9B%86%E5%87%86%E5%A4%87%E3%80%81%E8%B6%85%E5%8F%82%E6%95%B0%E8%AE%BE%E7%BD%AE%E3%80%81loss%E8%AE%BE%E8%AE%A1%E3%80%81%E5%85%B3%E9%94%AE%E5%8F%82%E6%95%B0%E8%AE%A1%E7%AE%97/" target="_blank">DDPM代码详细解读(1):数据集准备、超参数设置、loss设计、关键参数计算</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/扩散模型//" class="article-tag-list-link color5">扩散模型</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/11/13/%E4%B8%BA%E4%BB%80%E4%B9%88Diffusion-Models%E9%92%9F%E7%88%B1U-net%E7%BB%93%E6%9E%84/" class="archive-article-date">
-        <time datetime="2023-11-13T08:05:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-11-13</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/11/13/%E4%B8%BA%E4%BB%80%E4%B9%88Diffusion-Models%E9%92%9F%E7%88%B1U-net%E7%BB%93%E6%9E%84/" target="_blank">为什么Diffusion Models钟爱U-net结构</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/扩散模型//" class="article-tag-list-link color5">扩散模型</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/11/08/Diffusion-Models%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E4%B8%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86%E5%92%8C%E4%BB%A3%E7%A0%81%E8%A7%A3%E8%AF%BB/" class="archive-article-date">
-        <time datetime="2023-11-08T07:12:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-11-08</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/11/08/Diffusion-Models%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E4%B8%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86%E5%92%8C%E4%BB%A3%E7%A0%81%E8%A7%A3%E8%AF%BB/" target="_blank">Diffusion Models扩散模型与深度学习(数学原理深解)</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/扩散模型//" class="article-tag-list-link color5">扩散模型</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/archives/">&amp;laquo; Prev</a><a class="page-number" href="/archives/">1</a><span class="page-number current">2</span><a class="page-number" href="/archives/page/3/">3</a><a class="page-number" href="/archives/page/4/">4</a><a class="page-number" href="/archives/page/5/">5</a><a class="extend next" rel="next" href="/archives/page/3/">Next &amp;raquo;</a>
-    </nav>
-  
 
 
           </div>
@@ -841,8 +745,8 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: true,

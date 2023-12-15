@@ -6,19 +6,27 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://libaolu312.github.io">
-  <title>Archives | 李宝璐</title>
+  <title>论文精读Pix2Pix:Image-to-Image Translation with Conditional Adversarial Networks | 李宝璐</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="里面放着李宝璐的碎碎念">
-<meta property="og:type" content="website">
-<meta property="og:title" content="李宝璐">
-<meta property="og:url" content="https://libaolu312.github.io/archives/page/2/index.html">
+  <meta name="description" content="前言：这是一篇比较老的工作，发表在CVPR2017上，由UCB的AI Lab(BAIR)提出。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="论文精读Pix2Pix:Image-to-Image Translation with Conditional Adversarial Networks">
+<meta property="og:url" content="https://libaolu312.github.io/2023/12/15/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BBPix2Pix-Image-to-Image-Translation-with-Conditional-Adversarial-Networks/index.html">
 <meta property="og:site_name" content="李宝璐">
-<meta property="og:description" content="里面放着李宝璐的碎碎念">
+<meta property="og:description" content="前言：这是一篇比较老的工作，发表在CVPR2017上，由UCB的AI Lab(BAIR)提出。">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://libaolu312.github.io/2023/12/15/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BBPix2Pix-Image-to-Image-Translation-with-Conditional-Adversarial-Networks/image-20231215222904203.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/12/15/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BBPix2Pix-Image-to-Image-Translation-with-Conditional-Adversarial-Networks/image-20231215233835673.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/12/15/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BBPix2Pix-Image-to-Image-Translation-with-Conditional-Adversarial-Networks/image-20231215232200729.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/12/15/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BBPix2Pix-Image-to-Image-Translation-with-Conditional-Adversarial-Networks/image-20231215234038342.png">
+<meta property="article:published_time" content="2023-12-15T14:16:46.000Z">
+<meta property="article:modified_time" content="2023-12-15T15:45:49.514Z">
 <meta property="article:author" content="李宝璐">
+<meta property="article:tag" content="技术笔记">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://libaolu312.github.io/2023/12/15/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BBPix2Pix-Image-to-Image-Translation-with-Conditional-Adversarial-Networks/image-20231215222904203.png">
   
     <link rel="alternative" href="/atom.xml" title="李宝璐" type="application/atom+xml">
   
@@ -241,566 +249,381 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-论文精读Pix2Pix-Image-to-Image-Translation-with-Conditional-Adversarial-Networks" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 class="article-title" itemprop="name">
+      论文精读Pix2Pix:Image-to-Image Translation with Conditional Adversarial Networks
+    </h1>
+  
+
+
+  
+  
+        
+        <span id="busuanzi_container_page_pv" style='display:none' class="archive-article-date">
+              <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+        </span>
+
+<a href="/2023/12/15/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BBPix2Pix-Image-to-Image-Translation-with-Conditional-Adversarial-Networks/" class="archive-article-date">
+        <time datetime="2023-12-15T14:16:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-12-15</time>
+</a>
+
   
   
     
+<div style="margin-top:10px;">
+  <span class="post-time">
+    <span class="post-meta-item-icon">
+      <!-- fonts.scss -->
+      <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
+      <i class="icon-statistics"></i>
+      <span class="post-meta-item-text"> 字数统计:</span>
+      <span class="post-count">2k字</span>
+    </span>
+  </span>
+
+  <span class="post-time">
+    &nbsp; | &nbsp;
+    <span class="post-meta-item-icon">
+      <i class="icon-book icon"></i>
+      <span class="post-meta-item-text"> 阅读时长≈</span>
+      <span class="post-count">7分</span>
+    </span>
+  </span>
+</div>
+
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
     
+    <blockquote>
+<p>前言：这是一篇比较老的工作，发表在CVPR2017上，由UCB的AI
+Lab(BAIR)提出。</p>
+</blockquote>
+<span id="more"></span>
+<h1 id="abstract">1 Abstract</h1>
+<p>这篇工作调查了<strong>条件对抗网络作为图像到图像翻译问题的通用解决方案</strong>。</p>
+<p>这些网络不仅<strong>学习从输入图像到输出图像的映射</strong>，还<strong>学习一个损失函数来训练这个映射</strong>。</p>
+<p>这使得可以将相同的通用方法应用于传统上需要非常不同的损失公式的问题。作者证明了<strong>这种方法在从标签映射合成照片、从边缘映射重建物体和给图像上色等任务上是有效的</strong>。</p>
+<p>一个理想的方法是指定一个<strong>High-level
+Goal：使输出与现实无法区分</strong>，然后自动学习一个适合实现这个目标的损失函数。</p>
+<p>GANs就是这么做的，<strong>GANs学习一个损失函数，试图判断输出图像是真实的还是伪造的</strong>，<strong>同时训练一个生成模型来最小化这个损失</strong>。模糊的图像是不能容忍的，因为它们看起来明显是伪造的。由于GANs学习一个适应数据的损失函数，它们可以应用于许多传统上需要非常不同类型的损失函数的任务中。</p>
+<h1 id="method">2 Method</h1>
+<h4 id="方法总览">方法总览</h4>
+<ul>
+<li>GANs是学习从随机噪声向量 <span class="math inline">\(z\)</span>
+到输出图像 <span class="math inline">\(y\)</span>
+的映射的生成模型，<span class="math inline">\(G : z → y\)</span></li>
+<li>条件GANs学习从观察到的图像 <span class="math inline">\(x\)</span>
+和随机噪声向量 <span class="math inline">\(z\)</span> 到 <span class="math inline">\(y\)</span> 的映射，<span class="math inline">\(G :
+{x, z} → y\)</span></li>
+</ul>
+<p>生成器 <span class="math inline">\(G\)</span>
+产生的输出图像与“真实”图像无法被对抗训练过的判别器 <span class="math inline">\(D\)</span> 区分开来，<strong>判别器 <span class="math inline">\(D\)</span>
+被训练尽可能地检测生成器的“伪造”图像</strong>。</p>
+<p><img src="/2023/12/15/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BBPix2Pix-Image-to-Image-Translation-with-Conditional-Adversarial-Networks/image-20231215222904203.png" alt="image-20231215222904203" style="zoom:67%;"></p>
+<p>下面分点细说method。</p>
+<h2 id="objective">2.1 Objective</h2>
+<p>条件生成对抗网络（Conditional GAN）的目标可以表示为： <span class="math display">\[
+\mathcal{L}_{cGAN}\left( G,D \right) =\mathbb{E}_{x,y}\left[ \log
+D\left( x,y \right) \right] +\mathbb{E}_{x,z}\left[ \log \left(
+1-D\left( x,G\left( x,z \right) \right) \right) \right]
+\]</span></p>
+<blockquote>
+<p>在对抗训练中：</p>
+<p>生成器 <span class="math inline">\(G\)</span> ： 试图最小化该目标</p>
+<p>判别器 <span class="math inline">\(D\)</span> ： 试图最大化该目标</p>
+<p>即：<span class="math inline">\(G^*=arg\min _G\max
+_D\mathcal{L}_{cGAN}\left( G,D \right)\)</span></p>
+</blockquote>
+<p>为了测试判别器条件的重要性，实验中还与一个不带条件的变体进行比较，其中判别器不观察x：
+<span class="math display">\[
+\mathcal{L}_{GAN}\left( G,D \right) =\mathbb{E}_y\left[ \log D\left( y
+\right) \right] +\mathbb{E}_{x,z}\left[ \log \left( 1-D\left( x,G\left(
+x,z \right) \right) \right) \right]
+\]</span>
+以前的方法发现将GAN目标与更传统的损失（如L2距离）混合在一起是有益的。
+鉴别器的任务保持不变，但生成器的任务不仅是欺骗鉴别器，还要在L2意义上接近真实输出。</p>
+<p>实验中还探索了这个选项，使用L1距离而不是L2，因为L1鼓励较少的模糊生成：
+<span class="math display">\[
+\mathcal{L}_{L1}\left( G \right) =\mathbb{E}_{x,y,z}\left[ \lVert
+y-G\left( x,z \right) \rVert _1 \right]
+\]</span> 所以最终的目标是： <span class="math display">\[
+G^*=arg\min_G\max_D\mathcal{L}_{cGAN}\left( G,D \right) +\lambda
+\mathcal{L}_{L1}\left( G \right)
+\]</span> <strong>没有 <span class="math inline">\(z\)</span></strong>，网络仍然可以从 <span class="math inline">\(x\)</span> 到 <span class="math inline">\(y\)</span>
+学习映射，但<strong>会产生确定性的输出</strong>，因此无法匹配除了delta函数之外的任何分布。</p>
+<p>过去的条件GAN已经意识到了这一点，并<strong>在生成器中除了 <span class="math inline">\(x\)</span> 之外提供了高斯噪声 <span class="math inline">\(z\)</span> 作为输入</strong>。</p>
+<p>在初始实验中，发现这种策略并不有效（生成器只是学习忽略噪声）。相反，对于这篇工作的最终模型，只<strong>在训练和测试时间的多个层次应用dropout噪声形式提供噪声</strong>。尽管有dropout噪声，但是观察到网络的输出中<strong>只有轻微的随机性</strong>。</p>
+<blockquote>
+<p>设计能产生高度随机输出的条件GAN，从而捕捉到它们模拟的条件分布的完整熵，是当时工作中所未解答的一个重要问题。</p>
+</blockquote>
+<h2 id="network-architectures">2.2 Network architectures</h2>
+<p>生成器和判别器都使用Convolution-BatchNorm-ReLu 模块</p>
+<h4 id="generator-with-skips">2.2.1 Generator with skips</h4>
+<p>图像到图像转换问题的一个显著特征是<strong>将高分辨率input
+grid映射到高分辨率output
+grid</strong>。此外，输入和输出在表面外观上有所不同，但两者都是相同潜在结构的渲染。因此，输入中的结构与输出中的结构大致对齐。围绕这些考虑设计生成器架构。</p>
+<p>许多先前的工作曾经使用过一个<strong>encoder-decoder网络</strong>来解决这个领域的问题。在这样的网络中，<strong>输入通过一系列逐渐下采样的层传递，直到一个bottleneck
+layer，在这一点上，过程被反转</strong>。这样的网络要求<strong>所有信息流都必须通过所有层，包括bottleneck
+layer</strong>。对于许多图像转换问题来说，输入和输出之间存在大量的低级信息共享，并且直接在网络间传输这些信息将是可取的。（如对图像上色的情况下，输入和输出共享突出边缘的位置）</p>
+<p><img src="/2023/12/15/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BBPix2Pix-Image-to-Image-Translation-with-Conditional-Adversarial-Networks/image-20231215233835673.png" alt="image-20231215233835673" style="zoom:67%;"></p>
+<p>为了给生成器提供<strong>绕过像这样的信息瓶颈的方法</strong>，<strong>添加skip
+connections</strong>，遵循“U-Net”的一般形状。具体来说，在每个层 <span class="math inline">\(i\)</span> 和层 <span class="math inline">\(n-i\)</span> 之间添加skip connections，其中 <span class="math inline">\(n\)</span> 是总层数。每个skip
+connections简单地将层 <span class="math inline">\(i\)</span>
+的所有通道与层 <span class="math inline">\(n-i\)</span>
+的通道连接起来。</p>
+<h4 id="markovian-discriminator-patchgan">2.2.2 Markovian discriminator
+(PatchGAN)</h4>
+<p>L2 loss以及L1 loss，在图像生成问题上会产生模糊的结果：</p>
+<p><img src="/2023/12/15/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BBPix2Pix-Image-to-Image-Translation-with-Conditional-Adversarial-Networks/image-20231215232200729.png" alt="image-20231215232200729" style="zoom: 50%;"></p>
+<p>虽然这些损失无法鼓励高频的清晰度，在许多情况下<strong>它们仍然能够准确地捕捉低频信息</strong>。对于这种情况，并不需要完全新的框架来在低频率上强制执行正确性，<strong>L1已经足够</strong>。</p>
+<p>实验结果可以看出，使用U-Net和L1的组合是ok的：</p>
+<p><img src="/2023/12/15/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BBPix2Pix-Image-to-Image-Translation-with-Conditional-Adversarial-Networks/image-20231215234038342.png" alt="image-20231215234038342" style="zoom:67%;"></p>
+<p>这激励我们<strong>将GAN鉴别器限制为仅建模高频结构</strong>，并依靠L1
+loss来强制低频正确性（<span class="math inline">\(G^*=arg\min_G\max_D\mathcal{L}_{cGAN}\left( G,D
+\right) +\lambda \mathcal{L}_{L1}\left( G \right)\)</span> ）。</p>
+<p>为了建模高频率，<strong>只需将注意力限制在局部图像块的结构上</strong>。因此，设计了一个被称为
+<strong>PatchGAN
+的鉴别器架构</strong>，<strong>只惩罚与patch尺度相对应的结构</strong>。该鉴别器试图<strong>对图像中每个
+<span class="math inline">\(N × N\)</span>
+patch进行真假分类</strong>。</p>
+<p>通过<strong>对整个图像进行卷积来运行这个鉴别器</strong>，并对所有响应进行平均，以提供
+<span class="math inline">\(D\)</span> 的最终输出。</p>
+<p>在实验中证明 <strong><span class="math inline">\(N\)</span>
+可以远小于图像的完整尺寸</strong>，仍能产生高质量的结果。因为较小的PatchGAN参数较少，运行速度更快，并且可以应用于任意大的图像。</p>
+<p>这样一个辨别器能够有效地<strong>将图像建模为一个马尔可夫随机场</strong>，假设像素在超过一个图块直径的范围内是独立的。<strong>PatchGAN可以被理解为纹理/风格丢失的一种形式</strong>。</p>
+<h2 id="optimization-and-inference">2.3 Optimization and inference</h2>
+<p>优化网络方法：</p>
+<ul>
+<li><strong>在 <span class="math inline">\(D\)</span>
+上进行一步梯度下降，然后在 <span class="math inline">\(G\)</span>
+上进行一步梯度下降</strong>。（训练目标不是让 <span class="math inline">\(G\)</span> 最小化 <span class="math inline">\(\log
+\left( 1-D\left( x,G\left( x,z \right) \right)
+\right)\)</span>，而是<strong>最大化 <span class="math inline">\(\log
+\left( x,G\left( x,z \right) \right)\)</span></strong> ）。</li>
+<li>此外，<strong>在优化 <span class="math inline">\(D\)</span>
+时，将目标除以2，以减慢 <span class="math inline">\(D\)</span> 相对于
+<span class="math inline">\(G\)</span> 学习的速度</strong>。</li>
+</ul>
+<blockquote>
+<p>使用小批量随机梯度下降并应用Adam求解器，学习率为0.0002，momentum
+parameters β1 = 0.5，β2 = 0.999</p>
+</blockquote>
+<p>在推理时：</p>
+<p><strong>以与训练阶段完全相同的方式运行生成器网络</strong>。</p>
+<p><strong>在测试时应用了dropout</strong>，并且<strong>使用 test batch
+的 statistics 来应用 batch normalization</strong>。当batch
+size设置为1时，此batch normalization方法被称为"instance
+normalization"。</p>
+<blockquote>
+<p>在实验中，根据实验情况，使用不同的batch size，从1到10不等。</p>
+</blockquote>
+
+    
+
+    
+
+    
+    <div class="declare"> 
+      <ul class="post-copyright">
+        <li>
+          <strong>本文作者：</strong>
+          李宝璐
+        </li>
+        <li>
+          <strong>本文链接：</strong>
+          <a href="https://libaolu312.github.io/2023/12/15/论文精读Pix2Pix-Image-to-Image-Translation-with-Conditional-Adversarial-Networks/" title="论文精读Pix2Pix:Image-to-Image Translation with Conditional Adversarial Networks" target="_blank">https://libaolu312.github.io/2023/12/15/论文精读Pix2Pix-Image-to-Image-Translation-with-Conditional-Adversarial-Networks/</a>
+        </li>
+        
+        <li>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，均采用 <a href="https://github.com/JoeyBling/hexo-theme-yilia-plus/blob/master/LICENSE" rel="external nofollow" target="_blank">MIT</a> 许可协议。转载请注明出处！
+        </li>
+        
+      </ul>
+    </div>
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/AIGC//" class="article-tag-list-link color5">AIGC</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+
+    
+    
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <!-- <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a> -->
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://libaolu312.github.io/2023/12/15/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BBPix2Pix-Image-to-Image-Translation-with-Conditional-Adversarial-Networks/" alt="微信分享二维码"> -->
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+
+<nav id="article-nav">
+  
+  
+    <a href="/2023/12/15/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-Celeb-Basis-Inserting-Anybody-in-Diffusion-Models-via-Celeb-Basis/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">论文精读Celeb Basis:Inserting Anybody in Diffusion Models via Celeb Basis</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#abstract"><span class="toc-number">1.</span> <span class="toc-text">1 Abstract</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#method"><span class="toc-number">2.</span> <span class="toc-text">2 Method</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E6%80%BB%E8%A7%88"><span class="toc-number">2.0.0.1.</span> <span class="toc-text">方法总览</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#objective"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 Objective</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#network-architectures"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 Network architectures</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#generator-with-skips"><span class="toc-number">2.2.0.1.</span> <span class="toc-text">2.2.1 Generator with skips</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#markovian-discriminator-patchgan"><span class="toc-number">2.2.0.2.</span> <span class="toc-text">2.2.2 Markovian discriminator
+(PatchGAN)</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#optimization-and-inference"><span class="toc-number">2.3.</span> <span class="toc-text">2.3 Optimization and inference</span></a></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
+        
+    </div>
+</aside>
+
+
+
+
+
+  <section id="comments" class="comments">
+      <style>
+        .comments{margin:30px;padding:10px;background:#fff}
+        @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+      </style>
       
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2023" class="archive-year">2023</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/11/20/%E6%9D%A1%E4%BB%B6DDPM-Diffusion-Model%E7%9A%84%E7%AC%AC%E4%B8%89%E4%B8%AA%E5%B7%85%E5%B3%B0%E4%B9%8B%E4%BD%9C/" class="archive-article-date">
-        <time datetime="2023-11-20T12:40:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-11-20</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/11/20/%E6%9D%A1%E4%BB%B6DDPM-Diffusion-Model%E7%9A%84%E7%AC%AC%E4%B8%89%E4%B8%AA%E5%B7%85%E5%B3%B0%E4%B9%8B%E4%BD%9C/" target="_blank">条件DDPM:Diffusion Model的第三个巅峰之作</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/扩散模型//" class="article-tag-list-link color5">扩散模型</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+    var gitalk = new Gitalk({
+      clientID: '42328a99496b32b78cfb',
+      clientSecret: '8ff71391255b5283f624f252a3ca53d7b9b96f4b',
+      repo: 'libaolu312.github.io',
+      owner: 'libaolu312',
+      admin: 'libaolu312',
+     //id ��Ϊ�˱�֤issue��Ψһ�ԣ�id���Ȳ��ܴ���50�������������ʹ��·������id����һ����ȡ����ò�Ҫ�޸Ĵ������������ܵ������۶�ʧ  
+      id: location.href.slice(location.href.length-25),
+      distractionFreeMode: 'true',
+      labels: 'Comment'.split(',').filter(l => l) ,
+    })
+    gitalk.render('gitalk-container')
+    </script>
     
     
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/11/20/%E4%BB%8EVAE%E5%88%B0Diffusion-Models/" class="archive-article-date">
-        <time datetime="2023-11-20T12:32:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-11-20</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/11/20/%E4%BB%8EVAE%E5%88%B0Diffusion-Models/" target="_blank">从VAE到Diffusion Models</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/扩散模型//" class="article-tag-list-link color5">扩散模型</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/11/20/%E4%B8%BA%E4%BB%80%E4%B9%88Diffusion-Models%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E5%8F%AF%E4%BB%A5%E6%88%90%E4%B8%BAScore-based-Models/" class="archive-article-date">
-        <time datetime="2023-11-20T11:36:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-11-20</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/11/20/%E4%B8%BA%E4%BB%80%E4%B9%88Diffusion-Models%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E5%8F%AF%E4%BB%A5%E6%88%90%E4%B8%BAScore-based-Models/" target="_blank">为什么Diffusion Models扩散模型可以成为Score-based Models</a>
-  
-    </h1>
-  
+  </section>
 
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/扩散模型//" class="article-tag-list-link color5">扩散模型</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/11/18/%E9%92%88%E5%AF%B9%E6%88%B7%E5%9E%8B%E5%9B%BE%E6%95%B0%E6%8D%AE%E9%9B%86%E7%9A%84%E8%B0%83%E7%A0%94/" class="archive-article-date">
-        <time datetime="2023-11-18T06:42:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-11-18</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/11/18/%E9%92%88%E5%AF%B9%E6%88%B7%E5%9E%8B%E5%9B%BE%E6%95%B0%E6%8D%AE%E9%9B%86%E7%9A%84%E8%B0%83%E7%A0%94/" target="_blank">针对户型图数据集的调研</a>
-  
-    </h1>
-  
 
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/扩散模型//" class="article-tag-list-link color5">扩散模型</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/11/16/Windows-Copilot-%E5%92%8C-Github-Copilot-%E7%9A%84%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%92%8C%E4%BD%BF%E7%94%A8%E5%88%9D%E4%BD%93%E9%AA%8C/" class="archive-article-date">
-        <time datetime="2023-11-16T06:55:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-11-16</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/11/16/Windows-Copilot-%E5%92%8C-Github-Copilot-%E7%9A%84%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B%E5%92%8C%E4%BD%BF%E7%94%A8%E5%88%9D%E4%BD%93%E9%AA%8C/" target="_blank">Windows Copilot 和 Github Copilot 的安装教程和使用初体验</a>
-  
-    </h1>
-  
 
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/技术笔记//" class="article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/11/13/DDPM%E4%BB%A3%E7%A0%81%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%BB-3-%E5%9B%BE%E8%A7%A3%E6%A8%A1%E5%9E%8B%E5%90%84%E9%83%A8%E5%88%86%E7%BB%93%E6%9E%84%E3%80%81%E7%94%A8ConvNextBlock%E4%BB%A3%E6%9B%BFResNet/" class="archive-article-date">
-        <time datetime="2023-11-13T09:00:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-11-13</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/11/13/DDPM%E4%BB%A3%E7%A0%81%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%BB-3-%E5%9B%BE%E8%A7%A3%E6%A8%A1%E5%9E%8B%E5%90%84%E9%83%A8%E5%88%86%E7%BB%93%E6%9E%84%E3%80%81%E7%94%A8ConvNextBlock%E4%BB%A3%E6%9B%BFResNet/" target="_blank">DDPM代码详细解读(3):图解模型各部分结构、用ConvNextBlock代替ResNet</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/扩散模型//" class="article-tag-list-link color5">扩散模型</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/11/13/DDPM%E4%BB%A3%E7%A0%81%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%BB-2-Unet%E7%BB%93%E6%9E%84%E3%80%81%E6%AD%A3%E5%90%91%E5%92%8C%E9%80%86%E5%90%91%E8%BF%87%E7%A8%8B%E3%80%81IS%E5%92%8CFID%E6%B5%8B%E8%AF%95%E3%80%81EMA%E4%BC%98%E5%8C%96/" class="archive-article-date">
-        <time datetime="2023-11-13T08:59:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-11-13</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/11/13/DDPM%E4%BB%A3%E7%A0%81%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%BB-2-Unet%E7%BB%93%E6%9E%84%E3%80%81%E6%AD%A3%E5%90%91%E5%92%8C%E9%80%86%E5%90%91%E8%BF%87%E7%A8%8B%E3%80%81IS%E5%92%8CFID%E6%B5%8B%E8%AF%95%E3%80%81EMA%E4%BC%98%E5%8C%96/" target="_blank">DDPM代码详细解读(2):Unet结构、正向和逆向过程、IS和FID测试、EMA优化</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/扩散模型//" class="article-tag-list-link color5">扩散模型</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/11/13/DDPM%E4%BB%A3%E7%A0%81%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%BB-1-%E6%95%B0%E6%8D%AE%E9%9B%86%E5%87%86%E5%A4%87%E3%80%81%E8%B6%85%E5%8F%82%E6%95%B0%E8%AE%BE%E7%BD%AE%E3%80%81loss%E8%AE%BE%E8%AE%A1%E3%80%81%E5%85%B3%E9%94%AE%E5%8F%82%E6%95%B0%E8%AE%A1%E7%AE%97/" class="archive-article-date">
-        <time datetime="2023-11-13T08:58:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-11-13</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/11/13/DDPM%E4%BB%A3%E7%A0%81%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%BB-1-%E6%95%B0%E6%8D%AE%E9%9B%86%E5%87%86%E5%A4%87%E3%80%81%E8%B6%85%E5%8F%82%E6%95%B0%E8%AE%BE%E7%BD%AE%E3%80%81loss%E8%AE%BE%E8%AE%A1%E3%80%81%E5%85%B3%E9%94%AE%E5%8F%82%E6%95%B0%E8%AE%A1%E7%AE%97/" target="_blank">DDPM代码详细解读(1):数据集准备、超参数设置、loss设计、关键参数计算</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/扩散模型//" class="article-tag-list-link color5">扩散模型</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/11/13/%E4%B8%BA%E4%BB%80%E4%B9%88Diffusion-Models%E9%92%9F%E7%88%B1U-net%E7%BB%93%E6%9E%84/" class="archive-article-date">
-        <time datetime="2023-11-13T08:05:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-11-13</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/11/13/%E4%B8%BA%E4%BB%80%E4%B9%88Diffusion-Models%E9%92%9F%E7%88%B1U-net%E7%BB%93%E6%9E%84/" target="_blank">为什么Diffusion Models钟爱U-net结构</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/扩散模型//" class="article-tag-list-link color5">扩散模型</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/11/08/Diffusion-Models%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E4%B8%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86%E5%92%8C%E4%BB%A3%E7%A0%81%E8%A7%A3%E8%AF%BB/" class="archive-article-date">
-        <time datetime="2023-11-08T07:12:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-11-08</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/11/08/Diffusion-Models%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E4%B8%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86%E5%92%8C%E4%BB%A3%E7%A0%81%E8%A7%A3%E8%AF%BB/" target="_blank">Diffusion Models扩散模型与深度学习(数学原理深解)</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/扩散模型//" class="article-tag-list-link color5">扩散模型</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/archives/">&amp;laquo; Prev</a><a class="page-number" href="/archives/">1</a><span class="page-number current">2</span><a class="page-number" href="/archives/page/3/">3</a><a class="page-number" href="/archives/page/4/">4</a><a class="page-number" href="/archives/page/5/">5</a><a class="extend next" rel="next" href="/archives/page/3/">Next &amp;raquo;</a>
-    </nav>
-  
 
 
           </div>
@@ -841,8 +664,8 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: true,

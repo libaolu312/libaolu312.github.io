@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://libaolu312.github.io/2023/12/11/%E8%AE%BA%E6%96%87%E7%AE%80%E8%AF%BB-Alpha-CLIP-A-CLIP-Model-Focusing-on-Wherever-You-Want/image-20231212041932224.png">
 <meta property="og:image" content="https://libaolu312.github.io/2023/12/11/%E8%AE%BA%E6%96%87%E7%AE%80%E8%AF%BB-Alpha-CLIP-A-CLIP-Model-Focusing-on-Wherever-You-Want/image-20231212042111993.png">
 <meta property="article:published_time" content="2023-12-10T18:32:04.000Z">
-<meta property="article:modified_time" content="2023-12-11T20:34:01.263Z">
+<meta property="article:modified_time" content="2023-12-12T14:14:40.015Z">
 <meta property="article:author" content="李宝璐">
 <meta property="article:tag" content="技术笔记">
 <meta name="twitter:card" content="summary">
@@ -397,7 +397,8 @@ caption分数。</p>
 <p><img src="/2023/12/11/%E8%AE%BA%E6%96%87%E7%AE%80%E8%AF%BB-Alpha-CLIP-A-CLIP-Model-Focusing-on-Wherever-You-Want/image-20231212041932224.png" alt="image-20231212041932224" style="zoom:67%;"></p>
 <p>Stable-Diffusion是目前主流的2D图片生成模型，其Image
 Variation版本可以实现“图生图”，其中图片的编码器也是CLIP模型。通过将该模型替换为Alpha-CLIP，可以实现更复杂图片中指定物体的生成(同时较好地保留背景)。如上图所示，使用原始的CLIP会生成同时具有狮子和老虎特征的“狮虎兽”，而Alpha-CLIP能够很好地区分两个物体，从而指导Stable
-Diffusion模型生成更专一的图片。更多结果见下图<img src="/2023/12/11/%E8%AE%BA%E6%96%87%E7%AE%80%E8%AF%BB-Alpha-CLIP-A-CLIP-Model-Focusing-on-Wherever-You-Want/image-20231212042111993.png" alt="image-20231212042111993" style="zoom:67%;"></p>
+Diffusion模型生成更专一的图片。更多结果见下图</p>
+<p><img src="/2023/12/11/%E8%AE%BA%E6%96%87%E7%AE%80%E8%AF%BB-Alpha-CLIP-A-CLIP-Model-Focusing-on-Wherever-You-Want/image-20231212042111993.png" alt="image-20231212042111993" style="zoom:67%;"></p>
 <h2 id="总结">总结</h2>
 <p>本文介绍的这项工作提出了Alpha-CLIP模型，该模型引入了一个额外的alpha通道，用于指定感兴趣的区域。通过对数百万个RGBA区域-文本对进行训练，Alpha-CLIP不仅表现出卓越的区域关注能力，而且确保其输出空间与原始的CLIP模型保持一致。这种一致性使得Alpha-CLIP在CLIP的各种下游应用中能够轻松替代，无缝衔接。</p>
 <p>实验证明了，当提供特定关注的区域时，Alpha-CLIP展现出了更强大的Zero-Shot识别能力，并验证了它在许多下游任务中的有用性。CLIP的应用远远超出了本文的范围。</p>
@@ -519,6 +520,15 @@ Diffusion模型生成更专一的图片。更多结果见下图<img src="/2023/1
 
 
 <nav id="article-nav">
+  
+    <a href="/2023/12/15/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-Celeb-Basis-Inserting-Anybody-in-Diffusion-Models-via-Celeb-Basis/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          论文精读Celeb Basis:Inserting Anybody in Diffusion Models via Celeb Basis
+        
+      </div>
+    </a>
   
   
     <a href="/2023/12/09/%E4%B8%80%E8%87%B4%E6%80%A7%E8%A7%92%E8%89%B2%E7%94%9F%E6%88%90%E9%97%AE%E9%A2%98%E7%9A%84%E6%B1%87%E6%80%BB%E4%B8%8E%E6%8E%A2%E7%A9%B6/" id="article-nav-older" class="article-nav-link-wrap">
