@@ -10,17 +10,17 @@
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="前言：这又是一篇关于故事可视化问题的工作，重点关注与增强角色图像生成质量和角色一致性，2023.12.16 由阿卜杜拉国王科技大学（KAUST）发表在arXiv上，由论文标题也可以看出，此工作聚焦于将大预言模型应用在故事可视化问题中。  Motivation就不多说了，前面几个一致性工作中说的很全，这里主要看一下Abstract中对方法的概述：  首先，训练了一个具有角色感知（cha">
+  <meta name="description" content="前言：这又是一篇关于故事可视化问题的工作，重点关注与增强角色图像生成质量和角色一致性，2023.12.16 由阿卜杜拉国王科技大学（KAUST）发表在arXiv上，由论文标题也可以看出，此工作聚焦于将大预言模型应用在故事可视化问题中。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="论文精读:StoryGPT-V: Large Language Models as Consistent Story Visualizers">
 <meta property="og:url" content="https://libaolu312.github.io/2023/12/18/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-StoryGPT-V-Large-Language-Models-as-Consistent-Story-Visualizers/index.html">
 <meta property="og:site_name" content="李宝璐">
-<meta property="og:description" content="前言：这又是一篇关于故事可视化问题的工作，重点关注与增强角色图像生成质量和角色一致性，2023.12.16 由阿卜杜拉国王科技大学（KAUST）发表在arXiv上，由论文标题也可以看出，此工作聚焦于将大预言模型应用在故事可视化问题中。  Motivation就不多说了，前面几个一致性工作中说的很全，这里主要看一下Abstract中对方法的概述：  首先，训练了一个具有角色感知（cha">
+<meta property="og:description" content="前言：这又是一篇关于故事可视化问题的工作，重点关注与增强角色图像生成质量和角色一致性，2023.12.16 由阿卜杜拉国王科技大学（KAUST）发表在arXiv上，由论文标题也可以看出，此工作聚焦于将大预言模型应用在故事可视化问题中。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://libaolu312.github.io/2023/12/18/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-StoryGPT-V-Large-Language-Models-as-Consistent-Story-Visualizers/image-20231219014229304.png">
 <meta property="og:image" content="https://libaolu312.github.io/2023/12/18/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-StoryGPT-V-Large-Language-Models-as-Consistent-Story-Visualizers/image-20231219021231542.png">
 <meta property="article:published_time" content="2023-12-17T16:22:27.000Z">
-<meta property="article:modified_time" content="2023-12-18T19:04:24.851Z">
+<meta property="article:modified_time" content="2023-12-19T10:20:01.723Z">
 <meta property="article:author" content="李宝璐">
 <meta property="article:tag" content="技术笔记">
 <meta name="twitter:card" content="summary">
@@ -304,6 +304,7 @@
 <p>前言：这又是一篇关于故事可视化问题的工作，重点关注与<strong>增强角色图像生成质量</strong>和<strong>角色一致性</strong>，2023.12.16
 由阿卜杜拉国王科技大学（KAUST）发表在arXiv上，由论文标题也可以看出，此工作聚焦于将大预言模型应用在故事可视化问题中。</p>
 </blockquote>
+<span id="more"></span>
 <p>Motivation就不多说了，前面几个一致性工作中说的很全，这里主要看一下Abstract中对方法的概述：</p>
 <ul>
 <li>首先，训练了一个具有角色感知（character-aware）的LDM（Latent
