@@ -6,19 +6,31 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://libaolu312.github.io">
-  <title>Category: AIGC | 李宝璐</title>
+  <title>论文精读：FastComposer:Tuning-Free Multi-Subject Image Generation with Localized Attention | 李宝璐</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="里面放着李宝璐的碎碎念">
-<meta property="og:type" content="website">
-<meta property="og:title" content="李宝璐">
-<meta property="og:url" content="https://libaolu312.github.io/categories/AIGC/index.html">
+  <meta name="description" content="先说一句，这篇论文写的非常好，通俗易懂，其中的贡献点也能引起很多思考，十分推荐。 前言：这是MIT在今年六月份发在arXiv上的，主要做的是subject-driven，涉及到了layout generation，工作突出一个便宜高效，与fine-tuning-based的方法相比，该模型实现了300倍至2500倍的加速和2.8倍至6.7倍的内存节省，并且对于新主体不需要额外的存储空间（仅">
+<meta property="og:type" content="article">
+<meta property="og:title" content="论文精读：FastComposer:Tuning-Free Multi-Subject Image Generation with Localized Attention">
+<meta property="og:url" content="https://libaolu312.github.io/2023/12/23/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%EF%BC%9AFastComposer-Tuning-Free-Multi-Subject-Image-Generation-with-Localized-Attention/index.html">
 <meta property="og:site_name" content="李宝璐">
-<meta property="og:description" content="里面放着李宝璐的碎碎念">
+<meta property="og:description" content="先说一句，这篇论文写的非常好，通俗易懂，其中的贡献点也能引起很多思考，十分推荐。 前言：这是MIT在今年六月份发在arXiv上的，主要做的是subject-driven，涉及到了layout generation，工作突出一个便宜高效，与fine-tuning-based的方法相比，该模型实现了300倍至2500倍的加速和2.8倍至6.7倍的内存节省，并且对于新主体不需要额外的存储空间（仅">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://libaolu312.github.io/2023/12/23/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%EF%BC%9AFastComposer-Tuning-Free-Multi-Subject-Image-Generation-with-Localized-Attention/image-20231223113857010.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/12/23/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%EF%BC%9AFastComposer-Tuning-Free-Multi-Subject-Image-Generation-with-Localized-Attention/image-20231227215119980.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/12/23/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%EF%BC%9AFastComposer-Tuning-Free-Multi-Subject-Image-Generation-with-Localized-Attention/image-20231227215454666.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/12/23/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%EF%BC%9AFastComposer-Tuning-Free-Multi-Subject-Image-Generation-with-Localized-Attention/image-20231227223814267.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/12/23/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%EF%BC%9AFastComposer-Tuning-Free-Multi-Subject-Image-Generation-with-Localized-Attention/image-20231227231322181.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/12/23/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%EF%BC%9AFastComposer-Tuning-Free-Multi-Subject-Image-Generation-with-Localized-Attention/image-20231227234456156.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/12/23/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%EF%BC%9AFastComposer-Tuning-Free-Multi-Subject-Image-Generation-with-Localized-Attention/image-20231227234213146.png">
+<meta property="og:image" content="https://libaolu312.github.io/2023/12/23/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%EF%BC%9AFastComposer-Tuning-Free-Multi-Subject-Image-Generation-with-Localized-Attention/image-20231227234254884.png">
+<meta property="article:published_time" content="2023-12-23T03:16:12.000Z">
+<meta property="article:modified_time" content="2023-12-27T15:45:06.493Z">
 <meta property="article:author" content="李宝璐">
+<meta property="article:tag" content="技术笔记">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://libaolu312.github.io/2023/12/23/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%EF%BC%9AFastComposer-Tuning-Free-Multi-Subject-Image-Generation-with-Localized-Attention/image-20231223113857010.png">
   
     <link rel="alternative" href="/atom.xml" title="李宝璐" type="application/atom+xml">
   
@@ -241,95 +253,278 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-论文精读：FastComposer-Tuning-Free-Multi-Subject-Image-Generation-with-Localized-Attention" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2023" class="archive-year">2023</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/12/27/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-Cones-2-Customizable-Image-Synthesis-with-Multiple-Subjects/" class="archive-article-date">
-        <time datetime="2023-12-27T15:48:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-12-27</time>
-</a>
-
-        </div>
-    	 
+      <header class="article-header">
   
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/12/27/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-Cones-2-Customizable-Image-Synthesis-with-Multiple-Subjects/" target="_blank">论文精读:Cones 2: Customizable Image Synthesis with Multiple Subjects</a>
   
+    <h1 class="article-title" itemprop="name">
+      论文精读：FastComposer:Tuning-Free Multi-Subject Image Generation with Localized Attention
     </h1>
   
 
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/AIGC//" class="article-tag-list-link color5">AIGC</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
+  
+        
+        <span id="busuanzi_container_page_pv" style='display:none' class="archive-article-date">
+              <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+        </span>
+
 <a href="/2023/12/23/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%EF%BC%9AFastComposer-Tuning-Free-Multi-Subject-Image-Generation-with-Localized-Attention/" class="archive-article-date">
         <time datetime="2023-12-23T03:16:12.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-12-23</time>
 </a>
 
-        </div>
-    	 
   
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/12/23/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%EF%BC%9AFastComposer-Tuning-Free-Multi-Subject-Image-Generation-with-Localized-Attention/" target="_blank">论文精读：FastComposer:Tuning-Free Multi-Subject Image Generation with Localized Attention</a>
   
-    </h1>
-  
+    
+<div style="margin-top:10px;">
+  <span class="post-time">
+    <span class="post-meta-item-icon">
+      <!-- fonts.scss -->
+      <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
+      <i class="icon-statistics"></i>
+      <span class="post-meta-item-text"> 字数统计:</span>
+      <span class="post-count">2k字</span>
+    </span>
+  </span>
+
+  <span class="post-time">
+    &nbsp; | &nbsp;
+    <span class="post-meta-item-icon">
+      <i class="icon-book icon"></i>
+      <span class="post-meta-item-text"> 阅读时长≈</span>
+      <span class="post-count">8分</span>
+    </span>
+  </span>
+</div>
 
 
-        <div class="article-info info-on-right">
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <blockquote>
+<p>先说一句，这篇论文写的非常好，通俗易懂，其中的贡献点也能引起很多思考，十分推荐。</p>
+<p><strong>前言</strong>：这是MIT在今年六月份发在arXiv上的，主要做的是subject-driven，涉及到了layout
+generation，工作突出一个便宜高效，与fine-tuning-based的方法相比，该模型实现了<strong>300倍至2500倍的加速</strong>和2<strong>.8倍至6.7倍的内存节省</strong>，并且对于新主体不需要额外的存储空间（仅使用前向传播）相当牛逼！</p>
+<p><strong>重点关注</strong>：</p>
+<p>一种特殊的segmentation maps and cross-attention
+regularization手段对attention map的影响（有些工作也通过bounding
+box来实现这一效果）</p>
+</blockquote>
+<span id="more"></span>
+<h1 id="introduction">1 Introduction</h1>
+<h3 id="motivation">1.1 motivation</h3>
+<p>目前<strong>Subject-Driven text-to-image generation
+method</strong>主要受到<strong>两个限制</strong>：</p>
+<ul>
+<li>Cost of personalization（个性化的成本）</li>
+<li>Identity blending for multiple
+subjects（多个subjects的身份融合）</li>
+</ul>
+<p>个性化成本高，因为需要对每个 new subject 去 fine-tuning
+模型，内存消耗和反向传播计算量引入了计算开销和较高的硬件需求，模型调整的计算量限制了这些模型在不同平台上的适用性。</p>
+<p>多subjects融合的问题现有技术也很难处理的很好：</p>
+<p><img src="/2023/12/23/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%EF%BC%9AFastComposer-Tuning-Free-Multi-Subject-Image-Generation-with-Localized-Attention/image-20231223113857010.png" alt="image-20231223113857010" style="zoom:67%;"></p>
+<p>由此可以看出，我们现在<strong>需要一个tuning-free或者尽可能少tuning的模型，同时能够很好的进行subjects融合（不再仅仅依赖名人姓名）</strong></p>
+<h3 id="方法概述">1.2 方法概述</h3>
+<p>FastComposer，一种 tuning-free 的个性化multiple
+subjects文本到图像生成方法。</p>
+<p>通过捕捉个体在文本条件下的<strong>独特identity的embedding来替代generic
+word tokens</strong>（例如"person"）。</p>
+<ul>
+<li><strong>使用一个 visual encoder 从参考图像中 derive 这个 identity
+embedding</strong></li>
+<li><strong>然后使用这个 identity embedding 的feature来 augment the
+generic text tokens</strong></li>
+</ul>
+<p>这样可以基于 subject
+增强条件来进行图像生成。这个模型<strong>只需要前向传播</strong>就可以生成具有指定subject的图像，并且可以进一步与模型压缩技术相结合，以提高部署效率。（突出一个高效和轻量化，同时解决了上面的两个问题）</p>
+<p>关注 multi-subjects identity 混合的问题，使用一个 <strong>unregulated
+cross-attention</strong> ，当文本中包含两个 "person"
+token的时候，<strong>每个token的attention
+map都会同时注意到图像中的两个人物</strong>，而不是每个token与图像中的一个独立人物相关联。</p>
+<p>为了达到这样的效果，在训练期间使用standard segmentation
+tools来监督subject的attention map 和 segmentation mask（即交叉注意力定位
+cross-attention
+localization）。这种监督明确地指导模型<strong>将subject's
+feature映射到图像的不同且不重叠的区域</strong>，从而促进高质量多主体图像的生成。（segmentation
+and cross-attention localization只在训练阶段使用）</p>
+<h1 id="preliminaries">2 Preliminaries</h1>
+<p>这部分是一些基础的内容，我就简要写一点。</p>
+<h3 id="stable-diffusion">Stable Diffusion</h3>
+<p>Backbone Network：Stable
+Diffusion（SD）由三部分组成：变分自动编码器（VAE）+ U-Net +
+text-encoder</p>
+<ul>
+<li>VAE encoder <span class="math inline">\(\mathcal{E}\)</span> 将
+image <span class="math inline">\(x\)</span> --&gt; latent
+representation <span class="math inline">\(z\)</span> ，<span class="math inline">\(z\)</span> 在前向扩散过程中通过Gaussian noise
+<span class="math inline">\(\varepsilon\)</span> 扰动。</li>
+<li>U-Net （parameterized by <span class="math inline">\(θ\)</span>）通过预测噪声来去噪纯噪声的latent
+representation，该去噪过程可以通过cross-attention以text
+prompts为条件。</li>
+<li>text-encoder <span class="math inline">\(\psi\)</span> 将 text
+prompts <span class="math inline">\(\mathcal{P}\)</span> --&gt;
+conditional embeddings <span class="math inline">\(\psi \left(
+\mathcal{P} \right)\)</span></li>
+</ul>
+<p>在训练过程中，最小化以下loss函数来优化网络： <span class="math display">\[
+\mathcal{L}_{noise}=\mathbb{E}_{z~\mathcal{E}\left( x \right)
+,\mathcal{P},\varepsilon ~\mathcal{N}\left( 0,1 \right) ,t}\left[ \lVert
+\varepsilon -\varepsilon _{\theta}\left( z_t,t,\psi \left( \mathcal{P}
+\right) \right) \rVert _{2}^{2} \right]
+\]</span></p>
+<blockquote>
+<p><span class="math inline">\(z_t\)</span> 是在 time step <span class="math inline">\(t\)</span> 时的 latent code</p>
+</blockquote>
+<p>在推理时：从 <span class="math inline">\(\mathcal{N}\left( 0,1
+\right)\)</span> 中采样一个随机噪声 <span class="math inline">\(z_T\)</span>，并通过 U-Net
+迭代地对其进行去噪，得到初始潜在latent representation <span class="math inline">\(z_0\)</span>。最后，VAE decoder <span class="math inline">\(\mathcal{D}\)</span> 将 latent code
+映射回像素空间，生成最终图像 <span class="math inline">\(\hat{x}=\mathcal{D}\left( z_0
+\right)\)</span>。</p>
+<h1 id="method">3 Method</h1>
+<h3 id="tuning-free-subject-driven-image-generation-with-an-image-encoder">3.1
+Tuning-Free Subject-Driven Image Generation with an Image Encoder</h3>
+<blockquote>
+<p>无需调参的 subject-driven 图像生成与图像编码器</p>
+</blockquote>
+<h4 id="augmenting-text-representation-with-subject-embedding">3.1.1
+Augmenting Text Representation with Subject Embedding</h4>
+<p>为了实现 Tuning-Free 的 subject-driven 图像生成，可以利用从 reference
+subject image中提取的视觉特征来增强文本提示。</p>
+<ul>
+<li>给定一个 text prompts： <span class="math inline">\(P=\left\{
+w_1,w_2,...,w_n \right\}\)</span></li>
+<li>一个参考主题图像 list：<span class="math inline">\(S=\left\{
+s_1,s_2,...,s_m \right\}\)</span></li>
+<li>以及一个索引 list，指示哪个主题对应于文本提示中的哪个词：<span class="math inline">\(I=\left\{ i_1,i_2,...,i_m \right\} ,i_j\in
+1,2,...,n\)</span></li>
+</ul>
+<p>(1)首先使用预训练的CLIP文本编码器 <span class="math inline">\(\psi\)</span> 和图像编码器 <span class="math inline">\(\phi\)</span> 将 <span class="math inline">\(\mathcal{P}\)</span> 和 <span class="math inline">\(\mathcal{S}\)</span> --&gt; 编码为 embedding
+vector。</p>
+<p>(2)接下来，使用 MLP 来利用从 reference subject 中提取的视觉特征来增强
+text embedding。（将 word embeddings 与 visual features
+连接起来，并将结果增强的嵌入送入 MLP 中）</p>
+<p>这个过程产生了最终的 conditioning embeddings <span class="math inline">\(c&#39;\in
+\mathbb{R}^{n×d}\)</span>，定义如下：</p>
+<p><img src="/2023/12/23/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%EF%BC%9AFastComposer-Tuning-Free-Multi-Subject-Image-Generation-with-Localized-Attention/image-20231227215119980.png" alt="image-20231227215119980" style="zoom:67%;"></p>
+<h4 id="subject-driven-image-generation-training">3.1.2 Subject-Driven
+Image Generation Training</h4>
+<p>为了实现 inference-only 的 subject-driven 图像生成，使用denoising
+loss 来训练 image encoder、MLP module 和 U-Net。</p>
+<p><img src="/2023/12/23/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%EF%BC%9AFastComposer-Tuning-Free-Multi-Subject-Image-Generation-with-Localized-Attention/image-20231227215454666.png" alt="image-20231227215454666" style="zoom:67%;"></p>
+<p>创建一个 subjec-augmented image-text 数据对来训练模型，其中image
+caption中的名词短语和 target image中的 subject segments
+区域进行配对。</p>
+<p>处理过程如下：</p>
+<ul>
+<li><p>使用一个 <strong>dependency parsing model</strong> to chunk all
+noun phrases in image caption （例如：a woman）</p></li>
+<li><p>使用一个 <strong>全景分割模型</strong> to segment all subjects in
+image</p></li>
+<li><p>使用 <strong>基于文本和图像相似性的贪婪匹配算法</strong> 将这些
+subject segments 和 noun phrases 进行配对</p></li>
+</ul>
+<p>在训练过程中，使用上面的主题增强的条件来去噪扰动目标图像，在编码前用随机噪声
+mask 住 subject的背景，防止subject background过拟合。</p>
+<h3 id="localizing-cross-attention-maps-with-subject-segmentation-masks">3.2
+Localizing Cross-Attention Maps with Subject Segmentation Masks</h3>
+<p>传统的 cross-attention maps 往往同时关注 所有的 subjects，这会导致在
+multi-subjects image generation中出现身份混合：</p>
+<p><img src="/2023/12/23/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%EF%BC%9AFastComposer-Tuning-Free-Multi-Subject-Image-Generation-with-Localized-Attention/image-20231227223814267.png" alt="image-20231227223814267" style="zoom:67%;"></p>
+<p>通过在训练过程中<strong>在 cross-attention maps上使用 subject
+segmentation mask</strong>，可以解决这个问题。</p>
+<h4 id="understanding-the-identity-blending-in-diffusion-models">3.2.1
+Understanding the Identity Blending in Diffusion Models</h4>
+<p>我们来看看diffusion model中的身份融合是怎么个事。</p>
+<p>Diffusion model中的
+cross-attention机制主导了生成的图像的layout，<strong>the score in
+cross-attention maps 代表 信息从text token到latent
+pixel的传递量</strong>。</p>
+<p>假设，身份融合问题来自于无限制的cross-attention机制（这部分需要消融），因为单个latent
+pixel可以关注所有text tokens，如果一个subject的区域关注多个reference
+subjects，就会造成身份融合。</p>
+<p>通过下面这张图可以验证这个假设：</p>
+<p><img src="/2023/12/23/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%EF%BC%9AFastComposer-Tuning-Free-Multi-Subject-Image-Generation-with-Localized-Attention/image-20231227231322181.png" alt="image-20231227231322181" style="zoom:67%;"></p>
+<p>合适的cross-attention
+map应该类似于对目标图像的实例分割，清楚的分开不同subject相关的feature。</p>
+<p>为了实现这一点，在训练过程中为主体cross-attention
+map加入正则化项，鼓励关注特定的subject区域，segmentation maps and
+cross-attention regularization只在训练中使用，测试时不用。</p>
+<h4 id="localizing-cross-attention-with-segmentation-masks">3.2.2
+Localizing Cross-Attention with Segmentation Masks</h4>
+<p>一个cross-attention map <span class="math inline">\(A\in \left[ 0,1
+\right] ^{\left( h×w \right) ×n}\)</span> connects latent pixels to
+conditional embeddings at each layer</p>
+<blockquote>
+<p><span class="math inline">\(A[i,j,k]\)</span>表示从第<span class="math inline">\(k\)</span>个conditional token到latent
+pixel的信息流</p>
+</blockquote>
+<p>理想情况：subject token的attention map应该集中到subject
+region，而不是在整个图像上扩散。</p>
+<p>为了达到这个理想情况，<strong>使用reference subject's segmentation
+mask 来定位 cross-attention map</strong>：</p>
+<ul>
+<li><span class="math inline">\(\mathcal{M}=\left\{ M_1,M_2,...,M_m
+\right\}\)</span> 表示 reference subject's segmentation masks</li>
+<li><span class="math inline">\(\mathcal{I}=\left\{ I_1,I_2,...,I_m
+\right\}\)</span> 表示text prompts中每个word对应那个subject的索引</li>
+<li><span class="math inline">\(A_i=A\left[ :,:,i \right] \in \left[ 0,1
+\right] ^{\left( h×w \right)}\)</span>表示第<span class="math inline">\(i\)</span>个subject token的cross-attention
+map</li>
+</ul>
+<p><strong>使 the cross-attention map <span class="math inline">\(A_{i_j}\)</span> 靠近 第 <span class="math inline">\(j\)</span> 个 subject token 的segmentation mask
+<span class="math inline">\(m_j\)</span>，即 <span class="math inline">\(A_{i_j}\approx m_j\)</span></strong></p>
+<p>使用 balanced L1 loss 来最小化 cross-attention map 与 segmentation
+mask 的距离： <span class="math display">\[
+\mathcal{L}_{loc}=\frac{1}{m}\sum_{j=1}^m{\left( mean\left(
+A_{i_j}\left[ \bar{m}_j \right] \right) -mean\left( A_{i_j}\left[ m_j
+\right] \right) \right)}
+\]</span> 那么最终整个模型的训练目标就是：（λ=0.001） <span class="math display">\[
+\mathcal{L}=\mathcal{L}_{noise}+\lambda \mathcal{L}_{loc}
+\]</span></p>
+<h2 id="推理过程">推理过程</h2>
+<p>很直观，放个图就行：</p>
+<p><img src="/2023/12/23/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%EF%BC%9AFastComposer-Tuning-Free-Multi-Subject-Image-Generation-with-Localized-Attention/image-20231227234456156.png" alt="image-20231227234456156" style="zoom:67%;"></p>
+<p>最后来欣赏一下实验结果吧，虽然真实性上有些欠缺，但是这个思路给subject-driven提供了许多可能：</p>
+<p><img src="/2023/12/23/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%EF%BC%9AFastComposer-Tuning-Free-Multi-Subject-Image-Generation-with-Localized-Attention/image-20231227234213146.png" alt="image-20231227234213146" style="zoom:67%;"></p>
+<p><img src="/2023/12/23/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%EF%BC%9AFastComposer-Tuning-Free-Multi-Subject-Image-Generation-with-Localized-Attention/image-20231227234254884.png" alt="image-20231227234254884" style="zoom:67%;"></p>
+<p>PS：这个模型可能生成真实图像的效果差一点，所以作者用了很多风格生成。</p>
+
+    
+
+    
+
+    
+    <div class="declare"> 
+      <ul class="post-copyright">
+        <li>
+          <strong>本文作者：</strong>
+          李宝璐
+        </li>
+        <li>
+          <strong>本文链接：</strong>
+          <a href="https://libaolu312.github.io/2023/12/23/论文精读：FastComposer-Tuning-Free-Multi-Subject-Image-Generation-with-Localized-Attention/" title="论文精读：FastComposer:Tuning-Free Multi-Subject Image Generation with Localized Attention" target="_blank">https://libaolu312.github.io/2023/12/23/论文精读：FastComposer-Tuning-Free-Multi-Subject-Image-Generation-with-Localized-Attention/</a>
+        </li>
+        
+        <li>
+          <strong>版权声明： </strong>
           
+          本博客所有文章除特别声明外，均采用 <a href="https://github.com/JoeyBling/hexo-theme-yilia-plus/blob/master/LICENSE" rel="external nofollow" target="_blank">MIT</a> 许可协议。转载请注明出处！
+        </li>
+        
+      </ul>
+    </div>
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -341,7 +536,7 @@
 		</ul>
 	</div>
 
-          
+    
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -354,395 +549,164 @@
 	</div>
 
 
+    
+
+    
+    
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <!-- <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a> -->
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://libaolu312.github.io/2023/12/23/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%EF%BC%9AFastComposer-Tuning-Free-Multi-Subject-Image-Generation-with-Localized-Attention/" alt="微信分享二维码"> -->
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+
+    
+    <div class="clearfix"></div>
+  </div>
   </div>
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/12/18/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-StoryGPT-V-Large-Language-Models-as-Consistent-Story-Visualizers/" class="archive-article-date">
-        <time datetime="2023-12-17T16:22:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-12-18</time>
-</a>
 
+
+<nav id="article-nav">
+  
+    <a href="/2023/12/27/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-Cones-2-Customizable-Image-Synthesis-with-Multiple-Subjects/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          论文精读:Cones 2: Customizable Image Synthesis with Multiple Subjects
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2023/12/18/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-StoryGPT-V-Large-Language-Models-as-Consistent-Story-Visualizers/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">论文精读:StoryGPT-V: Large Language Models as Consistent Story Visualizers</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/12/18/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-StoryGPT-V-Large-Language-Models-as-Consistent-Story-Visualizers/" target="_blank">论文精读:StoryGPT-V: Large Language Models as Consistent Story Visualizers</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/AIGC//" class="article-tag-list-link color5">AIGC</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#introduction"><span class="toc-number">1.</span> <span class="toc-text">1 Introduction</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#motivation"><span class="toc-number">1.0.1.</span> <span class="toc-text">1.1 motivation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E6%A6%82%E8%BF%B0"><span class="toc-number">1.0.2.</span> <span class="toc-text">1.2 方法概述</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#preliminaries"><span class="toc-number">2.</span> <span class="toc-text">2 Preliminaries</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#stable-diffusion"><span class="toc-number">2.0.1.</span> <span class="toc-text">Stable Diffusion</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#method"><span class="toc-number">3.</span> <span class="toc-text">3 Method</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#tuning-free-subject-driven-image-generation-with-an-image-encoder"><span class="toc-number">3.0.1.</span> <span class="toc-text">3.1
+Tuning-Free Subject-Driven Image Generation with an Image Encoder</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#augmenting-text-representation-with-subject-embedding"><span class="toc-number">3.0.1.1.</span> <span class="toc-text">3.1.1
+Augmenting Text Representation with Subject Embedding</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#subject-driven-image-generation-training"><span class="toc-number">3.0.1.2.</span> <span class="toc-text">3.1.2 Subject-Driven
+Image Generation Training</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#localizing-cross-attention-maps-with-subject-segmentation-masks"><span class="toc-number">3.0.2.</span> <span class="toc-text">3.2
+Localizing Cross-Attention Maps with Subject Segmentation Masks</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#understanding-the-identity-blending-in-diffusion-models"><span class="toc-number">3.0.2.1.</span> <span class="toc-text">3.2.1
+Understanding the Identity Blending in Diffusion Models</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#localizing-cross-attention-with-segmentation-masks"><span class="toc-number">3.0.2.2.</span> <span class="toc-text">3.2.2
+Localizing Cross-Attention with Segmentation Masks</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A8%E7%90%86%E8%BF%87%E7%A8%8B"><span class="toc-number">3.1.</span> <span class="toc-text">推理过程</span></a></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
+        
+    </div>
+</aside>
+
+
+
+
+
+  <section id="comments" class="comments">
+      <style>
+        .comments{margin:30px;padding:10px;background:#fff}
+        @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+      </style>
+      
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+    var gitalk = new Gitalk({
+      clientID: '42328a99496b32b78cfb',
+      clientSecret: '8ff71391255b5283f624f252a3ca53d7b9b96f4b',
+      repo: 'libaolu312.github.io',
+      owner: 'libaolu312',
+      admin: 'libaolu312',
+     //id ��Ϊ�˱�֤issue��Ψһ�ԣ�id���Ȳ��ܴ���50�������������ʹ��·������id����һ����ȡ����ò�Ҫ�޸Ĵ������������ܵ������۶�ʧ  
+      id: location.href.slice(location.href.length-25),
+      distractionFreeMode: 'true',
+      labels: 'Comment'.split(',').filter(l => l) ,
+    })
+    gitalk.render('gitalk-container')
+    </script>
     
     
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/12/15/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BBPix2Pix-Image-to-Image-Translation-with-Conditional-Adversarial-Networks/" class="archive-article-date">
-        <time datetime="2023-12-15T14:16:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-12-15</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/12/15/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BBPix2Pix-Image-to-Image-Translation-with-Conditional-Adversarial-Networks/" target="_blank">论文精读Pix2Pix:Image-to-Image Translation with Conditional Adversarial Networks</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/AIGC//" class="article-tag-list-link color5">AIGC</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/12/15/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-Celeb-Basis-Inserting-Anybody-in-Diffusion-Models-via-Celeb-Basis/" class="archive-article-date">
-        <time datetime="2023-12-15T09:58:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-12-15</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/12/15/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-Celeb-Basis-Inserting-Anybody-in-Diffusion-Models-via-Celeb-Basis/" target="_blank">论文精读Celeb Basis:Inserting Anybody in Diffusion Models via Celeb Basis</a>
-  
-    </h1>
-  
+  </section>
 
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/AIGC//" class="article-tag-list-link color5">AIGC</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/12/11/%E8%AE%BA%E6%96%87%E7%AE%80%E8%AF%BB-Alpha-CLIP-A-CLIP-Model-Focusing-on-Wherever-You-Want/" class="archive-article-date">
-        <time datetime="2023-12-10T18:32:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-12-11</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/12/11/%E8%AE%BA%E6%96%87%E7%AE%80%E8%AF%BB-Alpha-CLIP-A-CLIP-Model-Focusing-on-Wherever-You-Want/" target="_blank">论文简读:Alpha-CLIP: A CLIP Model Focusing on Wherever You Want</a>
-  
-    </h1>
-  
 
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/AIGC//" class="article-tag-list-link color5">AIGC</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/12/09/%E4%B8%80%E8%87%B4%E6%80%A7%E8%A7%92%E8%89%B2%E7%94%9F%E6%88%90%E9%97%AE%E9%A2%98%E7%9A%84%E6%B1%87%E6%80%BB%E4%B8%8E%E6%8E%A2%E7%A9%B6/" class="archive-article-date">
-        <time datetime="2023-12-09T09:38:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-12-09</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/12/09/%E4%B8%80%E8%87%B4%E6%80%A7%E8%A7%92%E8%89%B2%E7%94%9F%E6%88%90%E9%97%AE%E9%A2%98%E7%9A%84%E6%B1%87%E6%80%BB%E4%B8%8E%E6%8E%A2%E7%A9%B6/" target="_blank">一致性角色生成问题的汇总与探究</a>
-  
-    </h1>
-  
 
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/AIGC//" class="article-tag-list-link color5">AIGC</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/12/08/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-AutoStory-Generating-Diverse-Storytelling-Images-with-Minimal-Human-Effort/" class="archive-article-date">
-        <time datetime="2023-12-07T18:31:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-12-08</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/12/08/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-AutoStory-Generating-Diverse-Storytelling-Images-with-Minimal-Human-Effort/" target="_blank">论文精读:AutoStory: Generating Diverse Storytelling Images with Minimal Human Effort</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/AIGC//" class="article-tag-list-link color5">AIGC</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2023/12/07/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-The-Chosen-One-Consistent-Characters-in-Text-to-Image-Diffusion-Models/" class="archive-article-date">
-        <time datetime="2023-12-06T18:30:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-12-07</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2023/12/07/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-The-Chosen-One-Consistent-Characters-in-Text-to-Image-Diffusion-Models/" target="_blank">论文精读:The Chosen One: Consistent Characters in Text-to-Image Diffusion Models</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/AIGC//" class="article-tag-list-link color5">AIGC</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -783,10 +747,10 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
-		isCategory: true,
+		isCategory: false,
 		open_in_new: true,
 		toc_hide_index: true,
 		root: "/",

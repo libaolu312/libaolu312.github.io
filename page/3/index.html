@@ -248,6 +248,205 @@
             
 
   
+    <article id="post-DDPM代码详细解读-2-Unet结构、正向和逆向过程、IS和FID测试、EMA优化" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2023/11/13/DDPM%E4%BB%A3%E7%A0%81%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%BB-2-Unet%E7%BB%93%E6%9E%84%E3%80%81%E6%AD%A3%E5%90%91%E5%92%8C%E9%80%86%E5%90%91%E8%BF%87%E7%A8%8B%E3%80%81IS%E5%92%8CFID%E6%B5%8B%E8%AF%95%E3%80%81EMA%E4%BC%98%E5%8C%96/" target="_blank">DDPM代码详细解读(2):Unet结构、正向和逆向过程、IS和FID测试、EMA优化</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2023/11/13/DDPM%E4%BB%A3%E7%A0%81%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%BB-2-Unet%E7%BB%93%E6%9E%84%E3%80%81%E6%AD%A3%E5%90%91%E5%92%8C%E9%80%86%E5%90%91%E8%BF%87%E7%A8%8B%E3%80%81IS%E5%92%8CFID%E6%B5%8B%E8%AF%95%E3%80%81EMA%E4%BC%98%E5%8C%96/" class="archive-article-date">
+        <time datetime="2023-11-13T08:59:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-11-13</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <h1 id="ddpm代码详细解读2unet结构正向和逆向过程is和fid测试ema优化">DDPM代码详细解读(2):Unet结构、正向和逆向过程、IS和FID测试、EMA优化</h1>
+    
+    <a class="article-more-a" href="/2023/11/13/DDPM%E4%BB%A3%E7%A0%81%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%BB-2-Unet%E7%BB%93%E6%9E%84%E3%80%81%E6%AD%A3%E5%90%91%E5%92%8C%E9%80%86%E5%90%91%E8%BF%87%E7%A8%8B%E3%80%81IS%E5%92%8CFID%E6%B5%8B%E8%AF%95%E3%80%81EMA%E4%BC%98%E5%8C%96/#more">more >></a>
+    
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/扩散模型//" class="article-tag-list-link color5">扩散模型</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2023/11/13/DDPM%E4%BB%A3%E7%A0%81%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%BB-2-Unet%E7%BB%93%E6%9E%84%E3%80%81%E6%AD%A3%E5%90%91%E5%92%8C%E9%80%86%E5%90%91%E8%BF%87%E7%A8%8B%E3%80%81IS%E5%92%8CFID%E6%B5%8B%E8%AF%95%E3%80%81EMA%E4%BC%98%E5%8C%96/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-DDPM代码详细解读-1-数据集准备、超参数设置、loss设计、关键参数计算" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2023/11/13/DDPM%E4%BB%A3%E7%A0%81%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%BB-1-%E6%95%B0%E6%8D%AE%E9%9B%86%E5%87%86%E5%A4%87%E3%80%81%E8%B6%85%E5%8F%82%E6%95%B0%E8%AE%BE%E7%BD%AE%E3%80%81loss%E8%AE%BE%E8%AE%A1%E3%80%81%E5%85%B3%E9%94%AE%E5%8F%82%E6%95%B0%E8%AE%A1%E7%AE%97/" target="_blank">DDPM代码详细解读(1):数据集准备、超参数设置、loss设计、关键参数计算</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2023/11/13/DDPM%E4%BB%A3%E7%A0%81%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%BB-1-%E6%95%B0%E6%8D%AE%E9%9B%86%E5%87%86%E5%A4%87%E3%80%81%E8%B6%85%E5%8F%82%E6%95%B0%E8%AE%BE%E7%BD%AE%E3%80%81loss%E8%AE%BE%E8%AE%A1%E3%80%81%E5%85%B3%E9%94%AE%E5%8F%82%E6%95%B0%E8%AE%A1%E7%AE%97/" class="archive-article-date">
+        <time datetime="2023-11-13T08:58:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-11-13</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <h1 id="ddpm代码详细解读1数据集准备超参数设置loss设计关键参数计算">DDPM代码详细解读(1):数据集准备、超参数设置、loss设计、关键参数计算</h1>
+<p>之前照猫画虎复现了DDPM，但是其中许多代码很不好理解，遂写此博客进行学习记录。</p>
+    
+    <a class="article-more-a" href="/2023/11/13/DDPM%E4%BB%A3%E7%A0%81%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%BB-1-%E6%95%B0%E6%8D%AE%E9%9B%86%E5%87%86%E5%A4%87%E3%80%81%E8%B6%85%E5%8F%82%E6%95%B0%E8%AE%BE%E7%BD%AE%E3%80%81loss%E8%AE%BE%E8%AE%A1%E3%80%81%E5%85%B3%E9%94%AE%E5%8F%82%E6%95%B0%E8%AE%A1%E7%AE%97/#more">more >></a>
+    
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/扩散模型//" class="article-tag-list-link color5">扩散模型</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2023/11/13/DDPM%E4%BB%A3%E7%A0%81%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%BB-1-%E6%95%B0%E6%8D%AE%E9%9B%86%E5%87%86%E5%A4%87%E3%80%81%E8%B6%85%E5%8F%82%E6%95%B0%E8%AE%BE%E7%BD%AE%E3%80%81loss%E8%AE%BE%E8%AE%A1%E3%80%81%E5%85%B3%E9%94%AE%E5%8F%82%E6%95%B0%E8%AE%A1%E7%AE%97/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-为什么Diffusion-Models钟爱U-net结构" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1036,208 +1235,6 @@ Models背后的深度学习原理（1）:配分函数</h1>
     
     <p class="article-more-link">
       <a class="article-more-a" href="/2023/10/20/Any-to-Any-Generation-via-Composable-Diffusion/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-视觉扩散模型综述" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2023/10/17/%E8%A7%86%E8%A7%89%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E7%BB%BC%E8%BF%B0/" target="_blank">视觉扩散模型综述</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2023/10/17/%E8%A7%86%E8%A7%89%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E7%BB%BC%E8%BF%B0/" class="archive-article-date">
-        <time datetime="2023-10-17T13:59:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-10-17</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p><a target="_blank" rel="noopener" href="https://github.com/ChenHsing/Awesome-Video-Diffusion-Models">https://github.com/ChenHsing/Awesome-Video-Diffusion-Models</a></p>
-<p>​		最近一波人工智能生成内容(AIGC)在计算机视觉领域取得了巨大的成功，而扩散模型在其中发挥了关键作用。由于其令人印象深刻的生成能力，扩散模型正逐渐取代基于GANs和自回归transformer的方法，不仅在图像生成和编辑方面，而且在视频相关研究领域都表现出了卓越的性能。</p>
-<h4 id="当前不足"><a href="#当前不足" class="headerlink" title="当前不足"></a>当前不足</h4><p>现有的研究主要集中在图像生成环境中的扩散模型（主要做image generation）</p>
-<p>provide only a coarse coverage of the video diffusion model or place greater emphasis on image model</p>
-    
-    <a class="article-more-a" href="/2023/10/17/%E8%A7%86%E8%A7%89%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E7%BB%BC%E8%BF%B0/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/论文精读//" class="article-tag-list-link color5">论文精读</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2023/10/17/%E8%A7%86%E8%A7%89%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E7%BB%BC%E8%BF%B0/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-关键路径及相关知识" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2023/09/26/%E5%85%B3%E9%94%AE%E8%B7%AF%E5%BE%84%E5%8F%8A%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/" target="_blank">关键路径及相关知识</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2023/09/26/%E5%85%B3%E9%94%AE%E8%B7%AF%E5%BE%84%E5%8F%8A%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/" class="archive-article-date">
-        <time datetime="2023-09-26T11:30:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-09-26</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p><strong>关键路径为起点到终点权值加起来最大的路径</strong></p>
-<p><img src="/2023/09/26/%E5%85%B3%E9%94%AE%E8%B7%AF%E5%BE%84%E5%8F%8A%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/63aa74726a00b83b9c02e677a0377b3.jpg" alt="63aa74726a00b83b9c02e677a0377b3"></p>
-    
-    <a class="article-more-a" href="/2023/09/26/%E5%85%B3%E9%94%AE%E8%B7%AF%E5%BE%84%E5%8F%8A%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/课程知识//" class="article-tag-list-link color5">课程知识</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2023/09/26/%E5%85%B3%E9%94%AE%E8%B7%AF%E5%BE%84%E5%8F%8A%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/">展开全文 >></a>
     </p>
     
 

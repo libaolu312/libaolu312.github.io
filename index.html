@@ -379,6 +379,392 @@ of Technology</p>
 
 
   
+    <article id="post-论文精读-Cones-2-Customizable-Image-Synthesis-with-Multiple-Subjects" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2023/12/27/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-Cones-2-Customizable-Image-Synthesis-with-Multiple-Subjects/" target="_blank">论文精读:Cones 2: Customizable Image Synthesis with Multiple Subjects</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2023/12/27/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-Cones-2-Customizable-Image-Synthesis-with-Multiple-Subjects/" class="archive-article-date">
+        <time datetime="2023-12-27T15:48:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-12-27</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <blockquote>
+<p><strong>前言</strong>：今年6月科大和上交做的一篇工作，也是关注
+<strong>Multi-subjects driven</strong></p>
+<p><strong>重点关注</strong>：<strong>Learning a residual on top of the
+base embedding</strong></p>
+</blockquote>
+<h2 id="introduction">1 Introduction</h2>
+<h3 id="motivation">1.1 Motivation</h3>
+<p><strong>现有的主流方法</strong>：通过 joint training 来实现
+multi-subject 的定制化，即tunes the model with all subjects</p>
+<p><strong>存在的问题</strong>：</p>
+<ul>
+<li>需要为每个subject组合来学习单独的模型，当subject数量增加可能会导致指数级增加的学习。</li>
+<li>不同subject之间可能会相互甘涛（例如：一只有猫特征的狗）</li>
+</ul>
+<p><img src="/2023/12/27/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-Cones-2-Customizable-Image-Synthesis-with-Multiple-Subjects/image-20231228021257924.png" alt="image-20231228021257924" style="zoom: 50%;"></p>
+<h4 id="方法简述">1.2 方法简述</h4>
+<p>想通过一种简单且有效的表示来代表一个subject，并且能够进行任意subject的组合（不需要重新训练）</p>
+<p>由此抛出两个问题：</p>
+<ul>
+<li>如何有效地表示一个subject</li>
+<li>如何有效地组合不同的subject</li>
+</ul>
+<p>给定一个subject和其配套的图片，将这个特定subject的feature绑定到一个可以灵活使用的<strong>插件</strong>上，使用特定subject的图片对T2I模型的text
+encoder进行fine-tuning，使其可以对subject进行定制。</p>
+<p>同时，还需要一个text-embedding-preservation
+loss，这个loss限制fine-tuning后的text
+encoder的输出（<strong>仅在特定subject的token
+embedding与原始的有所不同</strong>，替换），之后计算fine-tuning前后text
+encoder的差异，得到可以稳定的将原始类别转换为定制subject的<strong>residual
+token embedding</strong>。（eg：dog → customized dog）</p>
+<h2 id="method">2 Method</h2>
+<p>给定一个subject和其配套的从不同视角拍摄的图片（每个subject3-5张，有一说一，这个数据集挺奢侈的），目的是生成包含这些subject的任意组合的新图像，通过<strong>将subject-specific
+residual token embedding与diffusion
+model进行结合，并在生成过程中用layout进行引导</strong>，来实现这个过程。</p>
+<p><img src="/2023/12/27/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-Cones-2-Customizable-Image-Synthesis-with-Multiple-Subjects/image-20231228022911793.png" alt="image-20231228022911793" style="zoom:67%;"></p>
+<p>具体来说，<strong>将每个subject看做从基础subject偏移的residual token
+embedding</strong>（这块和celeb
+basis那篇工作的想法很像），也就是说将residual token
+embedding添加到基础subject
+的embedding中就可得到对应的subject，所以<strong>如何获得这个residual
+token embedding</strong>很关键。</p>
+<h3 id="text-conditioned-diffusion-model">2.1 Text-conditioned diffusion
+model</h3>
+<p>扩散模型的内容就不重复了，原文中有这块内容，可能是凑字数的，总的来说扩散模型就是通<strong>过逐渐去噪从高斯分布中采样的变量来学习数据分布</strong>。</p>
+<h3 id="representing-subjects-with-residual-token-embedding关键点">2.2
+Representing subjects with residual token embedding（关键点☆☆☆）</h3>
+<h4 id="representing-subjects-with-residual-text-embedding">2.2.1
+Representing subjects with residual text embedding</h4>
+<p>目标是<strong>用text encoder的output domain中的一个 residual text
+embedding 来表示每个subject</strong>。</p>
+<p>一个理想的residual text embedding <span class="math inline">\(\varDelta ^{custom}\)</span> 可以将基础
+subject转移到特定subject上，举个例子：一个具有embedding input （E（“a
+photo of dog”）+ <span class="math inline">\(\varDelta
+^{custom}\)</span>） 的模型 <span class="math inline">\(\epsilon
+_{\theta}\)</span> 可以生成特定“dog”的照片。</p>
+<p>实现这个目标的方式是<strong>从 source (original) text encoder 到
+target (fine-tuned) text encoder 计算一个 embedding direction
+vector</strong>，微调后的text encoder <span class="math inline">\(E^{costom}\)</span> 需要能够自定义 subject <span class="math inline">\(s\)</span> 并与 原始 diffusion model <span class="math inline">\(\epsilon _{\theta}\)</span>
+结合。（类似DreamBooth，<span class="math inline">\(E^{costom}\)</span>
+can be trained with the subject-preservation loss as：） <span class="math display">\[
+L_{sub}\left( E^{custom} \right) =\mathbb{E}_{\left( x,c \right)
+~D_s,\epsilon ~\mathcal{N}\left( 0,1 \right) ,t}\left[ \lVert \epsilon
+_{\theta}\left( x_t,E^{custom}\left( c \right) ,t \right) -\epsilon
+\rVert _{2}^{2} \right]
+\]</span></p>
+<blockquote>
+<p><span class="math inline">\(D_s\)</span>={( <span class="math inline">\(x_{j}^{s}\)</span> , "a photo of <span class="math inline">\(s\)</span>" ) | <span class="math inline">\(x_{j}^{s}\in X^s\)</span>} 是 subject <span class="math inline">\(s\)</span> 的reference few-shot data</p>
+</blockquote>
+<h4 id="regularization-with-a-text-embedding-preservation-loss">2.2.2
+Regularization with a text-embedding-preservation loss</h4>
+<p>根据上面获得的 residual text
+embedding，只能进行single-subject的定制生成，由于这些residual text
+embedding应用于整个text，其中任意两个embedding可能存在显著冲突，因此不能直接合并他俩后进行推理。</p>
+<p>所以，提出一个 <strong>text-embedding-preservation loss</strong> 来使
+residual text embedding 主要集中在于 subject token 有关的text
+embedding上，其核心思想是<strong>尽量减少 <span class="math inline">\(E^{costom}\)</span> 与除 subject token <span class="math inline">\(s\)</span> 之外的其他token对应的 <span class="math inline">\(E\)</span> 之间的差异</strong>。</p>
+<blockquote>
+<p>还是用dog举例子，用chatgpt生成1000个包含单词 “dog” 的句子 <span class="math inline">\(C_{dog}=\left\{ c^i \right\}
+_{i=1}^{1000}\)</span>，然后最小化除 "dog" 之外的所有的token 对应的
+<span class="math inline">\(E\)</span> 与 <span class="math inline">\(E^{costom}\)</span> 的差异。</p>
+<p>比如：“a dog on the beach”</p>
+<p>将它对应的text embedding 拆分成一个 sequence <span class="math inline">\(E\left( c \right) =\left( E\left( c \right)
+_a,E\left( c \right) _{dog},...,E\left( c \right) _{beach}
+\right)\)</span></p>
+<p>希望any 不等于 "dog" 的 p 都满足 <span class="math inline">\(\lVert
+E\left( c \right) _p-E_{p}^{custom\left( c \right)} \rVert
+_{2}^{2}\)</span></p>
+<p>也就是说，当<span class="math inline">\(p\)</span> 遍历 <span class="math inline">\(c\)</span> 中除 <span class="math inline">\(s\)</span> 之外的所有token时，
+text-embedding-preservation loss 是一种正则化</p>
+</blockquote>
+<p>整体的训练目标为： <span class="math display">\[
+L=L_{sub}+\lambda L_{reg}
+\]</span> 在获取微调好的text encoder后，通过计算 <span class="math inline">\(E^{custom}\left( c \right) _{dog}\)</span> 相对于
+<span class="math inline">\(E\left( c \right) _{dog}\)</span>
+在这1000个句子上的平均位移，我们得到了 “dog” 的 residual token
+embedding： <span class="math display">\[
+\varDelta _{dog}^{custom}=\frac{1}{\left| C_{dog} \right|}\cdot
+\sum_{c\in C_{dog}}{\left( E^{custom}\left( c \right) _{dog}-E\left( c
+\right) _{dog} \right)}
+\]</span></p>
+<h4 id="inference-with-residual-token-embedding">2.2.3 Inference with
+residual token embedding</h4>
+<p>上面得到的 residual token embedding 可以直接在涉及到它的任何 subject
+组合中使用</p>
+<p><img src="/2023/12/27/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-Cones-2-Customizable-Image-Synthesis-with-Multiple-Subjects/image-20231228031607772.png" alt="image-20231228031607772" style="zoom:50%;"></p>
+<p>当我们使用 <span class="math inline">\(N\)</span> 个特定subjects
+<span class="math inline">\(s_1,s_2,...,s_N\)</span>
+进行定制生成时，我们需要做的只是获取 <span class="math inline">\(\varDelta _{s_1}^{custom},\varDelta
+_{s_2}^{\text{c}uston},...,\varDelta _{s_N}^{custom}\)</span>
+并将其添加到 token embedding 中： <span class="math display">\[
+E^{final}\left( c \right) _{s_i}=E\left( c \right) _{s_i}+\varDelta
+_{s_i}^{custom},\ \ i=1,...,N
+\]</span> <strong>上面这个方程完全在 token
+维度上进行预算，这就很便利且高效，同时 任何 residual token embedding
+<span class="math inline">\(\varDelta _{i}^{custom}\)</span>
+都可以重复使用，也可以和另一个 <span class="math inline">\(\varDelta
+_{j}^{custom}\)</span> 相结合</strong>。</p>
+<p>很牛逼的一点是，对于每个 subject，<strong>只需要储存一个 float32 的
+vector</strong>，并不需要大量参数。</p>
+<h2 id="composing-subjects-with-layout-guidance">2.3 Composing subjects
+with layout guidance</h2>
+<p>T2I diffusion model 通常通过 cross-attention 机制将text embedding
+<span class="math inline">\(E(c)\)</span> 注入到 diffusion model <span class="math inline">\(\epsilon _{\theta}\)</span> 中。</p>
+<p>cross-attention layer 中的 attention map 是 <span class="math inline">\(CA=\left( W_Q\cdot \varphi \left( x_t \right)
+\right) \cdot \left( W_K\cdot E\left( c \right) \right)\)</span> （<span class="math inline">\(\varphi \left( x_t \right)\)</span> 是转换后的
+image feature，<span class="math inline">\(WQ\)</span> 和 <span class="math inline">\(WD\)</span> 表示计算 query 和 key
+的参数），cross-attention map 直接影响最终生成图像的 layout。</p>
+<p>那么下面就来关注如何通过改善 cross-attention map 来提高生成质量。</p>
+<h4 id="strengthening-the-signal-of-target-subject">2.3.1 Strengthening
+the signal of target subject</h4>
+<p>multi-subject 定制的一个问题是一些subject可能无法显示出来：</p>
+<p><img src="/2023/12/27/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-Cones-2-Customizable-Image-Synthesis-with-Multiple-Subjects/image-20231228033920554.png" alt="image-20231228033920554" style="zoom:33%;"></p>
+<p>一些研究认为这是由于这些subject在 cross-attention map
+中的<strong>激活不足</strong>造成的，那么就可以<strong>在希望这个
+subject 的区域进行信号加强</strong>。</p>
+<h4 id="weakening-the-signal-of-irrelevant-subject">2.3.2 Weakening the
+signal of irrelevant subject</h4>
+<p>multi-subject 定制的另一个问题是 subject 的属性在 subject
+之间变得混淆：</p>
+<p><img src="/2023/12/27/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-Cones-2-Customizable-Image-Synthesis-with-Multiple-Subjects/image-20231228033933372.png" alt="image-20231228033933372" style="zoom:33%;"></p>
+<p>一些研究认为这是由于<strong>不同 subject 在 cross-attention map
+中的活动区域重叠</strong>所导致的，那么就可以<strong>减弱每个 subject
+在其他 subject 区域中出现的信号</strong>。</p>
+<h4 id="layout-guided-iterative-generation-process">2.3.3 Layout-guided
+iterative generation process</h4>
+<p>结合上面增强和减弱信号的两种想法，在实验中，将 layout <span class="math inline">\(M\)</span> 定义为 a set of subject bounding
+boxes，并为每个 subject <span class="math inline">\(s\)</span> 获取
+guidance layout <span class="math inline">\(M_s\)</span> 。</p>
+<p><img src="/2023/12/27/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-Cones-2-Customizable-Image-Synthesis-with-Multiple-Subjects/image-20231228034700196.png" alt="image-20231228034700196" style="zoom:50%;"></p>
+<p>详细来说，将 <span class="math inline">\(M_s\)</span>
+分成不同的区域，在希望 subject <span class="math inline">\(s\)</span>
+出现的区域（表示为 <span class="math inline">\(R_{s}^{show}\)</span>
+）中将 <span class="math inline">\(M_s\)</span> 的值设为 正值 <span class="math inline">\(\gamma ^+\)</span>，与subject <span class="math inline">\(s\)</span> 无关的区域（表示为 <span class="math inline">\(R_{s}^{irrelevant}\)</span>）中将 <span class="math inline">\(M_s\)</span> 的值设为 正值 <span class="math inline">\(\gamma ^-\)</span>。</p>
+<p>在推理过程中，将 cross-attention 的所有输出替换为每一步的编辑结果：
+<span class="math display">\[
+EditedCA\left( CA,M,c \right) =Soft\max \left( CA\oplus \left\{ \eta
+\left( t \right) \cdot M_{s_i}|i=1,...,N \right\} \right) \cdot \left(
+W_V\cdot E\left( c \right) \right)
+\]</span></p>
+<blockquote>
+<p><span class="math inline">\(\oplus\)</span> 表示将 <span class="math inline">\(CA\)</span> 和 <span class="math inline">\(M\)</span> 的相应维度进行加法运算，<span class="math inline">\(\eta \left( t \right)\)</span>
+是一个凹函数，用来控制不同时间 <span class="math inline">\(t\)</span>
+的编辑强度。</p>
+</blockquote>
+<h3 id="整体的算法流程">整体的算法流程</h3>
+<figure>
+<img src="/2023/12/27/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-Cones-2-Customizable-Image-Synthesis-with-Multiple-Subjects/image-20231228040017828.png" alt="image-20231228040017828">
+<figcaption aria-hidden="true">image-20231228040017828</figcaption>
+</figure>
+<h3 id="实验的设置">实验的设置</h3>
+<h4 id="dataset">Dataset</h4>
+<p>这个作者真讨厌，说了跟没说一样，反正就是一些场景、宠物和物品，然后作者是从好几个地方收集来的，唉，本来这种数据集就难找，作者还不想说，奶奶个熊。</p>
+<h4 id="baselines">Baselines</h4>
+<p>这个模型与以下模型进行了比较：（这些工作也可以看看）</p>
+<ul>
+<li>DreamBooth（它在扩散模型中微调了所有参数，太狠了，算力多就是好）</li>
+<li>Custom diffusion（它在text encoder中优化了新增的word embedding
+以及扩散模型中的一些参数，即从文本到潜在特征的key和value射在cross-attention中）</li>
+<li>Cones（也是这个作者做的工作）</li>
+</ul>
+<h4 id="实验开销">实验开销</h4>
+<p>只说了用了一张A100，没说跑了多长时间，但是应该不会很久。</p>
+
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/AIGC//" class="article-tag-list-link color5">AIGC</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2023/12/27/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-Cones-2-Customizable-Image-Synthesis-with-Multiple-Subjects/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-论文精读：FastComposer-Tuning-Free-Multi-Subject-Image-Generation-with-Localized-Attention" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2023/12/23/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%EF%BC%9AFastComposer-Tuning-Free-Multi-Subject-Image-Generation-with-Localized-Attention/" target="_blank">论文精读：FastComposer:Tuning-Free Multi-Subject Image Generation with Localized Attention</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2023/12/23/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%EF%BC%9AFastComposer-Tuning-Free-Multi-Subject-Image-Generation-with-Localized-Attention/" class="archive-article-date">
+        <time datetime="2023-12-23T03:16:12.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-12-23</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <blockquote>
+<p>先说一句，这篇论文写的非常好，通俗易懂，其中的贡献点也能引起很多思考，十分推荐。</p>
+<p><strong>前言</strong>：这是MIT在今年六月份发在arXiv上的，主要做的是subject-driven，涉及到了layout
+generation，工作突出一个便宜高效，与fine-tuning-based的方法相比，该模型实现了<strong>300倍至2500倍的加速</strong>和2<strong>.8倍至6.7倍的内存节省</strong>，并且对于新主体不需要额外的存储空间（仅使用前向传播）相当牛逼！</p>
+<p><strong>重点关注</strong>：</p>
+<p>一种特殊的segmentation maps and cross-attention
+regularization手段对attention map的影响（有些工作也通过bounding
+box来实现这一效果）</p>
+</blockquote>
+    
+    <a class="article-more-a" href="/2023/12/23/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%EF%BC%9AFastComposer-Tuning-Free-Multi-Subject-Image-Generation-with-Localized-Attention/#more">more >></a>
+    
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/AIGC//" class="article-tag-list-link color5">AIGC</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2023/12/23/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB%EF%BC%9AFastComposer-Tuning-Free-Multi-Subject-Image-Generation-with-Localized-Attention/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-论文精读-StoryGPT-V-Large-Language-Models-as-Consistent-Story-Visualizers" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1067,218 +1453,6 @@ Research主导，主要关注的点在于多轮图像生成的角色一致性问
     
     <p class="article-more-link">
       <a class="article-more-a" href="/2023/12/07/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-The-Chosen-One-Consistent-Characters-in-Text-to-Image-Diffusion-Models/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-训练自己的户型图扩散模型" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2023/11/28/%E8%AE%AD%E7%BB%83%E8%87%AA%E5%B7%B1%E7%9A%84%E6%88%B7%E5%9E%8B%E5%9B%BE%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B/" target="_blank">训练自己的户型图扩散模型（附远程服务器配置）</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2023/11/28/%E8%AE%AD%E7%BB%83%E8%87%AA%E5%B7%B1%E7%9A%84%E6%88%B7%E5%9E%8B%E5%9B%BE%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B/" class="archive-article-date">
-        <time datetime="2023-11-28T03:35:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-11-28</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <blockquote>
-<p>前言：上次做了户型图数据集调研，并构建了自己的户型图数据集，这次使用构建好的数据集训练自己的Diffusion
-Model</p>
-<p>本次我训练了四个版本的Diffusion Model for Floor Plan
-datasets，分别是：</p>
-<p>cubicasa5k-Simple-DM</p>
-<p>cubicasa5k-Large-DM</p>
-<p>RPLAN-DM</p>
-<p>Myself-DM（自己从网上爬取的数据集）</p>
-</blockquote>
-    
-    <a class="article-more-a" href="/2023/11/28/%E8%AE%AD%E7%BB%83%E8%87%AA%E5%B7%B1%E7%9A%84%E6%88%B7%E5%9E%8B%E5%9B%BE%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/扩散模型//" class="article-tag-list-link color5">扩散模型</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2023/11/28/%E8%AE%AD%E7%BB%83%E8%87%AA%E5%B7%B1%E7%9A%84%E6%88%B7%E5%9E%8B%E5%9B%BE%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Latent-Diffusion-Models-原理和代码" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2023/11/27/Latent-Diffusion-Models-%E5%8E%9F%E7%90%86%E5%92%8C%E4%BB%A3%E7%A0%81/" target="_blank">Latent Diffusion Models:原理和代码</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2023/11/27/Latent-Diffusion-Models-%E5%8E%9F%E7%90%86%E5%92%8C%E4%BB%A3%E7%A0%81/" class="archive-article-date">
-        <time datetime="2023-11-27T09:06:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-11-27</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <blockquote>
-<p>前言：CVPR 2022中的一项新工作latent diffusion
-models引起了广泛关注，提出了两段式diffusion
-models能有效节省计算资源，latent
-attention技术为通用image-to-image任务打下基础，让人耳目一新，具有极强的借鉴意义和启发性，值得深度阅读。</p>
-</blockquote>
-    
-    <a class="article-more-a" href="/2023/11/27/Latent-Diffusion-Models-%E5%8E%9F%E7%90%86%E5%92%8C%E4%BB%A3%E7%A0%81/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/扩散模型//" class="article-tag-list-link color5">扩散模型</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2023/11/27/Latent-Diffusion-Models-%E5%8E%9F%E7%90%86%E5%92%8C%E4%BB%A3%E7%A0%81/">展开全文 >></a>
     </p>
     
 
