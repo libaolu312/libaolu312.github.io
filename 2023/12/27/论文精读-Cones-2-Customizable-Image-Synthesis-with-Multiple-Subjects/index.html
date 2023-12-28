@@ -10,12 +10,12 @@
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="前言：今年6月科大和上交做的一篇工作，也是关注 Multi-subjects driven 重点关注：Learning a residual on top of the base embedding  1 Introduction 1.1 Motivation 现有的主流方法：通过 joint training 来实现 multi-subject 的定制化，即tunes the">
+  <meta name="description" content="前言：今年6月科大和上交做的一篇工作，也是关注 Multi-subjects driven 重点关注：Learning a residual on top of the base embedding">
 <meta property="og:type" content="article">
 <meta property="og:title" content="论文精读:Cones 2: Customizable Image Synthesis with Multiple Subjects">
 <meta property="og:url" content="https://libaolu312.github.io/2023/12/27/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-Cones-2-Customizable-Image-Synthesis-with-Multiple-Subjects/index.html">
 <meta property="og:site_name" content="李宝璐">
-<meta property="og:description" content="前言：今年6月科大和上交做的一篇工作，也是关注 Multi-subjects driven 重点关注：Learning a residual on top of the base embedding  1 Introduction 1.1 Motivation 现有的主流方法：通过 joint training 来实现 multi-subject 的定制化，即tunes the">
+<meta property="og:description" content="前言：今年6月科大和上交做的一篇工作，也是关注 Multi-subjects driven 重点关注：Learning a residual on top of the base embedding">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://libaolu312.github.io/2023/12/27/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-Cones-2-Customizable-Image-Synthesis-with-Multiple-Subjects/image-20231228021257924.png">
 <meta property="og:image" content="https://libaolu312.github.io/2023/12/27/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-Cones-2-Customizable-Image-Synthesis-with-Multiple-Subjects/image-20231228022911793.png">
@@ -25,7 +25,7 @@
 <meta property="og:image" content="https://libaolu312.github.io/2023/12/27/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-Cones-2-Customizable-Image-Synthesis-with-Multiple-Subjects/image-20231228034700196.png">
 <meta property="og:image" content="https://libaolu312.github.io/2023/12/27/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-Cones-2-Customizable-Image-Synthesis-with-Multiple-Subjects/image-20231228040017828.png">
 <meta property="article:published_time" content="2023-12-27T15:48:34.000Z">
-<meta property="article:modified_time" content="2023-12-27T20:11:26.685Z">
+<meta property="article:modified_time" content="2023-12-28T07:45:59.010Z">
 <meta property="article:author" content="李宝璐">
 <meta property="article:tag" content="技术笔记">
 <meta name="twitter:card" content="summary">
@@ -311,6 +311,7 @@
 <p><strong>重点关注</strong>：<strong>Learning a residual on top of the
 base embedding</strong></p>
 </blockquote>
+<span id="more"></span>
 <h2 id="introduction">1 Introduction</h2>
 <h3 id="motivation">1.1 Motivation</h3>
 <p><strong>现有的主流方法</strong>：通过 joint training 来实现
