@@ -27,7 +27,7 @@
 <meta property="og:image" content="https://libaolu312.github.io/2024/01/01/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-Stable-Video-Diffusion-Scaling-Latent-Video-Diffusion-Models-to-Large-Datasets/image-20240102152729781.png">
 <meta property="og:image" content="https://libaolu312.github.io/2024/01/01/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-Stable-Video-Diffusion-Scaling-Latent-Video-Diffusion-Models-to-Large-Datasets/image-20240102153611186.png">
 <meta property="article:published_time" content="2024-01-01T12:44:32.000Z">
-<meta property="article:modified_time" content="2024-01-02T07:38:58.978Z">
+<meta property="article:modified_time" content="2024-01-02T10:15:31.389Z">
 <meta property="article:author" content="李宝璐">
 <meta property="article:tag" content="技术笔记">
 <meta name="twitter:card" content="summary">
@@ -313,6 +313,7 @@ Diffusion，这个公司上一个力作 Stable
 Diffusion已经得到了广泛的认可并且在工业界大范围使用，这篇工作又将图像生成拓展到了视频生成领域，还是延续工业界的土豪气息，这篇工作并没有什么花样百出的模型升级，和DALLE3一样，重点在对数据的处理，信奉<strong>大力出奇迹</strong>，事实证明效果很好，在很多下游任务上都取得了SOTA。</p>
 <p>重点关注：视频数据治理 Camera Motion LoRA</p>
 </blockquote>
+<span id="more"></span>
 <p>在开始前先看一下效果，这个gif可以在Stability
 AI的github主页上找到：</p>
 <p><img src="/2024/01/01/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-Stable-Video-Diffusion-Scaling-Latent-Video-Diffusion-Models-to-Large-Datasets/tile.gif" style="zoom:67%;"></p>
