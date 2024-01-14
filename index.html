@@ -379,6 +379,249 @@ of Technology</p>
 
 
   
+    <article id="post-论文精读-DreamCreature-Crafting-Photorealistic-Virtual-Creatures-from-Imagination" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2024/01/14/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-DreamCreature-Crafting-Photorealistic-Virtual-Creatures-from-Imagination/" target="_blank">论文精读:DreamCreature: Crafting Photorealistic Virtual Creatures from Imagination</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2024/01/14/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-DreamCreature-Crafting-Photorealistic-Virtual-Creatures-from-Imagination/" class="archive-article-date">
+        <time datetime="2024-01-14T09:07:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-01-14</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <blockquote>
+<p>前言：这是一篇萨里大学CVSSP组的工作，11.29日发在arxiv上，主要做的是specific
+categories的生成，其中涉及到了角色一致性的生成问题。</p>
+</blockquote>
+<h1 id="abstract">1 Abstract</h1>
+<p>提出一个新的任务：<strong>Virtual Creatures Generation</strong></p>
+<p>给定一组 unlabeled 图像的 target
+concepts（比如200中鸟），训练一个T2I模型，能够在不同的背景和上下文中创建新的
+concepts。</p>
+<p>针对这个任务提出一种新的方法： <strong>DreamCreature</strong></p>
+<p>用<strong>无监督</strong>方式 识别和提取
+底层<strong>sub-concepts</strong>（比如狗的耳朵），T2I模型组合学习这些sub-concepts，生成新图（一个新的鸟）。</p>
+<p>为了让这些sub-concepts一直保持不变，同时各个sub-concept之间互不影响，提出一种
+<strong>textual inversion technique</strong></p>
+<p><img src="/2024/01/14/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-DreamCreature-Crafting-Photorealistic-Virtual-Creatures-from-Imagination/image-20240114174406373.png" alt="image-20240114174406373" style="zoom:50%;"></p>
+<p>最近做 personalization 是怎么做的？给定一组描述相同 concept
+的图像，，它们<strong>在文本表示空间中学习了一个 dedicated
+token</strong>（这就是 <strong>textual
+inversion</strong>），<strong>这个特殊的token可以灵活的用来作为text
+descriptions中的代理</strong>（proxy），以生成一致的图像。它们专注于学习整体的
+concept ，并将其放置在不同的背景和环境中，但是这类方法是有局限性的：</p>
+<p><img src="/2024/01/14/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-DreamCreature-Crafting-Photorealistic-Virtual-Creatures-from-Imagination/image-20240114210633020.png" alt="image-20240114210633020" style="zoom:67%;"></p>
+<h1 id="method">2 Method</h1>
+<h3 id="总览">总览</h3>
+<p><img src="/2024/01/14/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-DreamCreature-Crafting-Photorealistic-Virtual-Creatures-from-Imagination/image-20240114211336160.png" alt="image-20240114211336160" style="zoom:67%;"></p>
+<blockquote>
+<p><strong>左图</strong>：在语义层次结构中发现sub-concepts涉及<strong>将每个图像划分为不同部分</strong>，并在未标记的训练数据中形成<strong>语义聚类</strong>。</p>
+<p><strong>右图</strong>：这些簇被组织成一个<strong>词典</strong>，并且它们的semantic
+embeddings是通过textual inversion方法学习的。例如，像“a photo of a
+[Head,42] [Wing,87]...”这样的text
+description指导着<strong>通过重建相关图像来优化相应的text
+embedding</strong>。为了<strong>促进学习概念之间的解耦</strong>，<strong>最小化</strong>了一个特别设计的<strong>attention损失</strong>，表示为<span class="math inline">\(\mathcal{L}_{attn}\)</span>。</p>
+</blockquote>
+<p>每个 target concept 都由一组 sub-concepts 组成，与训练图像 <span class="math inline">\(\left\{ x \right\}\)</span>
+配对，这个语义层次结构随后被用作微调T2I模型，表示为 <span class="math inline">\(\left\{ \epsilon _{\theta}\text{，}\tau
+_{\theta}\text{，}\mathcal{E}\text{，}\mathcal{D} \right\}\)</span></p>
+<blockquote>
+<p><span class="math inline">\(\epsilon _{\theta}\)</span> ：diffusion
+denoiser</p>
+<p><span class="math inline">\(\tau _{\theta}\)</span> ：text
+encoder</p>
+<p><span class="math inline">\(\mathcal{E} / \mathcal{D}\)</span> ：auto
+encoder</p>
+</blockquote>
+<p>采用 textual inversion 技术，在 word embedding 空间中学习每个
+sub-concept 的一组 pseudo-words <span class="math inline">\(p^*\)</span>
+（伪词） <span class="math display">\[
+\mathcal{L}_{ldm}=\mathbb{E}_{z,t,p,\epsilon}\left[ \lVert \epsilon
+-\epsilon _{\theta}\left( z_t,t,\tau _{\theta}\left( y_p \right) \right)
+\rVert _{2}^{2} \right]
+\]</span> <span class="math display">\[
+p^*=\underset{p}{arg\min}\ \mathcal{L}_{ldm}
+\]</span></p>
+<blockquote>
+<p><span class="math inline">\(\epsilon ~\mathcal{N}\left( 0,1
+\right)\)</span>：表示伪缩放的噪音</p>
+<p><span class="math inline">\(t\)</span>：time step</p>
+<p><span class="math inline">\(z=\mathcal{E}(x)\)</span>：图像的 latent
+表示</p>
+<p><span class="math inline">\(z_t\)</span>：时间 <span class="math inline">\(t\)</span> 的 latent noise</p>
+<p><span class="math inline">\(y_p\)</span>：包含 text tokens <span class="math inline">\(p\)</span> 的 text condition</p>
+<p><span class="math inline">\(\mathcal{L}_{ldm}\)</span>：是用于重构
+sub-concept 的标准扩散损失</p>
+</blockquote>
+<p>由于每个 target concept 由一组 sub-concepts
+组成，因此通过重构相关的sub-concepts集来实现其重构。</p>
+<h3 id="sub-concepts-discovery">2.1 Sub-concepts Discovery</h3>
+<p>这部分主要说的是个标注方法，简要说说，首先用DINO提取图像特征，得到特征图<span class="math inline">\(F\)</span>，然后进行三级分层聚类：</p>
+<ul>
+<li>第一层：使用k-means算法在特征图 <span class="math inline">\(F\)</span> 上应用两个簇，以获得前景和背景 <span class="math inline">\(B\)</span></li>
+<li>第二层：k-means进一步应用于前景，以获得每个代表一个 sub-concept 的
+<span class="math inline">\(M\)</span> 个簇，例如鸟类的头部</li>
+<li>第三层：进一步将每个 <span class="math inline">\(M\)</span>
+簇以及背景簇 <span class="math inline">\(B\)</span> 分成 <span class="math inline">\(K\)</span>
+个子类。每个子类指的是进一步细分的含义，比如特定鸟类的头部或特定的背景风格</li>
+</ul>
+<p>经过这步之后，<strong>图像的每个区域被标记为相应的簇的索引</strong>，这个
+description 将被用作模型训练中的 text prompts（例如：“a photo of a
+[p]”，<span class="math inline">\(p=\left( 0,k_0 \right) ,\left( 1,k_1
+\right) ,\left( 2,k_2 \right) ,...,\left( M,k_M \right)\)</span> ）</p>
+<h3 id="sub-concepts-projection">2.2 Sub-concepts Projection</h3>
+<p>这个任务需要掌握更多的 word tokens，这些 word tokens 来自 concepts 和
+sub-concepts，但是这些 concepts 和 sub-concepts
+带有固有的缺陷（比如部分重叠和过度切割）。</p>
+<p>为了增强学习过程，作者这里用了<strong>两层 MLP+ReLU
+激活函数的神经网络 <span class="math inline">\(f\)</span></strong>
+。</p>
+<h3 id="model-training">2.3 Model Training</h3>
+<p>之前的工作已经证明，不仅要学习伪词，<strong>而且要 fine-tuning
+T2I模型</strong>，能够更好的实现 target concept 重建。但是fine-tuning
+T2I模型要付出巨大的训练成本，因此，将 LoRA 应用于 cross-attention block
+，以实现高效的训练。然后最小化扩散损失 <span class="math inline">\(\mathcal{L}_{ldm}\)</span> ，以学习伪词和 LoRA
+adapters。</p>
+<p>在仅使用 <span class="math inline">\(\mathcal{L}_{ldm}\)</span>
+训练时，<strong>部分之间会发生纠缠</strong>，这一点可以从 denoiser <span class="math inline">\(\epsilon _{\theta}\)</span> 的 cross-attention map
+中可以看出：</p>
+<p><img src="/2024/01/14/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-DreamCreature-Crafting-Photorealistic-Virtual-Creatures-from-Imagination/image-20240114224627764.png" alt="image-20240114224627764" style="zoom:67%;"></p>
+<p><strong>这种纠缠是由于 sub-concepts
+之间的相关性而产生的</strong>（比如鸟头和鸟身总是编码配对，以表示同一种物种）</p>
+<p>为了解决这个问题，引入一个基于熵的 attention 损失作正则化： <span class="math display">\[
+\mathcal{L}_{attn}=\mathbb{E}_{z,t,m}\left[ -\left( S_m\log
+\hat{A}_m+\left( 1-S_m \right) \log \left( 1-\hat{A}_m \right) \right)
+\right]
+\]</span> <span class="math display">\[
+\bar{A}_m=\frac{1}{L}\sum_l^L{A_{l,m},\ \ \ \ \
+\hat{A}_{m,i,j}=\frac{\bar{A}_{m,i,j}}{\sum_k{\bar{A}_{k,i,j}}}}
+\]</span></p>
+<blockquote>
+<p><span class="math inline">\(A\in \left[ 0,1 \right] ^{M×HW}\)</span>
+：第 <span class="math inline">\(m\)</span> 个 sub-concepts 和 latent
+noise <span class="math inline">\(z_t\)</span> 之间的 cross-attention
+map</p>
+<p><span class="math inline">\(L\)</span>：选择的 attention map
+的数量</p>
+<p><span class="math inline">\(\hat{A}\in \left[ 0,1 \right]
+^{M×HW}\)</span>：所有 sub-concepts 的平均和标准化的 cross-attention
+map</p>
+<p><span class="math inline">\(S_m\in \left[ 0,1 \right]
+^{M×HW}\)</span>：用作只是 <span class="math inline">\(m\)</span>
+部分位置的 mask</p>
+<p>如果图像中不存在 sub-concepts （例如被遮挡住了），那么 <span class="math inline">\(S_m\)</span> 和 <span class="math inline">\(\hat{A}_m\)</span> 都设置为 0</p>
+</blockquote>
+<p>总loss： <span class="math display">\[
+\mathcal{L}_{total}=\mathcal{L}_{ldm}+\lambda
+_{attn}\mathcal{L}_{attn},\ \ \ \ \lambda _{attn}=0.01
+\]</span> 这样的 attention loss 可以直观的<strong>确保 sub-concepts
+在特定位置只出现一次</strong>，在去噪过程中更容易于其他 sub-concepts
+分离，为特定位置生成 sub-concepts 时，扩散模型应该只关注该
+sub-concept，而不是其他无关的
+sub-concepts，实验中已经验证了这种设计的有效性：</p>
+<p><img src="/2024/01/14/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-DreamCreature-Crafting-Photorealistic-Virtual-Creatures-from-Imagination/image-20240114235508549.png" alt="image-20240114235508549" style="zoom:67%;"></p>
+<h1 id="experiments">3 Experiments</h1>
+<h3 id="datasets">Datasets</h3>
+<p>作者就试了两个种类，一个鸟一个狗，是不是人脸的效果不好啊</p>
+<p>CUB-200-2011 （birds 5994 training images）</p>
+<p>Stanford Dogs （dogs 12000 training images）</p>
+<h3 id="卡">卡</h3>
+<p>单卡 3090 时间没说 应该不长</p>
+<p>最后看看效果：</p>
+<figure>
+<img src="/2024/01/14/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-DreamCreature-Crafting-Photorealistic-Virtual-Creatures-from-Imagination/image-20240115000033570.png" alt="image-20240115000033570">
+<figcaption aria-hidden="true">image-20240115000033570</figcaption>
+</figure>
+<figure>
+<img src="/2024/01/14/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-DreamCreature-Crafting-Photorealistic-Virtual-Creatures-from-Imagination/image-20240115000049471.png" alt="image-20240115000049471">
+<figcaption aria-hidden="true">image-20240115000049471</figcaption>
+</figure>
+
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/AIGC//" class="article-tag-list-link color5">AIGC</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2024/01/14/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-DreamCreature-Crafting-Photorealistic-Virtual-Creatures-from-Imagination/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-论文精读-Customizing-Motion-in-Text-to-Video-Diffusion-Models" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1151,110 +1394,6 @@ Lab(BAIR)提出。</p>
     
     <p class="article-more-link">
       <a class="article-more-a" href="/2023/12/15/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BBPix2Pix-Image-to-Image-Translation-with-Conditional-Adversarial-Networks/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-论文精读-Celeb-Basis-Inserting-Anybody-in-Diffusion-Models-via-Celeb-Basis" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2023/12/15/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-Celeb-Basis-Inserting-Anybody-in-Diffusion-Models-via-Celeb-Basis/" target="_blank">论文精读Celeb Basis:Inserting Anybody in Diffusion Models via Celeb Basis</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2023/12/15/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-Celeb-Basis-Inserting-Anybody-in-Diffusion-Models-via-Celeb-Basis/" class="archive-article-date">
-        <time datetime="2023-12-15T09:58:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-12-15</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <blockquote>
-<p>前言：这又是一篇关于角色一致性的工作（也是subject
-driven相关的工作），这篇工作由中山大学联合腾讯AI
-lab发布，在2023.6发布在arXiv上。这篇工作提供了一种很有意思的 Celeb Basis
-的想法，可以迁移到其他的一致性工作中。</p>
-</blockquote>
-    
-    <a class="article-more-a" href="/2023/12/15/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-Celeb-Basis-Inserting-Anybody-in-Diffusion-Models-via-Celeb-Basis/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/AIGC//" class="article-tag-list-link color5">AIGC</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2023/12/15/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-Celeb-Basis-Inserting-Anybody-in-Diffusion-Models-via-Celeb-Basis/">展开全文 >></a>
     </p>
     
 

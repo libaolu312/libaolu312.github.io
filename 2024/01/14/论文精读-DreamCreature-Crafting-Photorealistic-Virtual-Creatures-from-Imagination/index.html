@@ -6,23 +6,30 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://libaolu312.github.io">
-  <title>李宝璐</title>
+  <title>论文精读:DreamCreature: Crafting Photorealistic Virtual Creatures from Imagination | 李宝璐</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-    
-    <!-- <meta name="keywords" content="">
-    <meta name="description" content="里面放着李宝璐的碎碎念"> -->
-  
-  <meta name="description" content="里面放着李宝璐的碎碎念">
-<meta property="og:type" content="website">
-<meta property="og:title" content="李宝璐">
-<meta property="og:url" content="https://libaolu312.github.io/page/4/index.html">
+  <meta name="description" content="前言：这是一篇萨里大学CVSSP组的工作，11.29日发在arxiv上，主要做的是specific categories的生成，其中涉及到了角色一致性的生成问题。  1 Abstract 提出一个新的任务：Virtual Creatures Generation 给定一组 unlabeled 图像的 target concepts（比如200中鸟），训练一个T2I模型，能够在不同的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="论文精读:DreamCreature: Crafting Photorealistic Virtual Creatures from Imagination">
+<meta property="og:url" content="https://libaolu312.github.io/2024/01/14/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-DreamCreature-Crafting-Photorealistic-Virtual-Creatures-from-Imagination/index.html">
 <meta property="og:site_name" content="李宝璐">
-<meta property="og:description" content="里面放着李宝璐的碎碎念">
+<meta property="og:description" content="前言：这是一篇萨里大学CVSSP组的工作，11.29日发在arxiv上，主要做的是specific categories的生成，其中涉及到了角色一致性的生成问题。  1 Abstract 提出一个新的任务：Virtual Creatures Generation 给定一组 unlabeled 图像的 target concepts（比如200中鸟），训练一个T2I模型，能够在不同的">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://libaolu312.github.io/2024/01/14/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-DreamCreature-Crafting-Photorealistic-Virtual-Creatures-from-Imagination/image-20240114174406373.png">
+<meta property="og:image" content="https://libaolu312.github.io/2024/01/14/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-DreamCreature-Crafting-Photorealistic-Virtual-Creatures-from-Imagination/image-20240114210633020.png">
+<meta property="og:image" content="https://libaolu312.github.io/2024/01/14/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-DreamCreature-Crafting-Photorealistic-Virtual-Creatures-from-Imagination/image-20240114211336160.png">
+<meta property="og:image" content="https://libaolu312.github.io/2024/01/14/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-DreamCreature-Crafting-Photorealistic-Virtual-Creatures-from-Imagination/image-20240114224627764.png">
+<meta property="og:image" content="https://libaolu312.github.io/2024/01/14/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-DreamCreature-Crafting-Photorealistic-Virtual-Creatures-from-Imagination/image-20240114235508549.png">
+<meta property="og:image" content="https://libaolu312.github.io/2024/01/14/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-DreamCreature-Crafting-Photorealistic-Virtual-Creatures-from-Imagination/image-20240115000033570.png">
+<meta property="og:image" content="https://libaolu312.github.io/2024/01/14/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-DreamCreature-Crafting-Photorealistic-Virtual-Creatures-from-Imagination/image-20240115000049471.png">
+<meta property="article:published_time" content="2024-01-14T09:07:44.000Z">
+<meta property="article:modified_time" content="2024-01-14T16:01:08.924Z">
 <meta property="article:author" content="李宝璐">
+<meta property="article:tag" content="技术笔记">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://libaolu312.github.io/2024/01/14/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-DreamCreature-Crafting-Photorealistic-Virtual-Creatures-from-Imagination/image-20240114174406373.png">
   
     <link rel="alternative" href="/atom.xml" title="李宝璐" type="application/atom+xml">
   
@@ -245,48 +252,231 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-
-  
-    <article id="post-Diffusion-Models-Score-based-Generative-Models背后的深度学习原理（3）-蒙特卡洛采样法和重要采样法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-论文精读-DreamCreature-Crafting-Photorealistic-Virtual-Creatures-from-Imagination" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
   
   
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2023/11/06/Diffusion-Models-Score-based-Generative-Models%E8%83%8C%E5%90%8E%E7%9A%84%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%8E%9F%E7%90%86%EF%BC%883%EF%BC%89-%E8%92%99%E7%89%B9%E5%8D%A1%E6%B4%9B%E9%87%87%E6%A0%B7%E6%B3%95%E5%92%8C%E9%87%8D%E8%A6%81%E9%87%87%E6%A0%B7%E6%B3%95/" target="_blank">Diffusion Models/Score-based Generative Models背后的深度学习原理（3）:蒙特卡洛采样法和重要采样法</a>
-  
+    <h1 class="article-title" itemprop="name">
+      论文精读:DreamCreature: Crafting Photorealistic Virtual Creatures from Imagination
     </h1>
   
 
 
   
   
-<a href="/2023/11/06/Diffusion-Models-Score-based-Generative-Models%E8%83%8C%E5%90%8E%E7%9A%84%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%8E%9F%E7%90%86%EF%BC%883%EF%BC%89-%E8%92%99%E7%89%B9%E5%8D%A1%E6%B4%9B%E9%87%87%E6%A0%B7%E6%B3%95%E5%92%8C%E9%87%8D%E8%A6%81%E9%87%87%E6%A0%B7%E6%B3%95/" class="archive-article-date">
-        <time datetime="2023-11-06T07:40:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-11-06</time>
+        
+        <span id="busuanzi_container_page_pv" style='display:none' class="archive-article-date">
+              <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+        </span>
+
+<a href="/2024/01/14/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-DreamCreature-Crafting-Photorealistic-Virtual-Creatures-from-Imagination/" class="archive-article-date">
+        <time datetime="2024-01-14T09:07:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-01-14</time>
 </a>
 
   
   
     
+<div style="margin-top:10px;">
+  <span class="post-time">
+    <span class="post-meta-item-icon">
+      <!-- fonts.scss -->
+      <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
+      <i class="icon-statistics"></i>
+      <span class="post-meta-item-text"> 字数统计:</span>
+      <span class="post-count">1.5k字</span>
+    </span>
+  </span>
+
+  <span class="post-time">
+    &nbsp; | &nbsp;
+    <span class="post-meta-item-icon">
+      <i class="icon-book icon"></i>
+      <span class="post-meta-item-text"> 阅读时长≈</span>
+      <span class="post-count">6分</span>
+    </span>
+  </span>
+</div>
+
 
   
   </header>
   
   <div class="article-entry" itemprop="articleBody">
     
-    <h1 id="diffusion-modelsscore-based-generative-models背后的深度学习原理3蒙特卡洛采样法和重要采样法">Diffusion
-Models/Score-based Generative
-Models背后的深度学习原理（3）:蒙特卡洛采样法和重要采样法</h1>
-    
-    <a class="article-more-a" href="/2023/11/06/Diffusion-Models-Score-based-Generative-Models%E8%83%8C%E5%90%8E%E7%9A%84%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%8E%9F%E7%90%86%EF%BC%883%EF%BC%89-%E8%92%99%E7%89%B9%E5%8D%A1%E6%B4%9B%E9%87%87%E6%A0%B7%E6%B3%95%E5%92%8C%E9%87%8D%E8%A6%81%E9%87%87%E6%A0%B7%E6%B3%95/#more">more >></a>
-    
-    
+    <blockquote>
+<p>前言：这是一篇萨里大学CVSSP组的工作，11.29日发在arxiv上，主要做的是specific
+categories的生成，其中涉及到了角色一致性的生成问题。</p>
+</blockquote>
+<h1 id="abstract">1 Abstract</h1>
+<p>提出一个新的任务：<strong>Virtual Creatures Generation</strong></p>
+<p>给定一组 unlabeled 图像的 target
+concepts（比如200中鸟），训练一个T2I模型，能够在不同的背景和上下文中创建新的
+concepts。</p>
+<p>针对这个任务提出一种新的方法： <strong>DreamCreature</strong></p>
+<p>用<strong>无监督</strong>方式 识别和提取
+底层<strong>sub-concepts</strong>（比如狗的耳朵），T2I模型组合学习这些sub-concepts，生成新图（一个新的鸟）。</p>
+<p>为了让这些sub-concepts一直保持不变，同时各个sub-concept之间互不影响，提出一种
+<strong>textual inversion technique</strong></p>
+<p><img src="/2024/01/14/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-DreamCreature-Crafting-Photorealistic-Virtual-Creatures-from-Imagination/image-20240114174406373.png" alt="image-20240114174406373" style="zoom:50%;"></p>
+<p>最近做 personalization 是怎么做的？给定一组描述相同 concept
+的图像，，它们<strong>在文本表示空间中学习了一个 dedicated
+token</strong>（这就是 <strong>textual
+inversion</strong>），<strong>这个特殊的token可以灵活的用来作为text
+descriptions中的代理</strong>（proxy），以生成一致的图像。它们专注于学习整体的
+concept ，并将其放置在不同的背景和环境中，但是这类方法是有局限性的：</p>
+<p><img src="/2024/01/14/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-DreamCreature-Crafting-Photorealistic-Virtual-Creatures-from-Imagination/image-20240114210633020.png" alt="image-20240114210633020" style="zoom:67%;"></p>
+<h1 id="method">2 Method</h1>
+<h3 id="总览">总览</h3>
+<p><img src="/2024/01/14/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-DreamCreature-Crafting-Photorealistic-Virtual-Creatures-from-Imagination/image-20240114211336160.png" alt="image-20240114211336160" style="zoom:67%;"></p>
+<blockquote>
+<p><strong>左图</strong>：在语义层次结构中发现sub-concepts涉及<strong>将每个图像划分为不同部分</strong>，并在未标记的训练数据中形成<strong>语义聚类</strong>。</p>
+<p><strong>右图</strong>：这些簇被组织成一个<strong>词典</strong>，并且它们的semantic
+embeddings是通过textual inversion方法学习的。例如，像“a photo of a
+[Head,42] [Wing,87]...”这样的text
+description指导着<strong>通过重建相关图像来优化相应的text
+embedding</strong>。为了<strong>促进学习概念之间的解耦</strong>，<strong>最小化</strong>了一个特别设计的<strong>attention损失</strong>，表示为<span class="math inline">\(\mathcal{L}_{attn}\)</span>。</p>
+</blockquote>
+<p>每个 target concept 都由一组 sub-concepts 组成，与训练图像 <span class="math inline">\(\left\{ x \right\}\)</span>
+配对，这个语义层次结构随后被用作微调T2I模型，表示为 <span class="math inline">\(\left\{ \epsilon _{\theta}\text{，}\tau
+_{\theta}\text{，}\mathcal{E}\text{，}\mathcal{D} \right\}\)</span></p>
+<blockquote>
+<p><span class="math inline">\(\epsilon _{\theta}\)</span> ：diffusion
+denoiser</p>
+<p><span class="math inline">\(\tau _{\theta}\)</span> ：text
+encoder</p>
+<p><span class="math inline">\(\mathcal{E} / \mathcal{D}\)</span> ：auto
+encoder</p>
+</blockquote>
+<p>采用 textual inversion 技术，在 word embedding 空间中学习每个
+sub-concept 的一组 pseudo-words <span class="math inline">\(p^*\)</span>
+（伪词） <span class="math display">\[
+\mathcal{L}_{ldm}=\mathbb{E}_{z,t,p,\epsilon}\left[ \lVert \epsilon
+-\epsilon _{\theta}\left( z_t,t,\tau _{\theta}\left( y_p \right) \right)
+\rVert _{2}^{2} \right]
+\]</span> <span class="math display">\[
+p^*=\underset{p}{arg\min}\ \mathcal{L}_{ldm}
+\]</span></p>
+<blockquote>
+<p><span class="math inline">\(\epsilon ~\mathcal{N}\left( 0,1
+\right)\)</span>：表示伪缩放的噪音</p>
+<p><span class="math inline">\(t\)</span>：time step</p>
+<p><span class="math inline">\(z=\mathcal{E}(x)\)</span>：图像的 latent
+表示</p>
+<p><span class="math inline">\(z_t\)</span>：时间 <span class="math inline">\(t\)</span> 的 latent noise</p>
+<p><span class="math inline">\(y_p\)</span>：包含 text tokens <span class="math inline">\(p\)</span> 的 text condition</p>
+<p><span class="math inline">\(\mathcal{L}_{ldm}\)</span>：是用于重构
+sub-concept 的标准扩散损失</p>
+</blockquote>
+<p>由于每个 target concept 由一组 sub-concepts
+组成，因此通过重构相关的sub-concepts集来实现其重构。</p>
+<h3 id="sub-concepts-discovery">2.1 Sub-concepts Discovery</h3>
+<p>这部分主要说的是个标注方法，简要说说，首先用DINO提取图像特征，得到特征图<span class="math inline">\(F\)</span>，然后进行三级分层聚类：</p>
+<ul>
+<li>第一层：使用k-means算法在特征图 <span class="math inline">\(F\)</span> 上应用两个簇，以获得前景和背景 <span class="math inline">\(B\)</span></li>
+<li>第二层：k-means进一步应用于前景，以获得每个代表一个 sub-concept 的
+<span class="math inline">\(M\)</span> 个簇，例如鸟类的头部</li>
+<li>第三层：进一步将每个 <span class="math inline">\(M\)</span>
+簇以及背景簇 <span class="math inline">\(B\)</span> 分成 <span class="math inline">\(K\)</span>
+个子类。每个子类指的是进一步细分的含义，比如特定鸟类的头部或特定的背景风格</li>
+</ul>
+<p>经过这步之后，<strong>图像的每个区域被标记为相应的簇的索引</strong>，这个
+description 将被用作模型训练中的 text prompts（例如：“a photo of a
+[p]”，<span class="math inline">\(p=\left( 0,k_0 \right) ,\left( 1,k_1
+\right) ,\left( 2,k_2 \right) ,...,\left( M,k_M \right)\)</span> ）</p>
+<h3 id="sub-concepts-projection">2.2 Sub-concepts Projection</h3>
+<p>这个任务需要掌握更多的 word tokens，这些 word tokens 来自 concepts 和
+sub-concepts，但是这些 concepts 和 sub-concepts
+带有固有的缺陷（比如部分重叠和过度切割）。</p>
+<p>为了增强学习过程，作者这里用了<strong>两层 MLP+ReLU
+激活函数的神经网络 <span class="math inline">\(f\)</span></strong>
+。</p>
+<h3 id="model-training">2.3 Model Training</h3>
+<p>之前的工作已经证明，不仅要学习伪词，<strong>而且要 fine-tuning
+T2I模型</strong>，能够更好的实现 target concept 重建。但是fine-tuning
+T2I模型要付出巨大的训练成本，因此，将 LoRA 应用于 cross-attention block
+，以实现高效的训练。然后最小化扩散损失 <span class="math inline">\(\mathcal{L}_{ldm}\)</span> ，以学习伪词和 LoRA
+adapters。</p>
+<p>在仅使用 <span class="math inline">\(\mathcal{L}_{ldm}\)</span>
+训练时，<strong>部分之间会发生纠缠</strong>，这一点可以从 denoiser <span class="math inline">\(\epsilon _{\theta}\)</span> 的 cross-attention map
+中可以看出：</p>
+<p><img src="/2024/01/14/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-DreamCreature-Crafting-Photorealistic-Virtual-Creatures-from-Imagination/image-20240114224627764.png" alt="image-20240114224627764" style="zoom:67%;"></p>
+<p><strong>这种纠缠是由于 sub-concepts
+之间的相关性而产生的</strong>（比如鸟头和鸟身总是编码配对，以表示同一种物种）</p>
+<p>为了解决这个问题，引入一个基于熵的 attention 损失作正则化： <span class="math display">\[
+\mathcal{L}_{attn}=\mathbb{E}_{z,t,m}\left[ -\left( S_m\log
+\hat{A}_m+\left( 1-S_m \right) \log \left( 1-\hat{A}_m \right) \right)
+\right]
+\]</span> <span class="math display">\[
+\bar{A}_m=\frac{1}{L}\sum_l^L{A_{l,m},\ \ \ \ \
+\hat{A}_{m,i,j}=\frac{\bar{A}_{m,i,j}}{\sum_k{\bar{A}_{k,i,j}}}}
+\]</span></p>
+<blockquote>
+<p><span class="math inline">\(A\in \left[ 0,1 \right] ^{M×HW}\)</span>
+：第 <span class="math inline">\(m\)</span> 个 sub-concepts 和 latent
+noise <span class="math inline">\(z_t\)</span> 之间的 cross-attention
+map</p>
+<p><span class="math inline">\(L\)</span>：选择的 attention map
+的数量</p>
+<p><span class="math inline">\(\hat{A}\in \left[ 0,1 \right]
+^{M×HW}\)</span>：所有 sub-concepts 的平均和标准化的 cross-attention
+map</p>
+<p><span class="math inline">\(S_m\in \left[ 0,1 \right]
+^{M×HW}\)</span>：用作只是 <span class="math inline">\(m\)</span>
+部分位置的 mask</p>
+<p>如果图像中不存在 sub-concepts （例如被遮挡住了），那么 <span class="math inline">\(S_m\)</span> 和 <span class="math inline">\(\hat{A}_m\)</span> 都设置为 0</p>
+</blockquote>
+<p>总loss： <span class="math display">\[
+\mathcal{L}_{total}=\mathcal{L}_{ldm}+\lambda
+_{attn}\mathcal{L}_{attn},\ \ \ \ \lambda _{attn}=0.01
+\]</span> 这样的 attention loss 可以直观的<strong>确保 sub-concepts
+在特定位置只出现一次</strong>，在去噪过程中更容易于其他 sub-concepts
+分离，为特定位置生成 sub-concepts 时，扩散模型应该只关注该
+sub-concept，而不是其他无关的
+sub-concepts，实验中已经验证了这种设计的有效性：</p>
+<p><img src="/2024/01/14/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-DreamCreature-Crafting-Photorealistic-Virtual-Creatures-from-Imagination/image-20240114235508549.png" alt="image-20240114235508549" style="zoom:67%;"></p>
+<h1 id="experiments">3 Experiments</h1>
+<h3 id="datasets">Datasets</h3>
+<p>作者就试了两个种类，一个鸟一个狗，是不是人脸的效果不好啊</p>
+<p>CUB-200-2011 （birds 5994 training images）</p>
+<p>Stanford Dogs （dogs 12000 training images）</p>
+<h3 id="卡">卡</h3>
+<p>单卡 3090 时间没说 应该不长</p>
+<p>最后看看效果：</p>
+<figure>
+<img src="/2024/01/14/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-DreamCreature-Crafting-Photorealistic-Virtual-Creatures-from-Imagination/image-20240115000033570.png" alt="image-20240115000033570">
+<figcaption aria-hidden="true">image-20240115000033570</figcaption>
+</figure>
+<figure>
+<img src="/2024/01/14/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-DreamCreature-Crafting-Photorealistic-Virtual-Creatures-from-Imagination/image-20240115000049471.png" alt="image-20240115000049471">
+<figcaption aria-hidden="true">image-20240115000049471</figcaption>
+</figure>
 
     
 
+    
+
+    
+    <div class="declare"> 
+      <ul class="post-copyright">
+        <li>
+          <strong>本文作者：</strong>
+          李宝璐
+        </li>
+        <li>
+          <strong>本文链接：</strong>
+          <a href="https://libaolu312.github.io/2024/01/14/论文精读-DreamCreature-Crafting-Photorealistic-Virtual-Creatures-from-Imagination/" title="论文精读:DreamCreature: Crafting Photorealistic Virtual Creatures from Imagination" target="_blank">https://libaolu312.github.io/2024/01/14/论文精读-DreamCreature-Crafting-Photorealistic-Virtual-Creatures-from-Imagination/</a>
+        </li>
+        
+        <li>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，均采用 <a href="https://github.com/JoeyBling/hexo-theme-yilia-plus/blob/master/LICENSE" rel="external nofollow" target="_blank">MIT</a> 许可协议。转载请注明出处！
+        </li>
+        
+      </ul>
+    </div>
     
 
   </div>
@@ -310,7 +500,7 @@ Models背后的深度学习原理（3）:蒙特卡洛采样法和重要采样法
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/扩散模型//" class="article-tag-list-link color5">扩散模型</a>
+        			<a href="/categories/AIGC//" class="article-tag-list-link color5">AIGC</a>
         		</li>
       		
 		</ul>
@@ -318,16 +508,76 @@ Models背后的深度学习原理（3）:蒙特卡洛采样法和重要采样法
 
 
     
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2023/11/06/Diffusion-Models-Score-based-Generative-Models%E8%83%8C%E5%90%8E%E7%9A%84%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%8E%9F%E7%90%86%EF%BC%883%EF%BC%89-%E8%92%99%E7%89%B9%E5%8D%A1%E6%B4%9B%E9%87%87%E6%A0%B7%E6%B3%95%E5%92%8C%E9%87%8D%E8%A6%81%E9%87%87%E6%A0%B7%E6%B3%95/">展开全文 >></a>
-    </p>
+
     
+    
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <!-- <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a> -->
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://libaolu312.github.io/2024/01/14/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-DreamCreature-Crafting-Photorealistic-Virtual-Creatures-from-Imagination/" alt="微信分享二维码"> -->
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
 
     
     <div class="clearfix"></div>
   </div>
   </div>
 </article>
+
+
+<nav id="article-nav">
+  
+  
+    <a href="/2024/01/01/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-Customizing-Motion-in-Text-to-Video-Diffusion-Models/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">论文精读:Customizing Motion in Text-to-Video Diffusion Models</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -342,926 +592,64 @@ Models背后的深度学习原理（3）:蒙特卡洛采样法和重要采样法
         </div>
         
         
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Diffusion-Models-Score-based-Generative-Models背后的深度学习原理（2）-基于能量模型和受限玻尔兹曼机" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2023/11/06/Diffusion-Models-Score-based-Generative-Models%E8%83%8C%E5%90%8E%E7%9A%84%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%8E%9F%E7%90%86%EF%BC%882%EF%BC%89-%E5%9F%BA%E4%BA%8E%E8%83%BD%E9%87%8F%E6%A8%A1%E5%9E%8B%E5%92%8C%E5%8F%97%E9%99%90%E7%8E%BB%E5%B0%94%E5%85%B9%E6%9B%BC%E6%9C%BA/" target="_blank">Diffusion Models/Score-based Generative Models背后的深度学习原理（2）:基于能量模型和受限玻尔兹曼机</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2023/11/06/Diffusion-Models-Score-based-Generative-Models%E8%83%8C%E5%90%8E%E7%9A%84%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%8E%9F%E7%90%86%EF%BC%882%EF%BC%89-%E5%9F%BA%E4%BA%8E%E8%83%BD%E9%87%8F%E6%A8%A1%E5%9E%8B%E5%92%8C%E5%8F%97%E9%99%90%E7%8E%BB%E5%B0%94%E5%85%B9%E6%9B%BC%E6%9C%BA/" class="archive-article-date">
-        <time datetime="2023-11-06T07:40:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-11-06</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <h1 id="diffusion-modelsscore-based-generative-models背后的深度学习原理2基于能量模型和受限玻尔兹曼机">Diffusion
-Models/Score-based Generative
-Models背后的深度学习原理（2）:基于能量模型和受限玻尔兹曼机</h1>
-    
-    <a class="article-more-a" href="/2023/11/06/Diffusion-Models-Score-based-Generative-Models%E8%83%8C%E5%90%8E%E7%9A%84%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%8E%9F%E7%90%86%EF%BC%882%EF%BC%89-%E5%9F%BA%E4%BA%8E%E8%83%BD%E9%87%8F%E6%A8%A1%E5%9E%8B%E5%92%8C%E5%8F%97%E9%99%90%E7%8E%BB%E5%B0%94%E5%85%B9%E6%9B%BC%E6%9C%BA/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/扩散模型//" class="article-tag-list-link color5">扩散模型</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2023/11/06/Diffusion-Models-Score-based-Generative-Models%E8%83%8C%E5%90%8E%E7%9A%84%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%8E%9F%E7%90%86%EF%BC%882%EF%BC%89-%E5%9F%BA%E4%BA%8E%E8%83%BD%E9%87%8F%E6%A8%A1%E5%9E%8B%E5%92%8C%E5%8F%97%E9%99%90%E7%8E%BB%E5%B0%94%E5%85%B9%E6%9B%BC%E6%9C%BA/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#abstract"><span class="toc-number">1.</span> <span class="toc-text">1 Abstract</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#method"><span class="toc-number">2.</span> <span class="toc-text">2 Method</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E8%A7%88"><span class="toc-number">2.0.1.</span> <span class="toc-text">总览</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sub-concepts-discovery"><span class="toc-number">2.0.2.</span> <span class="toc-text">2.1 Sub-concepts Discovery</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sub-concepts-projection"><span class="toc-number">2.0.3.</span> <span class="toc-text">2.2 Sub-concepts Projection</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#model-training"><span class="toc-number">2.0.4.</span> <span class="toc-text">2.3 Model Training</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#experiments"><span class="toc-number">3.</span> <span class="toc-text">3 Experiments</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#datasets"><span class="toc-number">3.0.1.</span> <span class="toc-text">Datasets</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%A1"><span class="toc-number">3.0.2.</span> <span class="toc-text">卡</span></a></li></ol></li></ol></li></ol>
+                    </div>
+                </span>
             </div>
         </div>
         
-        
     </div>
 </aside>
 
 
 
 
-  
-    <article id="post-Diffusion-Models-Score-based-Generative-Models背后的深度学习原理（1）-配分函数" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2023/11/06/Diffusion-Models-Score-based-Generative-Models%E8%83%8C%E5%90%8E%E7%9A%84%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%8E%9F%E7%90%86%EF%BC%881%EF%BC%89-%E9%85%8D%E5%88%86%E5%87%BD%E6%95%B0/" target="_blank">Diffusion Models/Score-based Generative Models背后的深度学习原理（1）:配分函数</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2023/11/06/Diffusion-Models-Score-based-Generative-Models%E8%83%8C%E5%90%8E%E7%9A%84%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%8E%9F%E7%90%86%EF%BC%881%EF%BC%89-%E9%85%8D%E5%88%86%E5%87%BD%E6%95%B0/" class="archive-article-date">
-        <time datetime="2023-11-06T07:40:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-11-06</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <h1 id="diffusion-modelsscore-based-generative-models背后的深度学习原理1配分函数">Diffusion
-Models/Score-based Generative
-Models背后的深度学习原理（1）:配分函数</h1>
-    
-    <a class="article-more-a" href="/2023/11/06/Diffusion-Models-Score-based-Generative-Models%E8%83%8C%E5%90%8E%E7%9A%84%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%8E%9F%E7%90%86%EF%BC%881%EF%BC%89-%E9%85%8D%E5%88%86%E5%87%BD%E6%95%B0/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/扩散模型//" class="article-tag-list-link color5">扩散模型</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2023/11/06/Diffusion-Models-Score-based-Generative-Models%E8%83%8C%E5%90%8E%E7%9A%84%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%8E%9F%E7%90%86%EF%BC%881%EF%BC%89-%E9%85%8D%E5%88%86%E5%87%BD%E6%95%B0/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-在windows11下安装ubuntu子系统并配置深度学习环境" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2023/10/25/%E5%9C%A8windows11%E4%B8%8B%E5%AE%89%E8%A3%85ubuntu%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%B9%B6%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/" target="_blank">在windows11下安装ubuntu子系统并配置深度学习环境</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2023/10/25/%E5%9C%A8windows11%E4%B8%8B%E5%AE%89%E8%A3%85ubuntu%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%B9%B6%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/" class="archive-article-date">
-        <time datetime="2023-10-25T04:21:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-10-25</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <h1 id="事件起因"><a href="#事件起因" class="headerlink" title="事件起因"></a>事件起因</h1><p>之前我在跑深度学习的实验时要么用windows环境跑，要么用租的服务器的ubuntu环境跑，windows由于先天条件，运行时总是报一些稀奇古怪的错误，而且现在大多数的开源代码也都是在linux下跑的，代码调来调去的很麻烦，租的服务器每次配置环境也有些不便，而且现在服务器一天比一天贵，我本机是一张4070的卡，寻思着不用也是浪费，索性就研究一下如何在windows的大环境下配一个linux的子系统。</p>
-<p>通常来说在Linux系统下进行深度学习训练的效率要高于Windows系统，大家通常也是使用Linux常见的发行版本Ubuntu。但是Ubuntu对于日常使用不是很友好，于是就有了折中的方案，使用Windows Subsystem Linux (WSL)。</p>
-<p>为什么不用VMware呢？很简单，VMware虚拟机中的GPU是虚拟出来的，并不能真实调用本机的GPU，所以并无卵用。</p>
-    
-    <a class="article-more-a" href="/2023/10/25/%E5%9C%A8windows11%E4%B8%8B%E5%AE%89%E8%A3%85ubuntu%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%B9%B6%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/环境配置//" class="article-tag-list-link color5">环境配置</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2023/10/25/%E5%9C%A8windows11%E4%B8%8B%E5%AE%89%E8%A3%85ubuntu%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%B9%B6%E9%85%8D%E7%BD%AE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%8E%AF%E5%A2%83/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Any-to-Any-Generation-via-Composable-Diffusion" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2023/10/20/Any-to-Any-Generation-via-Composable-Diffusion/" target="_blank">Any-to-Any Generation via Composable Diffusion</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2023/10/20/Any-to-Any-Generation-via-Composable-Diffusion/" class="archive-article-date">
-        <time datetime="2023-10-20T11:33:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-10-20</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p><img src="/2023/10/20/Any-to-Any-Generation-via-Composable-Diffusion/image-20231020193618805.png" alt="image-20231020193618805"></p>
-<p>​		这篇论文主要介绍了一种名为<strong>Composable Diffusion</strong>的算法，用于生成任意样式的图像。该算法使用一组可组合的扩散操作，从共享的潜在空间中生成图像。这些操作允许使用多个扩散过程来生成图像，以便在不同的分辨率和模式下对潜在空间进行采样。</p>
-<p>​		该算法的关键提出是可组合性，它允许用户在不同的操作序列之间切换，以探索不同的样式和图像。该算法还提供了一种新的形式化分析技术，可以计算操作序列之间的互信息。这种技术提供了一种量化方法，以测量不同操作序列之间的相似性和差异性，并帮助用户理解操作的效果。在实验中，Composable Diffusion比其他流行的生成模型更灵活和可定制，可以生成高质量、多样性和艺术性的图像。</p>
-
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/论文精读//" class="article-tag-list-link color5">论文精读</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2023/10/20/Any-to-Any-Generation-via-Composable-Diffusion/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-视觉扩散模型综述" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2023/10/17/%E8%A7%86%E8%A7%89%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E7%BB%BC%E8%BF%B0/" target="_blank">视觉扩散模型综述</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2023/10/17/%E8%A7%86%E8%A7%89%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E7%BB%BC%E8%BF%B0/" class="archive-article-date">
-        <time datetime="2023-10-17T13:59:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-10-17</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p><a target="_blank" rel="noopener" href="https://github.com/ChenHsing/Awesome-Video-Diffusion-Models">https://github.com/ChenHsing/Awesome-Video-Diffusion-Models</a></p>
-<p>​		最近一波人工智能生成内容(AIGC)在计算机视觉领域取得了巨大的成功，而扩散模型在其中发挥了关键作用。由于其令人印象深刻的生成能力，扩散模型正逐渐取代基于GANs和自回归transformer的方法，不仅在图像生成和编辑方面，而且在视频相关研究领域都表现出了卓越的性能。</p>
-<h4 id="当前不足"><a href="#当前不足" class="headerlink" title="当前不足"></a>当前不足</h4><p>现有的研究主要集中在图像生成环境中的扩散模型（主要做image generation）</p>
-<p>provide only a coarse coverage of the video diffusion model or place greater emphasis on image model</p>
-    
-    <a class="article-more-a" href="/2023/10/17/%E8%A7%86%E8%A7%89%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E7%BB%BC%E8%BF%B0/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/论文精读//" class="article-tag-list-link color5">论文精读</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2023/10/17/%E8%A7%86%E8%A7%89%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B%E7%BB%BC%E8%BF%B0/">展开全文 >></a>
-    </p>
-    
 
+  <section id="comments" class="comments">
+      <style>
+        .comments{margin:30px;padding:10px;background:#fff}
+        @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+      </style>
+      
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+    var gitalk = new Gitalk({
+      clientID: '42328a99496b32b78cfb',
+      clientSecret: '8ff71391255b5283f624f252a3ca53d7b9b96f4b',
+      repo: 'libaolu312.github.io',
+      owner: 'libaolu312',
+      admin: 'libaolu312',
+     //id ��Ϊ�˱�֤issue��Ψһ�ԣ�id���Ȳ��ܴ���50�������������ʹ��·������id����һ����ȡ����ò�Ҫ�޸Ĵ������������ܵ������۶�ʧ  
+      id: location.href.slice(location.href.length-25),
+      distractionFreeMode: 'true',
+      labels: 'Comment'.split(',').filter(l => l) ,
+    })
+    gitalk.render('gitalk-container')
+    </script>
     
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-关键路径及相关知识" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2023/09/26/%E5%85%B3%E9%94%AE%E8%B7%AF%E5%BE%84%E5%8F%8A%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/" target="_blank">关键路径及相关知识</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2023/09/26/%E5%85%B3%E9%94%AE%E8%B7%AF%E5%BE%84%E5%8F%8A%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/" class="archive-article-date">
-        <time datetime="2023-09-26T11:30:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-09-26</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p><strong>关键路径为起点到终点权值加起来最大的路径</strong></p>
-<p><img src="/2023/09/26/%E5%85%B3%E9%94%AE%E8%B7%AF%E5%BE%84%E5%8F%8A%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/63aa74726a00b83b9c02e677a0377b3.jpg" alt="63aa74726a00b83b9c02e677a0377b3"></p>
-    
-    <a class="article-more-a" href="/2023/09/26/%E5%85%B3%E9%94%AE%E8%B7%AF%E5%BE%84%E5%8F%8A%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/课程知识//" class="article-tag-list-link color5">课程知识</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2023/09/26/%E5%85%B3%E9%94%AE%E8%B7%AF%E5%BE%84%E5%8F%8A%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Python-numpy中切片-1-1-分别表示什么" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2023/07/19/Python-numpy%E4%B8%AD%E5%88%87%E7%89%87-1-1-%E5%88%86%E5%88%AB%E8%A1%A8%E7%A4%BA%E4%BB%80%E4%B9%88/" target="_blank">Python numpy中切片 [:, : -1] [:, [-1] ] 分别表示什么</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2023/07/19/Python-numpy%E4%B8%AD%E5%88%87%E7%89%87-1-1-%E5%88%86%E5%88%AB%E8%A1%A8%E7%A4%BA%E4%BB%80%E4%B9%88/" class="archive-article-date">
-        <time datetime="2023-07-19T09:09:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-07-19</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <h1 id="Python-numpy中切片-1-1-分别表示什么"><a href="#Python-numpy中切片-1-1-分别表示什么" class="headerlink" title="Python numpy中切片 [:, : -1] [:, [-1] ] 分别表示什么"></a>Python numpy中切片 [:, : -1] [:, [-1] ] 分别表示什么</h1><p>最近在做数据集处理的时候，发现一个很有意思的东西，其实很早的发现了，只是现在才想起来总结。</p>
-<p>我们在做数据切片的时候，都知道[  起点   :  终点  :  步长  ]</p>
-<p>包括一些常规的正负的操作，在这里我就不多说了，想要了解可以看一下这篇博客：<a target="_blank" rel="noopener" href="https://blog.csdn.net/liuluTL/article/details/104951788?ops_request_misc=&request_id=&biz_id=102&utm_term=%5B:,%20:-1%5D%E5%88%87%E7%89%87&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduweb~default-0-104951788.142%5Ev89%5Econtrol_2,239%5Ev2%5Einsert_chatgpt&spm=1018.2226.3001.4187">彻底搞懂切片</a></p>
-<p>本次我就简单分享几个有意思的特殊切片：</p>
-<p><strong>[ : , : -1]</strong></p>
-<p><strong>[ : , [-1]]</strong></p>
-<p><strong>[ : , -1]</strong></p>
-    
-    <a class="article-more-a" href="/2023/07/19/Python-numpy%E4%B8%AD%E5%88%87%E7%89%87-1-1-%E5%88%86%E5%88%AB%E8%A1%A8%E7%A4%BA%E4%BB%80%E4%B9%88/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/课程知识//" class="article-tag-list-link color5">课程知识</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
     
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2023/07/19/Python-numpy%E4%B8%AD%E5%88%87%E7%89%87-1-1-%E5%88%86%E5%88%AB%E8%A1%A8%E7%A4%BA%E4%BB%80%E4%B9%88/">展开全文 >></a>
-    </p>
     
+  </section>
 
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-关于requirements-txt的那点事" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2023/07/01/%E5%85%B3%E4%BA%8Erequirements-txt%E7%9A%84%E9%82%A3%E7%82%B9%E4%BA%8B/" target="_blank">关于requirements.txt的那点事</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2023/07/01/%E5%85%B3%E4%BA%8Erequirements-txt%E7%9A%84%E9%82%A3%E7%82%B9%E4%BA%8B/" class="archive-article-date">
-        <time datetime="2023-07-01T06:21:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-07-01</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <h1 id="关于requirements-txt的那点事"><a href="#关于requirements-txt的那点事" class="headerlink" title="关于requirements.txt的那点事"></a>关于requirements.txt的那点事</h1><h2 id="一、requirements-txt文件的作用"><a href="#一、requirements-txt文件的作用" class="headerlink" title="一、requirements.txt文件的作用"></a>一、requirements.txt文件的作用</h2><p>python的项目在另一个环境上重新构建项目时，往往没有全的所需要的运行环境依赖包，但是我们缺什么包也不太清楚，要具体看程序所写，这样就很麻烦，所以有了requirements.txt文件。</p>
-<p>requirements.txt文件包括了这个项目的所有依赖</p>
-    
-    <a class="article-more-a" href="/2023/07/01/%E5%85%B3%E4%BA%8Erequirements-txt%E7%9A%84%E9%82%A3%E7%82%B9%E4%BA%8B/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/课程知识//" class="article-tag-list-link color5">课程知识</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2023/07/01/%E5%85%B3%E4%BA%8Erequirements-txt%E7%9A%84%E9%82%A3%E7%82%B9%E4%BA%8B/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-重生之我是机试coding怪" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2023/06/26/%E9%87%8D%E7%94%9F%E4%B9%8B%E6%88%91%E6%98%AF%E6%9C%BA%E8%AF%95coding%E6%80%AA/" target="_blank">重生之我是机试coding怪</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2023/06/26/%E9%87%8D%E7%94%9F%E4%B9%8B%E6%88%91%E6%98%AF%E6%9C%BA%E8%AF%95coding%E6%80%AA/" class="archive-article-date">
-        <time datetime="2023-06-26T05:03:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-06-26</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <h1 id="重生之我是机试coding怪"><a href="#重生之我是机试coding怪" class="headerlink" title="重生之我是机试coding怪"></a>重生之我是机试coding怪</h1><p>免责申明：我不是coding很厉害的人，我用的方法也是最笨的方法，但是每道题都可以AC，可以作为参考，网上还有很多比我复杂度更低思路更清晰的方法。</p>
-    
-    <a class="article-more-a" href="/2023/06/26/%E9%87%8D%E7%94%9F%E4%B9%8B%E6%88%91%E6%98%AF%E6%9C%BA%E8%AF%95coding%E6%80%AA/#more">more >></a>
-    
-    
-
-    
-
-    
 
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术笔记</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/机试指南//" class="article-tag-list-link color5">机试指南</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
 
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2023/06/26/%E9%87%8D%E7%94%9F%E4%B9%8B%E6%88%91%E6%98%AF%E6%9C%BA%E8%AF%95coding%E6%80%AA/">展开全文 >></a>
-    </p>
-    
 
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
 
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
 
 
 
 
-  
-  
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/3/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/5/">Next &amp;raquo;</a>
-    </nav>
-  
 
 
           </div>
@@ -1301,8 +689,8 @@ Models背后的深度学习原理（1）:配分函数</h1>
     <script>
 	var yiliaConfig = {
 		mathjax: true,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
