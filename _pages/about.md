@@ -45,7 +45,7 @@ Please feel free to contact me if you are interested in my research or potential
 # 📝 Publications 
 
 
-<div class='paper-box'><div class='paper-box-image'><div><div class="badge">arxiv</div><img src='images/500x300.png' alt="sym" width="100%"></div></div>
+<div class='paper-box'><div class='paper-box-image'><div><div class="badge">arxiv</div><img src='images/VFXMaster.gif' alt="sym" width="100%"></div></div>
 <div class='paper-box-text' markdown="1">
 
 [VFXMaster: Unlocking Dynamic Visual Effect Generation via In-Context Learning](https://libaolu312.github.io/project/VFXMaster/)
@@ -54,8 +54,8 @@ Please feel free to contact me if you are interested in my research or potential
 
 <!-- [**Project**](https://scholar.google.com/citations?view_op=view_citation&hl=zh-CN&user=DhtAFkwAAAAJ&citation_for_view=DhtAFkwAAAAJ:ALROH1vI_8AC) <strong><span class='show_paper_citations' data='DhtAFkwAAAAJ:ALROH1vI_8AC'></span></strong>
 - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet.  -->
-<!-- [[**Project Page**](https://madaoer.github.io/projects/physically_plausible_video_generation/)]
-[[**机器之心🔥**](https://mp.weixin.qq.com/s/6XddT1q0_yFO0hhQvmEwAQ)]
+[[**Project Page**](https://libaolu312.github.io/VFXMaster/)]
+<!-- [[**机器之心🔥**](https://mp.weixin.qq.com/s/6XddT1q0_yFO0hhQvmEwAQ)]
 [[**Paper**](https://arxiv.org/pdf/2503.23368)]
 [[**Code**](https://github.com/Madaoer/VLIPP)] -->
 <!-- - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet.  -->
