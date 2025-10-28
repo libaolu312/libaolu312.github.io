@@ -44,6 +44,26 @@ Please feel free to contact me if you are interested in my research or potential
 
 # 📝 Publications 
 
+
+<div class='paper-box'><div class='paper-box-image'><div><div class="badge">arxiv</div><img src='images/500x300.png' alt="sym" width="100%"></div></div>
+<div class='paper-box-text' markdown="1">
+
+[VFXMaster: Unlocking Dynamic Visual Effect Generation via In-Context Learning](https://libaolu312.github.io/project/VFXMaster/)
+
+**Baolu Li**<sup>*</sup>, Yiming Zhang<sup>*</sup>, Qinghe Wang<sup>*†</sup>, Liqian Ma<sup>✉</sup>, Xiaoyu Shi, Xintao Wang, Pengfei Wan, Zhenfei Yin, Yunzhi Zhuge, Huchuan Lu, Xu jia<sup>✉</sup>.
+
+<!-- [**Project**](https://scholar.google.com/citations?view_op=view_citation&hl=zh-CN&user=DhtAFkwAAAAJ&citation_for_view=DhtAFkwAAAAJ:ALROH1vI_8AC) <strong><span class='show_paper_citations' data='DhtAFkwAAAAJ:ALROH1vI_8AC'></span></strong>
+- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet.  -->
+<!-- [[**Project Page**](https://madaoer.github.io/projects/physically_plausible_video_generation/)]
+[[**机器之心🔥**](https://mp.weixin.qq.com/s/6XddT1q0_yFO0hhQvmEwAQ)]
+[[**Paper**](https://arxiv.org/pdf/2503.23368)]
+[[**Code**](https://github.com/Madaoer/VLIPP)] -->
+<!-- - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet.  -->
+</div>
+</div>
+
+
+
 <div class='paper-box'><div class='paper-box-image'><div><div class="badge">ICCV 2025(CCF A)</div><img src='images/vlipp.gif' alt="sym" width="100%"></div></div>
 <div class='paper-box-text' markdown="1">
 
