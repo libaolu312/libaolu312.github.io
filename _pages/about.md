@@ -55,6 +55,7 @@ Please feel free to contact me if you are interested in my research or potential
 <!-- [**Project**](https://scholar.google.com/citations?view_op=view_citation&hl=zh-CN&user=DhtAFkwAAAAJ&citation_for_view=DhtAFkwAAAAJ:ALROH1vI_8AC) <strong><span class='show_paper_citations' data='DhtAFkwAAAAJ:ALROH1vI_8AC'></span></strong>
 - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet.  -->
 [[**Project Page**](https://libaolu312.github.io/VFXMaster/)]
+[[**Paper**](https://arxiv.org/abs/2510.25772)]
 <!-- [[**机器之心🔥**](https://mp.weixin.qq.com/s/6XddT1q0_yFO0hhQvmEwAQ)]
 [[**Paper**](https://arxiv.org/pdf/2503.23368)]
 [[**Code**](https://github.com/Madaoer/VLIPP)] -->
