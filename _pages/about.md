@@ -27,8 +27,6 @@ Please feel free to contact me if you are interested in my research or potential
 
 
 
-
-
 # 🔥 News
 - *2025.10*: Release paper "[VFXMaster: Unlocking Dynamic Visual Effect Generation via In-Context Learning](https://libaolu312.github.io/VFXMaster/)".
 - *2025.07*: &nbsp;🎉🎉 One Paper is accepted by ICCV 2025. 
@@ -43,8 +41,7 @@ Please feel free to contact me if you are interested in my research or potential
 
 
 
-# 📝 Publications 
-
+# 📝 Publications
 
 <div class='paper-box'><div class='paper-box-image'><div><div class="badge">arxiv</div><img src='images/VFXMaster.gif' alt="sym" width="100%"></div></div>
 <div class='paper-box-text' markdown="1">
