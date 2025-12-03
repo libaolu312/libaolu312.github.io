@@ -46,9 +46,10 @@ Please feel free to contact me if you are interested in my research or potential
 <div class='paper-box'><div class='paper-box-image'><div><div class="badge">arxiv</div><img src='images/VFXMaster.gif' alt="sym" width="100%"></div></div>
 <div class='paper-box-text' markdown="1">
 
-[VFXMaster: Unlocking Dynamic Visual Effect Generation via In-Context Learning](https://libaolu312.github.io/project/VFXMaster/)
+[VFXMaster: Unlocking Dynamic Visual Effect Generation via In-Context Learning](https://libaolu312.github.io/VFXMaster/)
 
 **Baolu Li**<sup>*</sup>, Yiming Zhang<sup>*</sup>, Qinghe Wang<sup>*†</sup>, Liqian Ma<sup>✉</sup>, Xiaoyu Shi, Xintao Wang, Pengfei Wan, Zhenfei Yin, Yunzhi Zhuge, Huchuan Lu, Xu jia<sup>✉</sup>.
+<sup>*</sup>Equal Contribution    <sup>†</sup>Project Leader    <sup>✉</sup>Corresponding Author
 
 <!-- [**Project**](https://scholar.google.com/citations?view_op=view_citation&hl=zh-CN&user=DhtAFkwAAAAJ&citation_for_view=DhtAFkwAAAAJ:ALROH1vI_8AC) <strong><span class='show_paper_citations' data='DhtAFkwAAAAJ:ALROH1vI_8AC'></span></strong>
 - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet.  -->
@@ -63,12 +64,34 @@ Please feel free to contact me if you are interested in my research or potential
 
 
 
+<div class='paper-box'><div class='paper-box-image'><div><div class="badge">arxiv</div><img src='images/multishot.gif' alt="sym" width="100%"></div></div>
+<div class='paper-box-text' markdown="1">
+
+[MultiShotMaster: A Controllable Multi-Shot Video Generation Framework](https://qinghew.github.io/MultiShotMaster/)
+
+Qinghe Wang, Xiaoyu Shi<sup>✉</sup>, **Baolu Li**, Weikang Bian, Quande Liu, Huchuan Lu, Xintao Wang, Pengfei Wan, Kun Gai, Xu jia<sup>✉</sup>.
+<sup>✉</sup>Corresponding Author
+
+<!-- [**Project**](https://scholar.google.com/citations?view_op=view_citation&hl=zh-CN&user=DhtAFkwAAAAJ&citation_for_view=DhtAFkwAAAAJ:ALROH1vI_8AC) <strong><span class='show_paper_citations' data='DhtAFkwAAAAJ:ALROH1vI_8AC'></span></strong>
+- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet.  -->
+[[**Project Page**](https://qinghew.github.io/MultiShotMaster/)]
+[[**Paper**](https://arxiv.org/abs/2512.03041)]
+<!-- [[**机器之心🔥**](https://mp.weixin.qq.com/s/6XddT1q0_yFO0hhQvmEwAQ)]
+[[**Paper**](https://arxiv.org/pdf/2503.23368)]
+[[**Code**](https://github.com/Madaoer/VLIPP)] -->
+<!-- - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet.  -->
+</div>
+</div>
+
+
+
 <div class='paper-box'><div class='paper-box-image'><div><div class="badge">ICCV 2025(CCF A)</div><img src='images/vlipp.gif' alt="sym" width="100%"></div></div>
 <div class='paper-box-text' markdown="1">
 
 [VLIPP: Towards Physically Plausible Video Generation with Vision and Language Informed Physical Prior](https://madaoer.github.io/projects/physically_plausible_video_generation/)
 
-Xindi Yang<sup>*</sup>, **Baolu Li<sup>*</sup>**, Yiming Zhang, Zhenfei Yin, Lei Bai✉, Liqian Ma, Zhiyong Wang, Jianfei Cai, Tien-Tsin Wong, Huchuan Lu, Xu jia✉.
+Xindi Yang<sup>*</sup>, **Baolu Li<sup>*</sup>**, Yiming Zhang, Zhenfei Yin, Lei Bai<sup>✉</sup>, Liqian Ma, Zhiyong Wang, Jianfei Cai, Tien-Tsin Wong, Huchuan Lu, Xu jia<sup>✉</sup>.
+<sup>*</sup>Equal Contribution    <sup>✉</sup>Corresponding Author
 
 <!-- [**Project**](https://scholar.google.com/citations?view_op=view_citation&hl=zh-CN&user=DhtAFkwAAAAJ&citation_for_view=DhtAFkwAAAAJ:ALROH1vI_8AC) <strong><span class='show_paper_citations' data='DhtAFkwAAAAJ:ALROH1vI_8AC'></span></strong>
 - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet.  -->
@@ -88,6 +111,7 @@ Xindi Yang<sup>*</sup>, **Baolu Li<sup>*</sup>**, Yiming Zhang, Zhenfei Yin, Lei
 [CharacterFactory: Sampling Consistent Characters with GANs for Diffusion Models](https://qinghew.github.io/CharacterFactory/)
 
 Qinghe Wang, **Baolu Li**, Xiaomin Li, Bing Cao, Liqian Ma, Huchuan Lu, Xu jia✉.
+<sup>✉</sup>Corresponding Author
 
 <!-- [**Project**](https://scholar.google.com/citations?view_op=view_citation&hl=zh-CN&user=DhtAFkwAAAAJ&citation_for_view=DhtAFkwAAAAJ:ALROH1vI_8AC) <strong><span class='show_paper_citations' data='DhtAFkwAAAAJ:ALROH1vI_8AC'></span></strong>
 - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet.  -->
