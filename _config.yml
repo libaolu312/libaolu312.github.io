@@ -7,7 +7,7 @@
 
 # Site Settings
 title                    : "Baolu Li"
-description              : "Focusing on video large generation model."
+description              : "Focusing on video generation model and world model."
 repository               : "libaolu312/libaolu312.github.io"
 google_scholar_stats_use_cdn : true
 
