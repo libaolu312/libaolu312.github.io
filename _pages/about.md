@@ -28,13 +28,13 @@ Please feel free to contact me if you are interested in my research or potential
 
 
 # 🔥 News
+- *2026.03*: &nbsp;🎉🎉 One Paper is accepted by CVPR 2026. 
+- *2026.01*: Release paper and code "[MultiShotMaster: A Controllable Multi-Shot Video Generation Framework](https://qinghew.github.io/MultiShotMaster/)".
 - *2025.10*: Release paper "[VFXMaster: Unlocking Dynamic Visual Effect Generation via In-Context Learning](https://libaolu312.github.io/VFXMaster/)".
 - *2025.07*: &nbsp;🎉🎉 One Paper is accepted by ICCV 2025. 
-- *2024.05*: Release all the [Codes](https://github.com/Madaoer/VLIPP) of "VLIPP". Welcome to use!
-- *2025.03*: Release paper "[VLIPP: Towards Physically Plausible Video Generation with Vision and Language Informed Physical Prior](https://madaoer.github.io/projects/physically_plausible_video_generation/)".
+- *2025.03*: Release paper and code "[VLIPP: Towards Physically Plausible Video Generation with Vision and Language Informed Physical Prior](https://madaoer.github.io/projects/physically_plausible_video_generation/)".
 - *2025.03*: &nbsp;🎉🎉 One Paper is accepted by TIP 2025. 
-- *2024.05*: Release all the [Codes](https://github.com/qinghew/CharacterFactory) and [Gradio Demo](https://huggingface.co/spaces/DecoderWQH666/CharacterFactory) of "CharacterFactory". Welcome to use!
-- *2024.05*: Release paper "[CharacterFactory: Sampling Consistent Characters with GANs for Diffusion Models](https://qinghew.github.io/CharacterFactory/)".
+- *2024.05*: Release paper "[CharacterFactory: Sampling Consistent Characters with GANs for Diffusion Models](https://qinghew.github.io/CharacterFactory/)", [Codes](https://github.com/qinghew/CharacterFactory) and [Gradio Demo](https://huggingface.co/spaces/DecoderWQH666/CharacterFactory) of "CharacterFactory". Welcome to use!
 
 
 
@@ -65,7 +65,7 @@ Please feel free to contact me if you are interested in my research or potential
 
 
 
-<div class='paper-box'><div class='paper-box-image'><div><div class="badge">arxiv</div><img src='images/multishot.gif' alt="sym" width="100%"></div></div>
+<div class='paper-box'><div class='paper-box-image'><div><div class="badge">CVPR 2026</div><img src='images/multishot.gif' alt="sym" width="100%"></div></div>
 <div class='paper-box-text' markdown="1">
 
 [MultiShotMaster: A Controllable Multi-Shot Video Generation Framework](https://qinghew.github.io/MultiShotMaster/)
@@ -87,7 +87,7 @@ Qinghe Wang, Xiaoyu Shi<sup>✉</sup>, **Baolu Li**, Weikang Bian, Quande Liu, H
 
 
 
-<div class='paper-box'><div class='paper-box-image'><div><div class="badge">ICCV 2025(CCF A)</div><img src='images/vlipp.gif' alt="sym" width="100%"></div></div>
+<div class='paper-box'><div class='paper-box-image'><div><div class="badge">ICCV 2025</div><img src='images/vlipp.gif' alt="sym" width="100%"></div></div>
 <div class='paper-box-text' markdown="1">
 
 [VLIPP: Towards Physically Plausible Video Generation with Vision and Language Informed Physical Prior](https://madaoer.github.io/projects/physically_plausible_video_generation/)
@@ -108,7 +108,7 @@ Xindi Yang<sup>*</sup>, **Baolu Li<sup>*</sup>**, Yiming Zhang, Zhenfei Yin, Lei
 
 
 
-<div class='paper-box'><div class='paper-box-image'><div><div class="badge">TIP 2025(CCF A)</div><img src='images/characterfactory.svg' alt="sym" width="100%"></div></div>
+<div class='paper-box'><div class='paper-box-image'><div><div class="badge">IEEE TIP 2025</div><img src='images/characterfactory.svg' alt="sym" width="100%"></div></div>
 <div class='paper-box-text' markdown="1">
 
 [CharacterFactory: Sampling Consistent Characters with GANs for Diffusion Models](https://qinghew.github.io/CharacterFactory/)
@@ -143,7 +143,8 @@ Qinghe Wang, **Baolu Li**, Xiaomin Li, Bing Cao, Liqian Ma, Huchuan Lu, Xu jia�
 - *2021.06*, Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet. 
 - *2021.03*, Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet.  \| [\[video\]](https://github.com/) -->
 # 💬 Service
-I serve as a reviewer for ICLR, ACM MM, ICCV.
+I serve as a reviewer for ICLR, CVPR, ICCV, ACMMM, ICME.
+
 
 <!-- # 💻 Internships
 - *2019.05 - 2020.02*, [Lorem](https://github.com/), China. -->
