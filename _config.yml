@@ -6,7 +6,7 @@
 # `jekyll serve`. If you change this file, please restart the server process.
 
 # Site Settings
-title                    : "Baolu Li"
+title                    : "Baolu Li(李宝璐)"
 description              : "Focusing on video generation model and world model."
 repository               : "libaolu312/libaolu312.github.io"
 google_scholar_stats_use_cdn : true
