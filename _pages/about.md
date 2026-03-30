@@ -18,10 +18,9 @@ redirect_from:
 <span class='anchor' id='about-me'></span>
 
 
-Hi there! I'm currently a second-year Master's student at the [IIAU-Lab](https://iiaulab.github.io/), Dalian University of Technology, advised by [Prof. Xu Jia](https://stephenjia.github.io/). During a collaboration with Shanghai AI Lab, I was also fortunate to receive guidance from [Dr. Zhenfei Yin](https://yinzhenfei.github.io/) and [Dr. Lei Bai](http://leibai.site/). I received my Bachelor's degree from Hefei University of Technology, where I also interned at the [LMC-Lab](https://ci.hfut.edu.cn/info/1162/14469.htm). My current research interests primarily focus on image/video generation and 3D generation.
+Hi there! My name is Baolu Li (李宝璐), currently a second-year Master's student at the [IIAU-Lab](https://iiaulab.github.io/), Dalian University of Technology, advised by [Prof. Xu Jia](https://stephenjia.github.io/). During a collaboration with Shanghai AI Lab, I was also fortunate to receive guidance from [Dr. Zhenfei Yin](https://yinzhenfei.github.io/) and [Dr. Lei Bai](http://leibai.site/). I received my Bachelor's degree from Hefei University of Technology, where I also interned at the [LMC-Lab](https://ci.hfut.edu.cn/info/1162/14469.htm). 
 
-
-Please feel free to contact me if you are interested in my research or potential collaborations.
+My current research interests primarily focus on **Video/Image Generation** and **World Model**. Please feel free to contact me if you are interested in my research or potential collaborations.
 
 
 
@@ -143,7 +142,14 @@ Qinghe Wang, **Baolu Li**, Xiaomin Li, Bing Cao, Liqian Ma, Huchuan Lu, Xu jia�
 - *2021.06*, Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet. 
 - *2021.03*, Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet.  \| [\[video\]](https://github.com/) -->
 # 💬 Service
-I serve as a reviewer for ICLR, CVPR, ICCV, ACMMM, ICME.
+**Conference Reviewer**
+<ul>
+    <li>ICLR 2025、2026</li>
+    <li>CVPR 2025、2026</li>
+    <li>ICCV 2025</li>
+    <li>ACMMM 2025</li>
+    <li>ICME 2026</li>
+</ul>
 
 
 <!-- # 💻 Internships
