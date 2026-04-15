@@ -27,6 +27,7 @@ My current research interests primarily focus on **Video/Image Generation** and 
 
 
 # 🔥 News
+- *2026.03*: &nbsp;🎉🎉 One Paper is accepted by Siggraph 2026. 
 - *2026.03*: &nbsp;🎉🎉 One Paper is accepted by CVPR 2026. 
 - *2026.01*: Release paper and code "[MultiShotMaster: A Controllable Multi-Shot Video Generation Framework](https://qinghew.github.io/MultiShotMaster/)".
 - *2025.10*: Release paper "[VFXMaster: Unlocking Dynamic Visual Effect Generation via In-Context Learning](https://libaolu312.github.io/VFXMaster/)".
@@ -42,7 +43,7 @@ My current research interests primarily focus on **Video/Image Generation** and 
 
 # 📝 Publications
 
-<div class='paper-box'><div class='paper-box-image'><div><div class="badge">arxiv</div><img src='images/VFXMaster.gif' alt="sym" width="100%"></div></div>
+<div class='paper-box'><div class='paper-box-image'><div><div class="badge">Siggraph 2026(CCF A)</div><img src='images/VFXMaster.gif' alt="sym" width="100%"></div></div>
 <div class='paper-box-text' markdown="1">
 
 [VFXMaster: Unlocking Dynamic Visual Effect Generation via In-Context Learning](https://libaolu312.github.io/VFXMaster/)
@@ -64,7 +65,7 @@ My current research interests primarily focus on **Video/Image Generation** and 
 
 
 
-<div class='paper-box'><div class='paper-box-image'><div><div class="badge">CVPR 2026</div><img src='images/multishot.gif' alt="sym" width="100%"></div></div>
+<div class='paper-box'><div class='paper-box-image'><div><div class="badge">CVPR 2026(CCF A)</div><img src='images/multishot.gif' alt="sym" width="100%"></div></div>
 <div class='paper-box-text' markdown="1">
 
 [MultiShotMaster: A Controllable Multi-Shot Video Generation Framework](https://qinghew.github.io/MultiShotMaster/)
@@ -86,7 +87,7 @@ Qinghe Wang, Xiaoyu Shi<sup>✉</sup>, **Baolu Li**, Weikang Bian, Quande Liu, H
 
 
 
-<div class='paper-box'><div class='paper-box-image'><div><div class="badge">ICCV 2025</div><img src='images/vlipp.gif' alt="sym" width="100%"></div></div>
+<div class='paper-box'><div class='paper-box-image'><div><div class="badge">ICCV 2025(CCF A)</div><img src='images/vlipp.gif' alt="sym" width="100%"></div></div>
 <div class='paper-box-text' markdown="1">
 
 [VLIPP: Towards Physically Plausible Video Generation with Vision and Language Informed Physical Prior](https://madaoer.github.io/projects/physically_plausible_video_generation/)
@@ -107,7 +108,7 @@ Xindi Yang<sup>*</sup>, **Baolu Li<sup>*</sup>**, Yiming Zhang, Zhenfei Yin, Lei
 
 
 
-<div class='paper-box'><div class='paper-box-image'><div><div class="badge">IEEE TIP 2025</div><img src='images/characterfactory.svg' alt="sym" width="100%"></div></div>
+<div class='paper-box'><div class='paper-box-image'><div><div class="badge">IEEE TIP 2025(CCF A)</div><img src='images/characterfactory.svg' alt="sym" width="100%"></div></div>
 <div class='paper-box-text' markdown="1">
 
 [CharacterFactory: Sampling Consistent Characters with GANs for Diffusion Models](https://qinghew.github.io/CharacterFactory/)
