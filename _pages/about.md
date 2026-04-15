@@ -27,7 +27,7 @@ My current research interests primarily focus on **Video/Image Generation** and 
 
 
 # 🔥 News
-- *2026.03*: &nbsp;🎉🎉 One Paper is accepted by Siggraph 2026. 
+- *2026.04*: &nbsp;🎉🎉 One Paper is accepted by Siggraph 2026. 
 - *2026.03*: &nbsp;🎉🎉 One Paper is accepted by CVPR 2026. 
 - *2026.01*: Release paper and code "[MultiShotMaster: A Controllable Multi-Shot Video Generation Framework](https://qinghew.github.io/MultiShotMaster/)".
 - *2025.10*: Release paper "[VFXMaster: Unlocking Dynamic Visual Effect Generation via In-Context Learning](https://libaolu312.github.io/VFXMaster/)".
